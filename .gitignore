@@ -1,3 +1,14 @@
+/dist
+/tmp
+/coverage
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
 # Logs
 logs
 *.log
@@ -102,3 +113,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# System Files
+.DS_Store
+Thumbs.db

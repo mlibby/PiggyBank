@@ -1,0 +1,35 @@
+{
+  "name": "piggybank-api",
+  "version": "1.0.0",
+  "description": "api for PiggyBank hosted by node.js ",
+  "main": "src/server.js",
+  "scripts": {
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mlibby/PiggyBank.git"
+  },
+  "author": "Michael C. Libby",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/mlibby/PiggyBank/issues"
+  },
+  "homepage": "https://github.com/mlibby/PiggyBank#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-formidable": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.7",
+    "@types/express-formidable": "^1.0.4",
+    "@types/node": "^14.0.22",
+    "ts-node": "^8.10.2",
+    "ts-node-dev": "^1.0.0-pre.51",
+    "typescript": "^3.9.6"
+  }
+}
