@@ -32,4 +32,4 @@ The next goal after that is to have PiggyBank be able to import QFX/OFX files do
 
 # Full Documentation
 
-[https://piggybank.live PiggBankLive]
+Documentation lives at [PiggyBankLive](https://piggybank.live)
