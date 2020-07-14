@@ -1,26 +1,32 @@
 import express, { Request, Response } from "express";
-import formidable from "express-formidable";
+//import formidable from "express-formidable";
 
-import fs from "fs";
-import path from "path";
+//import fs from "fs";
+//import path from "path";
 
-let app: express.Application;
+export class PiggyBankApi {
+
+}
+
+
+
+//app: express.Application;
 
 // const Repo = require("./repo/PiggyBankRepo.js")
 // const repo = new Repo()
 // repo.updateDb()
 
-app = express();
+//app = express();
 //setupHttpServer();
-setupMainRoutes();
+//setupMainRoutes();
 //setupApiRoutes(repo)
 
-const port = 3030;
-app.listen(port, () => {
-  console.log("server starting on port : " + port);
-});
+//const port = 3030;
+//app.listen(port, () => {
+//  console.log("server starting on port : " + port);
+//});
 
-function setupHttpServer() {
+//setupHttpServer() {
 
   // const https = require("https")
 
@@ -35,32 +41,32 @@ function setupHttpServer() {
 
 
   //const server = https.createServer(options, app)
-  app.use(formidable())
-}
+//  app.use(formidable())
+//}
 
-function skipIndex(req: Request) {
-  return ["/api/"].some((fragment) => {
-    return req.url.substr(0, fragment.length) === fragment
-  })
-}
+//function skipIndex(req: Request) {
+//  return ["/api/"].some((fragment) => {
+//   return req.url.substr(0, fragment.length) === fragment
+//  })
+//}
 
-function setupMainRoutes() {
-  app.get("/", (req: Request, res: Response) => {
-    res.send("Hello World!");
-  });
+//function setupMainRoutes() {
+//  app.get("/", (req: Request, res: Response) => {
+//    res.send("Hello World!");
+//  });
 
   //app.use(express.static(path.join(__dirname, "..", "www-client")))
 
-  app.use(function (req, res, next) {
-    if (skipIndex(req)) {
-      return next()
-    }
+  // app.use(function (req, res, next) {
+  //   if (skipIndex(req)) {
+  //     return next()
+  //   }
 
     //   console.log(`Request for ${req.path} (not api or static)`)
     //   res.sendFile(`${__dirname}/index.html`)
     // })
-  })
-}
+//  })
+//}
 
 // function setupApiRoutes(repo) {
 //   const AccountApi = require("./api/AccountApi")
