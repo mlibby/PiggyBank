@@ -1,24 +1,31 @@
-# PiggyBank
-The PiggyBank helps manage all your finances
+# Welcome to PiggyBank
 
-# Software Setup
-These directions are notes for installing on WSL/Ubuntu or Raspbian
+PiggyBank is a project to create a household financial appliance. As an appliance, PiggyBank is more than
+just an app.
 
-# Hardware Setup
-PiggyBank is designed to run on a Raspberry Pi 3 A+ with an UCTRONICS 3.5 Inch HDMI TFT LCD Display with Touch Screen ([https://www.uctronics.com/index.php/uctronics-3-5-inch-hdmi-tft-lcd-display-with-touch-screen-touch-pen-3-heat-sinks-for-raspberry-pi-3-model-b-pi-2-model-b-pi-b.html])
+Traditional accounting software is a single-user app, which is hard (if not impossible) for families
+or groups to share. The app and the data live on just one computer and there's no mechanism for safely
+sharing it with someone using another computer, even on the same network.
 
-##Install the UCTRONICS_LCD35_HDMI_RPI Software/Drivers
+Newer accounting software solves this problem by running everything in "the cloud". But the cloud isn't some
+sort of magical place, it's really just someone else's computer. So now you can share your data with someone
+else in your household, but you're also sharing it with anyone who has access to that "cloud" computer.
 
-    wget https://raw.githubusercontent.com/UCTRONICS/UCTRONICS_LCD35_HDMI_RPI/master/install
+PiggyBank is an appliance that resolves this conflict by bringing "the cloud" a little closer to home. You
+install PiggyBank on a Raspberry Pi (or any computer, really) and put that system on your home network or LAN.
+Then you can access your data from any computer attached to your LAN by visiting PiggyBank in your web browser.
+You could access it from a laptop, a PC, tablet, or phone-- maybe even a smart TV that has a web browser.
 
-    sudo sh install 
+If you want to make PiggyBank an _actual_ home appliance, there is a 3D printable piggybank case that
+houses a Raspberry Pi and small computer screen. It's an interactive piggybank that can give you an
+always-on status report of how you're doing.
 
-If you are using the old version UC430, you should run the below command to support it.
+# Status and TODO List
 
-    sudo cp /home/pi/UCTRONICS_LCD35_HDMI_RPI/uctronics_hdmi/kernel_uc430.img /boot/kernel.img
+Right now, PiggyBank is still in the very early stages of development, having been through a few "rough draft"
+phases.
 
-    sudo cp /home/pi/UCTRONICS_LCD35_HDMI_RPI/uctronics_hdmi/kernel7_uc430.img /boot/kernel7.img
+The first goal is to get PiggyBank to where it can track investments, keeping track of how many shares you have
+of a given investment and being able to download updated prices.
 
-    sudo reboot
-
-You will certainly want to run `xinput-calibrator` to make sure your stylus is accurate.
+The next goal after that is to have PiggyBank be able to import QFX/OFX files downloaded from financial institutions.
