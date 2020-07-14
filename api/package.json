@@ -8,7 +8,7 @@
     "prestart": "npm run build",
     "start": "node .",
     "test": "ts-node node_modules/jasmine/bin/jasmine",
-    "coverage": "nyc -r text -e .ts -x \"spec/*.spec.ts\" npm run test",
+    "coverage": "nyc -r html -e .ts -x \"spec/*.spec.ts\" npm run test",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
   },
   "repository": {
