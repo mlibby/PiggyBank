@@ -28,8 +28,3 @@ of a given investment and being able to download updated prices.
 
 The next goal after that is to have PiggyBank be able to import QFX/OFX files downloaded from financial institutions.
 
-# Contents
-
-* [Raspberry Pi Setup](/pi/)
-* [Database Setup](/db/)
-* [3D Printing](/3d/)
