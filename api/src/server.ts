@@ -1,30 +1,49 @@
 import express, { Request, Response } from "express";
+import pg from "pg";
+
+import { PiggyBankRepo } from "./repo/PiggyBankRepo";
 //import formidable from "express-formidable";
 
 //import fs from "fs";
 //import path from "path";
 
 export class PiggyBankApi {
+  app: express.Application;
+  port: number;
+  repo: PiggyBankRepo;
 
+  constructor(app: express.Application, repo: PiggyBankRepo, port: number = 3030) {
+    this.app = app;
+    this.port = port;
+    this.repo = repo;
+  }
+
+  start(): void {
+    this.repo.updateDb();
+    this.app.listen(this.port, () => {
+      /* istanbul ignore next */
+      console.log(`server starting on port: ${this.port}`);
+    });
+  }
 }
 
+/* istanbul ignore if */
+if (require.main === module) {
+  const repo = new PiggyBankRepo(new pg.Pool({
+    database: "piggybank",
+    user: "pb_user",
+    password: "piggybank"
+  }));
 
+  const api = new PiggyBankApi(express(), repo);
+  api.start();
+}
 
-//app: express.Application;
-
-// const Repo = require("./repo/PiggyBankRepo.js")
-// const repo = new Repo()
 // repo.updateDb()
 
-//app = express();
 //setupHttpServer();
 //setupMainRoutes();
 //setupApiRoutes(repo)
-
-//const port = 3030;
-//app.listen(port, () => {
-//  console.log("server starting on port : " + port);
-//});
 
 //setupHttpServer() {
 
