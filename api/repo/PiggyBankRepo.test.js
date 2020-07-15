@@ -1,45 +1,46 @@
-const pg = require("pg");
-const PiggyBankRepo = require("./PiggyBankRepo");
+const PiggyBankRepo = require("./PiggyBankRepo")
 
-describe("PiggyBankRepo", () => {
-  let pool;
-  let client;
-  let readdir;
-  let readfile;
-  let pathJoin;
-  let repo;
+const mockResults = {
+  rows: ["test"]
+}
+const client = {
+  query: jest.fn().mockReturnValue(mockResults),
+  release: jest.fn()
+}
+const pool = {
+  connect: jest.fn().mockReturnValue(client)
+}
+const readdir = jest.fn()
+const readfile = jest.fn()
+const pathJoin = jest.fn()
 
-  beforeEach(() => {
-    client = jasmine.createSpyObj("pg.Client", ["query", "release"]);
-    pool = jasmine.createSpyObj("pg.Pool", ["connect"], ["database", "user", "password"]);
-    readdir = jasmine.createSpy("readdir");
-    readfile = jasmine.createSpy("readfile");
-    pathJoin = jasmine.createSpy("pathJoin");
-    repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin);
-  });
+let repo
 
-  it("should require instances of (pg.Pool, readdir, readfile, path.join) to construct", () => {
-    expect(repo.pool).toBe(pool);
-  });
+test("new PiggyBankRepo() requires instances of (pg.Pool, readdir, readfile, path.join)", () => {
+  repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin)
+  expect(repo.pool).toBe(pool)
+  expect(repo.readdir).toBe(readdir)
+  expect(repo.readfile).toBe(readfile)
+  expect(repo.pathJoin).toBe(pathJoin)
+})
 
-  it("should connect to the pool and collect results for query(sql, values)", async () => {
-    const mockResults = {rows: ["test"]};
-    pool.connect.and.returnValue(client);
-    client.query.and.returnValue(mockResults);
+test("connect to pg.Pool and collect results for query(sql, values)", async () => {
+  repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin)
+  const sql = 'select * from table'
+  const values = ["foo", "bar"]
+  const results = await repo.query(sql, values)
+  expect(pool.connect).toHaveBeenCalledTimes(1)
+  expect(client.query).toHaveBeenCalledWith(sql, values)
+  expect(results).toBe(mockResults)
+})
 
-    const sql = 'select * from table';
-    const values = [];
-    const results = await repo.query(sql, values);
-    expect(pool.connect).toHaveBeenCalledTimes(1);
-    expect(client.query).toHaveBeenCalledWith(sql, values);
-    expect(results).toBe(mockResults);
-  });
+test("getCurrentLevel() returns 0 when no migrations have run yet", async () => {
+  client.query = jest.fn().mockImplementation(() => {
+    throw new Error('relation "migration" does not exist')
+  })
 
-  it("should return 0 when running getCurrentLevel() with no migrations", () => {
-
-  });
-
-  it("should handle missing 'migration' table when running migrations", () => {
-
-  });
-});
+  repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin)
+  const level = await repo.getMigrationLevel()
+  expect(client.query).toHaveBeenCalledWith('select max(level) from migration', undefined)
+  expect(level).toBe(0)
+})
