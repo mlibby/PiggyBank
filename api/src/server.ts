@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
+import formidable from "express-formidable";
 import pg from "pg";
 
 import { PiggyBankRepo } from "./repo/PiggyBankRepo";
-//import formidable from "express-formidable";
 
 //import fs from "fs";
 //import path from "path";
@@ -11,19 +11,40 @@ export class PiggyBankApi {
   app: express.Application;
   port: number;
   repo: PiggyBankRepo;
+  formHandler: express.RequestHandler;
 
-  constructor(app: express.Application, repo: PiggyBankRepo, port: number = 3030) {
+  constructor(
+    app: express.Application,
+    repo: PiggyBankRepo,
+    formHandler: express.RequestHandler = formidable(),
+    port: number = 3030
+  ) {
     this.app = app;
     this.port = port;
     this.repo = repo;
+    this.formHandler = formHandler;
   }
 
   start(): void {
+    this.setupHttpServer();
     this.repo.updateDb();
     this.app.listen(this.port, () => {
       /* istanbul ignore next */
       console.log(`server starting on port: ${this.port}`);
     });
+  }
+
+  setupHttpServer(): void {
+    // const keyPath = path.join(__dirname, "..", ".ssl", "selfsigned.key")
+    // const key = fs.readFileSync(keyPath)
+    // const certPath = path.join(__dirname, "..", ".ssl", "/selfsigned.crt")
+    // const cert = fs.readFileSync(certPath)
+    // const options = {
+    //   key: key,
+    //   cert: cert
+    // }
+    //const server = https.createServer(options, app)
+    this.app.use(this.formHandler);
   }
 }
 
@@ -35,31 +56,16 @@ if (require.main === module) {
     password: "piggybank"
   }));
 
+  // const https = require("https")
   const api = new PiggyBankApi(express(), repo);
   api.start();
 }
 
-// repo.updateDb()
-
-//setupHttpServer();
 //setupMainRoutes();
 //setupApiRoutes(repo)
 
 //setupHttpServer() {
 
-  // const https = require("https")
-
-  // const keyPath = path.join(__dirname, "..", ".ssl", "selfsigned.key")
-  // const key = fs.readFileSync(keyPath)
-  // const certPath = path.join(__dirname, "..", ".ssl", "/selfsigned.crt")
-  // const cert = fs.readFileSync(certPath)
-  // const options = {
-  //   key: key,
-  //   cert: cert
-  // }
-
-
-  //const server = https.createServer(options, app)
 //  app.use(formidable())
 //}
 
