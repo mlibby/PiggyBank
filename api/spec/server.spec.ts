@@ -15,7 +15,7 @@ describe("PiggyBank API server startup", () => {
     formHandler = jasmine.createSpyObj("formidable", ["_"]);
     server = new PiggyBankApi(app, repo, formHandler);
     server.start();
-  })
+  });
 
   it("should register formidable as a request handler", () => {
     expect(app.use).toHaveBeenCalledWith(formHandler);
@@ -29,5 +29,4 @@ describe("PiggyBank API server startup", () => {
   it("should update the Repository when the server starts", () => {
     expect(repo.updateDb).toHaveBeenCalledTimes(1);
   });
-
 });
