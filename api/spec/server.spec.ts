@@ -17,6 +17,10 @@ describe("PiggyBank API server startup", () => {
     server.start();
   });
 
+  // If this test fails to compile, it's because @types/jasmine
+  // has a wrong signature. It should be:
+  //    interface FunctionMatchers<Fn extends Func> extends Matchers<any> {
+  //      toHaveBeenCalledWith(...params: any[]): boolean;
   it("should register formidable as a request handler", () => {
     expect(app.use).toHaveBeenCalledWith(formHandler);
   });
