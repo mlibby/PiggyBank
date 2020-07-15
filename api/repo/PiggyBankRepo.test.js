@@ -44,3 +44,11 @@ test("getCurrentLevel() returns 0 when no migrations have run yet", async () => 
   expect(client.query).toHaveBeenCalledWith('select max(level) from migration', undefined)
   expect(level).toBe(0)
 })
+
+test("getCurrentLevel() > 0 once migrations have been run", async () => {
+  client.query = jest.fn().mockReturnValue({ rows: [{ max: "1" }] })
+  repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin)
+  const level = await repo.getMigrationLevel()
+  expect(client.query).toHaveBeenCalledWith('select max(level) from migration', undefined)
+  expect(level).toBe(1)
+})

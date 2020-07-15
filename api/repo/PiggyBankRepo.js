@@ -19,15 +19,21 @@ class PiggyBankRepo {
   async getMigrationLevel() {
     const sql = 'select max(level) from migration'
     let level = 0
+    let results = null
     try {
-      level = await this.query(sql)
+      results = await this.query(sql)
     }
     catch (error) {
       if(error.message !== 'relation "migration" does not exist') {
         throw error
       }
     }
-    return 0;
+
+    if(results) {
+      level = Number(results.rows[0].max)
+    }
+
+    return level;
   }
 
   async updateDb() {
