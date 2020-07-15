@@ -1,15 +1,12 @@
 {
-  "name": "piggybank-api",
+  "name": "piggybank",
   "version": "1.0.0",
-  "description": "api for PiggyBank hosted by node.js ",
-  "main": "src/server.ts",
+  "description": "PiggyBank - the household financial appliance",
+  "main": "api/server.js",
   "scripts": {
-    "build": "tsc",
-    "prestart": "npm run build",
     "start": "node .",
-    "test": "ts-node node_modules/jasmine/bin/jasmine",
-    "coverage": "nyc -r html -e .ts -x \"spec/*.spec.ts\" npm run test",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+    "test": "jest",
+    "_coverage": "nyc -r html -e .ts -x \"spec/*.spec.ts\" npm run test"
   },
   "repository": {
     "type": "git",
@@ -27,6 +24,6 @@
     "pg": "^8.3.0"
   },
   "devDependencies": {
-    "jasmine": "^3.5.0"
+    "jest": "^26.1.0"
   }
 }
