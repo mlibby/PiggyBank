@@ -1,31 +1,19 @@
-import express, { Request, Response } from "express";
-import formidable from "express-formidable";
-import pg from "pg";
-
-import { PiggyBankRepo } from "./repo/PiggyBankRepo";
+const express = require("express");
+const formidable = require("express-formidable");
+const PiggyBankRepo = require("./repo/PiggyBankRepo");
 
 //import fs from "fs";
 //import path from "path";
 
-export class PiggyBankApi {
-  app: express.Application;
-  port: number;
-  repo: PiggyBankRepo;
-  formHandler: express.RequestHandler;
-
-  constructor(
-    app: express.Application,
-    repo: PiggyBankRepo,
-    formHandler: express.RequestHandler = formidable(),
-    port: number = 3030
-  ) {
+class PiggyBankApi {
+  constructor(app, repo, formHandler = formidable(), port = 3030) {
     this.app = app;
     this.port = port;
     this.repo = repo;
     this.formHandler = formHandler;
   }
 
-  start(): void {
+  start() {
     this.setupHttpServer();
     this.repo.updateDb();
     this.app.listen(this.port, () => {
@@ -34,7 +22,7 @@ export class PiggyBankApi {
     });
   }
 
-  setupHttpServer(): void {
+  setupHttpServer() {
     // const keyPath = path.join(__dirname, "..", ".ssl", "selfsigned.key")
     // const key = fs.readFileSync(keyPath)
     // const certPath = path.join(__dirname, "..", ".ssl", "/selfsigned.crt")
@@ -61,6 +49,7 @@ if (require.main === module) {
   api.start();
 }
 
+module.exports = PiggyBankApi;
 //setupMainRoutes();
 //setupApiRoutes(repo)
 
