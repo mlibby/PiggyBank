@@ -1,43 +1,43 @@
-const fs = require("fs")
-const path = require("path")
+const fs = require("fs");
+const path = require("path");
 
 class PiggyBankRepo {
   constructor(pool, readdir = fs.readdirSync, readfile = fs.readFileSync, pathJoin = path.join) {
-    this.pool = pool
-    this.pathJoin = pathJoin
-    this.readdir = readdir
-    this.readfile = readfile
+    this.pool = pool;
+    this.pathJoin = pathJoin;
+    this.readdir = readdir;
+    this.readfile = readfile;
   }
 
   async query(sql, values) {
-    const client = await this.pool.connect()
-    let results = await client.query(sql, values)
-    client.release()
-    return results
+    const client = await this.pool.connect();
+    let results = await client.query(sql, values);
+    client.release();
+    return results;
   }
 
   async getMigrationLevel() {
-    const sql = 'select max(level) from migration'
-    let level = 0
-    let results = null
+    const sql = 'select max(level) from migration';
+    let level = 0;
+    let results = null;
     try {
-      results = await this.query(sql)
+      results = await this.query(sql);
     }
     catch (error) {
-      if(error.message !== 'relation "migration" does not exist') {
-        throw error
+      if (error.message !== 'relation "migration" does not exist') {
+        throw error;
       }
     }
 
-    if(results) {
-      level = Number(results.rows[0].max)
+    if (results) {
+      level = Number(results.rows[0].max);
     }
 
     return level;
   }
 
   async updateDb() {
-    console.log("updating DB")
+    console.log("updating DB");
   }
 }
 

@@ -6,7 +6,7 @@ const PiggyBankRepo = require("./repo/PiggyBankRepo");
 //import path from "path";
 
 class PiggyBankApi {
-  constructor(app, repo, formHandler = formidable(), port = 3030) {
+  constructor(app, repo, formHandler, port) {
     this.app = app;
     this.port = port;
     this.repo = repo;
@@ -45,7 +45,7 @@ if (require.main === module) {
   }));
 
   // const https = require("https")
-  const api = new PiggyBankApi(express(), repo);
+  const api = new PiggyBankApi(express(), repo, formidable(), 3030);
   api.start();
 }
 
