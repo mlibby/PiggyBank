@@ -52,3 +52,13 @@ test("getCurrentLevel() > 0 once migrations have been run", async () => {
   expect(client.query).toHaveBeenCalledWith('select max(level) from migration', undefined);
   expect(level).toBe(1);
 });
+
+test("getCurrentLevel() only swallows 'migrations' missing error", async () => {
+  client.query = jest.fn().mockImplementation(() => {
+    throw new Error("this is not a migrations error");
+  });
+  repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin);
+  expect(async () => {
+    const level = await repo.getMigrationLevel();
+  }).rejects.toThrow();
+});

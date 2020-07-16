@@ -23,9 +23,9 @@ class PiggyBankRepo {
     try {
       results = await this.query(sql);
     }
-    catch (error) {
-      if (error.message !== 'relation "migration" does not exist') {
-        throw error;
+    catch (err) {
+      if (err.message !== 'relation "migration" does not exist') {
+        throw err;
       }
     }
 
