@@ -37,7 +37,18 @@ class PiggyBankRepo {
   }
 
   async updateDb() {
-    console.log("updating DB");
+    const migrationDir = this.pathJoin(__dirname, "../migrations");
+    const migrationLevel = this.getMigrationLevel();
+    const migrations = this.readdir(migrationDir);
+    const pending = migrations.filter((f) => {
+       return /^\d{5}/.test(f) && Number(f.substr(0, 5)) > migrationLevel
+    });
+
+    pending.forEach(async (f) => {
+      const migrationPath = this.pathJoin(migrationDir, f);
+      const sql = this.readfile(migrationPath);
+      await this.query(sql);
+    });
   }
 }
 
