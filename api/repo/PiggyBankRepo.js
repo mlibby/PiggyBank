@@ -37,6 +37,7 @@ class PiggyBankRepo {
   }
 
   async updateDb() {
+    console.log("checking for pending migrations");
     const migrationDir = this.pathJoin(__dirname, "../migrations");
     const migrationLevel = this.getMigrationLevel();
     const migrations = this.readdir(migrationDir);
@@ -45,6 +46,7 @@ class PiggyBankRepo {
     });
 
     pending.forEach(async (f) => {
+      console.log(`running migration ${f}`);
       const migrationPath = this.pathJoin(migrationDir, f);
       const sql = this.readfile(migrationPath);
       await this.query(sql);
