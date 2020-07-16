@@ -7,6 +7,8 @@ class PiggyBankRepo {
     this.pathJoin = pathJoin;
     this.readdir = readdir;
     this.readfile = readfile;
+
+    this.account = new (require("./AccountRepo"));
   }
 
   async query(sql, values) {
