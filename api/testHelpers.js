@@ -1,6 +1,6 @@
 const testHelpers = {
   normalize: (text) => {
-    return text.replace(/\s/g, "");
+    return text.replace(/\s/g, "").toLowerCase();
   }
 };
 
