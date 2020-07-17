@@ -1,8 +1,5 @@
-const fs = require("fs");
-const path = require("path");
-
 class PiggyBankRepo {
-  constructor(pool, readdir = fs.readdirSync, readfile = fs.readFileSync, pathJoin = path.join) {
+  constructor(pool, readdir, readfile, pathJoin) {
     this.pool = pool;
     this.pathJoin = pathJoin;
     this.readdir = readdir;

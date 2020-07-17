@@ -179,5 +179,5 @@ test("updateDb() runs only pending migrations at level 2", () => {
 
 test("repo.account is an AccountRepo", () => {
   const repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin);
-  expect(repo.account.constructor.name).toBe("AccountRepo");
+  expect(repo.account.const).toBe("AccountRepo");
 });

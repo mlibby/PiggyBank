@@ -1,10 +1,9 @@
 const express = require("express");
 const formidable = require("express-formidable");
+const fs = require("fs");
+const path = require("path")
 const pg = require("pg");
 const PiggyBankRepo = require("./repo/PiggyBankRepo");
-
-//import fs from "fs";
-//import path from "path";
 
 class PiggyBankApi {
   constructor(app, repo, formHandler, port) {
@@ -39,13 +38,13 @@ class PiggyBankApi {
 
 /* istanbul ignore if */
 if (require.main === module) {
-  const repo = new PiggyBankRepo(new pg.Pool({
+  const pool = new pg.Pool({
     database: "piggybank",
     user: "pb_user",
     password: "piggybank"
-  }));
-
-  // const https = require("https")
+  });
+  const repo = new PiggyBankRepo(pool, fs.readdirSync, fs.readFileSync, path.join);
+  // const https = require("https");
   const api = new PiggyBankApi(express(), repo, formidable(), 3030);
   api.start();
 }
