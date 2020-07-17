@@ -2,6 +2,21 @@ const AccountRepo = require("./AccountRepo");
 const helpers = require("../testHelpers.js");
 let queryFn = jest.fn();
 
+const origMd5 = 'originalMd5';
+const newMd5 = 'newMd5';
+let testAccount;
+
+beforeEach(() => {
+  testAccount = {
+    accountId: 123,
+    currencyId: 1,
+    name: "test account",
+    isPlaceholder: false,
+    parentId: 1,
+    md5: origMd5
+  };
+});
+
 test("new AccountRepo(queryFn)", () => {
   const accountRepo = new AccountRepo(queryFn);
   expect(accountRepo.queryFn).toBe(queryFn);
@@ -27,14 +42,16 @@ test("selectAll() uses correct SQL and returns rows", async () => {
 });
 
 test("insert() uses correct SQL and returns updated account", async () => {
-  const testAccount = {
-    currencyId: 1,
-    name: "test account",
-    isPlaceholder: false,
-    parentId: 1
-  };
-  const testAccountId = 4;
-  queryFn = jest.fn().mockResolvedValue({ rows: [{ account_id: testAccountId }] });
+  delete testAccount.accountId;
+  delete testAccount.md5;
+  const accountId = 333;
+  queryFn = jest.fn().mockResolvedValue({
+    rows:
+      [{
+        account_id: accountId,
+        md5: newMd5
+      }]
+  });
 
   const accountRepo = new AccountRepo(queryFn);
   const account = await accountRepo.insert(testAccount);
@@ -56,21 +73,21 @@ test("insert() uses correct SQL and returns updated account", async () => {
     testAccount.isPlaceholder,
     testAccount.parentId
   ]);
-  expect(account.accountId).toBe(testAccountId);
+  expect(account.accountId).toBe(accountId);
+  expect(account.md5).toBe(newMd5);
 });
 
-test("update() uses correct SQL and returns account", async () => {
-  const testAccount = {
-    accountId: 123,
-    currencyId: 1,
-    name: "test account",
-    isPlaceholder: false,
-    parentId: 1,
-    md5: 'md5(account::text)',
-  };
+test("update() uses correct SQL and returns updated account", async () => {
+  queryFn = jest.fn().mockResolvedValue({
+    rows:
+      [{
+        account_id: testAccount.accountId,
+        md5: newMd5
+      }]
+  });
 
   const accountRepo = new AccountRepo(queryFn);
-  await accountRepo.update(testAccount);
+  const account = await accountRepo.update(testAccount);
 
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
@@ -88,20 +105,12 @@ test("update() uses correct SQL and returns account", async () => {
     testAccount.isPlaceholder,
     testAccount.parentId,
     testAccount.accountId,
-    testAccount.md5
+    origMd5
   ]);
+  expect(account.md5).toBe(newMd5);
 });
 
 test("delete() uses correct SQL", async () => {
-  const testAccount = {
-    accountId: 123,
-    currencyId: 1,
-    name: "test account",
-    isPlaceholder: false,
-    parentId: 1,
-    md5: '9f2cfe1c5a1582fd631d80fa25d6cb5d'
-  };
-
   const accountRepo = new AccountRepo(queryFn);
   const result = await accountRepo.delete(testAccount);
 

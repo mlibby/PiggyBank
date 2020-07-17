@@ -58,6 +58,9 @@ class AccountRepo {
       account.accountId,
       account.md5
     ]);
+
+    account.md5 = result.rows[0].md5;
+    return account;
   }
 
   async delete(account) {
