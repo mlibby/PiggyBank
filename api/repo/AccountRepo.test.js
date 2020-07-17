@@ -7,7 +7,7 @@ test("new AccountRepo(queryFn)", () => {
   expect(accountRepo.queryFn).toBe(queryFn);
 });
 
-test("accountRepo.selectAll() uses correct SQL and returns rows", async () => {
+test("selectAll() uses correct SQL and returns rows", async () => {
   const results = { rows: ["foo", "bar"] };
   queryFn.mockResolvedValue(results);
   const accountRepo = new AccountRepo(queryFn);
@@ -25,7 +25,7 @@ test("accountRepo.selectAll() uses correct SQL and returns rows", async () => {
   expect(accounts).toEqual(results.rows);
 });
 
-test("accountRepo.insert() uses correct SQL and returns updated account", async () => {
+test("insert() uses correct SQL and returns updated account", async () => {
   const testAccount = {
     currencyId: 1,
     name: "test account",
@@ -57,3 +57,35 @@ test("accountRepo.insert() uses correct SQL and returns updated account", async 
   ]);
   expect(account.accountId).toBe(testAccountId);
 });
+
+test("update() uses correct SQL and returns account", async () => {
+  const testAccount = {
+    accountId: 123,
+    currencyId: 1,
+    name: "test account",
+    isPlaceholder: false,
+    parentId: 1
+  };
+
+  const accountRepo = new AccountRepo(queryFn);
+  const account = await accountRepo.update(testAccount);
+
+  expect(helpers.normalize(queryFn.mock.calls[0][0]))
+    .toBe(helpers.normalize(
+      `UPDATE account 
+      SET currency_id = $1,
+        account_name = $2,
+        is_placeholder = $3,
+        parent_id = $4
+      WHERE account_id = $5`
+    ));
+  expect(queryFn.mock.calls[0][1]).toEqual([
+    testAccount.currencyId,
+    testAccount.name,
+    testAccount.isPlaceholder,
+    testAccount.parentId,
+    testAccount.accountId
+  ]);
+  expect(account).toBe(testAccount);
+});
+

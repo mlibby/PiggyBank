@@ -18,7 +18,8 @@ class AccountRepo {
   }
 
   async insert(account) {
-    const sql = `INSERT INTO account (
+    const sql = `
+    INSERT INTO account (
       currency_id,
       account_name,
       is_placeholder,
@@ -26,6 +27,7 @@ class AccountRepo {
     )
     VALUES ($1, $2, $3, $4)
     RETURNING *`;
+
     const result = await this.queryFn(sql, [
       account.currencyId,
       account.name,
@@ -33,6 +35,26 @@ class AccountRepo {
       account.parentId
     ]);
     account.accountId = result.rows[0].account_id;
+    return account;
+  }
+
+  async update(account) {
+    const sql =`
+    UPDATE account 
+    SET currency_id = $1,
+      account_name = $2,
+      is_placeholder = $3,
+      parent_id = $4
+    WHERE account_id = $5`;
+    
+    await this.queryFn(sql, [
+      account.currencyId,
+      account.name,
+      account.isPlaceholder,
+      account.parentId,
+      account.accountId
+    ]);
+    
     return account;
   }
 }
