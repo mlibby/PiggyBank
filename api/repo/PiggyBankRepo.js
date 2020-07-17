@@ -1,3 +1,5 @@
+const AccountRepo = require("./AccountRepo");
+
 class PiggyBankRepo {
   constructor(pool, readdir, readfile, pathJoin) {
     this.pool = pool;
@@ -5,7 +7,7 @@ class PiggyBankRepo {
     this.readdir = readdir;
     this.readfile = readfile;
 
-    this.account = new (require("./AccountRepo"));
+    this.account = new AccountRepo();
   }
 
   async query(sql, values) {
@@ -38,7 +40,7 @@ class PiggyBankRepo {
   async updateDb() {
     console.log("checking for pending migrations");
     const migrationDir = this.pathJoin(__dirname, "../migrations");
-    const migrationLevel = this.getMigrationLevel();
+    const migrationLevel = await this.getMigrationLevel();
     const migrations = this.readdir(migrationDir);
     const pending = migrations.filter((f) => {
        return /^\d{5}/.test(f) && Number(f.substr(0, 5)) > migrationLevel

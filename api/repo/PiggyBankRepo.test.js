@@ -81,7 +81,7 @@ test("getCurrentLevel() returns 0 when no migrations have run yet", async () => 
 });
 
 test("getCurrentLevel() > 0 once migrations have been run", async () => {
-  client.query = jest.fn().mockReturnValue({ rows: [{ max: "1" }] });
+  client.query = jest.fn().mockResolvedValue({ rows: [{ max: "1" }] });
   const repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin);
   const level = await repo.getMigrationLevel();
   expect(client.query).toHaveBeenCalledWith('select max(level) from migration', undefined);
@@ -125,7 +125,7 @@ test("updateDb() gets the file list from migrations dir", async () => {
 test("updateDb() runs all migrations at migration level 0", () => {
   const repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin);
   repo.query = jest.fn();
-  repo.getMigrationLevel = jest.fn().mockReturnValueOnce(0);
+  repo.getMigrationLevel = jest.fn().mockResolvedValueOnce(0);
   repo.updateDb();
 
   expect(pathJoin).toHaveBeenCalledTimes(5);
@@ -160,7 +160,7 @@ test("updateDb() runs only pending migrations at level 2", () => {
 
   const repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin);
   repo.query = jest.fn();
-  repo.getMigrationLevel = jest.fn().mockReturnValueOnce(2);
+  repo.getMigrationLevel = jest.fn().mockResolvedValueOnce(2);
   repo.updateDb();
 
   expect(pathJoin).toHaveBeenCalledTimes(3);
