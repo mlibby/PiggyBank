@@ -115,6 +115,22 @@ test("update() uses correct SQL and returns updated account", async () => {
 
 test("update() fails from stale snapshot of account", async () => {
   queryFn = jest.fn().mockResolvedValue({
+    rowCount: 1,
+    rows: [{
+      accountId: testAccount.accountId,
+      md5: newMd5
+    }]
+  });
+
+  const accountRepo = new AccountRepo(queryFn);
+
+  expect(async () => {
+    const account = await accountRepo.update(testAccount);
+  }).rejects.toThrow("md5 mismatch");
+});
+
+test("update() fails because of missing record", async () => {
+  queryFn = jest.fn().mockResolvedValue({
     rowCount: 0,
     rows: []
   });
@@ -123,7 +139,7 @@ test("update() fails from stale snapshot of account", async () => {
 
   expect(async () => {
     const account = await accountRepo.update(testAccount);
-  }).rejects.toThrow("md5 mismatch");
+  }).rejects.toThrow("id mismatch");
 });
 
 test("delete() uses correct SQL", async () => {

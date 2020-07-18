@@ -12,7 +12,12 @@ class AccountRepo {
       WHERE account_id = $1`;
 
     const result = await this.queryFn(sql, [id]);
-    return result.rowCount === 1 && result.rows[0].md5 !== md5;
+    if (result.rowCount === 1 && md5result.rows[0].md5 !== account.md5) {
+      throw new Error("md5 mismatch");
+    }
+    else {
+      throw new Error("id mismatch");
+    }
   }
 
   async selectAll() {
@@ -73,13 +78,11 @@ class AccountRepo {
 
     if (result.rowCount > 0) {
       account.md5 = result.rows[0].md5;
+      return account;
     }
     else {
-      if (this.md5Check(account.accountId, account.md5)) {
-        throw new Error("md5 mismatch");
-      }
+      await this.md5Check(account.accountId, account.md5);
     }
-    return account;
   }
 
   async delete(account) {
