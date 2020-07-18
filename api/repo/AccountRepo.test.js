@@ -129,7 +129,7 @@ test("update() fails from stale snapshot of account", async () => {
   try {
     const account = await accountRepo.update(testAccount);
   }
-  catch(e) {
+  catch (e) {
     expect(e.message).toBe("md5 mismatch");
   }
 });
@@ -144,25 +144,78 @@ test("update() fails because of missing record", async () => {
   });
 
   const accountRepo = new AccountRepo(queryFn);
-  try{
-     const account = await accountRepo.update(testAccount);
+  try {
+    const account = await accountRepo.update(testAccount);
   }
-  catch(e) {
+  catch (e) {
     expect(e.message).toBe("id mismatch");
   }
 });
 
 test("delete() uses correct SQL", async () => {
+  queryFn = jest.fn().mockResolvedValue({
+    rowCount: 1,
+    rows:
+      [{
+        account_id: testAccount.accountId,
+        md5: origMd5
+      }]
+  });
+
   const accountRepo = new AccountRepo(queryFn);
   const result = await accountRepo.delete(testAccount);
 
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       DELETE FROM account
-      WHERE account_id = $1 and md5(account::text) = $2`
+      WHERE account_id = $1 and md5(account::text) = $2
+      RETURNING *, md5(account::text)`
     ));
   expect(queryFn.mock.calls[0][1]).toEqual([
     testAccount.accountId,
     testAccount.md5
   ]);
+});
+
+test("delete() fails from stale snapshot of account", async () => {
+  queryFn = jest.fn().mockResolvedValueOnce({
+    rowCount: 0,
+    rows: []
+  }).mockResolvedValueOnce({
+    rowCount: 1,
+    rows: [{
+      accountId: testAccount.accountId,
+      md5: newMd5
+    }]
+  });
+
+  const accountRepo = new AccountRepo(queryFn);
+
+  expect.assertions(1);
+  try {
+    await accountRepo.delete(testAccount);
+  }
+  catch (e) {
+    expect(e.message).toBe("md5 mismatch");
+  }
+});
+
+test("delete() fails because of missing record", async () => {
+  queryFn = jest.fn().mockResolvedValueOnce({
+    rowCount: 0,
+    rows: []
+  }).mockResolvedValue({
+    rowCount: 0,
+    rows: []
+  });
+
+  const accountRepo = new AccountRepo(queryFn);
+
+  expect.assertions(1);
+  try {
+    await accountRepo.delete(testAccount);
+  }
+  catch (e) {
+    expect(e.message).toBe("id mismatch");
+  }
 });

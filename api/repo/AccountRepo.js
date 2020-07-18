@@ -3,7 +3,16 @@ class AccountRepo {
     this.queryFn = queryFn;
   }
 
-  async md5Check(id, md5) {
+  async validateResult(result, account) {
+    if (result.rowCount > 0) {
+      account.md5 = result.rows[0].md5;
+    }
+    else {
+      await this.validateMd5(account.accountId, account.md5);
+    }
+  }
+
+  async validateMd5(id, md5) {
     const sql = `
       SELECT
         account_id "accountId",
@@ -76,24 +85,22 @@ class AccountRepo {
       account.md5
     ]);
 
-    if (result.rowCount > 0) {
-      account.md5 = result.rows[0].md5;
-      return account;
-    }
-    else {
-      await this.md5Check(account.accountId, account.md5);
-    }
+    await this.validateResult(result, account);
+    return account;
   }
 
   async delete(account) {
     const sql = `
       DELETE FROM account
-      WHERE account_id = $1 AND md5(account::text) = $2`;
+      WHERE account_id = $1 AND md5(account::text) = $2
+      RETURNING *, md5(account::text)`;
 
-    await this.queryFn(sql, [
+    const result = await this.queryFn(sql, [
       account.accountId,
       account.md5
     ]);
+
+    await this.validateResult(result, account);
   }
 }
 
