@@ -43,7 +43,7 @@ class PiggyBankRepo {
     const migrationLevel = await this.getMigrationLevel();
     const migrations = this.readdir(migrationDir);
     const pending = migrations.filter((f) => {
-       return /^\d{5}/.test(f) && Number(f.substr(0, 5)) > migrationLevel
+      return /^\d{5}/.test(f) && Number(f.substr(0, 5)) > migrationLevel
     });
 
     pending.forEach(async (f) => {
