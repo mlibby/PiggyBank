@@ -46,6 +46,7 @@ test("insert() uses correct SQL and returns updated account", async () => {
   delete testAccount.md5;
   const accountId = 333;
   queryFn = jest.fn().mockResolvedValue({
+    rowCount: 1,
     rows:
       [{
         account_id: accountId,
@@ -77,8 +78,10 @@ test("insert() uses correct SQL and returns updated account", async () => {
   expect(account.md5).toBe(newMd5);
 });
 
+
 test("update() uses correct SQL and returns updated account", async () => {
   queryFn = jest.fn().mockResolvedValue({
+    rowCount: 1,
     rows:
       [{
         account_id: testAccount.accountId,
@@ -108,6 +111,19 @@ test("update() uses correct SQL and returns updated account", async () => {
     origMd5
   ]);
   expect(account.md5).toBe(newMd5);
+});
+
+test("update() fails from stale snapshot of account", async () => {
+  queryFn = jest.fn().mockResolvedValue({
+    rowCount: 0,
+    rows: []
+  });
+
+  const accountRepo = new AccountRepo(queryFn);
+
+  expect(async () => {
+    const account = await accountRepo.update(testAccount);
+  }).rejects.toThrow("md5 mismatch");
 });
 
 test("delete() uses correct SQL", async () => {

@@ -3,6 +3,18 @@ class AccountRepo {
     this.queryFn = queryFn;
   }
 
+  async md5Check(id, md5) {
+    const sql = `
+      SELECT
+        account_id "accountId",
+        md5(account::text)
+      FROM account
+      WHERE account_id = $1`;
+
+    const result = await this.queryFn(sql, [id]);
+    return result.rowCount === 1 && result.rows[0].md5 !== md5;
+  }
+
   async selectAll() {
     const sql = `
       SELECT
@@ -59,7 +71,14 @@ class AccountRepo {
       account.md5
     ]);
 
-    account.md5 = result.rows[0].md5;
+    if (result.rowCount > 0) {
+      account.md5 = result.rows[0].md5;
+    }
+    else {
+      if (this.md5Check(account.accountId, account.md5)) {
+        throw new Error("md5 mismatch");
+      }
+    }
     return account;
   }
 
