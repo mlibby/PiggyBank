@@ -16,10 +16,11 @@ class PiggyBankApi {
   async start() {
     this.setupHttpServer();
     await this.repo.updateDb();
-    this.app.listen(this.port, () => {
+    this.app.listen(this.port,
       /* istanbul ignore next */
-      console.log(`server starting on port: ${this.port}`);
-    });
+      () => {
+        console.log(`server starting on port: ${this.port}`);
+      });
   }
 
   setupHttpServer() {

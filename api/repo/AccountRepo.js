@@ -12,7 +12,7 @@ class AccountRepo {
       WHERE account_id = $1`;
 
     const result = await this.queryFn(sql, [id]);
-    if (result.rowCount === 1 && md5result.rows[0].md5 !== account.md5) {
+    if (result.rowCount === 1 && result.rows[0].md5 !== md5) {
       throw new Error("md5 mismatch");
     }
     else {

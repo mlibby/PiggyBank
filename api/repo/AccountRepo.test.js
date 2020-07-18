@@ -114,7 +114,10 @@ test("update() uses correct SQL and returns updated account", async () => {
 });
 
 test("update() fails from stale snapshot of account", async () => {
-  queryFn = jest.fn().mockResolvedValue({
+  queryFn = jest.fn().mockResolvedValueOnce({
+    rowCount: 0,
+    rows: []
+  }).mockResolvedValueOnce({
     rowCount: 1,
     rows: [{
       accountId: testAccount.accountId,
@@ -123,23 +126,30 @@ test("update() fails from stale snapshot of account", async () => {
   });
 
   const accountRepo = new AccountRepo(queryFn);
-
-  expect(async () => {
+  try {
     const account = await accountRepo.update(testAccount);
-  }).rejects.toThrow("md5 mismatch");
+  }
+  catch(e) {
+    expect(e.message).toBe("md5 mismatch");
+  }
 });
 
 test("update() fails because of missing record", async () => {
-  queryFn = jest.fn().mockResolvedValue({
+  queryFn = jest.fn().mockResolvedValueOnce({
+    rowCount: 0,
+    rows: []
+  }).mockResolvedValue({
     rowCount: 0,
     rows: []
   });
 
   const accountRepo = new AccountRepo(queryFn);
-
-  expect(async () => {
-    const account = await accountRepo.update(testAccount);
-  }).rejects.toThrow("id mismatch");
+  try{
+     const account = await accountRepo.update(testAccount);
+  }
+  catch(e) {
+    expect(e.message).toBe("id mismatch");
+  }
 });
 
 test("delete() uses correct SQL", async () => {
