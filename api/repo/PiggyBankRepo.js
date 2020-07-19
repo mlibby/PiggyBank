@@ -7,7 +7,7 @@ class PiggyBankRepo {
     this.readdir = readdir;
     this.readfile = readfile;
 
-    this.account = new AccountRepo();
+    this.account = new AccountRepo(this.query.bind(this));
   }
 
   async query(sql, values) {

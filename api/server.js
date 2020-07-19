@@ -1,21 +1,18 @@
-const express = require("express");
-const formidable = require("express-formidable");
-const fs = require("fs");
-const path = require("path")
-const pg = require("pg");
-const PiggyBankRepo = require("./repo/PiggyBankRepo");
-
 class PiggyBankApi {
-  constructor(app, repo, formHandler, port) {
-    this.app = app;
+  constructor(express, repo, formHandler, port) {
+    this.express = express;
     this.port = port;
     this.repo = repo;
     this.formHandler = formHandler;
+
+    this.app = this.express();
   }
 
   async start() {
     this.setupHttpServer();
+    this.setupApiRoutes();
     await this.repo.updateDb();
+
     this.app.listen(this.port,
       /* istanbul ignore next */
       () => {
@@ -35,10 +32,23 @@ class PiggyBankApi {
     //const server = https.createServer(options, app)
     this.app.use(this.formHandler);
   }
+
+  setupApiRoutes(repo) {
+    const AccountRoutes = require("./routes/AccountRoutes");
+    const accountRoutes = new AccountRoutes(this.express.Router(), this.repo);
+    this.app.use("/api/account", accountRoutes.router);
+  }
 }
 
 /* istanbul ignore if */
 if (require.main === module) {
+  const express = require("express");
+  const formidable = require("express-formidable");
+  const fs = require("fs");
+  const path = require("path")
+  const pg = require("pg");
+  const PiggyBankRepo = require("./repo/PiggyBankRepo");
+
   const pool = new pg.Pool({
     database: "piggybank",
     user: "pb_user",
@@ -46,18 +56,11 @@ if (require.main === module) {
   });
   const repo = new PiggyBankRepo(pool, fs.readdirSync, fs.readFileSync, path.join);
   // const https = require("https");
-  const api = new PiggyBankApi(express(), repo, formidable(), 3030);
+  const api = new PiggyBankApi(express, repo, formidable(), 3030);
   api.start();
 }
 
 module.exports = PiggyBankApi;
-//setupMainRoutes();
-//setupApiRoutes(repo)
-
-//setupHttpServer() {
-
-//  app.use(formidable())
-//}
 
 //function skipIndex(req: Request) {
 //  return ["/api/"].some((fragment) => {
