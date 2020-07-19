@@ -81,6 +81,25 @@ test("update(req, res, next)", async () => {
 });
 
 test("delete(req, res, next)", async () => {
+  const mockReq2 = { ...mockRequest }
+  mockReq2.fields.accountId = mockAccountId;
+  mockReq2.fields.md5 = "original Md5";
+  const mockAccountOrig2 = {
+    ...mockAccountOrig, ...{
+      accountId: mockAccountId,
+      md5: mockReq2.fields.md5
+    }
+  };
+  mockResp2 = {
+    json: jest.fn(),
+    status: jest.fn()
+  }
+  mockResp2.status.mockReturnValue(mockResp2);
+
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo);
-  await accountRoutes.delete(mockRequest, mockResponse, null);
+  await accountRoutes.delete(mockReq2, mockResp2, null);
+
+  expect(mockRepo.account.delete).toHaveBeenCalledWith(mockAccountOrig2);
+  expect(mockResp2.status).toHaveBeenCalledWith(200);
+  expect(mockResp2.json).toHaveBeenCalledWith({});
 });

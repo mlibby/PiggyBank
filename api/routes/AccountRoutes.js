@@ -25,7 +25,9 @@ class AccountRoutes {
   }
 
   async delete(req, res, next) {
-
+    let account = this.requestToAccount(req);
+    account = await this.repo.account.delete(account);
+    res.status(200).json({});
   }
 
   requestToAccount(req) {
