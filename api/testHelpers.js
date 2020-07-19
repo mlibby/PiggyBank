@@ -21,9 +21,11 @@ const testHelpers = {
     };
   },
   mockRequest: () => {
-
+    return {
+      fields: {}
+    }
   },
-  mockResult: () => {
+  mockResponse: () => {
     return {
       json: jest.fn()
     };

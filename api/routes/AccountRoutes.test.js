@@ -4,8 +4,26 @@ const helpers = require("../testHelpers.js");
 const bindVal = "call with 'this'";
 const mockRouter = helpers.mockRouter();
 const mockRepo = helpers.mockRepo();
+
 const mockRequest = helpers.mockRequest();
-const mockResult = helpers.mockResult();
+mockRequest.fields.name = "mock account";
+mockRequest.fields.isPlaceholder = true;
+mockRequest.fields.parentId = 123;
+mockRequest.fields.currencyId = 345;
+const mockResponse = helpers.mockResponse();
+
+const mockAccountOrig = {
+  isPlaceholder: mockRequest.fields.isPlaceholder,
+  name: mockRequest.fields.name,
+  parentId: mockRequest.fields.parentId,
+  currencyId: mockRequest.fields.currencyId
+};
+const mockAccountId = 890;
+const mockAccountMd5 = "mock md5";
+const mockAccountNew = Object.assign({
+  id: mockAccountId,
+  md5: mockAccountMd5
+}, mockAccountOrig);
 
 test("new AccountRoutes(router, repo)", () => {
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo);
@@ -14,7 +32,7 @@ test("new AccountRoutes(router, repo)", () => {
 
 test("sets up routes", () => {
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo);
-  accountRoutes.list = {bind: jest.fn().mockReturnValue(bindVal)};
+  accountRoutes.list = { bind: jest.fn().mockReturnValue(bindVal) };
 
   expect(mockRouter.get.mock.calls[0][0]).toBe("/");
   expect(mockRouter.post.mock.calls[0][0]).toBe("/");
@@ -23,27 +41,46 @@ test("sets up routes", () => {
 });
 
 test("list(req, res, next)", async () => {
-  const mockAccountList = [{accountId: 1, name: "mock account"}];
+  const mockAccountList = [{ accountId: 1, name: "mock account" }];
   mockRepo.account.selectAll.mockResolvedValue(mockAccountList);
 
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo);
-  await accountRoutes.list(mockRequest, mockResult, null);
+  await accountRoutes.list(mockRequest, mockResponse, null);
 
   expect(mockRepo.account.selectAll).toHaveBeenCalled();
-  expect(mockResult.json).toHaveBeenCalledWith(mockAccountList);
+  expect(mockResponse.json).toHaveBeenCalledWith(mockAccountList);
 });
 
-test("create(req, res, next)", () => {
+test("create(req, res, next)", async () => {
+  mockRepo.account.insert.mockResolvedValue(mockAccountNew);
+
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo);
-  accountRoutes.create(mockRequest, mockResult, null);
+  await accountRoutes.create(mockRequest, mockResponse, null);
+
+  expect(mockRepo.account.insert).toHaveBeenCalledWith(mockAccountOrig);
+  expect(mockResponse.json).toHaveBeenCalledWith(mockAccountNew);
 });
 
-test("update(req, res, next)", () => {
+test("update(req, res, next)", async () => {
+  const mockReq2 = { ...mockRequest }
+  mockReq2.fields.accountId = mockAccountId;
+  mockReq2.fields.md5 = "original Md5";
+  const mockAccountOrig2 = {
+    ...mockAccountOrig, ...{
+      accountId: mockAccountId,
+      md5: mockReq2.fields.md5
+    }
+  };
+  mockRepo.account.update.mockResolvedValue(mockAccountNew);
+
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo);
-  accountRoutes.update(mockRequest, mockResult, null);
+  await accountRoutes.update(mockReq2, mockResponse, null);
+
+  expect(mockRepo.account.update).toHaveBeenCalledWith(mockAccountOrig2);
+  expect(mockResponse.json).toHaveBeenCalledWith(mockAccountNew);
 });
 
-test("delete(req, res, next)", () => {
+test("delete(req, res, next)", async () => {
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo);
-  accountRoutes.delete(mockRequest, mockResult, null);
+  await accountRoutes.delete(mockRequest, mockResponse, null);
 });

@@ -13,15 +13,33 @@ class AccountRoutes {
   }
 
   async create(req, res, next) {
-
+    let account = this.requestToAccount(req);
+    account = await this.repo.account.insert(account);
+    res.json(account);
   }
 
   async update(req, res, next) {
-
+    let account = this.requestToAccount(req);
+    account = await this.repo.account.update(account);
+    res.json(account);
   }
 
   async delete(req, res, next) {
 
+  }
+
+  requestToAccount(req) {
+    const account = {
+      name: req.fields.name,
+      currencyId: req.fields.currencyId,
+      isPlaceholder: req.fields.isPlaceholder,
+      parentId: Number(req.fields.parentId)
+    };
+    if(req.fields.accountId) {
+      account.accountId = req.fields.accountId,
+      account.md5 = req.fields.md5
+    }
+    return account;
   }
 }
 
