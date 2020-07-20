@@ -1,25 +1,25 @@
 class PiggyBankApi {
   constructor(express, repo, formHandler, port, pathJoin) {
-    this.express = express;
-    this.repo = repo;
-    this.formHandler = formHandler;
-    this.port = port;
-    this.pathJoin = pathJoin;
+    this.express = express
+    this.repo = repo
+    this.formHandler = formHandler
+    this.port = port
+    this.pathJoin = pathJoin
 
-    this.app = this.express();
+    this.app = this.express()
   }
 
   async start() {
-    this.setupHttpServer();
-    this.setupMainRoutes();
-    this.setupApiRoutes();
-    await this.repo.updateDb();
+    this.setupHttpServer()
+    this.setupMainRoutes()
+    this.setupApiRoutes()
+    await this.repo.updateDb()
 
     this.app.listen(this.port,
       /* istanbul ignore next */
       () => {
-        console.log(`server starting on port: ${this.port}`);
-      });
+        console.log(`server starting on port: ${this.port}`)
+      })
   }
 
   setupHttpServer() {
@@ -32,7 +32,7 @@ class PiggyBankApi {
     //   cert: cert
     // }
     //const server = https.createServer(options, app)
-    this.app.use(this.formHandler);
+    this.app.use(this.formHandler)
   }
 
   setupMainRoutes() {
@@ -44,33 +44,33 @@ class PiggyBankApi {
   }
 
   setupApiRoutes() {
-    const AccountRoutes = require("./routes/AccountRoutes");
-    const accountRoutes = new AccountRoutes(this.express.Router(), this.repo);
-    this.app.use("/api/account", accountRoutes.router);
+    const AccountRoutes = require("./routes/AccountRoutes")
+    const accountRoutes = new AccountRoutes(this.express.Router(), this.repo)
+    this.app.use("/api/account", accountRoutes.router)
   }
 }
 
 /* istanbul ignore if */
 if (require.main === module) {
-  const express = require("express");
-  const formidable = require("express-formidable");
-  const fs = require("fs");
+  const express = require("express")
+  const formidable = require("express-formidable")
+  const fs = require("fs")
   const path = require("path")
-  const pg = require("pg");
-  const PiggyBankRepo = require("./repo/PiggyBankRepo");
+  const pg = require("pg")
+  const PiggyBankRepo = require("./repo/PiggyBankRepo")
 
   const pool = new pg.Pool({
     database: "piggybank",
     user: "pb_user",
     password: "piggybank"
-  });
-  const repo = new PiggyBankRepo(pool, fs.readdirSync, fs.readFileSync, path.join);
+  })
+  const repo = new PiggyBankRepo(pool, fs.readdirSync, fs.readFileSync, path.join)
   // const https = require("https");
-  const api = new PiggyBankApi(express, repo, formidable(), 3030, path.join);
-  api.start();
+  const api = new PiggyBankApi(express, repo, formidable(), 3030, path.join)
+  api.start()
 }
 
-module.exports = PiggyBankApi;
+module.exports = PiggyBankApi
 
 //function skipIndex(req: Request) {
 //  return ["/api/"].some((fragment) => {

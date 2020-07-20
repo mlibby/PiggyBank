@@ -1,10 +1,10 @@
-const AccountRepo = require("./AccountRepo");
-const helpers = require("../testHelpers.js");
-let queryFn = jest.fn();
+const AccountRepo = require("./AccountRepo")
+const helpers = require("../testHelpers.js")
+let queryFn = jest.fn()
 
-const origMd5 = 'originalMd5';
-const newMd5 = 'newMd5';
-let testAccount;
+const origMd5 = 'originalMd5'
+const newMd5 = 'newMd5'
+let testAccount
 
 beforeEach(() => {
   testAccount = {
@@ -14,19 +14,19 @@ beforeEach(() => {
     isPlaceholder: false,
     parentId: 1,
     md5: origMd5
-  };
-});
+  }
+})
 
 test("new AccountRepo(queryFn)", () => {
-  const accountRepo = new AccountRepo(queryFn);
-  expect(accountRepo.queryFn).toBe(queryFn);
-});
+  const accountRepo = new AccountRepo(queryFn)
+  expect(accountRepo.queryFn).toBe(queryFn)
+})
 
 test("selectAll() uses correct SQL and returns rows", async () => {
-  const results = { rows: ["foo", "bar"] };
-  queryFn.mockResolvedValue(results);
-  const accountRepo = new AccountRepo(queryFn);
-  const accounts = await accountRepo.selectAll();
+  const results = { rows: ["foo", "bar"] }
+  queryFn.mockResolvedValue(results)
+  const accountRepo = new AccountRepo(queryFn)
+  const accounts = await accountRepo.selectAll()
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
@@ -37,14 +37,14 @@ test("selectAll() uses correct SQL and returns rows", async () => {
         parent_id "parentId",
         md5(account::text) "md5"
       FROM account`
-    ));
-  expect(accounts).toEqual(results.rows);
-});
+    ))
+  expect(accounts).toEqual(results.rows)
+})
 
 test("insert() uses correct SQL and returns updated account", async () => {
-  delete testAccount.accountId;
-  delete testAccount.md5;
-  const accountId = 333;
+  delete testAccount.accountId
+  delete testAccount.md5
+  const accountId = 333
   queryFn = jest.fn().mockResolvedValue({
     rowCount: 1,
     rows:
@@ -52,10 +52,10 @@ test("insert() uses correct SQL and returns updated account", async () => {
         account_id: accountId,
         md5: newMd5
       }]
-  });
+  })
 
-  const accountRepo = new AccountRepo(queryFn);
-  const account = await accountRepo.insert(testAccount);
+  const accountRepo = new AccountRepo(queryFn)
+  const account = await accountRepo.insert(testAccount)
 
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
@@ -67,17 +67,16 @@ test("insert() uses correct SQL and returns updated account", async () => {
       )
       VALUES ($1, $2, $3, $4)
       RETURNING *, md5(account::text)`
-    ));
+    ))
   expect(queryFn.mock.calls[0][1]).toEqual([
     testAccount.currencyId,
     testAccount.name,
     testAccount.isPlaceholder,
     testAccount.parentId
-  ]);
-  expect(account.accountId).toBe(accountId);
-  expect(account.md5).toBe(newMd5);
-});
-
+  ])
+  expect(account.accountId).toBe(accountId)
+  expect(account.md5).toBe(newMd5)
+})
 
 test("update() uses correct SQL and returns updated account", async () => {
   queryFn = jest.fn().mockResolvedValue({
@@ -87,10 +86,10 @@ test("update() uses correct SQL and returns updated account", async () => {
         account_id: testAccount.accountId,
         md5: newMd5
       }]
-  });
+  })
 
-  const accountRepo = new AccountRepo(queryFn);
-  const account = await accountRepo.update(testAccount);
+  const accountRepo = new AccountRepo(queryFn)
+  const account = await accountRepo.update(testAccount)
 
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
@@ -101,7 +100,7 @@ test("update() uses correct SQL and returns updated account", async () => {
         parent_id = $4
       WHERE account_id = $5 and md5(account::text) = $6
       RETURNING *, md5(account::text)`
-    ));
+    ))
   expect(queryFn.mock.calls[0][1]).toEqual([
     testAccount.currencyId,
     testAccount.name,
@@ -109,9 +108,9 @@ test("update() uses correct SQL and returns updated account", async () => {
     testAccount.parentId,
     testAccount.accountId,
     origMd5
-  ]);
+  ])
   expect(account.md5).toBe(newMd5);
-});
+})
 
 test("update() fails from stale snapshot of account", async () => {
   queryFn = jest.fn().mockResolvedValueOnce({
@@ -123,16 +122,16 @@ test("update() fails from stale snapshot of account", async () => {
       accountId: testAccount.accountId,
       md5: newMd5
     }]
-  });
+  })
 
-  const accountRepo = new AccountRepo(queryFn);
+  const accountRepo = new AccountRepo(queryFn)
   try {
-    const account = await accountRepo.update(testAccount);
+    const account = await accountRepo.update(testAccount)
   }
   catch (e) {
-    expect(e.message).toBe("md5 mismatch");
+    expect(e.message).toBe("md5 mismatch")
   }
-});
+})
 
 test("update() fails because of missing record", async () => {
   queryFn = jest.fn().mockResolvedValueOnce({
@@ -141,16 +140,16 @@ test("update() fails because of missing record", async () => {
   }).mockResolvedValue({
     rowCount: 0,
     rows: []
-  });
+  })
 
-  const accountRepo = new AccountRepo(queryFn);
+  const accountRepo = new AccountRepo(queryFn)
   try {
-    const account = await accountRepo.update(testAccount);
+    const account = await accountRepo.update(testAccount)
   }
   catch (e) {
-    expect(e.message).toBe("id mismatch");
+    expect(e.message).toBe("id mismatch")
   }
-});
+})
 
 test("delete() uses correct SQL", async () => {
   queryFn = jest.fn().mockResolvedValue({
@@ -160,22 +159,22 @@ test("delete() uses correct SQL", async () => {
         account_id: testAccount.accountId,
         md5: origMd5
       }]
-  });
+  })
 
-  const accountRepo = new AccountRepo(queryFn);
-  const result = await accountRepo.delete(testAccount);
+  const accountRepo = new AccountRepo(queryFn)
+  const result = await accountRepo.delete(testAccount)
 
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       DELETE FROM account
       WHERE account_id = $1 and md5(account::text) = $2
       RETURNING *, md5(account::text)`
-    ));
+    ))
   expect(queryFn.mock.calls[0][1]).toEqual([
     testAccount.accountId,
     testAccount.md5
-  ]);
-});
+  ])
+})
 
 test("delete() fails from stale snapshot of account", async () => {
   queryFn = jest.fn().mockResolvedValueOnce({
@@ -187,18 +186,18 @@ test("delete() fails from stale snapshot of account", async () => {
       accountId: testAccount.accountId,
       md5: newMd5
     }]
-  });
+  })
 
-  const accountRepo = new AccountRepo(queryFn);
+  const accountRepo = new AccountRepo(queryFn)
 
-  expect.assertions(1);
+  expect.assertions(1)
   try {
-    await accountRepo.delete(testAccount);
+    await accountRepo.delete(testAccount)
   }
   catch (e) {
-    expect(e.message).toBe("md5 mismatch");
+    expect(e.message).toBe("md5 mismatch")
   }
-});
+})
 
 test("delete() fails because of missing record", async () => {
   queryFn = jest.fn().mockResolvedValueOnce({
@@ -207,9 +206,9 @@ test("delete() fails because of missing record", async () => {
   }).mockResolvedValue({
     rowCount: 0,
     rows: []
-  });
+  })
 
-  const accountRepo = new AccountRepo(queryFn);
+  const accountRepo = new AccountRepo(queryFn)
 
   expect.assertions(1);
   try {
@@ -218,4 +217,4 @@ test("delete() fails because of missing record", async () => {
   catch (e) {
     expect(e.message).toBe("id mismatch");
   }
-});
+})

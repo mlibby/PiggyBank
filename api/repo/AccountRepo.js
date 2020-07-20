@@ -1,14 +1,14 @@
 class AccountRepo {
   constructor(queryFn) {
-    this.queryFn = queryFn;
+    this.queryFn = queryFn
   }
 
   async validateResult(result, account) {
     if (result.rowCount > 0) {
-      account.md5 = result.rows[0].md5;
+      account.md5 = result.rows[0].md5
     }
     else {
-      await this.validateMd5(account.accountId, account.md5);
+      await this.validateMd5(account.accountId, account.md5)
     }
   }
 
@@ -18,14 +18,14 @@ class AccountRepo {
         account_id "accountId",
         md5(account::text)
       FROM account
-      WHERE account_id = $1`;
+      WHERE account_id = $1`
 
-    const result = await this.queryFn(sql, [id]);
+    const result = await this.queryFn(sql, [id])
     if (result.rowCount === 1 && result.rows[0].md5 !== md5) {
-      throw new Error("md5 mismatch");
+      throw new Error("md5 mismatch")
     }
     else {
-      throw new Error("id mismatch");
+      throw new Error("id mismatch")
     }
   }
 
@@ -38,10 +38,10 @@ class AccountRepo {
         is_placeholder "isPlaceholder",
         parent_id "parentId",
         md5(account::text) "md5"
-      FROM account`;
+      FROM account`
 
-    const results = await this.queryFn(sql);
-    return results.rows;
+    const results = await this.queryFn(sql)
+    return results.rows
   }
 
   async insert(account) {
@@ -53,17 +53,17 @@ class AccountRepo {
         parent_id
       )
       VALUES ($1, $2, $3, $4)
-      RETURNING *, md5(account::text)`;
+      RETURNING *, md5(account::text)`
 
     const result = await this.queryFn(sql, [
       account.currencyId,
       account.name,
       account.isPlaceholder,
       account.parentId,
-    ]);
-    account.accountId = result.rows[0].account_id;
-    account.md5 = result.rows[0].md5;
-    return account;
+    ])
+    account.accountId = result.rows[0].account_id
+    account.md5 = result.rows[0].md5
+    return account
   }
 
   async update(account) {
@@ -74,7 +74,7 @@ class AccountRepo {
         is_placeholder = $3,
         parent_id = $4
       WHERE account_id = $5 and md5(account::text) = $6
-      RETURNING *, md5(account::text)`;
+      RETURNING *, md5(account::text)`
 
     const result = await this.queryFn(sql, [
       account.currencyId,
@@ -83,25 +83,25 @@ class AccountRepo {
       account.parentId,
       account.accountId,
       account.md5
-    ]);
+    ])
 
-    await this.validateResult(result, account);
-    return account;
+    await this.validateResult(result, account)
+    return account
   }
 
   async delete(account) {
     const sql = `
       DELETE FROM account
       WHERE account_id = $1 AND md5(account::text) = $2
-      RETURNING *, md5(account::text)`;
+      RETURNING *, md5(account::text)`
 
     const result = await this.queryFn(sql, [
       account.accountId,
       account.md5
-    ]);
+    ])
 
-    await this.validateResult(result, account);
+    await this.validateResult(result, account)
   }
 }
 
-module.exports = AccountRepo;
+module.exports = AccountRepo

@@ -1,6 +1,6 @@
 const testHelpers = {
   normalize: (text) => {
-    return text.replace(/\s/g, "").toLowerCase();
+    return text.replace(/\s/g, "").toLowerCase()
   },
   mockRouter: () => {
     return {
@@ -8,7 +8,7 @@ const testHelpers = {
       post: jest.fn(),
       put: jest.fn(),
       delete: jest.fn()
-    };
+    }
   },
   mockRepo: () => {
     return {
@@ -18,7 +18,7 @@ const testHelpers = {
         update: jest.fn(),
         delete: jest.fn()
       }
-    };
+    }
   },
   mockRequest: () => {
     return {
@@ -28,8 +28,8 @@ const testHelpers = {
   mockResponse: () => {
     return {
       json: jest.fn()
-    };
+    }
   }
-};
+}
 
-module.exports = testHelpers;
+module.exports = testHelpers
