@@ -1,15 +1,17 @@
 class PiggyBankApi {
-  constructor(express, repo, formHandler, port) {
+  constructor(express, repo, formHandler, port, pathJoin) {
     this.express = express;
-    this.port = port;
     this.repo = repo;
     this.formHandler = formHandler;
+    this.port = port;
+    this.pathJoin = pathJoin;
 
     this.app = this.express();
   }
 
   async start() {
     this.setupHttpServer();
+    this.setupMainRoutes();
     this.setupApiRoutes();
     await this.repo.updateDb();
 
@@ -33,7 +35,15 @@ class PiggyBankApi {
     this.app.use(this.formHandler);
   }
 
-  setupApiRoutes(repo) {
+  setupMainRoutes() {
+    this.app.use(
+      this.express.static(
+        this.pathJoin(__dirname, "..", "www")
+      )
+    )
+  }
+
+  setupApiRoutes() {
     const AccountRoutes = require("./routes/AccountRoutes");
     const accountRoutes = new AccountRoutes(this.express.Router(), this.repo);
     this.app.use("/api/account", accountRoutes.router);
@@ -56,7 +66,7 @@ if (require.main === module) {
   });
   const repo = new PiggyBankRepo(pool, fs.readdirSync, fs.readFileSync, path.join);
   // const https = require("https");
-  const api = new PiggyBankApi(express, repo, formidable(), 3030);
+  const api = new PiggyBankApi(express, repo, formidable(), 3030, path.join);
   api.start();
 }
 
