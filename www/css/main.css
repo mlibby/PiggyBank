@@ -1,0 +1,150 @@
+﻿@font-face {
+    font-family: 'Fira Mono';
+    src: url('fonts/FiraMono-Medium.ttf') format('truetype'), url('fonts/FiraMono-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+a.btn-icon {
+    border: 0px;
+    margin-top: -5px;
+}
+
+.bg-info-faded {
+    background-color: #75e4f5 !important;
+}
+
+.bg-success-faded {
+    background-color: #70ec8d !important;
+}
+
+body, input, button, select, optgroup, textarea {
+    font-family: "Fira Mono" !important;
+}
+
+body {
+    margin-top: 58px;
+}
+
+.btn .label {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 1.2;
+}
+
+.btn-icon {
+    padding-top: 0.5em;
+    padding-bottom: 0.15em;
+}
+
+.btn-secondary {
+    background-color: #879096;
+    border-color: #879096;
+}
+
+.btn-secondary:hover {
+    background-color: #697178;
+    border-color: #697178;
+}
+
+.btn-success {
+    background-color: #05a172;
+    border-color: #05a172;
+}
+
+.btn-success:hover {
+    background-color: #42a884;
+    border-color: #42a884;
+}
+
+div.accounts>ul.accounts {
+    padding-left: 0px;
+}
+
+h1, .h1 {
+    font-size: 2rem;
+}
+
+h2, .h2 {
+    font-size: 1.75rem;
+}
+
+h3, .h3 {
+    font-size: 1.5rem;
+}
+
+h4, .h4 {
+    font-size: 1.25rem;
+}
+
+h5, .h5 {
+    font-size: 1.1rem;
+}
+
+h6, .h6 {
+    font-size: 1rem;
+}
+
+.has-error {
+    background-color: yellow;
+}
+
+.help-block {
+    font-size: 0.8em;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.in-40 {
+    margin-left: 40px;
+}
+
+.inline-form-button {
+    padding-top: 2rem;
+}
+
+input[type=checkbox] {
+    height: 1.25rem;
+    width: 1.25rem;
+    vertical-align: text-bottom;
+}
+
+input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+label {
+    font-weight: bold;
+}
+
+.navbar {
+    padding: 0.25rem 1rem;
+}
+
+.navbar-brand .icon {
+    font-size: 1.8em;
+    vertical-align: middle;
+    color: #05a172;
+}
+
+.placeholder {
+    font-style: italic;
+    font-weight: normal;
+}
+
+ul.accounts {
+    list-style: none inside;
+    font-style: normal;
+    font-weight: bold;
+}
+
+ul.accounts>li {
+    margin-top: 10px;
+}
