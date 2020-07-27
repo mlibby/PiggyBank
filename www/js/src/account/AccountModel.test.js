@@ -1,4 +1,4 @@
-import {AccountModel } from "./AccountModel"
+import { AccountModel } from "./AccountModel"
 
 test("account model configuration", () => {
   const accountModel = new AccountModel()
