@@ -90,7 +90,7 @@ test("delete(req, res, next)", async () => {
       md5: mockReq2.fields.md5
     }
   }
-  mockResp2 = {
+  const mockResp2 = {
     json: jest.fn(),
     status: jest.fn()
   }

@@ -1,5 +1,6 @@
 "use strict"
 
+
 import { AccountView } from "./AccountView.js"
 
 export class AccountListView extends Backbone.View {
