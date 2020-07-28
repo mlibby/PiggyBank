@@ -1,4 +1,5 @@
 const AccountRepo = require("./AccountRepo")
+const CommodityRepo = require("./CommodityRepo")
 
 class PiggyBankRepo {
   constructor(pool, readdir, readfile, pathJoin) {
@@ -8,6 +9,7 @@ class PiggyBankRepo {
     this.readfile = readfile
 
     this.account = new AccountRepo(this.query.bind(this))
+    this.commodity = new CommodityRepo(this.query.bind(this))
   }
 
   async query(sql, values) {
