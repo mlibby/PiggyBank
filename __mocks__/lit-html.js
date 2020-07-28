@@ -1,4 +1,10 @@
 "use strict"
 
-const litHtml = jest.genMockFromModule("lit-html")
+const jestConfig = require("../jest.config")
+
+const litHtml = {
+  render: jest.fn(),
+  html: jest.fn()
+}
+
 module.exports = litHtml

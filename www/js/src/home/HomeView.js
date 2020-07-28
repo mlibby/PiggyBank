@@ -16,4 +16,8 @@ export class HomeView extends Backbone.View {
     render(template(), this.el)
     return this
   }
+
+  foo() {
+    console.log("extra function")
+  }
 }
