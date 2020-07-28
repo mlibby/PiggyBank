@@ -17,6 +17,9 @@ const testHelpers = {
         insert: jest.fn(),
         update: jest.fn(),
         delete: jest.fn()
+      },
+      commodity: {
+        selectAll: jest.fn()
       }
     }
   },

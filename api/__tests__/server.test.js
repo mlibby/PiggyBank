@@ -60,3 +60,8 @@ test("AccountRoutes assigned to /api/account", async () => {
   await server.start()
   expect(app.use).toHaveBeenCalledWith("/api/account", express.Router())
 })
+
+test("CommodityRoutes assigned to /api/commodity", async() => {
+  await server.start()
+  expect(app.use).toHaveBeenCalledWith("/api/commodity", express.Router())
+})

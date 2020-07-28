@@ -1,7 +1,6 @@
 const AccountRoutes = require("../AccountRoutes")
 const helpers = require("../../__tests__/testHelpers.js")
 
-const bindVal = "call with 'this'"
 const mockRouter = helpers.mockRouter()
 const mockRepo = helpers.mockRepo()
 
@@ -32,7 +31,6 @@ test("new AccountRoutes(router, repo)", () => {
 
 test("sets up routes", () => {
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo)
-  accountRoutes.list = { bind: jest.fn().mockReturnValue(bindVal) }
 
   expect(mockRouter.get.mock.calls[0][0]).toBe("/")
   expect(mockRouter.post.mock.calls[0][0]).toBe("/")
