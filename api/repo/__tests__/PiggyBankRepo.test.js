@@ -1,4 +1,4 @@
-const PiggyBankRepo = require("./PiggyBankRepo")
+const PiggyBankRepo = require("../PiggyBankRepo")
 
 const mockResults = {
   rows: ["test"]
@@ -104,7 +104,7 @@ test("updateDb() gets migration directory", async () => {
   const repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin)
   await repo.updateDb()
   expect(pathJoin).toHaveBeenCalled()
-  expect(pathJoin).toHaveBeenCalledWith(__dirname, "../migrations")
+  expect(pathJoin).toHaveBeenCalledWith(__dirname.replace("/__tests__", ""), "../migrations")
 })
 
 test("updateDb() gets the current migration level", async () => {

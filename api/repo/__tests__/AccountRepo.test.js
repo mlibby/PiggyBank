@@ -1,5 +1,5 @@
-const AccountRepo = require("./AccountRepo")
-const helpers = require("../testHelpers.js")
+const AccountRepo = require("../AccountRepo")
+const helpers = require("../../__tests__/testHelpers.js")
 let queryFn = jest.fn()
 
 const origMd5 = 'originalMd5'

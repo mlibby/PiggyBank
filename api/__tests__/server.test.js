@@ -1,5 +1,5 @@
 const formidable = require("express-formidable")
-const PiggyBankApi = require("./server")
+const PiggyBankApi = require("../server")
 
 const app = {
   use: jest.fn(),
@@ -45,8 +45,8 @@ test("app uses ${__dirname}/../www to serve static files", async () => {
   pathJoin.mockReturnValue(mockStaticDir)
 
   await server.start()
-  
-  expect(pathJoin).toHaveBeenCalledWith(__dirname, "..", "www")
+
+  expect(pathJoin).toHaveBeenCalledWith(__dirname.replace("/__tests__", ""), "..", "www")
   expect(express.static).toHaveBeenCalledWith(mockStaticDir)
   expect(app.use).toHaveBeenCalledWith(e_static)
 })

@@ -1,5 +1,5 @@
-const AccountRoutes = require("./AccountRoutes")
-const helpers = require("../testHelpers.js")
+const AccountRoutes = require("../AccountRoutes")
+const helpers = require("../../__tests__/testHelpers.js")
 
 const bindVal = "call with 'this'"
 const mockRouter = helpers.mockRouter()
