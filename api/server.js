@@ -7,14 +7,14 @@ class PiggyBankApi {
     this.pathJoin = pathJoin
 
     this.app = this.express()
-  }
 
-  async start() {
     this.setupHttpServer()
     this.setupMainRoutes()
     this.setupApiRoutes()
-    await this.repo.updateDb()
+  }
 
+  async start() {
+    await this.repo.updateDb()  
     this.app.listen(this.port,
       /* istanbul ignore next */
       () => {

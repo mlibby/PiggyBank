@@ -1,3 +1,4 @@
+const request = require("supertest")
 const formidable = require("express-formidable")
 const PiggyBankApi = require("../server")
 
@@ -56,17 +57,25 @@ test("update the Repository when the server starts", async () => {
   expect(repo.updateDb).toHaveBeenCalledTimes(1)
 })
 
+test("server sends index.html for any missing non-api route", async () => {
+  const express = request("express")
+  server = new PiggyBankApi(express, repo, formHandler, 3030, pathJoin)
+  request(server.app)
+    .get("/foo/bar")
+    .expect("Content-type", /html/)
+})
+
 test("AccountRoutes assigned to /api/account", async () => {
   await server.start()
   expect(app.use).toHaveBeenCalledWith("/api/account", express.Router())
 })
 
-test("CommodityRoutes assigned to /api/commodity", async() => {
-  await server.start()
-  expect(app.use).toHaveBeenCalledWith("/api/commodity", express.Router())
-})
-
 test("ApiKeyRoutes assigned to /api/apikey", async() => {
   await server.start()
   expect(app.use).toHaveBeenCalledWith("/api/apikey", express.Router())
+})
+
+test("CommodityRoutes assigned to /api/commodity", async() => {
+  await server.start()
+  expect(app.use).toHaveBeenCalledWith("/api/commodity", express.Router())
 })

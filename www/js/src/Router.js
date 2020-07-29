@@ -25,7 +25,7 @@ export class Router extends Backbone.Router {
   preinitialize() {
     this.routes = {
       "": () => switchView(new HomeView(), ""),
-      "account": switchView(new AccountIndexView(), "#navAccount"),
+      "account": () => switchView(new AccountIndexView(), "#navAccount"),
       "apiKey": () => switchView(new ApiKeyIndexView(), "#navBankingApiKey"),
       // "banking": () => ,
       "budget": () => switchView(new BudgetIndexView(), "#navBudget"),
