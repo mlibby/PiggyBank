@@ -1,4 +1,5 @@
 const AccountRepo = require("./AccountRepo")
+const ApiKeyRepo = require("./ApiKeyRepo")
 const CommodityRepo = require("./CommodityRepo")
 
 class PiggyBankRepo {
@@ -10,6 +11,7 @@ class PiggyBankRepo {
 
     this.account = new AccountRepo(this.query.bind(this))
     this.commodity = new CommodityRepo(this.query.bind(this))
+    this.apiKey = new ApiKeyRepo(this.query.bind(this))
   }
 
   async query(sql, values) {

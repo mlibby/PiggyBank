@@ -48,6 +48,10 @@ class PiggyBankApi {
     const accountRoutes = new AccountRoutes(this.express.Router(), this.repo)
     this.app.use("/api/account", accountRoutes.router)
 
+    const ApiKeyRoutes = require("./routes/ApiKeyRoutes")
+    const apiKeyRoutes = new ApiKeyRoutes(this.express.Router(), this.repo)
+    this.app.use("/api/apikey", apiKeyRoutes.router)
+
     const CommodityRoutes = require("./routes/CommodityRoutes")
     const commodityRoutes = new CommodityRoutes(this.express.Router(), this.repo)
     this.app.use("/api/commodity", commodityRoutes.router)
