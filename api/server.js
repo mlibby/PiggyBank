@@ -1,4 +1,4 @@
-exports.PiggyBankApi = class PiggyBankApi {
+const PiggyBankApi = exports.PiggyBankApi = class PiggyBankApi {
   constructor(express, repo, formHandler, port, pathJoin) {
     this.express = express
     this.repo = repo

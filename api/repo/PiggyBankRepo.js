@@ -1,6 +1,7 @@
 const { AccountRepo } = require("./AccountRepo")
 const { ApiKeyRepo } = require("./ApiKeyRepo")
 const { CommodityRepo } = require("./CommodityRepo")
+const { OfxRepo } = require("./OfxRepo")
 
 exports.PiggyBankRepo = class PiggyBankRepo {
   constructor(pool, readdir, readfile, pathJoin) {
@@ -12,6 +13,7 @@ exports.PiggyBankRepo = class PiggyBankRepo {
     this.account = new AccountRepo(this.query.bind(this))
     this.commodity = new CommodityRepo(this.query.bind(this))
     this.apiKey = new ApiKeyRepo(this.query.bind(this))
+    this.ofx = new OfxRepo(this.query.bind(this))
   }
 
   async query(sql, values) {

@@ -186,12 +186,17 @@ test("repo.account is an AccountRepo", () => {
   expect(repo.account.constructor.name).toBe("AccountRepo")
 })
 
+test("repo.apiKey is an ApiKeyRepo", () => {
+  const repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin)
+  expect(repo.apiKey.constructor.name).toBe("ApiKeyRepo")
+})
+
 test("repo.commodity is a CommodityRepo", () => {
   const repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin)
   expect(repo.commodity.constructor.name).toBe("CommodityRepo")
 })
 
-test("repo.apiKey is an ApiKeyRepo", () => {
+test("repo.ofx is a OfxRepo", () => {
   const repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin)
-  expect(repo.apiKey.constructor.name).toBe("ApiKeyRepo")
+  expect(repo.ofx.constructor.name).toBe("OfxRepo")
 })
