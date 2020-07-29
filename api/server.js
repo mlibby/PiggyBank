@@ -76,6 +76,10 @@ const PiggyBankApi = exports.PiggyBankApi = class PiggyBankApi {
     const { OfxRoutes } = require("./routes/OfxRoutes")
     const ofxRoutes = new OfxRoutes(this.express.Router(), this.repo)
     this.app.use("/api/ofx", ofxRoutes.router)
+
+    const { PriceRoutes } = require("./routes/PriceRoutes")
+    const priceRoutes = new PriceRoutes(this.express.Router(), this.repo)
+    this.app.use("/api/price", priceRoutes.router)
   }
 }
 

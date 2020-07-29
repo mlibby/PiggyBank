@@ -26,6 +26,9 @@ const testHelpers = {
       },
       ofx: {
         selectAll: jest.fn()
+      },
+      price: {
+        selectAll: jest.fn()
       }
     }
   },
