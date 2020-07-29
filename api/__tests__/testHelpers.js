@@ -23,6 +23,9 @@ const testHelpers = {
       },
       commodity: {
         selectAll: jest.fn()
+      },
+      ofx: {
+        selectAll: jest.fn()
       }
     }
   },
