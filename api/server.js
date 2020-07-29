@@ -8,13 +8,15 @@ class PiggyBankApi {
 
     this.app = this.express()
 
+    this.wwwDir = this.pathJoin(__dirname, "..", "www")
+
     this.setupHttpServer()
     this.setupMainRoutes()
     this.setupApiRoutes()
   }
 
   async start() {
-    await this.repo.updateDb()  
+    await this.repo.updateDb()
     this.app.listen(this.port,
       /* istanbul ignore next */
       () => {
@@ -35,12 +37,27 @@ class PiggyBankApi {
     this.app.use(this.formHandler)
   }
 
+  skipIndex(req) {
+    // right now we're only testing if the path starts with
+    // "/api", but we can add to the list if we have other
+    // patterns that we want to exclude
+    return ["/api/"].some((fragment) => {
+      return req.url.substr(0, fragment.length) === fragment
+    })
+  }
+
+  sendIndex(req, res, next) {
+    if (this.skipIndex(req)) {
+      return next()
+    }
+    else {
+      res.sendFile(this.pathJoin(this.wwwDir, "index.html"))
+    }
+  }
+
   setupMainRoutes() {
-    this.app.use(
-      this.express.static(
-        this.pathJoin(__dirname, "..", "www")
-      )
-    )
+    this.app.use(this.express.static(this.wwwDir))
+    this.app.use(this.sendIndex)
   }
 
   setupApiRoutes() {
