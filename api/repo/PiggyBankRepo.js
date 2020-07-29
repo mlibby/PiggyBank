@@ -1,8 +1,8 @@
-const AccountRepo = require("./AccountRepo")
-const ApiKeyRepo = require("./ApiKeyRepo")
-const CommodityRepo = require("./CommodityRepo")
+const { AccountRepo } = require("./AccountRepo")
+const { ApiKeyRepo } = require("./ApiKeyRepo")
+const { CommodityRepo } = require("./CommodityRepo")
 
-class PiggyBankRepo {
+exports.PiggyBankRepo = class PiggyBankRepo {
   constructor(pool, readdir, readfile, pathJoin) {
     this.pool = pool
     this.pathJoin = pathJoin
@@ -58,5 +58,3 @@ class PiggyBankRepo {
     })
   }
 }
-
-module.exports = PiggyBankRepo

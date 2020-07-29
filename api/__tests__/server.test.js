@@ -1,5 +1,5 @@
 const formidable = require("express-formidable")
-const PiggyBankApi = require("../server")
+const { PiggyBankApi } = require("../server")
 
 const app = {
   use: jest.fn(),
@@ -88,7 +88,7 @@ test("app uses sendIndex", () => {
   let boundSendIndexUsed = false
   app.use.mock.calls.forEach((v, i, a) => {
     if (v[0]) {
-      if(v[0].name === "bound sendIndex") {
+      if (v[0].name === "bound sendIndex") {
         boundSendIndexUsed = true
       }
     }

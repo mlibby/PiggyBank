@@ -1,4 +1,4 @@
-const ApiKeyRoutes = require("../ApiKeyRoutes")
+const { ApiKeyRoutes } = require("../ApiKeyRoutes")
 const helpers = require("../../__tests__/testHelpers.js")
 
 const mockRouter = helpers.mockRouter()

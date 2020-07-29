@@ -1,4 +1,4 @@
-class CommodityRepo {
+exports.CommodityRepo = class CommodityRepo {
   constructor(queryFn) {
     this.queryFn = queryFn
   }
@@ -18,5 +18,3 @@ class CommodityRepo {
     return results.rows
   }
 }
-
-module.exports = CommodityRepo

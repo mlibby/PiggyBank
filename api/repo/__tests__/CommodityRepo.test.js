@@ -1,4 +1,4 @@
-const CommodityRepo = require("../CommodityRepo")
+const { CommodityRepo } = require("../CommodityRepo")
 const helpers = require("../../__tests__/testHelpers.js")
 let queryFn = jest.fn()
 

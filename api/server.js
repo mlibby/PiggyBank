@@ -1,4 +1,4 @@
-class PiggyBankApi {
+exports.PiggyBankApi = class PiggyBankApi {
   constructor(express, repo, formHandler, port, pathJoin) {
     this.express = express
     this.repo = repo
@@ -61,15 +61,15 @@ class PiggyBankApi {
   }
 
   setupApiRoutes() {
-    const AccountRoutes = require("./routes/AccountRoutes")
+    const { AccountRoutes } = require("./routes/AccountRoutes")
     const accountRoutes = new AccountRoutes(this.express.Router(), this.repo)
     this.app.use("/api/account", accountRoutes.router)
 
-    const ApiKeyRoutes = require("./routes/ApiKeyRoutes")
+    const { ApiKeyRoutes } = require("./routes/ApiKeyRoutes")
     const apiKeyRoutes = new ApiKeyRoutes(this.express.Router(), this.repo)
     this.app.use("/api/apikey", apiKeyRoutes.router)
 
-    const CommodityRoutes = require("./routes/CommodityRoutes")
+    const { CommodityRoutes } = require("./routes/CommodityRoutes")
     const commodityRoutes = new CommodityRoutes(this.express.Router(), this.repo)
     this.app.use("/api/commodity", commodityRoutes.router)
   }
@@ -82,7 +82,7 @@ if (require.main === module) {
   const fs = require("fs")
   const path = require("path")
   const pg = require("pg")
-  const PiggyBankRepo = require("./repo/PiggyBankRepo")
+  const { PiggyBankRepo } = require("./repo/PiggyBankRepo")
 
   const pool = new pg.Pool({
     database: "piggybank",
@@ -94,9 +94,6 @@ if (require.main === module) {
   const api = new PiggyBankApi(express, repo, formidable(), 3030, path.join)
   api.start()
 }
-
-module.exports = PiggyBankApi
-
 //function skipIndex(req: Request) {
 //  return ["/api/"].some((fragment) => {
 //   return req.url.substr(0, fragment.length) === fragment

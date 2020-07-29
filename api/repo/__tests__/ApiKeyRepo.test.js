@@ -1,4 +1,4 @@
-const ApiKeyRepo = require("../ApiKeyRepo")
+const { ApiKeyRepo } = require("../ApiKeyRepo")
 const helpers = require("../../__tests__/testHelpers.js")
 let queryFn = jest.fn()
 

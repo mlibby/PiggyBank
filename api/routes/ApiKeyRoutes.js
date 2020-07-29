@@ -1,4 +1,4 @@
-class ApiKeyRoutes {
+exports.ApiKeyRoutes = class ApiKeyRoutes {
   constructor(router, repo) {
     this.repo = repo
     this.router = router
@@ -48,5 +48,3 @@ class ApiKeyRoutes {
   //   return account
   //}
 }
-
-module.exports = ApiKeyRoutes

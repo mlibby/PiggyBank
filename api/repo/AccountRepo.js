@@ -1,4 +1,4 @@
-class AccountRepo {
+exports.AccountRepo = class AccountRepo {
   constructor(queryFn) {
     this.queryFn = queryFn
   }
@@ -103,5 +103,3 @@ class AccountRepo {
     await this.validateResult(result, account)
   }
 }
-
-module.exports = AccountRepo

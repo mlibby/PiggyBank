@@ -1,4 +1,4 @@
-class AccountRoutes {
+exports.AccountRoutes = class AccountRoutes {
   constructor(router, repo) {
     this.repo = repo
     this.router = router
@@ -48,5 +48,3 @@ class AccountRoutes {
     return account
   }
 }
-
-module.exports = AccountRoutes

@@ -1,4 +1,4 @@
-const PiggyBankRepo = require("../PiggyBankRepo")
+const { PiggyBankRepo } = require("../PiggyBankRepo")
 
 const mockResults = {
   rows: ["test"]

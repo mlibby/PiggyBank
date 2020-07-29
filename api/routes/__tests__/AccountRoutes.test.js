@@ -1,4 +1,4 @@
-const AccountRoutes = require("../AccountRoutes")
+const { AccountRoutes } = require("../AccountRoutes")
 const helpers = require("../../__tests__/testHelpers.js")
 
 const mockRouter = helpers.mockRouter()

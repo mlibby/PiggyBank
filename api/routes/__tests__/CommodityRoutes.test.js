@@ -1,4 +1,4 @@
-const CommodityRoutes = require("../CommodityRoutes")
+const { CommodityRoutes } = require("../CommodityRoutes")
 const helpers = require("../../__tests__/testHelpers.js")
 
 const mockRouter = helpers.mockRouter()
@@ -28,7 +28,7 @@ test("list(req, res, next)", async () => {
 
   expect(mockRepo.commodity.selectAll).toHaveBeenCalled()
   expect(mockResponse.json).toHaveBeenCalledWith(mockCommodityList)
- })
+})
 
 // test("create(req, res, next)", async () => {
 //   mockRepo.account.insert.mockResolvedValue(mockAccountNew)

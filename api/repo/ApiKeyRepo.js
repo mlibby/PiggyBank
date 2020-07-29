@@ -1,4 +1,4 @@
-class ApiKeyRepo {
+exports.ApiKeyRepo = class ApiKeyRepo {
   constructor(queryFn) {
     this.queryFn = queryFn
   }
@@ -15,5 +15,3 @@ class ApiKeyRepo {
     return results.rows
   }
 }
-
-module.exports = ApiKeyRepo

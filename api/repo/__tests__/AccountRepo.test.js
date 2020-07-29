@@ -1,4 +1,4 @@
-const AccountRepo = require("../AccountRepo")
+const { AccountRepo } = require("../AccountRepo")
 const helpers = require("../../__tests__/testHelpers.js")
 let queryFn = jest.fn()
 
