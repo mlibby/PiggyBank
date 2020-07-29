@@ -57,7 +57,7 @@ class PiggyBankApi {
 
   setupMainRoutes() {
     this.app.use(this.express.static(this.wwwDir))
-    this.app.use(this.sendIndex)
+    this.app.use(this.sendIndex.bind(this))
   }
 
   setupApiRoutes() {

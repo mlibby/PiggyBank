@@ -70,7 +70,7 @@ test("sendIndex sends index when path does not start with /api", () => {
   expect(res.sendFile).toHaveBeenCalledWith(indexPath)
 })
 
-test("app uses ${__dirname}/../www to serve static files", async () => {
+test("app uses ${__dirname}/../www to serve static files", () => {
   const e_static = "express.static() does not return a string"
   express.static = jest.fn().mockReturnValue(e_static)
   const mockStaticDir = "/PiggyBank/www"
@@ -83,22 +83,30 @@ test("app uses ${__dirname}/../www to serve static files", async () => {
   expect(app.use).toHaveBeenCalledWith(e_static)
 })
 
-test("app uses sendIndex", async () => {
+test("app uses sendIndex", () => {
   const server = new PiggyBankApi(express, repo, formHandler, 3030, pathJoin)
-  expect(app.use).toHaveBeenCalledWith(server.sendIndex)
+  let boundSendIndexUsed = false
+  app.use.mock.calls.forEach((v, i, a) => {
+    if (v[0]) {
+      if(v[0].name === "bound sendIndex") {
+        boundSendIndexUsed = true
+      }
+    }
+  })
+  expect(boundSendIndexUsed).toBe(true)
 })
 
-test("AccountRoutes assigned to /api/account", async () => {
+test("AccountRoutes assigned to /api/account", () => {
   const server = new PiggyBankApi(express, repo, formHandler, 3030, pathJoin)
   expect(app.use).toHaveBeenCalledWith("/api/account", express.Router())
 })
 
-test("ApiKeyRoutes assigned to /api/apikey", async () => {
+test("ApiKeyRoutes assigned to /api/apikey", () => {
   const server = new PiggyBankApi(express, repo, formHandler, 3030, pathJoin)
   expect(app.use).toHaveBeenCalledWith("/api/apikey", express.Router())
 })
 
-test("CommodityRoutes assigned to /api/commodity", async () => {
+test("CommodityRoutes assigned to /api/commodity", () => {
   const server = new PiggyBankApi(express, repo, formHandler, 3030, pathJoin)
   expect(app.use).toHaveBeenCalledWith("/api/commodity", express.Router())
 })
