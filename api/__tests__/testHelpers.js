@@ -29,6 +29,9 @@ const testHelpers = {
       },
       price: {
         selectAll: jest.fn()
+      },
+      tx: {
+        selectAll: jest.fn()
       }
     }
   },
