@@ -14,7 +14,7 @@ import { TxIndexView } from "./tx/TxIndexView.js"
 
 let app = new Backbone.View()
 
-function switchView(view, navItem) {
+export function switchView(view, navItem) {
   app.remove()
   $("#app").html(view.render().el)
   $(".nav-item").removeClass("active")
