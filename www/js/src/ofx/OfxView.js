@@ -21,7 +21,9 @@ const template = (d) => html`
 `
 
 export class OfxView extends Backbone.View {
-  preinitialize(args) {
+  preinitialize(model) {
+    this.model = model
+
     this.tagName = "tr"
     this.className = ""
 

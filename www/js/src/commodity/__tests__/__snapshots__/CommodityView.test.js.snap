@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommodityView has render method 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        "
+<td>",
+        "</td>
+<td>",
+        "</td>
+<td>",
+        "</td>
+<td>",
+        "</td>
+<td>",
+        "</td>
+<td>
+  <button class=\\"create btn btn-sm btn-icon btn-outline-secondary\\"><span class=\\"icon-pencil\\"></span><span class=\\"sr-only\\">Edit</span></button>
+  <button class=\\"delete btn btn-sm btn-icon btn-outline-danger\\"><span class=\\"icon-trash\\"></span><span class=\\"sr-only\\">Delete</span></button>
+</td>
+",
+      ],
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": "htmlTemplate",
+    },
+  ],
+}
+`;

@@ -13,7 +13,9 @@ const template = (d) => html`
 `
 
 export class PriceView extends Backbone.View {
-  preinitialize(args) {
+  preinitialize(model) {
+    this.model = model
+    
     this.tagName = "tr"
     this.className = "display"
   }

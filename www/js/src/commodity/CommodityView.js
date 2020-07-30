@@ -15,9 +15,9 @@ const template = (d) => html`
 `;
 
 export class CommodityView extends Backbone.View {
-  preinitialize(args) {
+  preinitialize(model) {
+    this.model = model
     this.tagName = "tr"
-    this.className = "display"
   }
 
   edit(model, e) {
@@ -31,15 +31,6 @@ export class CommodityView extends Backbone.View {
     e.preventDefault()
 
     // const $form = this.$el.find("form").first();
-
-    // $form.find("input[name='id']").val(this.model.get("id"));
-    // $form.find("input[name='parentId']").val(this.model.get("parentId"));
-    // $form.find("input[name='name']").val(this.model.get("accountName"));
-    // if (this.model.get("isPlaceholder") === 1) {
-    //   $form.find("input[name='isPlaceholder']").attr("checked", "checked");
-    // } else {
-    //   $form.find("input[name='isPlaceholder']").removeAttr("checked");
-    // }
   }
 
   render() {

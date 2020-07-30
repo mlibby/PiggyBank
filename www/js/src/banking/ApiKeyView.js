@@ -12,16 +12,18 @@ const template = (d) => html`
 `;
 
 export class ApiKeyView extends Backbone.View {
-  preinitialize(args) {
+  preinitialize(model) {
+    this.model = model
+
     this.tagName = "tr"
     this.className = "display"
   }
 
-  edit(model, e) {
+  edit(e) {
     if (e) {
       e.preventDefault()
     }
-    this.trigger("apiKey:edit", model)
+    this.trigger("apiKey:edit", this.model)
   }
 
   editCommodity(e) {

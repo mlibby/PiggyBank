@@ -2,6 +2,7 @@
 
 export class OfxModel extends Backbone.Model {
   preinitialize() {
+    this.idAttribute = "ofxId"
     this.urlRoot = "/api/ofx"
     this.attributes = {
       accountId: null,

@@ -2,8 +2,8 @@
 
 export class PriceModel extends Backbone.Model {
   preinitialize() {
-    this.urlRoot = "/api/commodity"
-    this.children = null
+    this.idAttribute = "priceId"
+    this.urlRoot = "/api/price"
   }
 
   constructor(attr, opts) {
