@@ -12,30 +12,27 @@ import { ReceiptIndexView } from "./banking/ReceiptsView.js"
 import { ReportIndexView } from "./report/ReportIndexView.js"
 import { TxIndexView } from "./tx/TxIndexView.js"
 
-let app = new Backbone.View()
-
-export function switchView(view, navItem) {
-  app.remove()
-  $("#app").html(view.render().el)
-  $(".nav-item").removeClass("active")
-  $(navItem).addClass("active")
-}
-
 export class Router extends Backbone.Router {
   preinitialize() {
     this.routes = {
-      "": () => switchView(new HomeView(), ""),
-      "account": () => switchView(new AccountIndexView(), "#navAccount"),
-      "apiKey": () => switchView(new ApiKeyIndexView(), "#navBankingApiKey"),
+      "": () => this.switchView(new HomeView(), ""),
+      "account": () => this.switchView(new AccountIndexView(), "#navAccount"),
+      "apiKey": () => this.switchView(new ApiKeyIndexView(), "#navBankingApiKey"),
       // "banking": () => ,
-      "budget": () => switchView(new BudgetIndexView(), "#navBudget"),
-      "commodity": () => switchView(new CommodityIndexView(), "#navCommodity"),
-      "ofx": () => switchView(new OfxIndexView(), "#navBanking"),
-      "ofxImport": () => switchView(new OfxImportView(), "#navBankingOfxImport"),
-      "price": () => switchView(new PriceIndexView(), "#navPrice"),
-      "receipt": () => switchView(new ReceiptIndexView(), "#navReceipt"),
-      "report": () => switchView(new ReportIndexView(), "#navReport"),
-      "tx": () => switchView(new TxIndexView(), "#navTx"),
+      "budget": () => this.switchView(new BudgetIndexView(), "#navBudget"),
+      "commodity": () => this.switchView(new CommodityIndexView(), "#navCommodity"),
+      "ofx": () => this.switchView(new OfxIndexView(), "#navBanking"),
+      "ofxImport": () => this.switchView(new OfxImportView(), "#navBankingOfxImport"),
+      "price": () => this.switchView(new PriceIndexView(), "#navPrice"),
+      "receipt": () => this.switchView(new ReceiptIndexView(), "#navReceipt"),
+      "report": () => this.switchView(new ReportIndexView(), "#navReport"),
+      "tx": () => this.switchView(new TxIndexView(), "#navTx"),
     }
+  }
+
+  switchView(view, navItem) {
+    $("#app").html(view.render().el)
+    $(".nav-item").removeClass("active")
+    $(navItem).addClass("active")
   }
 }
