@@ -205,3 +205,8 @@ test("repo.price is a PriceRepo", () => {
   const repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin)
   expect(repo.price.constructor.name).toBe("PriceRepo")
 })
+
+test("repo.tx is a TxRepo", () => {
+  const repo = new PiggyBankRepo(pool, readdir, readfile, pathJoin)
+  expect(repo.tx.constructor.name).toBe("TxRepo")
+})

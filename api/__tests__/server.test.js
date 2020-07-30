@@ -120,3 +120,8 @@ test("PriceRoutes assigned to /api/price", () => {
   const server = new PiggyBankApi(express, repo, formHandler, 3030, pathJoin)
   expect(app.use).toHaveBeenCalledWith("/api/price", express.Router())
 })
+
+test("TxRoutes assigned to /api/tx", () => {
+  const server = new PiggyBankApi(express, repo, formHandler, 3030, pathJoin)
+  expect(app.use).toHaveBeenCalledWith("/api/tx", express.Router())
+})
