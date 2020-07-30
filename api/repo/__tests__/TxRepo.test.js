@@ -36,10 +36,11 @@ test("txRepo.selectAll() uses correct SQL and returns rows", async () => {
       }
     ]
   }
-
   queryFn.mockResolvedValue(results)
+
   const repo = new TxRepo(queryFn)
   const tx = await repo.selectAll()
+
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
@@ -58,28 +59,26 @@ test("txRepo.selectAll() uses correct SQL and returns rows", async () => {
       ON t.tx_id = s.tx_id
       ORDER BY t.tx_id, s.split_id`
     ))
-  expect(tx).toEqual([{
-    id: 2,
-    postDate: "2020-02-20",
-    number: "345",
-    description: "Foo Bar",
-    splits: [
-      {
-        splitId: 2,
-        accountId: 9,
-        commodityId: 1,
-        memo: "Bar",
-        amount: -66.66,
-        value: -66.66
-      },
-      {
-        splitId: 1,
-        accountId: 10,
-        commodityId: 1,
-        memo: "Foo",
-        amount: 22.22,
-        value: 66.66
-      }
-    ]
-  }])
+
+  expect(tx.length).toBe(1)
+  expect(tx[0].id).toBe(2)
+  expect(tx[0].postDate).toBe("2020-02-20")
+  expect(tx[0].description).toBe("Foo Bar")
+  expect(tx[0].splits.length).toBe(2)
+  expect(tx[0].splits).toContainEqual({
+    splitId: 2,
+    accountId: 9,
+    commodityId: 1,
+    memo: "Bar",
+    amount: -66.66,
+    value: -66.66
+  })
+  expect(tx[0].splits).toContainEqual({
+    splitId: 1,
+    accountId: 10,
+    commodityId: 2,
+    memo: "Foo",
+    amount: 22.22,
+    value: 66.66
+  })
 })
