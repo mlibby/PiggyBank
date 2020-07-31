@@ -1,6 +1,6 @@
 jest.mock("../../lib/lit-html/lit-html.js")
 
-import { Router } from "../Router"
+import { Router } from "../PiggyBankRouter"
 import { HomeView } from "../home/HomeView.js"
 import { AccountIndexView } from "../account/AccountIndexView.js"
 import { ApiKeyIndexView } from "../banking/ApiKeyIndexView.js"

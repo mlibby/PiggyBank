@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommodityIndexView has render method 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        "
+<div class='row'>
+  <div class='col'>
+    <h1>Commodities</h1>
+    <table class='table'>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Symbol</th>
+        <th>Description</th>
+        <th>Ticker</th>
+        <th></th>
+      </tr>
+    </table>
+  </div>
+</div>
+",
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": "htmlTemplate",
+    },
+  ],
+}
+`;

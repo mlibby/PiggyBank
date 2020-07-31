@@ -20,6 +20,7 @@
   "homepage": "https://github.com/mlibby/PiggyBank#readme",
   "dependencies": {
     "backbone": "^1.4.0",
+    "better-sqlite3": "^7.1.0",
     "bootstrap": "^4.5.0",
     "crypto-js": "^4.0.0",
     "express": "^4.17.1",
@@ -27,7 +28,6 @@
     "image-capture": "^0.4.0",
     "jquery": "^3.5.1",
     "lit-html": "^1.2.1",
-    "pg": "^8.3.0",
     "popper.js": "^1.16.1"
   },
   "devDependencies": {

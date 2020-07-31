@@ -1,12 +1,6 @@
 "use strict";
 
-import { Router } from "./Router.js";
-
-window.getUuid = function getUuid(a) {
-  return a ?
-    (a ^ Math.random() * 16 >> a / 4).toString(16) :
-    ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, getUuid);
-}
+import { PiggyBankRouter } from "./PiggyBankRouter.js";
 
 $().ready(function () {
   $(window.document).on("click", "a[href]:not([data-bypass])", function (e) {
@@ -21,6 +15,6 @@ $().ready(function () {
     $(".navbar-collapse").removeClass("show");
   });
 
-  const router = new Router();
+  const router = new PiggyBankRouter();
   Backbone.history.start({ pushState: true });
 });
