@@ -63,8 +63,8 @@ const template = (d) => html`
 </div>
 `;
 
-export class OfxFormView extends Backbone.View {
-  preinitialize() {
+export class CommodityFormView extends Backbone.View {
+  preinitialize(args) {
     this.tagName = "div";
     this.className = "";
 

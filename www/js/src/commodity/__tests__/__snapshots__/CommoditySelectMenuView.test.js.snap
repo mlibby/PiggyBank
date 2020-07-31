@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommoditySelectMenuView has render method 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        "
+    <label for='selectCommodityId-",
+        "'>",
+        "</label>
+    <select id='selectCommodityId-",
+        "' class='select-commodity-id form-control'>
+      <option value=''>[Choose Commodity]</option>
+    </select>
+",
+      ],
+      "TESTGUID",
+      "Commodity",
+      "TESTGUID",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": "htmlTemplate",
+    },
+  ],
+}
+`;

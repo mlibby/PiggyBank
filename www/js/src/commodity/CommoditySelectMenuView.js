@@ -1,6 +1,7 @@
 "use strict"
 
 import { html, render } from "../../lib/lit-html/lit-html.js"
+import { getUuid } from "../PiggyBankUtil.js"
 import { CommodityCollection } from "./CommodityCollection.js"
 
 const template = (d) => {
