@@ -16,9 +16,7 @@ const template = (d) => html`
 `
 
 export class TxView extends Backbone.View {
-  preinitialize(model) {
-    this.model = model
-
+  preinitialize(args) {
     this.tagName = "tr"
   }
 

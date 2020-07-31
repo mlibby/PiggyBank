@@ -16,7 +16,7 @@ test("HomeView has render method", () => {
   const model = {
     get: jest.fn()
   }
-  const view = new PriceView(model)
+  const view = new PriceView({ model })
   const renderedView = view.render()
   expect(view).toBe(renderedView)
   expect(html).toMatchSnapshot()

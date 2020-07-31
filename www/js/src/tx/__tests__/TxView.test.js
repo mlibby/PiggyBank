@@ -16,7 +16,7 @@ test("TxView has render method", () => {
   const model = {
     get: jest.fn()
   }
-  const view = new TxView(model)
+  const view = new TxView({model})
   const renderedView = view.render()
   expect(view).toBe(renderedView)
   expect(html).toMatchSnapshot()

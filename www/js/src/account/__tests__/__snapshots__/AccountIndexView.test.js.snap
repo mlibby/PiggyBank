@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountView has render method 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        "
+<div class='row'>
+  <div class='col'>
+    <h1>Accounts</h1>
+  </div>
+</div>
+<div class='row'>
+  <div id='formContainer' class='col'>
+  </div>
+</div>
+<div class='row'>
+  <div id='tableContainer' class='accounts col'>
+  </div>
+</div>
+",
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": "htmlTemplate",
+    },
+  ],
+}
+`;

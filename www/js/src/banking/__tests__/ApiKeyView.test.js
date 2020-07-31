@@ -16,7 +16,7 @@ test("ApiKeyView has render method", () => {
   const model = {
     get: jest.fn()
   }
-  const view = new ApiKeyView(model)
+  const view = new ApiKeyView({ model })
   const renderedView = view.render()
   expect(view).toBe(renderedView)
   expect(html).toMatchSnapshot()

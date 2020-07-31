@@ -52,7 +52,7 @@ const template = (d) => html`
 `;
 
 export class AccountFormView extends Backbone.View {
-  preinitialize() {
+  preinitialize(args) {
     this.tagName = "div"
     this.className = ""
 

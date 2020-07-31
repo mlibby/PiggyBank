@@ -1,14 +1,9 @@
 "use strict"
 
-
 import { AccountView } from "./AccountView.js"
 
 export class AccountListView extends Backbone.View {
-  constructor(args) {
-    super(args)
-  }
-
-  preinitialize() {
+  preinitialize(args) {
     this.tagName = "ul"
     this.className = "accounts"
   }

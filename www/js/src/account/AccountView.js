@@ -15,7 +15,6 @@ export class AccountView extends Backbone.View {
   preinitialize(args) {
     this.tagName = "li"
     this.className = ""
-    this.subview = null
   }
 
   edit(model, e) {

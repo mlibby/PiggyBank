@@ -10,13 +10,14 @@ jest.mock("../../../lib/lit-html/lit-html.js", () => {
 })
 
 import { html, render } from "../../../lib/lit-html/lit-html.js"
-import { CommodityView } from "../CommodityView"
+import { AccountListView } from "../AccountListView"
 
-test("CommodityView has render method", () => {
+test("AccountListView has render method", () => {
   const model = {
     get: jest.fn()
   }
-  const view = new CommodityView({ model })
+  const collection = [model]
+  const view = new AccountListView({ collection })
   const renderedView = view.render()
   expect(view).toBe(renderedView)
   expect(html).toMatchSnapshot()

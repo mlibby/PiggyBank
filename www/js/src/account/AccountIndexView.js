@@ -24,7 +24,7 @@ const template = (d) => html`
 `
 
 export class AccountIndexView extends Backbone.View {
-  preinitialize() {
+  preinitialize(args) {
     this.accountCollection = new AccountCollection()
     this.commodityCollection = new CommodityCollection()
   }

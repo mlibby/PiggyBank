@@ -16,7 +16,7 @@ test("OfxView has render method", () => {
   const model = {
     attributes: jest.fn()
   }
-  const view = new OfxView(model)
+  const view = new OfxView({ model })
   const renderedView = view.render()
   expect(view).toBe(renderedView)
   expect(html).toMatchSnapshot()

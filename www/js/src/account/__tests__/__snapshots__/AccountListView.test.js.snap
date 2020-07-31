@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountListView has render method 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        "<div class=\\"display\\">
+  <a href=\\"/ledger/",
+        "\\">",
+        "</a>
+  <button class=\\"edit btn btn-sm btn-icon btn-outline-secondary\\"><span class=\\"icon-pencil\\"></span></button>
+  <button class=\\"create btn btn-sm btn-icon btn-outline-primary\\"><span class=\\"icon-plus\\"></span></button>
+  <button class=\\"delete btn btn-sm btn-icon btn-outline-danger\\"><span class=\\"icon-trash\\"></span></button>
+</div>
+",
+      ],
+      undefined,
+      undefined,
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": "htmlTemplate",
+    },
+  ],
+}
+`;
