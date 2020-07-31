@@ -1,3 +1,7 @@
+const fs = require("fs")
+const path = require("path")
+const SQLite3 = require("better-sqlite3")
+
 const { AccountRepo } = require("./AccountRepo")
 const { ApiKeyRepo } = require("./ApiKeyRepo")
 const { CommodityRepo } = require("./CommodityRepo")
@@ -6,11 +10,8 @@ const { PriceRepo } = require("./PriceRepo")
 const { TxRepo } = require("./TxRepo")
 
 exports.PiggyBankRepo = class PiggyBankRepo {
-  constructor(pool, readdir, readfile, pathJoin) {
-    this.pool = pool
-    this.pathJoin = pathJoin
-    this.readdir = readdir
-    this.readfile = readfile
+  constructor() {
+    this.db = new SQLite3("piggybank.db")
 
     this.account = new AccountRepo(this.query.bind(this))
     this.commodity = new CommodityRepo(this.query.bind(this))
@@ -20,19 +21,19 @@ exports.PiggyBankRepo = class PiggyBankRepo {
     this.tx = new TxRepo(this.query.bind(this))
   }
 
-  async query(sql, values) {
-    const client = await this.pool.connect()
-    let results = await client.query(sql, values)
-    client.release()
-    return results
+  query(sql, values) {
+    const stmt = this.db.prepare(sql)
+    //let results =  client.query(sql, values)
+    //client.release()
+    return // results
   }
 
-  async getMigrationLevel() {
+  getMigrationLevel() {
     const sql = 'select max(level) from migration'
     let level = 0
     let results = null
     try {
-      results = await this.query(sql)
+      results = this.query(sql)
     }
     catch (err) {
       if (err.message !== 'relation "migration" does not exist') {
@@ -47,20 +48,20 @@ exports.PiggyBankRepo = class PiggyBankRepo {
     return level
   }
 
-  async updateDb() {
+  updateDb() {
     console.log("checking for pending migrations")
-    const migrationDir = this.pathJoin(__dirname, "../migrations")
-    const migrationLevel = await this.getMigrationLevel()
-    const migrations = this.readdir(migrationDir)
+    const migrationDir = path.join(__dirname, "../migrations")
+    const migrationLevel = this.getMigrationLevel()
+    const migrations = fs.readdir(migrationDir)
     const pending = migrations.filter((f) => {
       return /^\d{5}/.test(f) && Number(f.substr(0, 5)) > migrationLevel
     });
 
     pending.forEach(async (f) => {
       console.log(`running migration ${f}`)
-      const migrationPath = this.pathJoin(migrationDir, f)
-      const sql = this.readfile(migrationPath)
-      await this.query(sql)
+      const migrationPath = path.join(migrationDir, f)
+      const sql = fs.readfile(migrationPath)
+      this.query(sql)
     })
   }
 }
