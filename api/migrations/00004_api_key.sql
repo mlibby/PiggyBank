@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS api_key (
 );
 
 INSERT INTO
-  apiKey ("description", "apiKeyValue")
+  api_key ("description", "apiKeyValue")
 VALUES
   ('www.alphavantage.co', '');
 

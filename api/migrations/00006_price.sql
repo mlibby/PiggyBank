@@ -1,10 +1,10 @@
-DROP TABLE IF EXISTS price;
+DROP TABLE IF EXISTS "price";
 
-CREATE TABLE price (
+CREATE TABLE "price" (
   "priceId" INTEGER PRIMARY KEY AUTOINCREMENT,
   "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
   "commodityId" INTEGER NOT NULL REFERENCES commodity (commodityId),
-  "quoteTimestamp" TEXT NOT NULL,
+  "quoteDate" TEXT NOT NULL,
   "value" NUMERIC NOT NULL
 );
 

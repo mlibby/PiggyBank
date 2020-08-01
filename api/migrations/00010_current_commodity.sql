@@ -1,5 +1,4 @@
-CREATE
-OR REPLACE VIEW current_commodity AS
+CREATE VIEW current_commodity AS
 SELECT
   s.commodityId,
   c.name,

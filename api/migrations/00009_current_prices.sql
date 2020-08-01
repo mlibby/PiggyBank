@@ -1,5 +1,4 @@
-CREATE
-OR REPLACE VIEW current_price AS
+CREATE VIEW current_price AS
 SELECT
   p.commodityId,
   p.value

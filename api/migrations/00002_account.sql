@@ -20,20 +20,12 @@ INSERT INTO
 VALUES
   (1, '$', 'USD', 'US Dollar');
 
-SELECT
-  commodityId INTO usdId
-FROM
-  commodity
-WHERE
-  symbol = '$';
-
 CREATE TABLE price (
   "priceId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
   "commodityId" INTEGER NOT NULL REFERENCES commodity (commodityId),
   "quoteTimestamp" TIMESTAMP NOT NULL,
-  "value" NUMERIC NOT NULL,
-  FOREIGN KEY (currencyId) REFERENCES
+  "value" NUMERIC NOT NULL
 );
 
 CREATE TABLE account (
@@ -41,7 +33,7 @@ CREATE TABLE account (
   "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
   "accountName" TEXT NOT NULL,
   "isPlaceholder" BOOLEAN NOT NULL DEFAULT FALSE,
-  "parentId" INTEGER,
+  "parentId" INTEGER
 );
 
 CREATE UNIQUE INDEX accountNameParent ON account(accountName, parentId);
@@ -80,9 +72,6 @@ SELECT
   cid
 FROM
   c;
-
-VALUES
-  ('Equity', TRUE, usd_id);
 
 WITH c (cid) AS (
   SELECT

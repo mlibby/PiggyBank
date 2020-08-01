@@ -1,10 +1,10 @@
-ALTER TABLE
-  price DROP COLUMN quoteTimestamp;
+-- ALTER TABLE
+--   price DROP COLUMN quoteTimestamp;
 
-ALTER TABLE
-  price
-ADD
-  COLUMN quoteDate DATE NOT NULL;
+-- ALTER TABLE
+--   price
+-- ADD
+--   COLUMN quoteDate DATE NOT NULL;
 
 -- set migration
 UPDATE
