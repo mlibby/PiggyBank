@@ -82,7 +82,7 @@ const PiggyBankApi = exports.PiggyBankApi = class PiggyBankApi {
     const priceRoutes = new PriceRoutes(this.express.Router(), this.repo)
     this.app.use("/api/price", priceRoutes.router)
 
-    const {TxRoutes} = require("./routes/TxRoutes")
+    const { TxRoutes } = require("./routes/TxRoutes")
     const txRoutes = new TxRoutes(this.express.Router(), this.repo)
     this.app.use("/api/tx", txRoutes.router)
   }
@@ -93,7 +93,7 @@ if (require.main === module) {
   const { PiggyBankRepo } = require("./repo/PiggyBankRepo")
   const repo = new PiggyBankRepo()
   // const https = require("https");
-  const api = new PiggyBankApi( repo, 3030)
+  const api = new PiggyBankApi(repo, 3030)
   api.start()
 }
 //function skipIndex(req: Request) {

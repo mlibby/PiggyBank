@@ -21,30 +21,19 @@ exports.PiggyBankRepo = class PiggyBankRepo {
     this.tx = new TxRepo(this.query.bind(this))
   }
 
-  query(sql, values) {
-    const stmt = this.db.prepare(sql)
-    //let results =  client.query(sql, values)
-    //client.release()
-    return // results
-  }
-
   getMigrationLevel() {
     const sql = 'select max(level) from migration'
     let level = 0
-    let results = null
     try {
-      results = this.query(sql)
+      const stmt = this.db.prepare(sql)
+      level = stmt.pluck().get()
     }
     catch (err) {
       if (err.message !== 'relation "migration" does not exist') {
         throw err
       }
     }
-
-    if (results) {
-      level = Number(results.rows[0].max)
-    }
-
+    
     return level
   }
 

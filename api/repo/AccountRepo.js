@@ -3,16 +3,16 @@ exports.AccountRepo = class AccountRepo {
     this.queryFn = queryFn
   }
 
-  async validateResult(result, account) {
+  validateResult(result, account) {
     if (result.rowCount > 0) {
       account.md5 = result.rows[0].md5
     }
     else {
-      await this.validateMd5(account.accountId, account.md5)
+     this.validateMd5(account.accountId, account.md5)
     }
   }
 
-  async validateMd5(id, md5) {
+   validateMd5(id, md5) {
     const sql = `
       SELECT
         account_id "accountId",
