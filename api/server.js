@@ -16,7 +16,7 @@ const PiggyBankApi = exports.PiggyBankApi = class PiggyBankApi {
     this.setupApiRoutes()
   }
 
-  async start() {
+  start() {
     this.repo.updateDb()
     this.app.listen(this.port,
       /* istanbul ignore next */
@@ -57,33 +57,33 @@ const PiggyBankApi = exports.PiggyBankApi = class PiggyBankApi {
   }
 
   setupMainRoutes() {
-    this.app.use(this.express.static(this.wwwDir))
+    this.app.use(express.static(this.wwwDir))
     this.app.use(this.sendIndex.bind(this))
   }
 
   setupApiRoutes() {
     const { AccountRoutes } = require("./routes/AccountRoutes")
-    const accountRoutes = new AccountRoutes(this.express.Router(), this.repo)
+    const accountRoutes = new AccountRoutes(express.Router(), this.repo)
     this.app.use("/api/account", accountRoutes.router)
 
     const { ApiKeyRoutes } = require("./routes/ApiKeyRoutes")
-    const apiKeyRoutes = new ApiKeyRoutes(this.express.Router(), this.repo)
+    const apiKeyRoutes = new ApiKeyRoutes(express.Router(), this.repo)
     this.app.use("/api/apikey", apiKeyRoutes.router)
 
     const { CommodityRoutes } = require("./routes/CommodityRoutes")
-    const commodityRoutes = new CommodityRoutes(this.express.Router(), this.repo)
+    const commodityRoutes = new CommodityRoutes(express.Router(), this.repo)
     this.app.use("/api/commodity", commodityRoutes.router)
 
     const { OfxRoutes } = require("./routes/OfxRoutes")
-    const ofxRoutes = new OfxRoutes(this.express.Router(), this.repo)
+    const ofxRoutes = new OfxRoutes(express.Router(), this.repo)
     this.app.use("/api/ofx", ofxRoutes.router)
 
     const { PriceRoutes } = require("./routes/PriceRoutes")
-    const priceRoutes = new PriceRoutes(this.express.Router(), this.repo)
+    const priceRoutes = new PriceRoutes(express.Router(), this.repo)
     this.app.use("/api/price", priceRoutes.router)
 
     const { TxRoutes } = require("./routes/TxRoutes")
-    const txRoutes = new TxRoutes(this.express.Router(), this.repo)
+    const txRoutes = new TxRoutes(express.Router(), this.repo)
     this.app.use("/api/tx", txRoutes.router)
   }
 }

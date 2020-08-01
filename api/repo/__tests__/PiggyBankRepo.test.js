@@ -12,41 +12,46 @@ const sql00002 = "select * from accounts"
 const sql00003 = "select * from tx"
 const sql00004 = "select * from budget"
 
-const db = jest.mock("better-sqlite3")
-  .mockReturnValue({
-    prepare: jest.fn(),
-    get: jest.fn(),
-    pluck: jest.fn().mockReturnValue(this)
-  })
+jest.mock("better-sqlite3")
+const SQLite3 = require("better-sqlite3")
+const db = new SQLite3(":memory:") 
 
-const fs = jest.mock("fs").mockReturnValue({
-  readdir: jest.fn()
-    .mockReturnValueOnce([
-      migration00001,
-      migration00002,
-      migration00003,
-      migration00004
-    ]),
-  readfile: jest.fn()
-    .mockReturnValueOnce(sql00001)
-    .mockReturnValueOnce(sql00002)
-    .mockReturnValueOnce(sql00003)
-    .mockReturnValueOnce(sql00004)
+db.prepare = jest.fn()
+db.get = jest.fn()
+db.pluck = jest.fn().mockReturnValue(this)
+
+const fs = jest.mock("fs", () => {
+  return {
+    readdir: jest.fn()
+      .mockReturnValueOnce([
+        migration00001,
+        migration00002,
+        migration00003,
+        migration00004
+      ]),
+    readfile: jest.fn()
+      .mockReturnValueOnce(sql00001)
+      .mockReturnValueOnce(sql00002)
+      .mockReturnValueOnce(sql00003)
+      .mockReturnValueOnce(sql00004)
+  }
 })
 
-const path = jest.mock("path").mockReturnValue({
-  join: jest.fn().mockReturnValueOnce(migrationDir)
-    .mockReturnValueOnce(path00001)
-    .mockReturnValueOnce(path00002)
-    .mockReturnValueOnce(path00003)
-    .mockReturnValueOnce(path00004)
+const path = jest.mock("path", () => {
+  return {
+    join: jest.fn().mockReturnValueOnce(migrationDir)
+      .mockReturnValueOnce(path00001)
+      .mockReturnValueOnce(path00002)
+      .mockReturnValueOnce(path00003)
+      .mockReturnValueOnce(path00004)
+  }
 })
 
 const { PiggyBankRepo } = require("../PiggyBankRepo")
 
 test("getCurrentLevel() returns 0 when no migrations have run yet", async () => {
   db.get = jest.fn().mockImplementation(() => {
-    throw new Error('relation "migration" does not exist')
+    throw new Error('Error: no such table: migrations')
   })
 
   const repo = new PiggyBankRepo()

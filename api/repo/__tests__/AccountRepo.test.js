@@ -22,11 +22,11 @@ test("new AccountRepo(queryFn)", () => {
   expect(accountRepo.queryFn).toBe(queryFn)
 })
 
-test("selectAll() uses correct SQL and returns rows", async () => {
+test("selectAll() uses correct SQL and returns rows", () => {
   const results = { rows: ["foo", "bar"] }
   queryFn.mockResolvedValue(results)
   const accountRepo = new AccountRepo(queryFn)
-  const accounts = await accountRepo.selectAll()
+  const accounts =  accountRepo.selectAll()
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
@@ -41,7 +41,7 @@ test("selectAll() uses correct SQL and returns rows", async () => {
   expect(accounts).toEqual(results.rows)
 })
 
-test("insert() uses correct SQL and returns updated account", async () => {
+test("insert() uses correct SQL and returns updated account",  () => {
   delete testAccount.accountId
   delete testAccount.md5
   const accountId = 333
@@ -55,7 +55,7 @@ test("insert() uses correct SQL and returns updated account", async () => {
   })
 
   const accountRepo = new AccountRepo(queryFn)
-  const account = await accountRepo.insert(testAccount)
+  const account =  accountRepo.insert(testAccount)
 
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
@@ -78,7 +78,7 @@ test("insert() uses correct SQL and returns updated account", async () => {
   expect(account.md5).toBe(newMd5)
 })
 
-test("update() uses correct SQL and returns updated account", async () => {
+test("update() uses correct SQL and returns updated account",  () => {
   queryFn = jest.fn().mockResolvedValue({
     rowCount: 1,
     rows:
@@ -89,7 +89,7 @@ test("update() uses correct SQL and returns updated account", async () => {
   })
 
   const accountRepo = new AccountRepo(queryFn)
-  const account = await accountRepo.update(testAccount)
+  const account = accountRepo.update(testAccount)
 
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
@@ -112,7 +112,7 @@ test("update() uses correct SQL and returns updated account", async () => {
   expect(account.md5).toBe(newMd5);
 })
 
-test("update() fails from stale snapshot of account", async () => {
+test("update() fails from stale snapshot of account", () => {
   queryFn = jest.fn().mockResolvedValueOnce({
     rowCount: 0,
     rows: []
@@ -126,14 +126,14 @@ test("update() fails from stale snapshot of account", async () => {
 
   const accountRepo = new AccountRepo(queryFn)
   try {
-    const account = await accountRepo.update(testAccount)
+    const account =  accountRepo.update(testAccount)
   }
   catch (e) {
     expect(e.message).toBe("md5 mismatch")
   }
 })
 
-test("update() fails because of missing record", async () => {
+test("update() fails because of missing record",  () => {
   queryFn = jest.fn().mockResolvedValueOnce({
     rowCount: 0,
     rows: []
@@ -144,14 +144,14 @@ test("update() fails because of missing record", async () => {
 
   const accountRepo = new AccountRepo(queryFn)
   try {
-    const account = await accountRepo.update(testAccount)
+    const account =  accountRepo.update(testAccount)
   }
   catch (e) {
     expect(e.message).toBe("id mismatch")
   }
 })
 
-test("delete() uses correct SQL", async () => {
+test("delete() uses correct SQL",  () => {
   queryFn = jest.fn().mockResolvedValue({
     rowCount: 1,
     rows:
@@ -162,7 +162,7 @@ test("delete() uses correct SQL", async () => {
   })
 
   const accountRepo = new AccountRepo(queryFn)
-  const result = await accountRepo.delete(testAccount)
+  const result =  accountRepo.delete(testAccount)
 
   expect(helpers.normalize(queryFn.mock.calls[0][0]))
     .toBe(helpers.normalize(`
@@ -176,7 +176,7 @@ test("delete() uses correct SQL", async () => {
   ])
 })
 
-test("delete() fails from stale snapshot of account", async () => {
+test("delete() fails from stale snapshot of account",  () => {
   queryFn = jest.fn().mockResolvedValueOnce({
     rowCount: 0,
     rows: []
@@ -192,14 +192,14 @@ test("delete() fails from stale snapshot of account", async () => {
 
   expect.assertions(1)
   try {
-    await accountRepo.delete(testAccount)
+     accountRepo.delete(testAccount)
   }
   catch (e) {
     expect(e.message).toBe("md5 mismatch")
   }
 })
 
-test("delete() fails because of missing record", async () => {
+test("delete() fails because of missing record",  () => {
   queryFn = jest.fn().mockResolvedValueOnce({
     rowCount: 0,
     rows: []
@@ -212,7 +212,7 @@ test("delete() fails because of missing record", async () => {
 
   expect.assertions(1);
   try {
-    await accountRepo.delete(testAccount);
+     accountRepo.delete(testAccount);
   }
   catch (e) {
     expect(e.message).toBe("id mismatch");

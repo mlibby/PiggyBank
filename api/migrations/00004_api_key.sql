@@ -1,15 +1,18 @@
-DROP TABLE IF EXISTS api_key CASCADE;
+DROP TABLE IF EXISTS api_key;
 
 CREATE TABLE IF NOT EXISTS api_key (
-    api_key_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    description TEXT NOT NULL,
-    api_key_value TEXT NOT NULL
+  "apiKeyId" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "description" TEXT NOT NULL,
+  "apiKeyValue" TEXT NOT NULL
 );
 
-INSERT INTO api_key (description, api_key_value) VALUES ('www.alphavantage.co', '');
+INSERT INTO
+  apiKey ("description", "apiKeyValue")
+VALUES
+  ('www.alphavantage.co', '');
 
 -- set migration
 UPDATE
-    migration
+  migration
 SET
-    level = 4;
+  LEVEL = 4;

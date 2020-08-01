@@ -1,17 +1,20 @@
-CREATE OR REPLACE VIEW current_commodity
-AS
+CREATE
+OR REPLACE VIEW current_commodity AS
 SELECT
-	s.commodity_id,
-    c.name,
-	SUM(amount) amount
-FROM split s
-JOIN commodity c
-ON s.commodity_id = c.commodity_id
-WHERE c.commodity_type = 1
-GROUP BY s.commodity_id, c.name;
+  s.commodityId,
+  c.name,
+  SUM(amount) amount
+FROM
+  split s
+  JOIN commodity c ON s.commodityId = c.commodityId
+WHERE
+  c.commodityType = 1
+GROUP BY
+  s.commodityId,
+  c.name;
 
 -- set migration
 UPDATE
-    migration
+  migration
 SET
-    level = 10;
+  LEVEL = 10;

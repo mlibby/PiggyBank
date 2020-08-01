@@ -1,60 +1,142 @@
-DO $$DECLARE usd_id INTEGER;
-BEGIN	
-DROP TABLE IF EXISTS commodity;
+DROP INDEX IF EXISTS accountNameParent;
 
-CREATE TABLE commodity (
-    commodity_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    commodity_type INTEGER NOT NULL,
-    symbol TEXT NOT NULL,
-    name TEXT NOT NULL,
-    description TEXT NOT NULL,
-    cusip TEXT
-);
-
-INSERT INTO commodity (commodity_type, symbol, name, description)
-    VALUES (0, '$', 'USD', 'US Dollar');
-
-SELECT commodity_id INTO usd_id FROM commodity WHERE symbol = '$';
+DROP TABLE IF EXISTS account;
 
 DROP TABLE IF EXISTS price;
 
-CREATE TABLE price (
-    currency_id INTEGER NOT NULL REFERENCES commodity (commodity_id),
-    commodity_id INTEGER NOT NULL REFERENCES commodity (commodity_id),
-    quote_timestamp TIMESTAMP NOT NULL,
-    value NUMERIC NOT NULL
+DROP TABLE IF EXISTS commodity;
+
+CREATE TABLE commodity (
+  "commodityId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "commodityType" INTEGER NOT NULL,
+  "symbol" TEXT NOT NULL UNIQUE,
+  "name" TEXT NOT NULL UNIQUE,
+  "description" TEXT NOT NULL,
+  "cusip" TEXT
 );
 
-DROP TABLE IF EXISTS account CASCADE;
+INSERT INTO
+  commodity ("commodityType", "symbol", "name", "description")
+VALUES
+  (1, '$', 'USD', 'US Dollar');
+
+SELECT
+  commodityId INTO usdId
+FROM
+  commodity
+WHERE
+  symbol = '$';
+
+CREATE TABLE price (
+  "priceId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
+  "commodityId" INTEGER NOT NULL REFERENCES commodity (commodityId),
+  "quoteTimestamp" TIMESTAMP NOT NULL,
+  "value" NUMERIC NOT NULL,
+  FOREIGN KEY (currencyId) REFERENCES
+);
 
 CREATE TABLE account (
-    account_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	currency_id INTEGER NOT NULL REFERENCES commodity (commodity_id),
-    account_name TEXT NOT NULL,
-    is_placeholder BOOLEAN NOT NULL DEFAULT FALSE,
-    parent_id INTEGER
+  "accountId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
+  "accountName" TEXT NOT NULL,
+  "isPlaceholder" BOOLEAN NOT NULL DEFAULT FALSE,
+  "parentId" INTEGER,
 );
 
+CREATE UNIQUE INDEX accountNameParent ON account(accountName, parentId);
+
 -- Required top-level accounts
-INSERT INTO account (account_name, is_placeholder, currency_id)
-    VALUES ('Assets', TRUE, usd_id);
+WITH c (cid) AS (
+  SELECT
+    commodityId
+  FROM
+    commodity
+  WHERE
+    symbol = '$'
+)
+INSERT INTO
+  account (accountName, isPlaceholder, currencyId)
+SELECT
+  'Assets',
+  TRUE,
+  cid
+FROM
+  c;
 
-INSERT INTO account (account_name, is_placeholder, currency_id)
-    VALUES ('Equity', TRUE, usd_id);
+WITH c (cid) AS (
+  SELECT
+    commodityId
+  FROM
+    commodity
+  WHERE
+    symbol = '$'
+)
+INSERT INTO
+  account (accountName, isPlaceholder, currencyId)
+SELECT
+  'Equity',
+  TRUE,
+  cid
+FROM
+  c;
 
-INSERT INTO account (account_name, is_placeholder, currency_id)
-    VALUES ('Expenses', TRUE, usd_id);
+VALUES
+  ('Equity', TRUE, usd_id);
 
-INSERT INTO account (account_name, is_placeholder, currency_id)
-    VALUES ('Income', TRUE, usd_id);
+WITH c (cid) AS (
+  SELECT
+    commodityId
+  FROM
+    commodity
+  WHERE
+    symbol = '$'
+)
+INSERT INTO
+  account (accountName, isPlaceholder, currencyId)
+SELECT
+  'Expenses',
+  TRUE,
+  cid
+FROM
+  c;
 
-INSERT INTO account (account_name, is_placeholder, currency_id)
-    VALUES ('Liabilities', TRUE, usd_id);
+WITH c (cid) AS (
+  SELECT
+    commodityId
+  FROM
+    commodity
+  WHERE
+    symbol = '$'
+)
+INSERT INTO
+  account (accountName, isPlaceholder, currencyId)
+SELECT
+  'Income',
+  TRUE,
+  cid
+FROM
+  c;
+
+WITH c (cid) AS (
+  SELECT
+    commodityId
+  FROM
+    commodity
+  WHERE
+    symbol = '$'
+)
+INSERT INTO
+  account (accountName, isPlaceholder, currencyId)
+SELECT
+  'Liabilities',
+  TRUE,
+  cid
+FROM
+  c;
 
 -- set migration
 UPDATE
-    migration
+  migration
 SET
-    level = 2;
-
-END$$;
+  LEVEL = 2;

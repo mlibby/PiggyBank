@@ -1,13 +1,25 @@
-ALTER TABLE price ADD UNIQUE(currency_id, commodity_id, quote_date);
+ALTER TABLE
+  price
+ADD
+  UNIQUE("currencyId", "commodityId", "quoteDate");
 
-ALTER TABLE account ADD UNIQUE(parent_id, account_name);
+ALTER TABLE
+  account
+ADD
+  UNIQUE("parentId", "accountName");
 
-ALTER TABLE api_key ADD UNIQUE(description);
+ALTER TABLE
+  api_key
+ADD
+  UNIQUE("description");
 
-ALTER TABLE commodity ADD UNIQUE(commodity_type, name);
+ALTER TABLE
+  commodity
+ADD
+  UNIQUE("commodityType", "name");
 
 -- set migration
 UPDATE
-    migration
+  migration
 SET
-    level = 8;
+  LEVEL = 8;

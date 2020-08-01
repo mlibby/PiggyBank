@@ -8,11 +8,11 @@ exports.AccountRepo = class AccountRepo {
       account.md5 = result.rows[0].md5
     }
     else {
-     this.validateMd5(account.accountId, account.md5)
+      this.validateMd5(account.accountId, account.md5)
     }
   }
 
-   validateMd5(id, md5) {
+  validateMd5(id, md5) {
     const sql = `
       SELECT
         account_id "accountId",
@@ -20,7 +20,7 @@ exports.AccountRepo = class AccountRepo {
       FROM account
       WHERE account_id = $1`
 
-    const result = await this.queryFn(sql, [id])
+    const result = this.queryFn(sql, [id])
     if (result.rowCount === 1 && result.rows[0].md5 !== md5) {
       throw new Error("md5 mismatch")
     }
@@ -29,7 +29,7 @@ exports.AccountRepo = class AccountRepo {
     }
   }
 
-  async selectAll() {
+  selectAll() {
     const sql = `
       SELECT
         account_id "accountId",
@@ -40,11 +40,11 @@ exports.AccountRepo = class AccountRepo {
         md5(account::text) "md5"
       FROM account`
 
-    const results = await this.queryFn(sql)
+    const results = this.queryFn(sql)
     return results.rows
   }
 
-  async insert(account) {
+  insert(account) {
     const sql = `
       INSERT INTO account (
         currency_id,
@@ -55,7 +55,7 @@ exports.AccountRepo = class AccountRepo {
       VALUES ($1, $2, $3, $4)
       RETURNING *, md5(account::text)`
 
-    const result = await this.queryFn(sql, [
+    const result = this.queryFn(sql, [
       account.currencyId,
       account.name,
       account.isPlaceholder,
@@ -66,7 +66,7 @@ exports.AccountRepo = class AccountRepo {
     return account
   }
 
-  async update(account) {
+  update(account) {
     const sql = `
       UPDATE account 
       SET currency_id = $1,
@@ -76,7 +76,7 @@ exports.AccountRepo = class AccountRepo {
       WHERE account_id = $5 and md5(account::text) = $6
       RETURNING *, md5(account::text)`
 
-    const result = await this.queryFn(sql, [
+    const result = this.queryFn(sql, [
       account.currencyId,
       account.name,
       account.isPlaceholder,
@@ -85,21 +85,21 @@ exports.AccountRepo = class AccountRepo {
       account.md5
     ])
 
-    await this.validateResult(result, account)
+    this.validateResult(result, account)
     return account
   }
 
-  async delete(account) {
+  delete(account) {
     const sql = `
       DELETE FROM account
       WHERE account_id = $1 AND md5(account::text) = $2
       RETURNING *, md5(account::text)`
 
-    const result = await this.queryFn(sql, [
+    const result = this.queryFn(sql, [
       account.accountId,
       account.md5
     ])
 
-    await this.validateResult(result, account)
+    this.validateResult(result, account)
   }
 }

@@ -1,28 +1,30 @@
-DROP TABLE IF EXISTS ledger_tx CASCADE;
-DROP TABLE IF EXISTS tx CASCADE;
+DROP TABLE IF EXISTS ledger_entry;
 
-CREATE TABLE tx (
-    tx_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    post_date DATE NOT NULL,
-    number TEXT NULL,
-    description TEXT NOT NULL
+DROP TABLE IF EXISTS split;
+
+DROP TABLE IF EXISTS ledger_tx;
+
+DROP TABLE IF EXISTS tx;
+
+CREATE TABLE IF NOT EXISTS tx (
+  "txId" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "postDate" TEXT NOT NULL,
+  "number" TEXT NULL,
+  "description" TEXT NOT NULL
 );
 
-DROP TABLE IF EXISTS ledger_entry CASCADE;
-DROP TABLE IF EXISTS split CASCADE;
-
 CREATE TABLE IF NOT EXISTS split (
-    split_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    tx_id INT NOT NULL REFERENCES tx (tx_id),
-    account_id INT NOT NULL REFERENCES account (account_id),
-    commodity_id INT NOT NULL REFERENCES commodity (commodity_id),
-    memo TEXT NULL,
-    amount NUMERIC NOT NULL,
-    value NUMERIC NOT NULL
+  "splitId" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "txId" INTEGER NOT NULL REFERENCES tx (txId),
+  "accountId" INTEGER NOT NULL REFERENCES account (accountId),
+  "commodityId" INTEGER NOT NULL REFERENCES commodity (commodityId),
+  "memo" TEXT NULL,
+  "amount" NUMERIC NOT NULL,
+  "value" NUMERIC NOT NULL
 );
 
 -- set migration
 UPDATE
-    migration
+  migration
 SET
-    level = 3;
+  level = 3;

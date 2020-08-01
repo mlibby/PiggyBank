@@ -1,32 +1,35 @@
-DO $$ 
-BEGIN
 DROP TABLE IF EXISTS ofx;
+
 CREATE TABLE ofx (
-  ofx_id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  active boolean NOT NULL DEFAULT FALSE,
-  account_id integer NOT NULL REFERENCES account (account_id),
-  url text NOT NULL DEFAULT '',
-  "user" text NOT NULL DEFAULT '',
-  "password" text NOT NULL DEFAULT '',
-  fid integer NOT NULL,
-  fid_org text NOT NULL,
-  bank_id text NOT NULL DEFAULT '',
-  acct_id text NOT NULL,
-  acct_type text NOT NULL
+  "ofxId" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "active" BOOLEAN NOT NULL DEFAULT FALSE,
+  "accountId" INTEGER NOT NULL REFERENCES account (accountId),
+  "url" TEXT NOT NULL DEFAULT '',
+  "user" TEXT NOT NULL DEFAULT '',
+  "password" TEXT NOT NULL DEFAULT '',
+  "fid" INTEGER NOT NULL,
+  "fidOrg" TEXT NOT NULL,
+  "bankId" TEXT NOT NULL DEFAULT '',
+  "bankAccountId" TEXT NOT NULL,
+  "accountType" TEXT NOT NULL
 );
+
 DROP TABLE IF EXISTS ofx_import;
+
 CREATE TABLE ofx_import (
-  ofx_import_id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  ofx_id integer NOT NULL REFERENCES ofx (ofx_id),
-  downloaded text NOT NULL,
-  start_date timestamp NOT NULL,
-  end_date timestamp NOT NULL,
-  tx_count integer NOT NULL,
-  tx_loaded integer NOT NULL,
-  balance numeric,
-  balance_date timestamp
+  ofxImportId INTEGER PRIMARY KEY AUTOINCREMENT,
+  ofxId INTEGER NOT NULL REFERENCES ofx (ofxIFd),
+  downloaded TEXT NOT NULL,
+  startDate TEXT NOT NULL,
+  endDate TEXT NOT NULL,
+  txCount INTEGER NOT NULL,
+  txLoaded INTEGER NOT NULL,
+  balance NUMERIC,
+  balanceDate TEXT
 );
+
 -- set migration
-UPDATE migration
-SET level = 12;
-END $$;
+UPDATE
+  migration
+SET
+  LEVEL = 12;

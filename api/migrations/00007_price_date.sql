@@ -1,9 +1,13 @@
-ALTER TABLE price DROP COLUMN quote_timestamp;
+ALTER TABLE
+  price DROP COLUMN quoteTimestamp;
 
-ALTER TABLE price ADD COLUMN quote_date DATE NOT NULL;
+ALTER TABLE
+  price
+ADD
+  COLUMN quoteDate DATE NOT NULL;
 
 -- set migration
 UPDATE
-    migration
+  migration
 SET
-    level = 7;
+  LEVEL = 7;

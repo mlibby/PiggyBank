@@ -1,7 +1,8 @@
-ALTER TABLE commodity RENAME COLUMN cusip TO ticker;
+ALTER TABLE
+  commodity RENAME COLUMN cusip TO ticker;
 
 -- set migration
 UPDATE
-    migration
+  migration
 SET
-    level = 5;
+  LEVEL = 5;
