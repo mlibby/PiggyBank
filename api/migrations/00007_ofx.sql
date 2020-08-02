@@ -11,7 +11,8 @@ CREATE TABLE ofx (
   "fidOrg" TEXT NOT NULL,
   "bankId" TEXT NOT NULL DEFAULT '',
   "bankAccountId" TEXT NOT NULL,
-  "accountType" TEXT NOT NULL
+  "accountType" TEXT NOT NULL,
+  "version" TEXT NOT NULL
 );
 
 DROP TABLE IF EXISTS ofx_import;
@@ -25,7 +26,8 @@ CREATE TABLE ofx_import (
   txCount INTEGER NOT NULL,
   txLoaded INTEGER NOT NULL,
   balance NUMERIC,
-  balanceDate TEXT
+  balanceDate TEXT,
+  "version" TEXT NOT NULL
 );
 
 -- set migration

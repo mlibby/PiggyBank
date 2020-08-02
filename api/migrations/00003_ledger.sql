@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS tx (
   "txId" INTEGER PRIMARY KEY AUTOINCREMENT,
   "postDate" TEXT NOT NULL,
   "number" TEXT NULL,
-  "description" TEXT NOT NULL
+  "description" TEXT NOT NULL,
+  "version" TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS split (
@@ -20,7 +21,8 @@ CREATE TABLE IF NOT EXISTS split (
   "commodityId" INTEGER NOT NULL REFERENCES commodity (commodityId),
   "memo" TEXT NULL,
   "amount" NUMERIC NOT NULL,
-  "value" NUMERIC NOT NULL
+  "value" NUMERIC NOT NULL,
+  "version" TEXT NOT NULL
 );
 
 -- set migration

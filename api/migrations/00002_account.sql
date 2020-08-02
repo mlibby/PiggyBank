@@ -12,22 +12,24 @@ CREATE TABLE commodity (
   "symbol" TEXT NOT NULL,
   "name" TEXT NOT NULL,
   "description" TEXT NOT NULL,
-  "ticker" TEXT
+  "ticker" TEXT,
+  "version" TEXT NOT NULL
 );
 
 CREATE INDEX commodityTypeName ON commodity ("commodityType", "name");
 
 INSERT INTO
-  commodity ("commodityType", "symbol", "name", "description")
+  commodity ("commodityType", "symbol", "name", "description", "version")
 VALUES
-  (1, '$', 'USD', 'US Dollar');
+  (1, '$', 'USD', 'US Dollar', getVersion());
 
 CREATE TABLE price (
   "priceId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
   "commodityId" INTEGER NOT NULL REFERENCES commodity (commodityId),
   "quoteDate" TEXT NOT NULL,
-  "value" NUMERIC NOT NULL
+  "value" NUMERIC NOT NULL,
+  "version" TEXT NOT NULL
 );
 
 CREATE INDEX priceCurrCommDate ON price ("currencyId", "commodityId", "quoteDate");
@@ -41,12 +43,13 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  price ("currencyId", "commodityId", "value", "quoteDate")
+  price ("currencyId", "commodityId", "value", "quoteDate", "version")
 SELECT
   cid,
   cid,
   1,
-  '1970-01-01T00:00:00.000Z'
+  '1970-01-01T00:00:00.000Z',
+  getVersion()
 FROM
   c;
 
@@ -55,7 +58,8 @@ CREATE TABLE account (
   "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
   "accountName" TEXT NOT NULL,
   "isPlaceholder" BOOLEAN NOT NULL DEFAULT FALSE,
-  "parentId" INTEGER
+  "parentId" INTEGER,
+  "version" TEXT NOT NULL
 );
 
 CREATE UNIQUE INDEX accountNameParent ON account(accountName, parentId);
@@ -70,11 +74,12 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  account (accountName, isPlaceholder, currencyId)
+  account (accountName, isPlaceholder, currencyId, "version")
 SELECT
   'Assets',
   TRUE,
-  cid
+  cid,
+  getVersion()
 FROM
   c;
 
@@ -87,11 +92,12 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  account (accountName, isPlaceholder, currencyId)
+  account (accountName, isPlaceholder, currencyId, "version")
 SELECT
   'Equity',
   TRUE,
-  cid
+  cid,
+  getVersion()
 FROM
   c;
 
@@ -104,11 +110,12 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  account (accountName, isPlaceholder, currencyId)
+  account (accountName, isPlaceholder, currencyId, "version")
 SELECT
   'Expenses',
   TRUE,
-  cid
+  cid,
+  getVersion()
 FROM
   c;
 
@@ -121,11 +128,12 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  account (accountName, isPlaceholder, currencyId)
+  account (accountName, isPlaceholder, currencyId, "version")
 SELECT
   'Income',
   TRUE,
-  cid
+  cid,
+  getVersion()
 FROM
   c;
 
@@ -138,11 +146,12 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  account (accountName, isPlaceholder, currencyId)
+  account (accountName, isPlaceholder, currencyId, "version")
 SELECT
   'Liabilities',
   TRUE,
-  cid
+  cid,
+  getVersion()
 FROM
   c;
 

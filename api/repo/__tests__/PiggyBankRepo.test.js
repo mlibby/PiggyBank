@@ -42,59 +42,57 @@ jest.mock("path", () => {
 class mockSQLite3 {
   constructor() { }
   pragma() { return this }
-  prepare() { return this }
-  get() { return this }
-  pluck() { return this }
 }
 
 jest.mock("better-sqlite3", () => mockSQLite3)
 const SQLite3 = require("better-sqlite3")
-const db = new SQLite3()
 
 const path = require("path")
 const fs = require("fs")
 
 const { PiggyBankRepo } = require("../PiggyBankRepo")
 
+let repo
+beforeEach(() => {
+  repo = new PiggyBankRepo()
+  repo.db.get = jest.fn().mockReturnValue(repo.db)
+  repo.db.pluck = jest.fn().mockReturnValue(repo.db)
+  repo.db.pragma = jest.fn().mockReturnValue(repo.db)
+  repo.db.prepare = jest.fn().mockReturnValue(repo.db)
+})
+
 test("getCurrentLevel() returns 0 when no migrations have run yet", () => {
-  db.prepare = jest.fn().mockReturnValue(db)
-  
-  db.get = jest.fn().mockImplementation(() => {
-    throw new Error('Error: no such table: migrations')
+  repo.db.get = jest.fn().mockImplementation(() => {
+    throw new Error('no such table: migration')
   })
 
-  const repo = new PiggyBankRepo()
   const level = repo.getMigrationLevel()
-  expect(db.prepare).toHaveBeenCalledWith('select max(level) from migration')
+  expect(repo.db.prepare).toHaveBeenCalledWith('select max(level) from migration')
   expect(level).toBe(0)
 })
 
 test("getCurrentLevel() > 0 once migrations have been run", () => {
-  const repo = new PiggyBankRepo()
   const level = repo.getMigrationLevel()
-  //expect(client.query).toHaveBeenCalledWith('select max(level) from migration', undefined)
+  expect(repo.db.prepare).toHaveBeenCalledWith('select max(level) from migration')
   expect(level).toBe(1)
 })
 
 test("getCurrentLevel() only swallows 'migrations' missing error", () => {
-  db.get = jest.fn().mockImplementation(() => {
+  repo.db.get = jest.fn().mockImplementation(() => {
     throw new Error("this is not a migrations error")
   })
-  const repo = new PiggyBankRepo()
   expect(() => {
     const level = repo.getMigrationLevel()
   }).rejects.toThrow()
 })
 
 test("updateDb() gets migration directory", () => {
-  const repo = new PiggyBankRepo()
   repo.updateDb()
   expect(path.join).toHaveBeenCalled()
   expect(path.join).toHaveBeenCalledWith(__dirname.replace("/__tests__", ""), "../migrations")
 })
 
 test("updateDb() gets the current migration level", () => {
-  const repo = new PiggyBankRepo()
   repo.getMigrationLevel = jest.fn()
   repo.updateDb()
   expect(repo.getMigrationLevel).toHaveBeenCalledTimes(1)
@@ -102,8 +100,7 @@ test("updateDb() gets the current migration level", () => {
 
 test("updateDb() gets the file list from migrations dir", () => {
   path.join.mockReturnValue(mockMigrationDir)
-  
-  const repo = new PiggyBankRepo()
+
   repo.updateDb()
 
   expect(fs.readdirSync).toHaveBeenCalledTimes(1)
@@ -111,7 +108,6 @@ test("updateDb() gets the file list from migrations dir", () => {
 })
 
 test("updateDb() runs all migrations at migration level 0", () => {
-  const repo = new PiggyBankRepo()
   repo.query = jest.fn()
   repo.getMigrationLevel = jest.fn().mockResolvedValueOnce(0)
   repo.updateDb()
@@ -146,7 +142,6 @@ test("updateDb() runs only pending migrations at level 2", () => {
     .mockReturnValueOnce(mockSql00003)
     .mockReturnValueOnce(mockSql00004)
 
-  const repo = new PiggyBankRepo()
   repo.getMigrationLevel = jest.fn().mockResolvedValueOnce(2)
   repo.updateDb()
 
@@ -165,31 +160,25 @@ test("updateDb() runs only pending migrations at level 2", () => {
 })
 
 test("repo.account is an AccountRepo", () => {
-  const repo = new PiggyBankRepo()
   expect(repo.account.constructor.name).toBe("AccountRepo")
 })
 
 test("repo.apiKey is an ApiKeyRepo", () => {
-  const repo = new PiggyBankRepo()
   expect(repo.apiKey.constructor.name).toBe("ApiKeyRepo")
 })
 
 test("repo.commodity is a CommodityRepo", () => {
-  const repo = new PiggyBankRepo()
   expect(repo.commodity.constructor.name).toBe("CommodityRepo")
 })
 
 test("repo.ofx is a OfxRepo", () => {
-  const repo = new PiggyBankRepo()
   expect(repo.ofx.constructor.name).toBe("OfxRepo")
 })
 
 test("repo.price is a PriceRepo", () => {
-  const repo = new PiggyBankRepo()
   expect(repo.price.constructor.name).toBe("PriceRepo")
 })
 
 test("repo.tx is a TxRepo", () => {
-  const repo = new PiggyBankRepo()
   expect(repo.tx.constructor.name).toBe("TxRepo")
 })
