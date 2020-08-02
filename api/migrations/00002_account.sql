@@ -15,7 +15,7 @@ CREATE TABLE commodity (
   "ticker" TEXT
 );
 
-CREATE INDEX commodityTypeName ON commodity ("commmodityType", "name");
+CREATE INDEX commodityTypeName ON commodity ("commodityType", "name");
 
 INSERT INTO
   commodity ("commodityType", "symbol", "name", "description")
@@ -46,7 +46,7 @@ SELECT
   cid,
   cid,
   1,
-  "1970-01-01T00:00:00.000Z"
+  '1970-01-01T00:00:00.000Z'
 FROM
   c;
 
