@@ -1,38 +1,58 @@
-const { PiggyBankApi } = require("../server")
-
-const app = {
+const mockApp = {
   use: jest.fn(),
   listen: jest.fn()
 }
-const express = jest.fn().mockReturnValue(app)
-express.Router = jest.fn().mockReturnValue({
-  get: jest.fn(),
-  post: jest.fn(),
-  put: jest.fn(),
-  delete: jest.fn(),
-})
-express.static = jest.fn()
 
-const repo = {
-  updateDb: jest.fn()
+jest.mock("express", () => {
+  return () => {
+    return mockApp
+  }
+})
+
+const mockFormidable = {
+  IncomingForm: jest.fn(),
+  name: "formidable"
 }
+
+jest.mock("express-formidable", () => {
+  return () => mockFormidable
+})
+jest.mock("../repo/PiggyBankRepo.js")
+
+const express = require("express")
+const formidable = require("express-formidable")
+const { PiggyBankApi } = require("../server")
+const { PiggyBankRepo } = require("../repo/PiggyBankRepo.js")
+
+const mockRouter = {
+  get: jest.fn(),
+  put: jest.fn(),
+  post: jest.fn(),
+  delete: jest.fn()
+}
+
+let repo
+beforeEach(() => {
+  express.static = jest.fn()
+  express.Router = jest.fn().mockImplementation(() => mockRouter)
+  repo = new PiggyBankRepo()
+})
 
 test("register formidable as a request handler", () => {
   const server = new PiggyBankApi(repo, 3030)
-  server.start()
-  expect(app.use).toHaveBeenCalledWith(formHandler)
+  expect(mockApp.use).toHaveBeenCalledWith(mockFormidable)
 })
 
 test("use port set by constructor", () => {
   const server = new PiggyBankApi(repo, 3030)
   server.start()
-  expect(app.listen).toHaveBeenCalledTimes(1)
-  expect(app.listen.mock.calls[0][0]).toBe(3030)
+  expect(mockApp.listen).toHaveBeenCalledTimes(1)
+  expect(mockApp.listen.mock.calls[0][0]).toBe(3030)
 })
 
 test("update the Repository when the server starts", () => {
   const server = new PiggyBankApi(repo, 3030)
-  erver.start()
+  server.start()
   expect(repo.updateDb).toHaveBeenCalledTimes(1)
 })
 
@@ -57,13 +77,17 @@ test("sendIndex calls next() when path starts with /api", () => {
 })
 
 test("sendIndex sends index when path does not start with /api", () => {
-  const indexPath = "/PiggyBank/www/index.html"
-  jest.mock("path.join").mockReturnValue(indexPath)
+  const mockPath = "/PiggyBank/www/index.html"
+  jest.mock("path", () => {
+    return {
+      join: jest.fn().mockReturnValue(mockPath)
+    }
+  })
   const server = new PiggyBankApi(repo, 3030)
   const res = { sendFile: jest.fn() }
   const next = jest.fn()
   server.sendIndex({ url: "/foo/bar" }, res, next)
-  expect(res.sendFile).toHaveBeenCalledWith(indexPath)
+  expect(res.sendFile).toHaveBeenCalledWith(mockPath)
 })
 
 test("app uses ${__dirname}/../www to serve static files", () => {
@@ -77,13 +101,13 @@ test("app uses ${__dirname}/../www to serve static files", () => {
 
   expect(pathJoin).toHaveBeenCalledWith(__dirname.replace("/__tests__", ""), "..", "www")
   expect(express.static).toHaveBeenCalledWith(mockStaticDir)
-  expect(app.use).toHaveBeenCalledWith(e_static)
+  expect(mockApp.use).toHaveBeenCalledWith(e_static)
 })
 
 test("app uses sendIndex", () => {
   const server = new PiggyBankApi(repo, 3030)
   let boundSendIndexUsed = false
-  app.use.mock.calls.forEach((v, i, a) => {
+  mockApp.use.mock.calls.forEach((v, i, a) => {
     if (v[0]) {
       if (v[0].name === "bound sendIndex") {
         boundSendIndexUsed = true
@@ -95,30 +119,30 @@ test("app uses sendIndex", () => {
 
 test("AccountRoutes assigned to /api/account", () => {
   const server = new PiggyBankApi(repo, 3030)
-  expect(app.use).toHaveBeenCalledWith("/api/account", express.Router())
+  expect(mockApp.use).toHaveBeenCalledWith("/api/account", mockRouter)
 })
 
 test("ApiKeyRoutes assigned to /api/apikey", () => {
   const server = new PiggyBankApi(repo, 3030)
-  expect(app.use).toHaveBeenCalledWith("/api/apikey", express.Router())
+  expect(mockApp.use).toHaveBeenCalledWith("/api/apikey", mockRouter)
 })
 
 test("CommodityRoutes assigned to /api/commodity", () => {
   const server = new PiggyBankApi(repo, 3030)
-  expect(app.use).toHaveBeenCalledWith("/api/commodity", express.Router())
+  expect(mockApp.use).toHaveBeenCalledWith("/api/commodity", mockRouter)
 })
 
 test("OfxRoutes assigned to /api/ofx", () => {
   const server = new PiggyBankApi(repo, 3030)
-  expect(app.use).toHaveBeenCalledWith("/api/ofx", express.Router())
+  expect(mockApp.use).toHaveBeenCalledWith("/api/ofx", mockRouter)
 })
 
 test("PriceRoutes assigned to /api/price", () => {
   const server = new PiggyBankApi(repo, 3030)
-  expect(app.use).toHaveBeenCalledWith("/api/price", express.Router())
+  expect(mockApp.use).toHaveBeenCalledWith("/api/price", mockRouter)
 })
 
 test("TxRoutes assigned to /api/tx", () => {
   const server = new PiggyBankApi(repo, 3030)
-  expect(app.use).toHaveBeenCalledWith("/api/tx", express.Router())
+  expect(mockApp.use).toHaveBeenCalledWith("/api/tx", mockRouter)
 })
