@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS api_key;
 
 CREATE TABLE IF NOT EXISTS api_key (
   "apiKeyId" INTEGER PRIMARY KEY AUTOINCREMENT,
-  "description" TEXT NOT NULL,
+  "description" TEXT NOT NULL UNIQUE,
   "apiKeyValue" TEXT NOT NULL
 );
 

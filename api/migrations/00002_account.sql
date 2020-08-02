@@ -9,11 +9,13 @@ DROP TABLE IF EXISTS commodity;
 CREATE TABLE commodity (
   "commodityId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   "commodityType" INTEGER NOT NULL,
-  "symbol" TEXT NOT NULL UNIQUE,
-  "name" TEXT NOT NULL UNIQUE,
+  "symbol" TEXT NOT NULL,
+  "name" TEXT NOT NULL,
   "description" TEXT NOT NULL,
-  "cusip" TEXT
+  "ticker" TEXT
 );
+
+CREATE INDEX commodityTypeName ON commodity ("commmodityType", "name");
 
 INSERT INTO
   commodity ("commodityType", "symbol", "name", "description")
@@ -24,9 +26,29 @@ CREATE TABLE price (
   "priceId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
   "commodityId" INTEGER NOT NULL REFERENCES commodity (commodityId),
-  "quoteTimestamp" TIMESTAMP NOT NULL,
+  "quoteDate" TEXT NOT NULL,
   "value" NUMERIC NOT NULL
 );
+
+CREATE INDEX priceCurrCommDate ON price ("currencyId", "commodityId", "quoteDate");
+
+WITH c (cid) AS (
+  SELECT
+    commodityId
+  FROM
+    commodity
+  WHERE
+    symbol = '$'
+)
+INSERT INTO
+  price ("currencyId", "commodityId", "value", "quoteDate")
+SELECT
+  cid,
+  cid,
+  1,
+  "1970-01-01T00:00:00.000Z"
+FROM
+  c;
 
 CREATE TABLE account (
   "accountId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
