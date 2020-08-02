@@ -17,10 +17,19 @@ const mockFormidable = {
 jest.mock("express-formidable", () => {
   return () => mockFormidable
 })
+
+jest.mock("better-sqlite3", () => { })
+
 jest.mock("../repo/PiggyBankRepo.js")
+
+const mockPath = {
+  join: jest.fn()
+}
+jest.mock("path", () => mockPath)
 
 const express = require("express")
 const formidable = require("express-formidable")
+const path = require("path")
 const { PiggyBankApi } = require("../server")
 const { PiggyBankRepo } = require("../repo/PiggyBankRepo.js")
 
@@ -78,11 +87,8 @@ test("sendIndex calls next() when path starts with /api", () => {
 
 test("sendIndex sends index when path does not start with /api", () => {
   const mockPath = "/PiggyBank/www/index.html"
-  jest.mock("path", () => {
-    return {
-      join: jest.fn().mockReturnValue(mockPath)
-    }
-  })
+  path.join.mockReturnValue(mockPath)
+
   const server = new PiggyBankApi(repo, 3030)
   const res = { sendFile: jest.fn() }
   const next = jest.fn()
@@ -91,16 +97,16 @@ test("sendIndex sends index when path does not start with /api", () => {
 })
 
 test("app uses ${__dirname}/../www to serve static files", () => {
+  const mockPath = "/PiggyBank/www"
+  path.join.mockReturnValue(mockPath)
+
   const e_static = "express.static() does not return a string"
   express.static = jest.fn().mockReturnValue(e_static)
-  const mockStaticDir = "/PiggyBank/www"
-  jest.mock("path").mockReturnValue({
-    join: jest.fn().mockReturnValue(mockStaticDir)
-  })
+
   const server = new PiggyBankApi(repo, 3030)
 
-  expect(pathJoin).toHaveBeenCalledWith(__dirname.replace("/__tests__", ""), "..", "www")
-  expect(express.static).toHaveBeenCalledWith(mockStaticDir)
+  expect(path.join).toHaveBeenCalledWith(__dirname.replace("/__tests__", ""), "..", "www")
+  expect(express.static).toHaveBeenCalledWith(mockPath)
   expect(mockApp.use).toHaveBeenCalledWith(e_static)
 })
 

@@ -78,43 +78,43 @@ test("getCurrentLevel() only swallows 'migrations' missing error", async () => {
   }).rejects.toThrow()
 })
 
-test("updateDb() gets migration directory", async () => {
+test("updateDb() gets migration directory", () => {
   const repo = new PiggyBankRepo()
-  await repo.updateDb()
-  expect(pathJoin).toHaveBeenCalled()
-  expect(pathJoin).toHaveBeenCalledWith(__dirname.replace("/__tests__", ""), "../migrations")
+  repo.updateDb()
+  expect(path.join).toHaveBeenCalled()
+  expect(path.join).toHaveBeenCalledWith(__dirname.replace("/__tests__", ""), "../migrations")
 })
 
-test("updateDb() gets the current migration level", async () => {
+test("updateDb() gets the current migration level", () => {
   const repo = new PiggyBankRepo()
   repo.getMigrationLevel = jest.fn()
-  await repo.updateDb()
+  repo.updateDb()
   expect(repo.getMigrationLevel).toHaveBeenCalledTimes(1)
 })
 
-test("updateDb() gets the file list from migrations dir", async () => {
-  pathJoin.mockReturnValue(migrationDir)
+test("updateDb() gets the file list from migrations dir", () => {
+  path.join.mockReturnValue(migrationDir)
   client.query = jest.fn().mockResolvedValue({ rows: [{ max: "1" }] })
 
   const repo = new PiggyBankRepo()
-  await repo.updateDb()
+  repo.updateDb()
 
   expect(readdir).toHaveBeenCalledTimes(1)
   expect(readdir).toHaveBeenCalledWith(migrationDir)
 })
 
-test("updateDb() runs all migrations at migration level 0", async () => {
+test("updateDb() runs all migrations at migration level 0", () => {
 
   const repo = new PiggyBankRepo()
   repo.query = jest.fn()
   repo.getMigrationLevel = jest.fn().mockResolvedValueOnce(0)
-  await repo.updateDb()
+  repo.updateDb()
 
-  expect(pathJoin).toHaveBeenCalledTimes(5)
-  expect(pathJoin.mock.calls[1]).toEqual([migrationDir, migration00001])
-  expect(pathJoin.mock.calls[2]).toEqual([migrationDir, migration00002])
-  expect(pathJoin.mock.calls[3]).toEqual([migrationDir, migration00003])
-  expect(pathJoin.mock.calls[4]).toEqual([migrationDir, migration00004])
+  expect(path.join).toHaveBeenCalledTimes(5)
+  expect(path.join.mock.calls[1]).toEqual([migrationDir, migration00001])
+  expect(path.join.mock.calls[2]).toEqual([migrationDir, migration00002])
+  expect(path.join.mock.calls[3]).toEqual([migrationDir, migration00003])
+  expect(path.join.mock.calls[4]).toEqual([migrationDir, migration00004])
 
   expect(readfile).toHaveBeenCalledTimes(4)
   expect(readfile.mock.calls[0]).toEqual([path00001])
@@ -131,13 +131,13 @@ test("updateDb() runs all migrations at migration level 0", async () => {
 })
 
 test("updateDb() runs only pending migrations at level 2", async () => {
-  pathJoin = jest.fn()
-  pathJoin.mockReturnValueOnce(migrationDir)
+  path.join = jest.fn()
+    .mockReturnValueOnce(migrationDir)
     .mockReturnValueOnce(path00003)
     .mockReturnValueOnce(path00004)
 
-  readfile = jest.fn();
-  readfile.mockReturnValueOnce(sql00003)
+  readfile = jest.fn()
+    .mockReturnValueOnce(sql00003)
     .mockReturnValueOnce(sql00004)
 
   const repo = new PiggyBankRepo()
@@ -145,10 +145,10 @@ test("updateDb() runs only pending migrations at level 2", async () => {
   repo.getMigrationLevel = jest.fn().mockResolvedValueOnce(2)
   await repo.updateDb()
 
-  expect(pathJoin).toHaveBeenCalledTimes(3)
+  expect(path.join).toHaveBeenCalledTimes(3)
 
-  expect(pathJoin.mock.calls[1]).toEqual([migrationDir, migration00003])
-  expect(pathJoin.mock.calls[2]).toEqual([migrationDir, migration00004])
+  expect(path.join.mock.calls[1]).toEqual([migrationDir, migration00003])
+  expect(path.join.mock.calls[2]).toEqual([migrationDir, migration00004])
 
   expect(readfile).toHaveBeenCalledTimes(2)
   expect(readfile.mock.calls[0]).toEqual([path00003])
