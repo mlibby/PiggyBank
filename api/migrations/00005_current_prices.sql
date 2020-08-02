@@ -19,4 +19,4 @@ FROM
 UPDATE
   migration
 SET
-  LEVEL = 9;
+  LEVEL = 5;

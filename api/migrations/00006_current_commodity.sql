@@ -16,4 +16,4 @@ GROUP BY
 UPDATE
   migration
 SET
-  LEVEL = 10;
+  LEVEL = 6;

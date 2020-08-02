@@ -32,4 +32,4 @@ CREATE TABLE ofx_import (
 UPDATE
   migration
 SET
-  LEVEL = 12;
+  LEVEL = 7;
