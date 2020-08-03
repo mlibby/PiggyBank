@@ -14,34 +14,26 @@ const mockSql00004 = "select * from budget"
 
 jest.mock("fs", () => {
   return {
-    readdirSync: jest.fn()
-      .mockReturnValue([
-        mockMigration00001,
-        mockMigration00002,
-        mockMigration00003,
-        mockMigration00004
-      ]),
-    readfileSync: jest.fn()
-      .mockReturnValueOnce(mockSql00001)
-      .mockReturnValueOnce(mockSql00002)
-      .mockReturnValueOnce(mockSql00003)
-      .mockReturnValueOnce(mockSql00004)
+    readdirSync: jest.fn(),
+    readFileSync: jest.fn()
   }
 })
 
 jest.mock("path", () => {
   return {
-    join: jest.fn().mockReturnValueOnce(mockMigrationDir)
-      .mockReturnValueOnce(mockPath00001)
-      .mockReturnValueOnce(mockPath00002)
-      .mockReturnValueOnce(mockPath00003)
-      .mockReturnValueOnce(mockPath00004)
+    join: jest.fn()
   }
 })
 
 class mockSQLite3 {
-  constructor() { }
-  pragma() { return this }
+  constructor() {
+    this.exec = jest.fn().mockReturnValue(this)
+    this.function = jest.fn().mockReturnValue(this)
+    this.pragma = jest.fn().mockReturnValue(this)
+    this.get = jest.fn().mockReturnValue(this)
+    this.pluck = jest.fn().mockReturnValue(this)
+    this.prepare = jest.fn().mockReturnValue(this)
+  }
 }
 
 jest.mock("better-sqlite3", () => mockSQLite3)
@@ -55,10 +47,27 @@ const { PiggyBankRepo } = require("../PiggyBankRepo")
 let repo
 beforeEach(() => {
   repo = new PiggyBankRepo()
-  repo.db.get = jest.fn().mockReturnValue(repo.db)
-  repo.db.pluck = jest.fn().mockReturnValue(repo.db)
-  repo.db.pragma = jest.fn().mockReturnValue(repo.db)
-  repo.db.prepare = jest.fn().mockReturnValue(repo.db)
+
+  fs.readdirSync = jest.fn()
+    .mockReturnValue([
+      mockMigration00001,
+      mockMigration00002,
+      mockMigration00003,
+      mockMigration00004
+    ])
+
+  fs.readFileSync = jest.fn()
+    .mockReturnValueOnce(mockSql00001)
+    .mockReturnValueOnce(mockSql00002)
+    .mockReturnValueOnce(mockSql00003)
+    .mockReturnValueOnce(mockSql00004)
+
+  path.join = jest.fn()
+    .mockReturnValueOnce(mockMigrationDir)
+    .mockReturnValueOnce(mockPath00001)
+    .mockReturnValueOnce(mockPath00002)
+    .mockReturnValueOnce(mockPath00003)
+    .mockReturnValueOnce(mockPath00004)
 })
 
 test("getCurrentLevel() returns 0 when no migrations have run yet", () => {
@@ -72,8 +81,11 @@ test("getCurrentLevel() returns 0 when no migrations have run yet", () => {
 })
 
 test("getCurrentLevel() > 0 once migrations have been run", () => {
+  repo.db.get.mockReturnValue(1)
   const level = repo.getMigrationLevel()
   expect(repo.db.prepare).toHaveBeenCalledWith('select max(level) from migration')
+  expect(repo.db.pluck).toHaveBeenCalled()
+  expect(repo.db.get).toHaveBeenCalled()
   expect(level).toBe(1)
 })
 
@@ -83,7 +95,7 @@ test("getCurrentLevel() only swallows 'migrations' missing error", () => {
   })
   expect(() => {
     const level = repo.getMigrationLevel()
-  }).rejects.toThrow()
+  }).toThrow()
 })
 
 test("updateDb() gets migration directory", () => {
@@ -109,7 +121,7 @@ test("updateDb() gets the file list from migrations dir", () => {
 
 test("updateDb() runs all migrations at migration level 0", () => {
   repo.query = jest.fn()
-  repo.getMigrationLevel = jest.fn().mockResolvedValueOnce(0)
+  repo.getMigrationLevel = jest.fn().mockReturnValue(0)
   repo.updateDb()
 
   expect(path.join).toHaveBeenCalledTimes(5)
@@ -118,18 +130,18 @@ test("updateDb() runs all migrations at migration level 0", () => {
   expect(path.join.mock.calls[3]).toEqual([mockMigrationDir, mockMigration00003])
   expect(path.join.mock.calls[4]).toEqual([mockMigrationDir, mockMigration00004])
 
-  expect(readfile).toHaveBeenCalledTimes(4)
-  expect(readfile.mock.calls[0]).toEqual([mockPath00001])
-  expect(readfile.mock.calls[1]).toEqual([mockPath00002])
-  expect(readfile.mock.calls[2]).toEqual([mockPath00003])
-  expect(readfile.mock.calls[3]).toEqual([mockPath00004])
+  expect(fs.readFileSync).toHaveBeenCalledTimes(4)
+  expect(fs.readFileSync.mock.calls[0]).toEqual([mockPath00001])
+  expect(fs.readFileSync.mock.calls[1]).toEqual([mockPath00002])
+  expect(fs.readFileSync.mock.calls[2]).toEqual([mockPath00003])
+  expect(fs.readFileSync.mock.calls[3]).toEqual([mockPath00004])
 
   // would expect 5 queries, but we're mocking getMigrationLevel()
-  expect(repo.query).toHaveBeenCalledTimes(4)
-  expect(repo.query.mock.calls[0]).toEqual([mockSql00001])
-  expect(repo.query.mock.calls[1]).toEqual([mockSql00002])
-  expect(repo.query.mock.calls[2]).toEqual([mockSql00003])
-  expect(repo.query.mock.calls[3]).toEqual([mockSql00004])
+  expect(repo.db.exec).toHaveBeenCalledTimes(4)
+  expect(repo.db.exec.mock.calls[0]).toEqual([mockSql00001])
+  expect(repo.db.exec.mock.calls[1]).toEqual([mockSql00002])
+  expect(repo.db.exec.mock.calls[2]).toEqual([mockSql00003])
+  expect(repo.db.exec.mock.calls[3]).toEqual([mockSql00004])
 })
 
 test("updateDb() runs only pending migrations at level 2", () => {
@@ -138,11 +150,11 @@ test("updateDb() runs only pending migrations at level 2", () => {
     .mockReturnValueOnce(mockPath00003)
     .mockReturnValueOnce(mockPath00004)
 
-  fs.readfileSync = jest.fn()
+  fs.readFileSync = jest.fn()
     .mockReturnValueOnce(mockSql00003)
     .mockReturnValueOnce(mockSql00004)
 
-  repo.getMigrationLevel = jest.fn().mockResolvedValueOnce(2)
+  repo.getMigrationLevel = jest.fn().mockReturnValue(2)
   repo.updateDb()
 
   expect(path.join).toHaveBeenCalledTimes(3)
@@ -150,13 +162,13 @@ test("updateDb() runs only pending migrations at level 2", () => {
   expect(path.join.mock.calls[1]).toEqual([mockMigrationDir, mockMigration00003])
   expect(path.join.mock.calls[2]).toEqual([mockMigrationDir, mockMigration00004])
 
-  expect(fs.readfileSync).toHaveBeenCalledTimes(2)
-  expect(fs.readfileSync.mock.calls[0]).toEqual([mockPath00003])
-  expect(fs.readfileSync.mock.calls[1]).toEqual([mockPath00004])
+  expect(fs.readFileSync).toHaveBeenCalledTimes(2)
+  expect(fs.readFileSync.mock.calls[0]).toEqual([mockPath00003])
+  expect(fs.readFileSync.mock.calls[1]).toEqual([mockPath00004])
 
-  expect(repo.query).toHaveBeenCalledTimes(2)
-  expect(repo.query.mock.calls[0]).toEqual([mockSql00003])
-  expect(repo.query.mock.calls[1]).toEqual([mockSql00004])
+  expect(repo.db.exec).toHaveBeenCalledTimes(2)
+  expect(repo.db.exec.mock.calls[0]).toEqual([mockSql00003])
+  expect(repo.db.exec.mock.calls[1]).toEqual([mockSql00004])
 })
 
 test("repo.account is an AccountRepo", () => {
