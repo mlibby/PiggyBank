@@ -59,7 +59,7 @@ export class AccountView extends Backbone.View {
     this.$(".btn.delete").click((e) => this.delete(this.model, e))
 
     if (this.model.children) {
-      if (this.subview !== null) {
+      if (this.subview != null) {
         this.subview.remove()
       }
       this.subview = new AccountListView({ collection: this.model.children })

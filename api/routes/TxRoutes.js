@@ -9,8 +9,8 @@ exports.TxRoutes = class TxRoutes {
     // this.router.delete("/", this.delete.bind(this))
   }
 
-  async list(req, res, next) {
-    const txs = await this.repo.tx.selectAll()
+  list(req, res, next) {
+    const txs = this.repo.tx.selectAll()
     res.json(txs)
   }
 

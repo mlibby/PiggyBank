@@ -9,8 +9,8 @@ exports.CommodityRoutes = class CommodityRoutes {
     // this.router.delete("/", this.delete.bind(this))
   }
 
-  async list(req, res, next) {
-    const commodities = await this.repo.commodity.selectAll()
+  list(req, res, next) {
+    const commodities = this.repo.commodity.selectAll()
     res.json(commodities)
   }
 

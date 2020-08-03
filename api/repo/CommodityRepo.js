@@ -1,20 +1,20 @@
 exports.CommodityRepo = class CommodityRepo {
-  constructor(queryFn) {
-    this.queryFn = queryFn
+  constructor(db) {
+    this.db = db
   }
 
-  async selectAll() {
-    const sql = `
+  selectAll() {
+    const stmt = this.db.prepare(`
     SELECT
-      commodity_id "commodityId",
-      commodity_type "type",
-      symbol,
+      "commodityId",
+      "type",
+      "symbol",
       "name",
-      description,
-      ticker
-    FROM commodity`
+      "description",
+      "ticker"
+    FROM commodity`)
 
-    const results = await this.queryFn(sql)
-    return results.rows
+    const results = stmt.all()
+    return results
   }
 }

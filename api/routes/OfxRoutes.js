@@ -9,8 +9,8 @@ exports.OfxRoutes = class OfxRoutes {
     // this.router.delete("/", this.delete.bind(this))
   }
 
-  async list(req, res, next) {
-    const ofx = await this.repo.ofx.selectAll()
+  list(req, res, next) {
+    const ofx = this.repo.ofx.selectAll()
     res.json(ofx)
   }
 

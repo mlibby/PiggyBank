@@ -9,26 +9,26 @@ exports.AccountRoutes = class AccountRoutes {
     this.router.delete("/", this.delete.bind(this))
   }
 
-  async list(req, res, next) {
-    const accounts = await this.repo.account.selectAll()
+  list(req, res, next) {
+    const accounts = this.repo.account.selectAll()
     res.json(accounts)
   }
 
-  async create(req, res, next) {
+  create(req, res, next) {
     let account = this.requestToAccount(req)
-    account = await this.repo.account.insert(account)
+    account = this.repo.account.insert(account)
     res.json(account)
   }
 
-  async update(req, res, next) {
+  update(req, res, next) {
     let account = this.requestToAccount(req)
-    account = await this.repo.account.update(account)
+    account = this.repo.account.update(account)
     res.json(account)
   }
 
-  async delete(req, res, next) {
+  delete(req, res, next) {
     let account = this.requestToAccount(req)
-    account = await this.repo.account.delete(account)
+    account = this.repo.account.delete(account)
     res.status(200).json({})
   }
 

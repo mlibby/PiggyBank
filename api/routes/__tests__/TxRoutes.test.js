@@ -19,12 +19,12 @@ test("TxRoutes sets up routes", () => {
   // expect(mockRouter.delete.mock.calls[0][0]).toBe("/")
 })
 
-test("txRoutes.list(req, res, next)", async () => {
+test("txRoutes.list(req, res, next)", () => {
   const mockResults = ["foo", "bar"]
-  mockRepo.tx.selectAll.mockResolvedValue(mockResults)
+  mockRepo.tx.selectAll.mockReturnValue(mockResults)
 
   const routes = new TxRoutes(mockRouter, mockRepo)
-  await routes.list(mockRequest, mockResponse, null)
+  routes.list(mockRequest, mockResponse, null)
 
   expect(mockRepo.tx.selectAll).toHaveBeenCalled()
   expect(mockResponse.json).toHaveBeenCalledWith(mockResults)

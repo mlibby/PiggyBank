@@ -1,6 +1,6 @@
 jest.mock("../../lib/lit-html/lit-html.js")
 
-import { Router } from "../PiggyBankRouter"
+import { PiggyBankRouter } from "../PiggyBankRouter"
 import { HomeView } from "../home/HomeView.js"
 import { AccountIndexView } from "../account/AccountIndexView.js"
 import { ApiKeyIndexView } from "../banking/ApiKeyIndexView.js"
@@ -15,11 +15,11 @@ import { TxIndexView } from "../tx/TxIndexView.js"
 
 let router
 beforeEach(() => {
-  router = new Router()
+  router = new PiggyBankRouter()
   router.switchView = jest.fn()
 })
 
-test("router.switchView(view, navItem)", () => {
+test("PiggyBankRouter.switchView(view, navItem)", () => {
   const renderEl = {
     el: "test el"
   }
@@ -33,7 +33,7 @@ test("router.switchView(view, navItem)", () => {
   }
   global.$ = jest.fn().mockReturnValue($mocks)
   
-  const router2 = new Router()
+  const router2 = new PiggyBankRouter()
   router2.switchView(view, "#idTag")
 
   //render the view

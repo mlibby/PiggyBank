@@ -18,15 +18,15 @@ CREATE TABLE ofx (
 DROP TABLE IF EXISTS ofx_import;
 
 CREATE TABLE ofx_import (
-  ofxImportId INTEGER PRIMARY KEY AUTOINCREMENT,
-  ofxId INTEGER NOT NULL REFERENCES ofx (ofxIFd),
-  downloaded TEXT NOT NULL,
-  startDate TEXT NOT NULL,
-  endDate TEXT NOT NULL,
-  txCount INTEGER NOT NULL,
-  txLoaded INTEGER NOT NULL,
-  balance NUMERIC,
-  balanceDate TEXT,
+  "ofxImportId" INTEGER PRIMARY KEY AUTOINCREMENT,
+  "ofxId" INTEGER NOT NULL REFERENCES ofx (ofxIFd),
+  "downloaded" TEXT NOT NULL,
+  "startDate" TEXT NOT NULL,
+  "endDate" TEXT NOT NULL,
+  "txCount" INTEGER NOT NULL,
+  "txLoaded" INTEGER NOT NULL,
+  "balance" NUMERIC,
+  "balanceDate" TEXT,
   "version" TEXT NOT NULL
 );
 

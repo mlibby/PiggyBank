@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS commodity;
 
 CREATE TABLE commodity (
   "commodityId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "commodityType" INTEGER NOT NULL,
+  "type" INTEGER NOT NULL,
   "symbol" TEXT NOT NULL,
   "name" TEXT NOT NULL,
   "description" TEXT NOT NULL,
@@ -16,10 +16,16 @@ CREATE TABLE commodity (
   "version" TEXT NOT NULL
 );
 
-CREATE INDEX commodityTypeName ON commodity ("commodityType", "name");
+CREATE INDEX commodityTypeName ON commodity ("type", "name");
 
 INSERT INTO
-  commodity ("commodityType", "symbol", "name", "description", "version")
+  commodity (
+    "type",
+    "symbol",
+    "name",
+    "description",
+    "version"
+  )
 VALUES
   (1, '$', 'USD', 'US Dollar', getVersion());
 
@@ -43,7 +49,13 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  price ("currencyId", "commodityId", "value", "quoteDate", "version")
+  price (
+    "currencyId",
+    "commodityId",
+    "value",
+    "quoteDate",
+    "version"
+  )
 SELECT
   cid,
   cid,
@@ -56,13 +68,13 @@ FROM
 CREATE TABLE account (
   "accountId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
-  "accountName" TEXT NOT NULL,
+  "name" TEXT NOT NULL,
   "isPlaceholder" BOOLEAN NOT NULL DEFAULT FALSE,
   "parentId" INTEGER,
   "version" TEXT NOT NULL
 );
 
-CREATE UNIQUE INDEX accountNameParent ON account(accountName, parentId);
+CREATE UNIQUE INDEX accountNameParent ON account("name", "parentId");
 
 -- Required top-level accounts
 WITH c (cid) AS (
@@ -74,7 +86,12 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  account (accountName, isPlaceholder, currencyId, "version")
+  account (
+    "name",
+    "isPlaceholder",
+    "currencyId",
+    "version"
+  )
 SELECT
   'Assets',
   TRUE,
@@ -92,7 +109,12 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  account (accountName, isPlaceholder, currencyId, "version")
+  account (
+    "name",
+    "isPlaceholder",
+    "currencyId",
+    "version"
+  )
 SELECT
   'Equity',
   TRUE,
@@ -110,7 +132,12 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  account (accountName, isPlaceholder, currencyId, "version")
+  account (
+    "name",
+    "isPlaceholder",
+    "currencyId",
+    "version"
+  )
 SELECT
   'Expenses',
   TRUE,
@@ -128,7 +155,12 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  account (accountName, isPlaceholder, currencyId, "version")
+  account (
+    "name",
+    "isPlaceholder",
+    "currencyId",
+    "version"
+  )
 SELECT
   'Income',
   TRUE,
@@ -146,7 +178,12 @@ WITH c (cid) AS (
     symbol = '$'
 )
 INSERT INTO
-  account (accountName, isPlaceholder, currencyId, "version")
+  account (
+    "name",
+    "isPlaceholder",
+    "currencyId",
+    "version"
+  )
 SELECT
   'Liabilities',
   TRUE,

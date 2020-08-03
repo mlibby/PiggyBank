@@ -38,28 +38,28 @@ test("sets up routes", () => {
   expect(mockRouter.delete.mock.calls[0][0]).toBe("/")
 })
 
-test("list(req, res, next)", async () => {
+test("list(req, res, next)", () => {
   const mockAccountList = [{ accountId: 1, name: "mock account" }]
   mockRepo.account.selectAll.mockResolvedValue(mockAccountList)
 
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo)
-  await accountRoutes.list(mockRequest, mockResponse, null)
+  accountRoutes.list(mockRequest, mockResponse, null)
 
   expect(mockRepo.account.selectAll).toHaveBeenCalled()
   expect(mockResponse.json).toHaveBeenCalledWith(mockAccountList)
 })
 
-test("create(req, res, next)", async () => {
-  mockRepo.account.insert.mockResolvedValue(mockAccountNew)
+test("create(req, res, next)", () => {
+  mockRepo.account.insert.mockReturnValue(mockAccountNew)
 
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo)
-  await accountRoutes.create(mockRequest, mockResponse, null)
+  accountRoutes.create(mockRequest, mockResponse, null)
 
   expect(mockRepo.account.insert).toHaveBeenCalledWith(mockAccountOrig)
   expect(mockResponse.json).toHaveBeenCalledWith(mockAccountNew)
 })
 
-test("update(req, res, next)", async () => {
+test("update(req, res, next)", () => {
   const mockReq2 = { ...mockRequest }
   mockReq2.fields.accountId = mockAccountId
   mockReq2.fields.md5 = "original Md5"
@@ -69,16 +69,16 @@ test("update(req, res, next)", async () => {
       md5: mockReq2.fields.md5
     }
   }
-  mockRepo.account.update.mockResolvedValue(mockAccountNew)
+  mockRepo.account.update.mockReturnValue(mockAccountNew)
 
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo)
-  await accountRoutes.update(mockReq2, mockResponse, null)
+  accountRoutes.update(mockReq2, mockResponse, null)
 
   expect(mockRepo.account.update).toHaveBeenCalledWith(mockAccountOrig2)
   expect(mockResponse.json).toHaveBeenCalledWith(mockAccountNew)
 })
 
-test("delete(req, res, next)", async () => {
+test("delete(req, res, next)", () => {
   const mockReq2 = { ...mockRequest }
   mockReq2.fields.accountId = mockAccountId
   mockReq2.fields.md5 = "original Md5"
@@ -95,7 +95,7 @@ test("delete(req, res, next)", async () => {
   mockResp2.status.mockReturnValue(mockResp2)
 
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo)
-  await accountRoutes.delete(mockReq2, mockResp2, null)
+  accountRoutes.delete(mockReq2, mockResp2, null)
 
   expect(mockRepo.account.delete).toHaveBeenCalledWith(mockAccountOrig2)
   expect(mockResp2.status).toHaveBeenCalledWith(200)

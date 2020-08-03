@@ -19,12 +19,12 @@ test("sets up routes", () => {
   // expect(mockRouter.delete.mock.calls[0][0]).toBe("/")
 })
 
-test("list(req, res, next)", async () => {
+test("list(req, res, next)", () => {
   const mockResults = ["foo", "bar"]
-  mockRepo.price.selectAll.mockResolvedValue(mockResults)
+  mockRepo.price.selectAll.mockReturnValue(mockResults)
 
   const routes = new PriceRoutes(mockRouter, mockRepo)
-  await routes.list(mockRequest, mockResponse, null)
+  routes.list(mockRequest, mockResponse, null)
 
   expect(mockRepo.price.selectAll).toHaveBeenCalled()
   expect(mockResponse.json).toHaveBeenCalledWith(mockResults)

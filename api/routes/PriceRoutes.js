@@ -9,8 +9,8 @@ exports.PriceRoutes = class PriceRoutes {
     // this.router.delete("/", this.delete.bind(this))
   }
 
-  async list(req, res, next) {
-    const prices = await this.repo.price.selectAll()
+  list(req, res, next) {
+    const prices = this.repo.price.selectAll()
     res.json(prices)
   }
 

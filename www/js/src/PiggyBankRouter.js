@@ -12,7 +12,7 @@ import { ReceiptIndexView } from "./banking/ReceiptsView.js"
 import { ReportIndexView } from "./report/ReportIndexView.js"
 import { TxIndexView } from "./tx/TxIndexView.js"
 
-export class Router extends Backbone.Router {
+export class PiggyBankRouter extends Backbone.Router {
   preinitialize() {
     this.routes = {
       "": () => this.switchView(new HomeView(), ""),

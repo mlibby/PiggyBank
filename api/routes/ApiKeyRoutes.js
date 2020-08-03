@@ -9,8 +9,8 @@ exports.ApiKeyRoutes = class ApiKeyRoutes {
     // this.router.delete("/", this.delete.bind(this))
   }
 
-  async list(req, res, next) {
-    const apiKeys = await this.repo.apiKey.selectAll()
+  list(req, res, next) {
+    const apiKeys = this.repo.apiKey.selectAll()
     res.json(apiKeys)
   }
 

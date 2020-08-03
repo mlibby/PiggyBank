@@ -4,7 +4,8 @@ exports.AccountRepo = class AccountRepo {
   }
 
   validateResult(result, account) {
-    if (result.rowCount > 0) {
+    if (result.changes > 0) {
+
       account.md5 = result.rows[0].md5
     }
     else {
@@ -15,14 +16,14 @@ exports.AccountRepo = class AccountRepo {
   validateVersion(id, version) {
     const stmt = this.db.prepare(`
       SELECT
-        account_id "accountId",
-        md5(account::text)
+        "accountId",
+        "version"
       FROM account
-      WHERE account_id = $1`)
+      WHERE accountId = ?`)
 
     const result = stmt.get(id)
-    if (result.rowCount === 1 && result.rows[0].md5 !== md5) {
-      throw new Error("md5 mismatch")
+    if (result && result.version !== version) {
+      throw new Error("version mismatch")
     }
     else {
       throw new Error("id mismatch")
@@ -32,51 +33,66 @@ exports.AccountRepo = class AccountRepo {
   selectAll() {
     const stmt = this.db.prepare(`
       SELECT
-        account_id "accountId",
-        currency_id "currencyId",
-        account_name "name",
-        is_placeholder "isPlaceholder",
-        parent_id "parentId",
-        md5(account::text) "md5"
+        "accountId",
+        "currencyId",
+        "name",
+        "isPlaceholder",
+        "parentId",
+        "version"
       FROM account`)
 
     const results = stmt.all()
     return results
   }
 
+  select(id) {
+    const stmt = this.db.prepare(`
+      SELECT
+        "accountId",
+        "currencyId",
+        "name",
+        "isPlaceholder",
+        "parentId",
+        "version"
+      FROM account`)
+
+    const result = stmt.get()
+    return result
+  }
+
   insert(account) {
     const stmt = this.db.prepare(`
       INSERT INTO account (
-        currency_id,
-        account_name,
-        is_placeholder,
-        parent_id
+        "currencyId",
+        "name",
+        "isPlaceholder",
+        "parentId",
+        "version"
       )
-      VALUES ($1, $2, $3, $4)
-      RETURNING *, md5(account::text)`)
+      VALUES (?, ?, ?, ?, getVersion())
+      `)
 
-    const result = stmt.get(
+    const result = stmt.run(
       account.currencyId,
       account.name,
       account.isPlaceholder,
       account.parentId,
     )
-    account.accountId = result.rows[0].account_id
-    account.md5 = result.rows[0].md5
+
+    account = this.select(result.lastInsertRowid)
     return account
   }
 
   update(account) {
     const stmt = this.db.prepare(`
       UPDATE account 
-      SET currency_id = $1,
-        account_name = $2,
-        is_placeholder = $3,
-        parent_id = $4
-      WHERE account_id = $5 and md5(account::text) = $6
-      RETURNING *, md5(account::text)`)
+      SET "currencyId" = ?,
+        "name" = ?,
+        "isPlaceholder" = ?,
+        "parentId" = ?
+      WHERE "accountId" = ? and "version" = ?`)
 
-    const result = stmt.get(
+    const result = stmt.run(
       account.currencyId,
       account.name,
       account.isPlaceholder,
