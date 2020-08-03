@@ -1,27 +1,40 @@
+const { MockSQLite3 } = require("./MockSQLite3")
+jest.mock("better-sqlite3", () => MockSQLite3)
+const SQLite3 = require("better-sqlite3")
+
 const { CommodityRepo } = require("../CommodityRepo")
 const helpers = require("../../__tests__/testHelpers.js")
-let queryFn = jest.fn()
 
-test("new CommodityRepo(queryFn)", () => {
-  const repo = new CommodityRepo(queryFn)
-  expect(repo.queryFn).toBe(queryFn)
+const origVersion = 'original version'
+const newVersion = 'new version'
+
+let repo
+let db
+beforeEach(() => {
+  db = new SQLite3()
+  repo = new CommodityRepo(db)
 })
 
-test("selectAll() uses correct SQL and returns rows", async () => {
-  const results = { rows: ["foo", "bar"] }
-  queryFn.mockResolvedValue(results)
-  const repo = new CommodityRepo(queryFn)
-  const commodities = await repo.selectAll()
-  expect(helpers.normalize(queryFn.mock.calls[0][0]))
+test("new CommodityRepo(db)", () => {
+  expect(repo.db).toBe(db)
+})
+
+test("selectAll() uses correct SQL and returns rows", () => {
+  const mockResults = [{foo: "foo", bar: "bar"}]
+  db.all.mockReturnValue(mockResults)
+
+  const commodities = repo.selectAll()
+  expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
-        commodity_id "commodityId",
-        commodity_type "type",
-        symbol,
+        "commodityId",
+        "type",
+        "symbol",
         "name",
-        description,
-        ticker
+        "description",
+        "ticker",
+        "version"
       FROM commodity`
     ))
-  expect(commodities).toEqual(results.rows)
+  expect(commodities).toEqual(mockResults)
 })

@@ -25,18 +25,8 @@ jest.mock("path", () => {
   }
 })
 
-class mockSQLite3 {
-  constructor() {
-    this.exec = jest.fn().mockReturnValue(this)
-    this.function = jest.fn().mockReturnValue(this)
-    this.pragma = jest.fn().mockReturnValue(this)
-    this.get = jest.fn().mockReturnValue(this)
-    this.pluck = jest.fn().mockReturnValue(this)
-    this.prepare = jest.fn().mockReturnValue(this)
-  }
-}
-
-jest.mock("better-sqlite3", () => mockSQLite3)
+const { MockSQLite3 } = require("./MockSQLite3.js")
+jest.mock("better-sqlite3", () => MockSQLite3)
 const SQLite3 = require("better-sqlite3")
 
 const path = require("path")

@@ -1,26 +1,26 @@
 exports.PriceRepo = class PriceRepo {
-  constructor(queryFn) {
-    this.queryFn = queryFn
+  constructor(db) {
+    this.db = db
   }
 
-  async selectAll() {
-    const sql = `
+  selectAll() {
+    const stmt = this.db.prepare(`
       SELECT
-        price_id "id",
-        currency_id "currencyId",
-        c2.name "currencyName",
-        p.commodity_id "commodityId",
-        c.name "commodityName",
+        "priceId",
+        "currencyId",
+        cur.name "currencyName",
+        p.commodityId "commodityId",
+        com.name "commodityName",
         "value",
-        quote_date "quoteDate"
+        "quoteDate"
       FROM price p
-      JOIN commodity c 
-      ON p.commodity_id = c.commodity_id
-      JOIN commodity c2
-      ON p.currency_id = c2.commodity_id
-      `
+      JOIN commodity com
+      ON p.commodityId = cur.commodityId
+      JOIN commodity cur
+      ON p.currencyId = cur.commodityId
+      `)
 
-    const results = await this.queryFn(sql)
-    return results.rows
+    const results = stmt.all()
+    return results
   }
 }

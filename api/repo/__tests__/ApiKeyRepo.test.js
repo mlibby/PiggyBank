@@ -1,24 +1,38 @@
+const { MockSQLite3 } = require("./MockSQLite3")
+jest.mock("better-sqlite3", () => MockSQLite3)
+const SQLite3 = require("better-sqlite3")
+
 const { ApiKeyRepo } = require("../ApiKeyRepo")
 const helpers = require("../../__tests__/testHelpers.js")
-let queryFn = jest.fn()
 
-test("new ApiKeyRepo(queryFn)", () => {
-  const repo = new ApiKeyRepo(queryFn)
-  expect(repo.queryFn).toBe(queryFn)
+const origVersion = 'original version'
+const newVersion = 'new version'
+
+let repo
+let db
+beforeEach(() => {
+  db = new SQLite3()
+  repo = new ApiKeyRepo(db)
 })
 
-test("selectAll() uses correct SQL and returns rows", async () => {
-  const results = { rows: ["foo", "bar"] }
-  queryFn.mockResolvedValue(results)
-  const repo = new ApiKeyRepo(queryFn)
-  const apiKeys = await repo.selectAll()
-  expect(helpers.normalize(queryFn.mock.calls[0][0]))
+test("new ApiKeyRepo(queryFn)", () => {
+  expect(repo.db).toBe(db)
+})
+
+test("selectAll() uses correct SQL and returns rows",  () => {
+  const mockResults = [{foo: "foo", bar: "bar"}]
+  db.all.mockReturnValue(mockResults)
+
+  const apiKeys =  repo.selectAll()
+
+  expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
-        api_key_id "id",
-        description,
-        api_key_value "apiKeyValue"
+        "apiKeyId",
+        "description",
+        "apiKeyValue",
+        "version"
       FROM api_key`
     ))
-  expect(apiKeys).toEqual(results.rows)
+  expect(apiKeys).toEqual(mockResults)
 })

@@ -5,8 +5,10 @@ exports.AccountRepo = class AccountRepo {
 
   validateResult(result, account) {
     if (result.changes > 0) {
-
-      account.md5 = result.rows[0].md5
+      const account2 = this.select(account.accountId)
+      if (account2) {
+        account.version = account2.version
+      }
     }
     else {
       this.validateVersion(account.accountId, account.version)
@@ -98,7 +100,7 @@ exports.AccountRepo = class AccountRepo {
       account.isPlaceholder,
       account.parentId,
       account.accountId,
-      account.md5
+      account.version
     )
 
     this.validateResult(result, account)
@@ -108,12 +110,11 @@ exports.AccountRepo = class AccountRepo {
   delete(account) {
     const stmt = this.db.prepare(`
       DELETE FROM account
-      WHERE account_id = $1 AND md5(account::text) = $2
-      RETURNING *, md5(account::text)`)
+      WHERE "accountId" = ? AND "version" = ?`)
 
-    const result = stmt.get(
+    const result = stmt.run(
       account.accountId,
-      account.md5
+      account.version
     )
 
     this.validateResult(result, account)

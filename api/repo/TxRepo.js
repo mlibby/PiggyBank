@@ -5,7 +5,8 @@ const newSplit = exports.newSplit = (tx, row) => {
     commodityId: row.commodityId,
     memo: row.memo,
     amount: row.amount,
-    value: row.value
+    value: row.value,
+    version: row.splitVersion
   }
   tx.splits.push(split)
 }
@@ -16,6 +17,7 @@ const newTx = exports.newTx = (row) => {
     postDate: row.postDate,
     number: row.number,
     description: row.description,
+    version: row.txVersion,
     splits: []
   }
   newSplit(tx, row)
@@ -23,33 +25,35 @@ const newTx = exports.newTx = (row) => {
 }
 
 exports.TxRepo = class TxRepo {
-  constructor(queryFn) {
-    this.queryFn = queryFn
+  constructor(db) {
+    this.db = db
   }
 
-  async selectAll() {
-    const sql = `
+  selectAll() {
+    const stmt = this.db.prepare(`
       SELECT
-        t.tx_id "txId",
-        t.post_date "postDate",
-        t.number,
-        t.description,
-        s.split_id "splitId",
-        s.account_id "accountId",
-        s.commodity_id "commodityId",
-        s.memo,
-        s.amount,
-        s.value
+        t."txId",
+        t."postDate",
+        t."number",
+        t."description",
+        t."version" "txVersion"
+        s."splitId",
+        s."accountId",
+        s."commodityId",
+        s."memo",
+        s."amount",
+        s."value",
+        s."version" "splitVersion"
       FROM tx t
       JOIN split s
-      ON t.tx_id = s.tx_id
-      ORDER BY t.tx_id, s.split_id
-      `
+      ON t."txId = s."txId"
+      ORDER BY t."txId", s."splitId"
+      `)
 
-    const list = await this.queryFn(sql)
+    const list = stmt.all()
     const txes = []
     let tx = { id: 0 }
-    list.rows.forEach((row) => {
+    list.forEach((row) => {
       if (row.txId === tx.id) {
         newSplit(tx, row)
       }

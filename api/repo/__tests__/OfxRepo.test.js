@@ -1,32 +1,46 @@
+const { MockSQLite3 } = require("./MockSQLite3")
+jest.mock("better-sqlite3", () => MockSQLite3)
+const SQLite3 = require("better-sqlite3")
+
 const { OfxRepo } = require("../OfxRepo")
 const helpers = require("../../__tests__/testHelpers.js")
-let queryFn = jest.fn()
 
-test("new CommodityRepo(queryFn)", () => {
-  const repo = new OfxRepo(queryFn)
-  expect(repo.queryFn).toBe(queryFn)
+const origVersion = 'original version'
+const newVersion = 'new version'
+
+let repo
+let db
+beforeEach(() => {
+  db = new SQLite3()
+  repo = new OfxRepo(db)
 })
 
-test("selectAll() uses correct SQL and returns rows", async () => {
-  const results = { rows: ["foo", "bar"] }
-  queryFn.mockResolvedValue(results)
-  const repo = new OfxRepo(queryFn)
-  const ofx = await repo.selectAll()
-  expect(helpers.normalize(queryFn.mock.calls[0][0]))
+test("new OfxRepo(db)", () => {
+  expect(repo.db).toBe(db)
+})
+
+test("selectAll() uses correct SQL and returns rows", () => {
+  const mockResults = [{foo: "foo", bar: "bar"}]
+  db.all.mockReturnValue(mockResults)
+
+  const ofx = repo.selectAll()
+  
+  expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
-        ofx_id "ofxId",
-        active,
-        account_id "accountId",
-        url,
-        "user" "user",
-        password,
-        fid,
-        fid_org "fidOrg",
-        bank_id "bankId",
-        acct_id "acctId",
-        acct_type "acctType"
+        "ofxId",
+        "active",
+        "accountId",
+        "url",
+        "user",
+        "password",
+        "fid",
+        "fidOrg",
+        "bankId",
+        "bankAccountId",
+        "accountType",
+        "version"
       FROM ofx`
     ))
-  expect(ofx).toEqual(results.rows)
+  expect(ofx).toEqual(mockResults)
 })

@@ -40,7 +40,7 @@ test("sets up routes", () => {
 
 test("list(req, res, next)", () => {
   const mockAccountList = [{ accountId: 1, name: "mock account" }]
-  mockRepo.account.selectAll.mockResolvedValue(mockAccountList)
+  mockRepo.account.selectAll.mockReturnValue(mockAccountList)
 
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo)
   accountRoutes.list(mockRequest, mockResponse, null)

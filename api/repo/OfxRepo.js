@@ -1,25 +1,26 @@
 exports.OfxRepo = class OfxRepo {
-  constructor(queryFn) {
-    this.queryFn = queryFn
+  constructor(db) {
+    this.db = db
   }
 
-  async selectAll() {
-    const sql = `
+  selectAll() {
+    const stmt = this.db.prepare(`
       SELECT
-        ofx_id "ofxId",
-        active,
-        account_id "accountId",
-        url,
-        "user" "user",
-        password,
-        fid,
-        fid_org "fidOrg",
-        bank_id "bankId",
-        acct_id "acctId",
-        acct_type "acctType"
-      FROM ofx`
+        "ofxId",
+        "active",
+        "accountId",
+        "url",
+        "user",
+        "password",
+        "fid",
+        "fidOrg",
+        "bankId",
+        "bankAccountId",
+        "accountType",
+        "version"
+      FROM ofx`)
 
-    const results = await this.queryFn(sql)
-    return results.rows
+    const results = stmt.all()
+    return results
   }
 }

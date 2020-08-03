@@ -9,7 +9,7 @@ const origVersion = 'original version'
 const newVersion = 'new version'
 
 let mockAccount
-let accountRepo
+let repo
 let db
 beforeEach(() => {
   mockAccount = {
@@ -22,16 +22,16 @@ beforeEach(() => {
   }
 
   db = new SQLite3()
-  accountRepo = new AccountRepo(db)
+  repo = new AccountRepo(db)
 })
 
 test("new AccountRepo(db)", () => {
-  expect(accountRepo.db).toBe(db)
+  expect(repo.db).toBe(db)
 })
 
 test("selectAll() uses correct SQL and returns rows", () => {
   db.all.mockReturnValue([mockAccount])
-  const accounts = accountRepo.selectAll()
+  const accounts = repo.selectAll()
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
@@ -59,7 +59,7 @@ test("insert() uses correct SQL and returns updated account", () => {
     version: newVersion
   })
 
-  const account = accountRepo.insert(mockAccount)
+  const account = repo.insert(mockAccount)
 
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
@@ -89,59 +89,51 @@ test("update() uses correct SQL and returns updated account", () => {
     version: newVersion
   })
 
-  const account = accountRepo.update(mockAccount)
+  const account = repo.update(mockAccount)
 
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       UPDATE account 
       SET "currencyId" = ?,
-        "accountName" = ?,
+        "name" = ?,
         "isPlaceholder" = ?,
         "parentId" = ?
       WHERE "accountId" = ? and "version" = ?`
     ))
   expect(db.run.mock.calls[0][0]).toEqual(mockAccount.currencyId)
-  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.name)
-  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.isPlaceholder)
-  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.parentId)
-  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.accountId)
-  expect(db.run.mock.calls[0][0]).toEqual(origVersion)
+  expect(db.run.mock.calls[0][1]).toEqual(mockAccount.name)
+  expect(db.run.mock.calls[0][2]).toEqual(mockAccount.isPlaceholder)
+  expect(db.run.mock.calls[0][3]).toEqual(mockAccount.parentId)
+  expect(db.run.mock.calls[0][4]).toEqual(mockAccount.accountId)
+  expect(db.run.mock.calls[0][5]).toEqual(origVersion)
   expect(account.version).toBe(newVersion);
 })
 
 test("update() fails from stale snapshot of account", () => {
-  db.get = jest.fn().mockReturnValueOnce({
-    rowCount: 0,
-    rows: []
-  }).mockReturnValueOnce({
-    rowCount: 1,
-    rows: [{
-      accountId: mockAccount.accountId,
-      md5: newVersion
-    }]
+  db.run.mockReturnValueOnce({
+    changes: 0
+  })
+  db.get.mockReturnValueOnce({
+    accountId: mockAccount.accountId,
+    version: newVersion
   })
 
   try {
-    const account = accountRepo.update(mockAccount)
+    const account = repo.update(mockAccount)
   }
   catch (e) {
-    expect(e.message).toBe("md5 mismatch")
+    expect(e.message).toBe("version mismatch")
   }
 })
 
 test("update() fails because of missing record", () => {
-  db.get = jest.fn()
-    .mockReturnValueOnce({
-      rowCount: 0,
-      rows: []
-    })
-    .mockReturnValue({
-      rowCount: 0,
-      rows: []
-    })
+  db.run.mockReturnValueOnce({
+    changes: 0
+  })
+  db.get.mockReturnValueOnce(undefined)
 
   try {
-    const account = accountRepo.update(mockAccount)
+    const account = repo.update(mockAccount)
   }
   catch (e) {
     expect(e.message).toBe("id mismatch")
@@ -149,47 +141,34 @@ test("update() fails because of missing record", () => {
 })
 
 test("delete() uses correct SQL", () => {
-  db.get = jest.fn()
-    .mockReturnValue({
-      rowCount: 1,
-      rows:
-        [{
-          account_id: mockAccount.accountId,
-          md5: origVersion
-        }]
-    })
+  db.run.mockReturnValue({
+    changes: 1
+  })
+  db.get.mockReturnValue(undefined)
 
-  const result = accountRepo.delete(mockAccount)
+  const result = repo.delete(mockAccount)
 
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       DELETE FROM account
-      WHERE account_id = $1 and md5(account::text) = $2
-      RETURNING *, md5(account::text)`
+      WHERE "accountId" = ? AND "version" = ?`
     ))
-  expect(db.get.mock.calls[0][1]).toEqual([
-    mockAccount.accountId,
-    mockAccount.md5
-  ])
+  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.accountId)
+  expect(db.run.mock.calls[0][1]).toEqual(mockAccount.version)
 })
 
 test("delete() fails from stale snapshot of account", () => {
-  db.get = jest.fn()
-    .mockReturnValueOnce({
-      rowCount: 0,
-      rows: []
-    })
-    .mockReturnValueOnce({
-      rowCount: 1,
-      rows: [{
-        accountId: mockAccount.accountId,
-        md5: newVersion
-      }]
-    })
+  db.run.mockReturnValueOnce({
+    changes: 0
+  })
+  db.get.mockReturnValueOnce({
+    accountId: mockAccount.accountId,
+    version: newVersion
+  })
 
   expect.assertions(1)
   try {
-    accountRepo.delete(mockAccount)
+    repo.delete(mockAccount)
   }
   catch (e) {
     expect(e.message).toBe("version mismatch")
@@ -197,19 +176,14 @@ test("delete() fails from stale snapshot of account", () => {
 })
 
 test("delete() fails because of missing record", () => {
-  db.get = jest.fn()
-    .mockReturnValueOnce({
-      rowCount: 0,
-      rows: []
-    })
-    .mockReturnValue({
-      rowCount: 0,
-      rows: []
-    })
+  db.run.mockReturnValueOnce({
+    changes: 0
+  })
+  db.get.mockReturnValueOnce(undefined)
 
   expect.assertions(1);
   try {
-    accountRepo.delete(mockAccount);
+    repo.delete(mockAccount);
   }
   catch (e) {
     expect(e.message).toBe("id mismatch");

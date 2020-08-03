@@ -1,32 +1,45 @@
+const { MockSQLite3 } = require("./MockSQLite3")
+jest.mock("better-sqlite3", () => MockSQLite3)
+const SQLite3 = require("better-sqlite3")
+
 const { PriceRepo } = require("../PriceRepo")
 const helpers = require("../../__tests__/testHelpers.js")
-let queryFn = jest.fn()
 
-test("new PriceRepo(queryFn)", () => {
-  const repo = new PriceRepo(queryFn)
-  expect(repo.queryFn).toBe(queryFn)
+const origVersion = 'original version'
+const newVersion = 'new version'
+
+let repo
+let db
+beforeEach(() => {
+  db = new SQLite3()
+  repo = new PriceRepo(db)
 })
 
-test("selectAll() uses correct SQL and returns rows", async () => {
-  const results = { rows: ["foo", "bar"] }
-  queryFn.mockResolvedValue(results)
-  const repo = new PriceRepo(queryFn)
-  const ofx = await repo.selectAll()
-  expect(helpers.normalize(queryFn.mock.calls[0][0]))
+test("new PriceRepo(db)", () => {
+  expect(repo.db).toBe(db)
+})
+
+test("selectAll() uses correct SQL and returns rows", () => {
+  const mockResults = [{foo: "foo", bar: "bar"}]
+  db.all.mockReturnValue(mockResults)
+
+  const prices = repo.selectAll()
+
+  expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
-        price_id "id",
-        currency_id "currencyId",
-        c2.name "currencyName",
-        p.commodity_id "commodityId",
-        c.name "commodityName",
+        "priceId",
+        "currencyId",
+        cur.name "currencyName",
+        p.commodityId "commodityId",
+        com.name "commodityName",
         "value",
-        quote_date "quoteDate"
+        "quoteDate"
       FROM price p
-      JOIN commodity c 
-      ON p.commodity_id = c.commodity_id
-      JOIN commodity c2
-      ON p.currency_id = c2.commodity_id`
+      JOIN commodity com
+      ON p.commodityId = cur.commodityId
+      JOIN commodity cur
+      ON p.currencyId = cur.commodityId`
     ))
-  expect(ofx).toEqual(results.rows)
+  expect(prices).toEqual(mockResults)
 })

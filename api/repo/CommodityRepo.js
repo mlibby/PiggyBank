@@ -11,7 +11,8 @@ exports.CommodityRepo = class CommodityRepo {
       "symbol",
       "name",
       "description",
-      "ticker"
+      "ticker",
+      "version"
     FROM commodity`)
 
     const results = stmt.all()
