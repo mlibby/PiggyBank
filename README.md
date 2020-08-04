@@ -1,4 +1,4 @@
-![Node.js CI](https://github.com/mlibby/PiggyBank/workflows/Node.js%20CI/badge.svg)
+![npm test](https://github.com/mlibby/PiggyBank/workflows/npm%20test/badge.svg)
 
 # Welcome to PiggyBank
 
