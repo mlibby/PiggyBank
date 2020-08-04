@@ -1,3 +1,5 @@
+![Node.js CI](https://github.com/mlibby/PiggyBank/workflows/Node.js%20CI/badge.svg)
+
 # Welcome to PiggyBank
 
 PiggyBank is a project to create a household financial appliance. As an appliance, PiggyBank is more than
