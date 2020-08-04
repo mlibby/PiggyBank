@@ -13,7 +13,7 @@ exports.PiggyBankRepo = class PiggyBankRepo {
   constructor() {
     this.db = new SQLite3("piggybank.db")
     this.db.pragma("foreign_keys = ON")
-    this.db.function('getVersion', () => (new Date).toISOString());
+    this.db.function('getVersion', this.getVersion)
 
     this.account = new AccountRepo(this.db)
     this.commodity = new CommodityRepo(this.db)
@@ -21,6 +21,10 @@ exports.PiggyBankRepo = class PiggyBankRepo {
     this.ofx = new OfxRepo(this.db)
     this.price = new PriceRepo(this.db)
     this.tx = new TxRepo(this.db)
+  }
+
+  getVersion() {
+    return (new Date()).toISOString()
   }
 
   getMigrationLevel() {

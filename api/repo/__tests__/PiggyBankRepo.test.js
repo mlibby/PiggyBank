@@ -60,6 +60,11 @@ beforeEach(() => {
     .mockReturnValueOnce(mockPath00004)
 })
 
+test("getVersion returns a timestamp in ISO format", () => {
+  const version = repo.getVersion()
+  expect(version).toEqual(expect.stringMatching(/^\d\d\d\d\-\d\d-\d\dT\d\d\:\d\d\:\d\d\.\d\d\dZ$/))
+})
+
 test("getCurrentLevel() returns 0 when no migrations have run yet", () => {
   repo.db.get = jest.fn().mockImplementation(() => {
     throw new Error('no such table: migration')
@@ -159,6 +164,17 @@ test("updateDb() runs only pending migrations at level 2", () => {
   expect(repo.db.exec).toHaveBeenCalledTimes(2)
   expect(repo.db.exec.mock.calls[0]).toEqual([mockSql00003])
   expect(repo.db.exec.mock.calls[1]).toEqual([mockSql00004])
+})
+
+test("updateDb() throws error when db.exec throws error", () => {
+  repo.db.exec = jest.fn().mockImplementation(() => {
+    throw new Error("SQL failed")
+  })
+  repo.getMigrationLevel = jest.fn().mockReturnValue(3)
+
+  expect(() => {
+    const level = repo.updateDb()
+  }).toThrow()
 })
 
 test("repo.account is an AccountRepo", () => {
