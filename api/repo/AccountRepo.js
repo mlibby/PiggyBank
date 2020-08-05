@@ -4,35 +4,6 @@ exports.AccountRepo = class AccountRepo {
     this.validateFn = validateFn
   }
 
-  // validateResult(result, account) {
-  //   if (result.changes > 0) {
-  //     const account2 = this.select(account.accountId)
-  //     if (account2) {
-  //       account.version = account2.version
-  //     }
-  //   }
-  //   else {
-  //     this.validateVersion(account.accountId, account.version)
-  //   }
-  // }
-
-  // validateVersion(id, version) {
-  //   const stmt = this.db.prepare(`
-  //     SELECT
-  //       "accountId",
-  //       "version"
-  //     FROM account
-  //     WHERE accountId = ?`)
-
-  //   const result = stmt.get(id)
-  //   if (result && result.version !== version) {
-  //     throw new Error("version mismatch")
-  //   }
-  //   else {
-  //     throw new Error("id mismatch")
-  //   }
-  // }
-
   selectAll() {
     const stmt = this.db.prepare(`
       SELECT
