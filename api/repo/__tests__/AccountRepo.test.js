@@ -23,7 +23,7 @@ beforeEach(() => {
   }
 
   db = new SQLite3()
-  mockValidateFn = jest.fn().mockImplementation((orig, table, idField) => {
+  mockValidateFn = jest.fn().mockImplementation((result, orig, table, idField) => {
     orig.version = newVersion
   })
   repo = new AccountRepo(db, mockValidateFn)
@@ -87,12 +87,9 @@ test("insert() uses correct SQL and returns updated account", () => {
 })
 
 test("update() uses correct SQL and returns updated account", () => {
-  db.run.mockReturnValue({
-    changes: 1
-  })
-  db.get.mockReturnValue({
-    version: newVersion
-  })
+  const mockChanges = { changes: 1 }
+  db.run.mockReturnValue(mockChanges)
+  db.get.mockReturnValue({ version: newVersion })
 
   const account = repo.update(mockAccount)
 
@@ -111,15 +108,14 @@ test("update() uses correct SQL and returns updated account", () => {
   expect(db.run.mock.calls[0][3]).toEqual(mockAccount.parentId)
   expect(db.run.mock.calls[0][4]).toEqual(mockAccount.accountId)
   expect(db.run.mock.calls[0][5]).toEqual(origVersion)
-  expect(mockValidateFn).toBeCalledWith(mockAccount, "account", "accountId")
+  expect(mockValidateFn).toBeCalledWith(mockChanges, mockAccount, "account", "accountId")
   expect(account.version).toEqual(newVersion)
 })
 
 
 test("delete() uses correct SQL", () => {
-  db.run.mockReturnValue({
-    changes: 1
-  })
+  const mockChanges = { changes: 1 }
+  db.run.mockReturnValue(mockChanges)
   db.get.mockReturnValue(undefined)
 
   const result = repo.delete(mockAccount)
@@ -131,5 +127,5 @@ test("delete() uses correct SQL", () => {
     ))
   expect(db.run.mock.calls[0][0]).toEqual(mockAccount.accountId)
   expect(db.run.mock.calls[0][1]).toEqual(origVersion)
-  expect(mockValidateFn).toBeCalledWith(mockAccount, "account", "accountId")
+  expect(mockValidateFn).toBeCalledWith(mockChanges, mockAccount, "account", "accountId")
 })

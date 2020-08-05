@@ -75,7 +75,7 @@ exports.AccountRepo = class AccountRepo {
       account.version
     )
 
-    this.validateFn(account, "account", "accountId")
+    this.validateFn(result, account, "account", "accountId")
     return account
   }
 
@@ -89,6 +89,6 @@ exports.AccountRepo = class AccountRepo {
       account.version
     )
 
-    this.validateFn(account, "account", "accountId")
+    this.validateFn(result, account, "account", "accountId")
   }
 }
