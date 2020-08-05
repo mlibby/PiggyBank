@@ -177,6 +177,71 @@ test("updateDb() throws error when db.exec throws error", () => {
   }).toThrow()
 })
 
+test("update() fails from stale snapshot of account", () => {
+  db.run.mockReturnValueOnce({
+    changes: 0
+  })
+  db.get.mockReturnValueOnce({
+    accountId: mockAccount.accountId,
+    version: newVersion
+  })
+
+  try {
+    const account = repo.update(mockAccount)
+  }
+  catch (e) {
+    expect(e.message).toBe("version mismatch")
+  }
+})
+
+test("update() fails because of missing record", () => {
+  db.run.mockReturnValueOnce({
+    changes: 0
+  })
+  db.get.mockReturnValueOnce(undefined)
+
+  try {
+    const account = repo.update(mockAccount)
+  }
+  catch (e) {
+    expect(e.message).toBe("id mismatch")
+  }
+})
+
+test("delete() fails from stale snapshot of account", () => {
+  db.run.mockReturnValueOnce({
+    changes: 0
+  })
+  db.get.mockReturnValueOnce({
+    accountId: mockAccount.accountId,
+    version: newVersion
+  })
+
+  expect.assertions(1)
+  try {
+    repo.delete(mockAccount)
+  }
+  catch (e) {
+    expect(e.message).toBe("version mismatch")
+  }
+})
+
+test("delete() fails because of missing record", () => {
+  db.run.mockReturnValueOnce({
+    changes: 0
+  })
+  db.get.mockReturnValueOnce(undefined)
+
+  expect.assertions(1);
+  try {
+    repo.delete(mockAccount);
+  }
+  catch (e) {
+    expect(e.message).toBe("id mismatch");
+  }
+})
+
+
 test("repo.account is an AccountRepo", () => {
   expect(repo.account.constructor.name).toBe("AccountRepo")
 })

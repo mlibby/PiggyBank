@@ -1,36 +1,37 @@
 exports.AccountRepo = class AccountRepo {
-  constructor(db) {
+  constructor(db, validateFn) {
     this.db = db
+    this.validateFn = validateFn
   }
 
-  validateResult(result, account) {
-    if (result.changes > 0) {
-      const account2 = this.select(account.accountId)
-      if (account2) {
-        account.version = account2.version
-      }
-    }
-    else {
-      this.validateVersion(account.accountId, account.version)
-    }
-  }
+  // validateResult(result, account) {
+  //   if (result.changes > 0) {
+  //     const account2 = this.select(account.accountId)
+  //     if (account2) {
+  //       account.version = account2.version
+  //     }
+  //   }
+  //   else {
+  //     this.validateVersion(account.accountId, account.version)
+  //   }
+  // }
 
-  validateVersion(id, version) {
-    const stmt = this.db.prepare(`
-      SELECT
-        "accountId",
-        "version"
-      FROM account
-      WHERE accountId = ?`)
+  // validateVersion(id, version) {
+  //   const stmt = this.db.prepare(`
+  //     SELECT
+  //       "accountId",
+  //       "version"
+  //     FROM account
+  //     WHERE accountId = ?`)
 
-    const result = stmt.get(id)
-    if (result && result.version !== version) {
-      throw new Error("version mismatch")
-    }
-    else {
-      throw new Error("id mismatch")
-    }
-  }
+  //   const result = stmt.get(id)
+  //   if (result && result.version !== version) {
+  //     throw new Error("version mismatch")
+  //   }
+  //   else {
+  //     throw new Error("id mismatch")
+  //   }
+  // }
 
   selectAll() {
     const stmt = this.db.prepare(`
@@ -103,7 +104,7 @@ exports.AccountRepo = class AccountRepo {
       account.version
     )
 
-    this.validateResult(result, account)
+    this.validateFn(account, "account", "accountId")
     return account
   }
 
@@ -117,6 +118,6 @@ exports.AccountRepo = class AccountRepo {
       account.version
     )
 
-    this.validateResult(result, account)
+    this.validateFn(account, "account", "accountId")
   }
 }

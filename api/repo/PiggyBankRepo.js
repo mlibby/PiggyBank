@@ -15,7 +15,7 @@ exports.PiggyBankRepo = class PiggyBankRepo {
     this.db.pragma("foreign_keys = ON")
     this.db.function('getVersion', this.getVersion)
 
-    this.account = new AccountRepo(this.db)
+    this.account = new AccountRepo(this.db, this.validateResult)
     this.commodity = new CommodityRepo(this.db)
     this.apiKey = new ApiKeyRepo(this.db)
     this.ofx = new OfxRepo(this.db)
@@ -59,10 +59,44 @@ exports.PiggyBankRepo = class PiggyBankRepo {
       try {
         this.db.exec(sql)
       }
-      catch(err) {
+      catch (err) {
         console.log(err.message)
         throw err
       }
     })
+  }
+
+  validateResult(result, original, table, idField) {
+    if (result.changes > 0) {
+      const stmt = this.db.prepare(`
+        SELECT "${idField}", "version"
+        FROM ${table}
+      `)
+      const updated = this.db.get(original[idField])
+      if (updated) {
+        original.version = updated.version
+      }
+    }
+    else {
+      this.validateVersion(original, table, idField)
+    }
+  }
+
+  validateVersion(original, table, idField) {
+    const stmt = this.db.prepare(`
+      SELECT
+        "${idField}",
+        "version"
+      FROM ${table}
+      WHERE "${idField}" = ?
+      `)
+
+    const result = stmt.get(original[idField])
+    if (result && result.version !== original.version) {
+      throw new Error("version mismatch")
+    }
+    else {
+      throw new Error("id mismatch")
+    }
   }
 }
