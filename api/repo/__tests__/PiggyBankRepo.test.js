@@ -177,70 +177,46 @@ test("updateDb() throws error when db.exec throws error", () => {
   }).toThrow()
 })
 
-test("update() fails from stale snapshot of account", () => {
-  db.run.mockReturnValueOnce({
-    changes: 0
-  })
-  db.get.mockReturnValueOnce({
-    accountId: mockAccount.accountId,
+test("validateResult() throws version mismatch with stale version", () => {
+  const mockChanges = { changes: 0 }
+  const mockId = "mockId"
+  const origVersion = "original version"
+  const newVersion = "new version"
+  repo.db.get.mockReturnValueOnce({
+    idField: mockId,
     version: newVersion
   })
+  const versionedObject = {
+    idField: 123,
+    version: origVersion
+  }
 
   try {
-    const account = repo.update(mockAccount)
+    repo.validateResult({ changes: 0 }, versionedObject, "vobj", "idField")
   }
   catch (e) {
     expect(e.message).toBe("version mismatch")
   }
 })
 
-test("update() fails because of missing record", () => {
-  db.run.mockReturnValueOnce({
-    changes: 0
-  })
-  db.get.mockReturnValueOnce(undefined)
+test("validateResult() throws id mismatch with invalid id", () => {
+  const mockChanges = { changes: 0 }
+  const mockId = "mockId"
+  const origVersion = "original version"
+  const newVersion = "new version"
+  repo.db.get.mockReturnValueOnce(undefined)
+  const versionedObject = {
+    idField: 123,
+    version: origVersion
+  }
 
   try {
-    const account = repo.update(mockAccount)
+    repo.validateResult({ changes: 0 }, versionedObject, "vobj", "idField")
   }
   catch (e) {
     expect(e.message).toBe("id mismatch")
   }
 })
-
-test("delete() fails from stale snapshot of account", () => {
-  db.run.mockReturnValueOnce({
-    changes: 0
-  })
-  db.get.mockReturnValueOnce({
-    accountId: mockAccount.accountId,
-    version: newVersion
-  })
-
-  expect.assertions(1)
-  try {
-    repo.delete(mockAccount)
-  }
-  catch (e) {
-    expect(e.message).toBe("version mismatch")
-  }
-})
-
-test("delete() fails because of missing record", () => {
-  db.run.mockReturnValueOnce({
-    changes: 0
-  })
-  db.get.mockReturnValueOnce(undefined)
-
-  expect.assertions(1);
-  try {
-    repo.delete(mockAccount);
-  }
-  catch (e) {
-    expect(e.message).toBe("id mismatch");
-  }
-})
-
 
 test("repo.account is an AccountRepo", () => {
   expect(repo.account.constructor.name).toBe("AccountRepo")
