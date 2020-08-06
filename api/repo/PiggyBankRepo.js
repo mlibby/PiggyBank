@@ -67,6 +67,18 @@ exports.PiggyBankRepo = class PiggyBankRepo {
   }
 
   validateResult(result, original, table, idField) {
+    // WARNING: 
+    // there is a potential race condition in this code
+    // if another user updates or deletes a record with
+    // the relevant ID then this will either pull back
+    // a version number that doesn't match the state of
+    // object or this will silently fail to update the 
+    // version number of the object
+    // NOTE:
+    // is this a real problem given that the first update
+    // would prevent the second update from working via
+    // the version number mismatch?
+
     if (result.changes > 0) {
       const stmt = this.db.prepare(`
         SELECT "${idField}", "version"
