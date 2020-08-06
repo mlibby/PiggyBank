@@ -71,6 +71,7 @@ exports.PiggyBankRepo = class PiggyBankRepo {
       const stmt = this.db.prepare(`
         SELECT "${idField}", "version"
         FROM ${table}
+        WHERE "${idField}" = ?
       `)
       const updated = this.db.get(original[idField])
       if (updated) {

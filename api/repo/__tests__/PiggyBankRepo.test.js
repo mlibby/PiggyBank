@@ -25,7 +25,7 @@ jest.mock("path", () => {
   }
 })
 
-const { MockSQLite3 } = require("./MockSQLite3.js")
+const { MockSQLite3 } = require("../__mocks__/SQLite3.mock.js")
 jest.mock("better-sqlite3", () => MockSQLite3)
 const SQLite3 = require("better-sqlite3")
 
@@ -192,7 +192,7 @@ test("validateResult() throws version mismatch with stale version", () => {
   }
 
   try {
-    repo.validateResult({ changes: 0 }, versionedObject, "vobj", "idField")
+    repo.validateResult(mockChanges, versionedObject, "vobj", "idField")
   }
   catch (e) {
     expect(e.message).toBe("version mismatch")
@@ -211,11 +211,30 @@ test("validateResult() throws id mismatch with invalid id", () => {
   }
 
   try {
-    repo.validateResult({ changes: 0 }, versionedObject, "vobj", "idField")
+    repo.validateResult(mockChanges, versionedObject, "vobj", "idField")
   }
   catch (e) {
     expect(e.message).toBe("id mismatch")
   }
+})
+
+test("validateResult() updates object version when there are changes", () => {
+  const mockChanges = { changes: 1 }
+  const mockId = "mock id"
+  const origVersion = "original version"
+  const newVersion = "new version"
+  repo.db.get.mockReturnValueOnce({
+    id: mockId,
+    version: newVersion
+  })
+  const versionedObject = {
+    idField: mockId,
+    version: origVersion
+  }
+
+  repo.validateResult(mockChanges, versionedObject, "vobj", "idField")
+
+  expect(versionedObject.version).toBe(newVersion)
 })
 
 test("repo.account is an AccountRepo", () => {

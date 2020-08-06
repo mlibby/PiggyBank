@@ -1,4 +1,4 @@
-const { MockSQLite3 } = require("./MockSQLite3")
+const { MockSQLite3 } = require("../__mocks__/SQLite3.mock")
 jest.mock("better-sqlite3", () => MockSQLite3)
 const SQLite3 = require("better-sqlite3")
 
