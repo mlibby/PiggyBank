@@ -6,7 +6,7 @@ exports.CommodityRepo = class CommodityRepo {
   selectAll() {
     const stmt = this.db.prepare(`
     SELECT
-      "commodityId",
+      "id",
       "type",
       "symbol",
       "name",

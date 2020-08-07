@@ -14,14 +14,14 @@ let mockApiKey
 let mockValidateFn
 beforeEach(() => {
   db = new SQLite3()
-  mockValidateFn = jest.fn().mockImplementation((result, orig, table, idField) => {
+  mockValidateFn = jest.fn().mockImplementation((result, orig, table) => {
     orig.version = newVersion
   })
   repo = new ApiKeyRepo(db, mockValidateFn)
   mockApiKey = {
-    apiKeyId: 423,
+    id: 423,
     description: "alphavantage",
-    apiKeyValue: "beep boop bap",
+    value: "beep boop bap",
     version: origVersion
   }
 })
@@ -40,9 +40,9 @@ test("selectAll() uses correct SQL and returns rows", () => {
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
-        "apiKeyId",
+        "id",
         "description",
-        "apiKeyValue",
+        "value",
         "version"
       FROM api_key`
     ))
@@ -62,13 +62,13 @@ test("update() uses correct SQL and returns updated account", () => {
     .toBe(helpers.normalize(`
       UPDATE apiKey 
       SET "description" = ?,
-        "apiKeyValue" = ?
-      WHERE "apiKeyId" = ? and "version" = ?`
+        "value" = ?
+      WHERE "id" = ? and "version" = ?`
     ))
   expect(db.run.mock.calls[0][0]).toEqual(mockApiKey.description)
-  expect(db.run.mock.calls[0][1]).toEqual(mockApiKey.apiKeyValue)
-  expect(db.run.mock.calls[0][2]).toEqual(mockApiKey.apiKeyId)
+  expect(db.run.mock.calls[0][1]).toEqual(mockApiKey.value)
+  expect(db.run.mock.calls[0][2]).toEqual(mockApiKey.id)
   expect(db.run.mock.calls[0][3]).toEqual(origVersion)
-  expect(mockValidateFn).toHaveBeenCalledWith(mockChanges, mockApiKey, "api_key", "apiKeyId")
+  expect(mockValidateFn).toHaveBeenCalledWith(mockChanges, mockApiKey, "api_key")
   expect(apiKey.version).toBe(newVersion)
 })

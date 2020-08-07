@@ -11,7 +11,7 @@ const template = (d) => html`
     <div class="modal-content">
       <div class="modal-body">
         <form class="account-editor form">
-          <input id="accountId" type="hidden" value="${d.accountId || ''}" />
+          <input id="accountId" type="hidden" value="${d.id || ''}" />
           <div class="form-row">
             <div class="form-group col">
               <div id="parentSelect"></div>
@@ -65,9 +65,9 @@ export class AccountFormView extends Backbone.View {
   save(e) {
     e.preventDefault()
 
-    const accountId = this.$("#accountId").val()
+    const id = this.$("#accountId").val()
     this.model.set({
-      "accountId": accountId ? Number(accountId) : null,
+      "id": id ? Number(id) : null,
       "currencyId": this.$("#commoditySelect select.select-commodity-id").find(":selected").val(),
       "name": this.$("#accountName").val(),
       "isPlaceholder": this.$("#isPlaceholder")[0].checked ? 1 : 0,

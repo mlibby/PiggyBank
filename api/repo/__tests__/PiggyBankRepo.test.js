@@ -183,16 +183,16 @@ test("validateResult() throws version mismatch with stale version", () => {
   const origVersion = "original version"
   const newVersion = "new version"
   repo.db.get.mockReturnValueOnce({
-    idField: mockId,
+    id: mockId,
     version: newVersion
   })
   const versionedObject = {
-    idField: 123,
+    id: mockId,
     version: origVersion
   }
 
   try {
-    repo.validateResult(mockChanges, versionedObject, "vobj", "idField")
+    repo.validateResult(mockChanges, versionedObject, "vobj")
   }
   catch (e) {
     expect(e.message).toBe("version mismatch")
@@ -206,12 +206,12 @@ test("validateResult() throws id mismatch with invalid id", () => {
   const newVersion = "new version"
   repo.db.get.mockReturnValueOnce(undefined)
   const versionedObject = {
-    idField: 123,
+    idField: "not mock id",
     version: origVersion
   }
 
   try {
-    repo.validateResult(mockChanges, versionedObject, "vobj", "idField")
+    repo.validateResult(mockChanges, versionedObject, "vobj")
   }
   catch (e) {
     expect(e.message).toBe("id mismatch")
@@ -228,11 +228,11 @@ test("validateResult() updates object version when there are changes", () => {
     version: newVersion
   })
   const versionedObject = {
-    idField: mockId,
+    id: mockId,
     version: origVersion
   }
 
-  repo.validateResult(mockChanges, versionedObject, "vobj", "idField")
+  repo.validateResult(mockChanges, versionedObject, "vobj")
 
   expect(versionedObject.version).toBe(newVersion)
 })

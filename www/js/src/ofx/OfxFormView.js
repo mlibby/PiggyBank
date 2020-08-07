@@ -126,7 +126,7 @@ export class OfxFormView extends Backbone.View {
     render(template(this.model.attributes), this.el);
 
     const accountSelect = new AccountSelectMenuView();
-    const el = accountSelect.render(this.model.get("accountId")).el;
+    const el = accountSelect.render(this.model.get("id")).el;
     this.$("#accountSelectMenu").html(el);
 
     this.$("#acctType").val(this.model.get("acctType"));

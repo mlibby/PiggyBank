@@ -48,7 +48,7 @@ export class AccountSelectMenuView extends Backbone.View {
     const accountSelect = this.$(".select-account-id")
     for (let model of collection.models) {
       if (includePlaceholders || model.get("isPlaceholder") === 0) {
-        const option = `<option value='${model.get("accountId")}'>${model.get("longName")}</option>`
+        const option = `<option value='${model.get("id")}'>${model.get("longName")}</option>`
         accountSelect.append(option)
       }
     }

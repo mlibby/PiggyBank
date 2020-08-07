@@ -6,7 +6,7 @@ exports.PriceRepo = class PriceRepo {
   selectAll() {
     const stmt = this.db.prepare(`
       SELECT
-        "priceId",
+        p."id",
         "currencyId",
         cur.name "currencyName",
         p.commodityId "commodityId",
@@ -15,9 +15,9 @@ exports.PriceRepo = class PriceRepo {
         "quoteDate"
       FROM price p
       JOIN commodity com
-      ON p.commodityId = cur.commodityId
+      ON p.commodityId = cur.id
       JOIN commodity cur
-      ON p.currencyId = cur.commodityId
+      ON p.currencyId = cur.id
       `)
 
     const results = stmt.all()

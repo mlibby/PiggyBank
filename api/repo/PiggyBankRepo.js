@@ -16,8 +16,8 @@ exports.PiggyBankRepo = class PiggyBankRepo {
     this.db.function('getVersion', this.getVersion)
 
     this.account = new AccountRepo(this.db, this.validateResult)
+    this.apiKey = new ApiKeyRepo(this.db, this.validateResult)
     this.commodity = new CommodityRepo(this.db)
-    this.apiKey = new ApiKeyRepo(this.db)
     this.ofx = new OfxRepo(this.db)
     this.price = new PriceRepo(this.db)
     this.tx = new TxRepo(this.db)
@@ -66,7 +66,7 @@ exports.PiggyBankRepo = class PiggyBankRepo {
     })
   }
 
-  validateResult(result, original, table, idField) {
+  validateResult(result, original, table) {
     // WARNING: 
     // there is a potential race condition in this code
     // if another user updates or deletes a record with
@@ -81,30 +81,30 @@ exports.PiggyBankRepo = class PiggyBankRepo {
 
     if (result.changes > 0) {
       const stmt = this.db.prepare(`
-        SELECT "${idField}", "version"
+        SELECT "id", "version"
         FROM ${table}
-        WHERE "${idField}" = ?
+        WHERE "id" = ?
       `)
-      const updated = this.db.get(original[idField])
+      const updated = this.db.get(original["id"])
       if (updated) {
         original.version = updated.version
       }
     }
     else {
-      this.validateVersion(original, table, idField)
+      this.validateVersion(original, table)
     }
   }
 
-  validateVersion(original, table, idField) {
+  validateVersion(original, table) {
     const stmt = this.db.prepare(`
       SELECT
-        "${idField}",
+        "id",
         "version"
       FROM ${table}
-      WHERE "${idField}" = ?
+      WHERE "id" = ?
       `)
 
-    const result = stmt.get(original[idField])
+    const result = stmt.get(original["id"])
     if (result && result.version !== original.version) {
       throw new Error("version mismatch")
     }

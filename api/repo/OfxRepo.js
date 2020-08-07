@@ -6,7 +6,7 @@ exports.OfxRepo = class OfxRepo {
   selectAll() {
     const stmt = this.db.prepare(`
       SELECT
-        "ofxId",
+        "id",
         "active",
         "accountId",
         "url",

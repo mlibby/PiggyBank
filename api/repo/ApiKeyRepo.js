@@ -7,9 +7,9 @@ exports.ApiKeyRepo = class ApiKeyRepo {
   selectAll() {
     const stmt = this.db.prepare(`
       SELECT
-        "apiKeyId",
+        "id",
         "description",
-        "apiKeyValue",
+        "value",
         "version"
       FROM api_key`)
 
@@ -21,18 +21,18 @@ exports.ApiKeyRepo = class ApiKeyRepo {
     const stmt = this.db.prepare(`
       UPDATE apiKey 
       SET "description" = ?,
-        "apiKeyValue" = ?
-      WHERE "apiKeyId" = ? and "version" = ?
+        "value" = ?
+      WHERE "id" = ? and "version" = ?
       `)
 
     const result = stmt.run(
       apiKey.description,
-      apiKey.apiKeyValue,
-      apiKey.apiKeyId,
+      apiKey.value,
+      apiKey.id,
       apiKey.version
     )
 
-    this.validateFn(result, apiKey, "api_key", "apiKeyId")
+    this.validateFn(result, apiKey, "api_key")
     return apiKey
   }
 }

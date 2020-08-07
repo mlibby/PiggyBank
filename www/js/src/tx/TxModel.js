@@ -2,7 +2,6 @@
 
 export class TxModel extends Backbone.Model {
   preinitialize() {
-    this.idAttribute = "txId"
     this.urlRoot = "/api/tx"
   }
 

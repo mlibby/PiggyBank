@@ -45,8 +45,8 @@ const template = (d) => html`
               <input id="bankId" class="form-control" type="text" name="bankId" value="${d.bankId}" />
             </div>
             <div class="form-group col-6 col-md-3">
-              <label for="acctId">Account ID</label>
-              <input id="acctId" class="form-control" type="text" name="acctId" value="${d.acctId}" />
+              <label for="bankAccountId">Account ID</label>
+              <input id="acctId" class="form-control" type="text" name="acctId" value="${d.bankAccountId}" />
             </div>
             <div class="form-group col-6">
             </div>
@@ -85,8 +85,8 @@ export class CommodityFormView extends Backbone.View {
       fid: this.$("#fid").val(),
       fidOrg: this.$("#fidOrg").val(),
       bankId: this.$("#bankId").val(),
-      acctId: this.$("#acctId").val(),
-      acctType: this.$("#acctType").val()
+      bankAccountId: this.$("#acctId").val(),
+      bankAccountType: this.$("#acctType").val()
     });
 
     const isNew = this.model.isNew();
@@ -94,7 +94,7 @@ export class CommodityFormView extends Backbone.View {
       success: (model) => {
         model.attributes.password = "******";
         const acctId = model.attributes.acctId;
-        model.attributes.acctId = "****" + acctId.substring(acctId.length - 4);
+        model.attributes.accontId = "****" + acctId.substring(accountId.length - 4);
         if (isNew) {
           this.trigger("created", model);
         } else {

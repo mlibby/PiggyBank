@@ -7,7 +7,7 @@ exports.AccountRepo = class AccountRepo {
   selectAll() {
     const stmt = this.db.prepare(`
       SELECT
-        "accountId",
+        "id",
         "currencyId",
         "name",
         "isPlaceholder",
@@ -22,7 +22,7 @@ exports.AccountRepo = class AccountRepo {
   select(id) {
     const stmt = this.db.prepare(`
       SELECT
-        "accountId",
+        "id",
         "currencyId",
         "name",
         "isPlaceholder",
@@ -64,31 +64,31 @@ exports.AccountRepo = class AccountRepo {
         "name" = ?,
         "isPlaceholder" = ?,
         "parentId" = ?
-      WHERE "accountId" = ? and "version" = ?`)
+      WHERE "id" = ? and "version" = ?`)
 
     const result = stmt.run(
       account.currencyId,
       account.name,
       account.isPlaceholder,
       account.parentId,
-      account.accountId,
+      account.id,
       account.version
     )
 
-    this.validateFn(result, account, "account", "accountId")
+    this.validateFn(result, account, "account")
     return account
   }
 
   delete(account) {
     const stmt = this.db.prepare(`
       DELETE FROM account
-      WHERE "accountId" = ? AND "version" = ?`)
+      WHERE "id" = ? AND "version" = ?`)
 
     const result = stmt.run(
-      account.accountId,
+      account.id,
       account.version
     )
 
-    this.validateFn(result, account, "account", "accountId")
+    this.validateFn(result, account, "account")
   }
 }

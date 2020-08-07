@@ -5,7 +5,7 @@ SELECT
   SUM(amount) amount
 FROM
   split s
-  JOIN commodity c ON s.commodityId = c.commodityId
+  JOIN commodity c ON s.commodityId = c.id
 WHERE
   c.commodityType = 1
 GROUP BY

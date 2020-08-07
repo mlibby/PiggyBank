@@ -4,7 +4,7 @@ import { html, render } from "../../lib/lit-html/lit-html.js"
 
 const template = (d) => html`
 <td>${d.description}</td>
-<td>${d.apiKeyValue}</td>
+<td>${d.value}</td>
 <td>
   <button class="create btn btn-sm btn-icon btn-outline-secondary"><span class="icon-pencil"></span><span class="sr-only">Edit</span></button>
   <button class="delete btn btn-sm btn-icon btn-outline-danger"><span class="icon-trash"></span><span class="sr-only">Delete</span></button>
@@ -43,7 +43,7 @@ export class ApiKeyView extends Backbone.View {
     render(template({
       id: this.model.get("id"),
       description: this.model.get("description"),
-      apiKeyValue: this.model.get("apiKeyValue")
+      value: this.model.get("value")
     }), this.el)
 
     this.$(".btn.edit").click((e) => this.edit(this.model, e))

@@ -1,6 +1,6 @@
 const newSplit = exports.newSplit = (tx, row) => {
   const split = {
-    splitId: row.splitId,
+    id: row.splitId,
     accountId: row.accountId,
     commodityId: row.commodityId,
     memo: row.memo,
@@ -32,12 +32,12 @@ exports.TxRepo = class TxRepo {
   selectAll() {
     const stmt = this.db.prepare(`
       SELECT
-        t."txId",
+        t."id" "txId",
         t."postDate",
         t."number",
         t."description",
-        t."version" "txVersion"
-        s."splitId",
+        t."version" "txVersion",
+        s."id" "splitId",
         s."accountId",
         s."commodityId",
         s."memo",
@@ -46,8 +46,8 @@ exports.TxRepo = class TxRepo {
         s."version" "splitVersion"
       FROM tx t
       JOIN split s
-      ON t."txId = s."txId"
-      ORDER BY t."txId", s."splitId"
+      ON t."id" = s."txId"
+      ORDER BY t."id", s."id"
       `)
 
     const list = stmt.all()

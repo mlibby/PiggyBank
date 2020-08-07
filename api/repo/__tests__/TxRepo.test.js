@@ -20,7 +20,7 @@ test("new TxRepo(db)", () => {
   expect(repo.db).toBe(db)
 })
 
-test("txRepo.selectAll() uses correct SQL and returns rows", async () => {
+test("txRepo.selectAll() uses correct SQL and returns rows", () => {
   const mockResults = [
     {
       txId: 2,
@@ -58,12 +58,12 @@ test("txRepo.selectAll() uses correct SQL and returns rows", async () => {
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
-        t."txId",
+        t."id" "txId",
         t."postDate",
         t."number",
         t."description",
         t."version" "txVersion"
-        s."splitId",
+        s."id" "splitId",
         s."accountId",
         s."commodityId",
         s."memo",
@@ -72,8 +72,8 @@ test("txRepo.selectAll() uses correct SQL and returns rows", async () => {
         s."version" "splitVersion"
       FROM tx t
       JOIN split s
-      ON t."txId = s."txId"
-      ORDER BY t."txId", s."splitId"`
+      ON t."id" = s."txId"
+      ORDER BY t."id", s."id"`
     ))
 
   expect(tx.length).toBe(1)
@@ -83,7 +83,7 @@ test("txRepo.selectAll() uses correct SQL and returns rows", async () => {
   expect(tx[0].version).toBe("txVersion1")
   expect(tx[0].splits.length).toBe(2)
   expect(tx[0].splits).toContainEqual({
-    splitId: 2,
+    id: 2,
     accountId: 9,
     commodityId: 1,
     memo: "Bar",
@@ -92,7 +92,7 @@ test("txRepo.selectAll() uses correct SQL and returns rows", async () => {
     version: "splitVersion2"
   })
   expect(tx[0].splits).toContainEqual({
-    splitId: 1,
+    id: 1,
     accountId: 10,
     commodityId: 2,
     memo: "Foo",

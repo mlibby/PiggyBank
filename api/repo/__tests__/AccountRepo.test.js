@@ -14,7 +14,7 @@ let db
 let mockValidateFn
 beforeEach(() => {
   mockAccount = {
-    accountId: 123,
+    id: 123,
     currencyId: 1,
     name: "test account",
     isPlaceholder: false,
@@ -40,7 +40,7 @@ test("selectAll() uses correct SQL and returns rows", () => {
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
-        "accountId",
+        "id",
         "currencyId",
         "name",
         "isPlaceholder",
@@ -54,13 +54,13 @@ test("selectAll() uses correct SQL and returns rows", () => {
 test("insert() uses correct SQL and returns updated account", () => {
   delete mockAccount.accountId
   delete mockAccount.md5
-  const mockAccountId = 333
+  const mockId = 333
   db.run.mockReturnValue({
     changes: 1,
-    lastInsertRowid: mockAccountId
+    lastInsertRowid: mockId
   })
   db.get.mockReturnValue({
-    accountId: mockAccountId,
+    id: mockId,
     version: newVersion
   })
 
@@ -82,7 +82,7 @@ test("insert() uses correct SQL and returns updated account", () => {
   expect(db.run.mock.calls[0][2]).toEqual(mockAccount.isPlaceholder)
   expect(db.run.mock.calls[0][3]).toEqual(mockAccount.parentId)
 
-  expect(account.accountId).toBe(mockAccountId)
+  expect(account.id).toBe(mockId)
   expect(account.version).toBe(newVersion)
 })
 
@@ -100,15 +100,15 @@ test("update() uses correct SQL and returns updated account", () => {
         "name" = ?,
         "isPlaceholder" = ?,
         "parentId" = ?
-      WHERE "accountId" = ? and "version" = ?`
+      WHERE "id" = ? and "version" = ?`
     ))
   expect(db.run.mock.calls[0][0]).toEqual(mockAccount.currencyId)
   expect(db.run.mock.calls[0][1]).toEqual(mockAccount.name)
   expect(db.run.mock.calls[0][2]).toEqual(mockAccount.isPlaceholder)
   expect(db.run.mock.calls[0][3]).toEqual(mockAccount.parentId)
-  expect(db.run.mock.calls[0][4]).toEqual(mockAccount.accountId)
+  expect(db.run.mock.calls[0][4]).toEqual(mockAccount.id)
   expect(db.run.mock.calls[0][5]).toEqual(origVersion)
-  expect(mockValidateFn).toBeCalledWith(mockChanges, mockAccount, "account", "accountId")
+  expect(mockValidateFn).toBeCalledWith(mockChanges, mockAccount, "account")
   expect(account.version).toEqual(newVersion)
 })
 
@@ -123,9 +123,9 @@ test("delete() uses correct SQL", () => {
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       DELETE FROM account
-      WHERE "accountId" = ? AND "version" = ?`
+      WHERE "id" = ? AND "version" = ?`
     ))
-  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.accountId)
+  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.id)
   expect(db.run.mock.calls[0][1]).toEqual(origVersion)
-  expect(mockValidateFn).toBeCalledWith(mockChanges, mockAccount, "account", "accountId")
+  expect(mockValidateFn).toBeCalledWith(mockChanges, mockAccount, "account")
 })

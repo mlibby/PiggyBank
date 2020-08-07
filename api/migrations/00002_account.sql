@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS price;
 DROP TABLE IF EXISTS commodity;
 
 CREATE TABLE commodity (
-  "commodityId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   "type" INTEGER NOT NULL,
   "symbol" TEXT NOT NULL,
   "name" TEXT NOT NULL,
@@ -30,9 +30,9 @@ VALUES
   (1, '$', 'USD', 'US Dollar', getVersion());
 
 CREATE TABLE price (
-  "priceId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
-  "commodityId" INTEGER NOT NULL REFERENCES commodity (commodityId),
+  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "currencyId" INTEGER NOT NULL REFERENCES commodity (id),
+  "commodityId" INTEGER NOT NULL REFERENCES commodity (id),
   "quoteDate" TEXT NOT NULL,
   "value" NUMERIC NOT NULL,
   "version" TEXT NOT NULL
@@ -42,7 +42,7 @@ CREATE INDEX priceCurrCommDate ON price ("currencyId", "commodityId", "quoteDate
 
 WITH c (cid) AS (
   SELECT
-    commodityId
+    id
   FROM
     commodity
   WHERE
@@ -66,8 +66,8 @@ FROM
   c;
 
 CREATE TABLE account (
-  "accountId" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "currencyId" INTEGER NOT NULL REFERENCES commodity (commodityId),
+  "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  "currencyId" INTEGER NOT NULL REFERENCES commodity (id),
   "name" TEXT NOT NULL,
   "isPlaceholder" BOOLEAN NOT NULL DEFAULT FALSE,
   "parentId" INTEGER,
@@ -79,7 +79,7 @@ CREATE UNIQUE INDEX accountNameParent ON account("name", "parentId");
 -- Required top-level accounts
 WITH c (cid) AS (
   SELECT
-    commodityId
+    id
   FROM
     commodity
   WHERE
@@ -102,7 +102,7 @@ FROM
 
 WITH c (cid) AS (
   SELECT
-    commodityId
+    id
   FROM
     commodity
   WHERE
@@ -125,7 +125,7 @@ FROM
 
 WITH c (cid) AS (
   SELECT
-    commodityId
+    id
   FROM
     commodity
   WHERE
@@ -148,7 +148,7 @@ FROM
 
 WITH c (cid) AS (
   SELECT
-    commodityId
+    id
   FROM
     commodity
   WHERE
@@ -171,7 +171,7 @@ FROM
 
 WITH c (cid) AS (
   SELECT
-    commodityId
+    id
   FROM
     commodity
   WHERE

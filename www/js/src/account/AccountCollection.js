@@ -11,7 +11,7 @@ export class AccountCollection extends Backbone.Collection {
 
   unflatten() {
     for (const model of this.models) {
-      const parentId = model.get("accountId")
+      const parentId = model.get("id")
       const children = this.models.filter(m => m.get("parentId") === parentId)
       if (children.length > 0) {
         model.children = new AccountCollection(children)

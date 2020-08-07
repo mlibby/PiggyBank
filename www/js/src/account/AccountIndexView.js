@@ -63,7 +63,7 @@ export class AccountIndexView extends Backbone.View {
 
   create(parent) {
     const model = new AccountModel({
-      parentId: parent.get("accountId"),
+      parentId: parent.get("id"),
       commodityCollection: this.commodityCollection
     })
     this.form = new AccountFormView({ model })

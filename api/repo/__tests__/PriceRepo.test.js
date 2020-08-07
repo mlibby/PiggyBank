@@ -28,7 +28,7 @@ test("selectAll() uses correct SQL and returns rows", () => {
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
-        "priceId",
+        "id",
         "currencyId",
         cur.name "currencyName",
         p.commodityId "commodityId",
@@ -37,9 +37,9 @@ test("selectAll() uses correct SQL and returns rows", () => {
         "quoteDate"
       FROM price p
       JOIN commodity com
-      ON p.commodityId = cur.commodityId
+      ON p.commodityId = cur.id
       JOIN commodity cur
-      ON p.currencyId = cur.commodityId`
+      ON p.currencyId = cur.id`
     ))
   expect(prices).toEqual(mockResults)
 })

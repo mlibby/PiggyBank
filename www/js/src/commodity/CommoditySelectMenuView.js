@@ -46,7 +46,7 @@ export class CommoditySelectMenuView extends Backbone.View {
   AddCommodityOptions(collection, commodityId) {
     const commoditySelect = this.$(".select-commodity-id");
     for (let model of collection.models) {
-      const option = `<option value='${model.get("commodityId")}'>${model.get("name")}</option>`;
+      const option = `<option value='${model.get("id")}'>${model.get("name")}</option>`;
       commoditySelect.append(option);
     }
 
