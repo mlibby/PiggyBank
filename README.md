@@ -1,4 +1,4 @@
-![npm test](https://github.com/mlibby/PiggyBank/workflows/npm%20test/badge.svg)
+[![npm test](https://github.com/mlibby/PiggyBank/workflows/npm%20test/badge.svg)](https://github.com/mlibby/PiggyBank/actions?query=workflow%3A"npm+test")
 
 # Welcome to PiggyBank
 
