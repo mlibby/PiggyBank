@@ -1,5 +1,5 @@
 [![npm test](https://github.com/mlibby/PiggyBank/workflows/npm%20test/badge.svg)](https://github.com/mlibby/PiggyBank/actions?query=workflow%3A"npm+test")
-![GitHub](https://img.shields.io/github/license/mlibby/PiggyBank)
+![license: GPL-3.0](https://img.shields.io/github/license/mlibby/PiggyBank)
 
 # Welcome to PiggyBank
 
