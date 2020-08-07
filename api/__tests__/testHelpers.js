@@ -19,7 +19,8 @@ const testHelpers = {
         delete: jest.fn()
       },
       apiKey: {
-        selectAll: jest.fn()
+        selectAll: jest.fn(),
+        update: jest.fn()
       },
       commodity: {
         selectAll: jest.fn()

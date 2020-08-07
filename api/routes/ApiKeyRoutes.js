@@ -20,11 +20,11 @@ exports.ApiKeyRoutes = class ApiKeyRoutes {
   //   res.json(account)
   // }
 
-  // async update(req, res, next) {
-  //   let account = this.requestToAccount(req)
-  //   account = await this.repo.account.update(account)
-  //   res.json(account)
-  // }
+  update(req, res, next) {
+    let apiKey = this.requestToApiKey(req)
+    apiKey = this.repo.apiKey.update(apiKey)
+    res.json(apiKey)
+  }
 
   // async delete(req, res, next) {
   //   let account = this.requestToAccount(req)
@@ -32,19 +32,17 @@ exports.ApiKeyRoutes = class ApiKeyRoutes {
   //   res.status(200).json({})
   // }
 
-  // requestToAccount(req) {
-  //   const account = {
-  //     name: req.fields.name,
-  //     currencyId: req.fields.currencyId,
-  //     isPlaceholder: req.fields.isPlaceholder,
-  //     parentId: Number(req.fields.parentId)
-  //   }
+  requestToApiKey(req) {
+    const apiKey = {
+      description: req.fields.description,
+      apiKeyValue: req.fields.apiKeyValue
+    }
 
-  //   if(req.fields.accountId) {
-  //     account.accountId = req.fields.accountId,
-  //     account.md5 = req.fields.md5
-  //   }
+    if(req.fields.apiKeyId) {
+      apiKey.apiKeyId = req.fields.apiKeyId,
+      apiKey.version = req.fields.version
+    }
 
-  //   return account
-  //}
+    return apiKey
+  }
 }

@@ -5,6 +5,9 @@ const mockRouter = helpers.mockRouter()
 const mockRepo = helpers.mockRepo()
 const mockRequest = helpers.mockRequest()
 const mockResponse = helpers.mockResponse()
+const mockApiKeyId = "mock api key id"
+const origVersion = "original version"
+const newVersion = "new version"
 
 test("new ApiKeyRoutes(router, repo)", () => {
   const routes = new ApiKeyRoutes(mockRouter, mockRepo)
@@ -40,24 +43,20 @@ test("list(req, res, next)", () => {
 //   expect(mockResponse.json).toHaveBeenCalledWith(mockAccountNew)
 // })
 
-// test("update(req, res, next)", async () => {
-//   const mockReq2 = { ...mockRequest }
-//   mockReq2.fields.accountId = mockAccountId
-//   mockReq2.fields.md5 = "original Md5"
-//   const mockAccountOrig2 = {
-//     ...mockAccountOrig, ...{
-//       accountId: mockAccountId,
-//       md5: mockReq2.fields.md5
-//     }
-//   }
-//   mockRepo.account.update.mockResolvedValue(mockAccountNew)
+test("ApiKeyRepo.update(req, res, next)", async () => {
+  const mockReq2 = { ...mockRequest }
+  mockReq2.fields.apiKeyId = mockApiKeyId
+  mockReq2.fields.version = origVersion
+  mockReq2.fields.description = "mock api key"
+  mockReq2.fields.apiKeyValue = "mock api key value"
+  mockRepo.apiKey.update.mockReturnValue({ changes: 1 })
 
-//   const accountRoutes = new AccountRoutes(mockRouter, mockRepo)
-//   await accountRoutes.update(mockReq2, mockResponse, null)
+  const routes = new ApiKeyRoutes(mockRouter, mockRepo)
+  routes.update(mockReq2, mockResponse, null)
 
-//   expect(mockRepo.account.update).toHaveBeenCalledWith(mockAccountOrig2)
-//   expect(mockResponse.json).toHaveBeenCalledWith(mockAccountNew)
-// })
+  //   expect(mockRepo.account.update).toHaveBeenCalledWith(mockAccountOrig2)
+  //   expect(mockResponse.json).toHaveBeenCalledWith(mockAccountNew)
+})
 
 // test("delete(req, res, next)", async () => {
 //   const mockReq2 = { ...mockRequest }
