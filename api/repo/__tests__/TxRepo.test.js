@@ -62,7 +62,7 @@ test("txRepo.selectAll() uses correct SQL and returns rows", () => {
         t."postDate",
         t."number",
         t."description",
-        t."version" "txVersion"
+        t."version" "txVersion",
         s."id" "splitId",
         s."accountId",
         s."commodityId",

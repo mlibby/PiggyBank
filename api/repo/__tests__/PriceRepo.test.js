@@ -28,7 +28,7 @@ test("selectAll() uses correct SQL and returns rows", () => {
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       SELECT
-        "id",
+        p."id",
         "currencyId",
         cur.name "currencyName",
         p.commodityId "commodityId",
