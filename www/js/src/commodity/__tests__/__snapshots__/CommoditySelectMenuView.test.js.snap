@@ -15,9 +15,9 @@ exports[`CommoditySelectMenuView has render method 1`] = `
     </select>
 ",
       ],
-      "TESTGUID",
+      "test guid",
       "Commodity",
-      "TESTGUID",
+      "test guid",
     ],
   ],
   "results": Array [

@@ -1,24 +1,19 @@
-jest.mock("../../../lib/lit-html/lit-html.js", () => {
-  return {
-    html: jest.fn().mockImplementation(() => {
-      return "htmlTemplate"
-    }),
-    render: jest.fn().mockImplementation(() => {
-      return "renderedHtml"
-    })
-  }
-})
-
+import { mockTemplate } from "../../__tests__/TestHelpers"
 import { html, render } from "../../../lib/lit-html/lit-html.js"
 import { AccountIndexView } from "../AccountIndexView"
 
-test("AccountView has render method", () => {
-  const model = {
-    get: jest.fn()
+let view
+beforeEach(() => {
+  view = new AccountIndexView()
+  view.listView = {
+    on: jest.fn(),
+    render: jest.fn().mockReturnValue("list view")
   }
-  const view = new AccountIndexView({ model })
+})
+
+test("AccountView has render method", () => {
   const renderedView = view.render()
   expect(view).toBe(renderedView)
   expect(html).toMatchSnapshot()
-  expect(render).toHaveBeenCalledWith("htmlTemplate", view.el)
+  expect(render).toHaveBeenCalledWith(mockTemplate, view.el)
 })

@@ -1,24 +1,4 @@
-const htmlTemplate = "htmlTemplate"
-const renderedHtml = "renderedHtml"
-const testGuid = "test guid"
-
-jest.mock("../../../lib/lit-html/lit-html.js", () => {
-  return {
-    html: jest.fn().mockImplementation(() => {
-      return htmlTemplate
-    }),
-    render: jest.fn().mockImplementation(() => {
-      return renderedHtml
-    })
-  }
-})
-
-jest.mock("../../PiggyBankUtil", () => {
-  return {
-    getUuid: jest.fn().mockReturnValue(testGuid)
-  }
-})
-
+import { mockTemplate } from "../../__tests__/TestHelpers"
 import { html, render } from "../../../lib/lit-html/lit-html.js"
 import { AccountSelectMenuView } from "../AccountSelectMenuView"
 import { AccountCollection } from "../AccountCollection.js"
@@ -32,5 +12,5 @@ test("AccountSelectMenuView has render method", () => {
   const renderedView = view.render()
   expect(view).toBe(renderedView)
   expect(html).toMatchSnapshot()
-  expect(render).toHaveBeenCalledWith(htmlTemplate, view.el)
+  expect(render).toHaveBeenCalledWith(mockTemplate, view.el)
 })

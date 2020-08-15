@@ -13,6 +13,11 @@ import { ReceiptIndexView } from "../banking/ReceiptsView.js"
 import { ReportIndexView } from "../report/ReportIndexView.js"
 import { TxIndexView } from "../tx/TxIndexView.js"
 
+window.piggybank = {
+  accounts: {},
+  commodities: {}
+}
+
 let router
 beforeEach(() => {
   router = new PiggyBankRouter()

@@ -22,6 +22,10 @@ const template = (d) => html`
 `
 
 export class AccountIndexView extends Backbone.View {
+  preinitialize() {
+    this.listView = new AccountListView({ collection: piggybank.accounts });
+  }
+
   render() {
     render(template(), this.el)
     this.renderListView()
@@ -29,7 +33,6 @@ export class AccountIndexView extends Backbone.View {
   }
 
   renderListView() {
-    this.listView = new AccountListView({ collection: piggybank.accounts });
     this.$('#tableContainer').html(this.listView.render().el);
     this.listenTo(this.listView, "account:edit", this.edit);
     this.listenTo(this.listView, "account:create", this.create);

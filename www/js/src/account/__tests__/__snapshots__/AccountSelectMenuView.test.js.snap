@@ -14,9 +14,9 @@ exports[`AccountSelectMenuView has render method 1`] = `
       <option value=''>[Choose Account]</option>
     </select>",
       ],
-      "TESTGUID",
+      "test guid",
       "Account",
-      "TESTGUID",
+      "test guid",
     ],
   ],
   "results": Array [
