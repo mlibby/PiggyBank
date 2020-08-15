@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountFormView has render method 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        "
+<div class=\\"modal fade\\" id=\\"modalForm\\" tabindex=\\"-1\\" role=\\"dialog\\" aria-hidden=\\"true\\">
+  <div class=\\"modal-dialog modal-xl modal-dialog-centered\\" role=\\"document\\">
+    <div class=\\"modal-content\\">
+      <div class=\\"modal-body\\">
+        <form class=\\"account-editor form\\">
+          <input id=\\"accountId\\" type=\\"hidden\\" value=\\"",
+        "\\" />
+          <div class=\\"form-row\\">
+            <div class=\\"form-group col\\">
+              <div id=\\"parentSelect\\"></div>
+            </div>
+          </div>
+          <div class=\\"form-row\\">
+            <div class=\\"form-group col\\">
+              <div id=\\"commoditySelect\\"></div>
+            </div>
+          </div>
+          <div class=\\"form-row\\">
+            <div class=\\"form-group col\\">
+              <label for=\\"accountName\\">Name</label>
+              <input id=\\"accountName\\" class=\\"mr-3 form-control\\" type=\\"text\\" value=\\"",
+        "\\" />
+            </div>
+          </div>
+          <div class=\\"form-row\\">
+            <div class=\\"form-group form-check\\">
+              <div class=\\"col\\">
+                <input id=\\"isPlaceholder\\" class=\\"form-check-input mr-1\\" type=\\"checkbox\\" ?checked=",
+        " />
+                <label for=\\"isPlaceholder\\" class=\\"mr-3\\">
+                  Is Placeholder
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class=\\"form-row\\">
+            <div class=\\"form-group\\">
+              <button class=\\"save btn btn-success mr-2\\"><span class=\\"icon-solid-check\\"></span></button>
+              <button class=\\"cancel btn btn-danger\\"><span class=\\"icon-close\\"></span></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+",
+      ],
+      1,
+      "Assets",
+      1,
+    ],
+    Array [
+      Array [
+        "
+    <label for='selectAccountId-",
+        "'>",
+        "</label>
+    <select id='selectAccountId-",
+        "' class='select-account-id form-control'>
+      <option value=''>[Choose Account]</option>
+    </select>",
+      ],
+      "test guid",
+      "Parent Account",
+      "test guid",
+    ],
+    Array [
+      Array [
+        "
+    <label for='selectCommodityId-",
+        "'>",
+        "</label>
+    <select id='selectCommodityId-",
+        "' class='select-commodity-id form-control'>
+      <option value=''>[Choose Commodity]</option>
+    </select>
+",
+      ],
+      "test guid",
+      "Currency",
+      "test guid",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": "htmlTemplate",
+    },
+    Object {
+      "type": "return",
+      "value": "htmlTemplate",
+    },
+    Object {
+      "type": "return",
+      "value": "htmlTemplate",
+    },
+  ],
+}
+`;
