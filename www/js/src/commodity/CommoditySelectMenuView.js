@@ -21,36 +21,20 @@ export class CommoditySelectMenuView extends Backbone.View {
   }
 
   render(commodityId, label) {
-    label = label || "Commodity";
-    render(template({ label }), this.el);
-
-    if (this.commodityCollection) {
-      this.AddCommodityOptions(this.commodityCollection, commodityId);
-    }
-    else {
-      this.commodityCollection = new CommodityCollection();
-      this.commodityCollection.fetch({
-        success: (collection, resp, opts) => {
-          collection.sort()
-          this.AddCommodityOptions(collection, commodityId)
-        },
-        error: (collection, resp, opts) => {
-          alert("Error fetching commodity data")
-        }
-      })
-    }
-
-    return this;
+    label = label || "Commodity"
+    render(template({ label }), this.el)
+    this.AddCommodityOptions(this.commodityCollection, commodityId)
+    return this
   }
 
   AddCommodityOptions(collection, commodityId) {
-    const commoditySelect = this.$(".select-commodity-id");
-    for (let model of collection.models) {
-      const option = `<option value='${model.get("id")}'>${model.get("name")}</option>`;
-      commoditySelect.append(option);
+    const commoditySelect = this.$(".select-commodity-id")
+    for (let model of piggybank.commodities.models) {
+      const option = `<option value='${model.get("id")}'>${model.get("name")}</option>`
+      commoditySelect.append(option)
     }
 
-    commoditySelect.val(commodityId);
-    commoditySelect.on('change', (e) => this.trigger('change', e));
+    commoditySelect.val(commodityId)
+    commoditySelect.on('change', (e) => this.trigger('change', e))
   }
 }

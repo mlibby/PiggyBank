@@ -1,11 +1,9 @@
 "use strict";
 
 import { html, render } from "../../lib/lit-html/lit-html.js"
-import { AccountCollection } from "./AccountCollection.js"
 import { AccountListView } from "./AccountListView.js"
 import { AccountFormView } from "./AccountFormView.js"
 import { AccountModel } from "./AccountModel.js"
-import { CommodityCollection } from "../commodity/CommodityCollection.js"
 
 const template = (d) => html`
 <div class='row'>
@@ -24,29 +22,18 @@ const template = (d) => html`
 `
 
 export class AccountIndexView extends Backbone.View {
-  preinitialize(args) {
-    this.accountCollection = new AccountCollection()
-    this.commodityCollection = new CommodityCollection()
-  }
-
   render() {
     render(template(), this.el)
-    this.commodityCollection.fetch({
-      success: (collection, resp, opts) => {
-        this.accountCollection.fetch({
-          success: (collection, resp, opts) => {
-            collection.unflatten()
-            this.listView = new AccountListView({ collection })
-            this.$('#tableContainer').html(this.listView.render().el)
-            this.listenTo(this.listView, "account:edit", this.edit)
-            this.listenTo(this.listView, "account:create", this.create)
-            this.listenTo(this.listView, "account:delete", this.delete)
-          }
-        })
-      }
-    })
-
+    this.renderListView()
     return this
+  }
+
+  renderListView() {
+    this.listView = new AccountListView({ collection: piggybank.accounts });
+    this.$('#tableContainer').html(this.listView.render().el);
+    this.listenTo(this.listView, "account:edit", this.edit);
+    this.listenTo(this.listView, "account:create", this.create);
+    this.listenTo(this.listView, "account:delete", this.delete);
   }
 
   edit(model) {
