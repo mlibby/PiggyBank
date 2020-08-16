@@ -1,5 +1,4 @@
-import { mockTemplate } from "../../__tests__/testHelpers"
-import { html, render } from "../../../lib/lit-html/lit-html.js"
+import "../../__tests__/testHelpers"
 import { AccountIndexView } from "../AccountIndexView"
 
 let view
@@ -14,6 +13,5 @@ beforeEach(() => {
 test("AccountView has render method", () => {
   const renderedView = view.render()
   expect(view).toBe(renderedView)
-  expect(html).toMatchSnapshot()
-  expect(render).toHaveBeenCalledWith(mockTemplate, view.el)
+  expect(view.el).toMatchSnapshot()
 })

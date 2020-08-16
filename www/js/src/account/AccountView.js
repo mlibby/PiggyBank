@@ -3,7 +3,8 @@
 import { html, render } from "../../lib/lit-html/lit-html.js"
 import { AccountListView } from "./AccountListView.js"
 
-const template = (d) => html`<div class="display">
+const template = d => html`
+<div class="display">
   <a href="/ledger/${d.id}">${d.accountName}</a>
   <button class="edit btn btn-sm btn-icon btn-outline-secondary"><span class="icon-pencil"></span></button>
   <button class="create btn btn-sm btn-icon btn-outline-primary"><span class="icon-plus"></span></button>
@@ -54,9 +55,9 @@ export class AccountView extends Backbone.View {
       this.$el.removeClass("placeholder")
     }
 
-    this.$(".btn.edit").click((e) => this.edit(this.model, e))
-    this.$(".btn.create").click((e) => this.create(this.model, e))
-    this.$(".btn.delete").click((e) => this.delete(this.model, e))
+    this.$(".btn.edit").click(e => this.edit(this.model, e))
+    this.$(".btn.create").click(e => this.create(this.model, e))
+    this.$(".btn.delete").click(e => this.delete(this.model, e))
 
     if (this.model.children) {
       if (this.subview != null) {

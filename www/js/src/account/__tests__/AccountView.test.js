@@ -1,5 +1,4 @@
-import { mockTemplate } from "../../__tests__/testHelpers"
-import { html, render } from "../../../lib/lit-html/lit-html.js"
+import "../../__tests__/testHelpers"
 import { AccountView } from "../AccountView"
 
 let view
@@ -12,10 +11,14 @@ beforeEach(() => {
 test("AccountView has render method", () => {
   const renderedView = view.render()
   expect(view).toBe(renderedView)
-  expect(html).toMatchSnapshot()
-  expect(render).toHaveBeenCalledWith(mockTemplate, view.el)
+  expect(view.el).toMatchSnapshot()
 })
 
-test("buttons trigger events", () => {
+test("edit button triggers account:edit event", () => {
+  const mockEdit = jest.fn()
+  view.on("account:edit", mockEdit)
 
+  view.render()
+  view.$(".btn.edit").click()
+  expect(mockEdit).toHaveBeenCalledWith(view.model)
 })

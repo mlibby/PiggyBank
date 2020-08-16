@@ -1,29 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AccountSelectMenuView has render method 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Array [
-        "
-    <label for='selectAccountId-",
-        "'>",
-        "</label>
-    <select id='selectAccountId-",
-        "' class='select-account-id form-control'>
-      <option value=''>[Choose Account]</option>
-    </select>",
-      ],
-      "test guid",
-      "Account",
-      "test guid",
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": "htmlTemplate",
-    },
-  ],
-}
+<div>
+  <!---->
+  
+    
+  <label
+    for="selectAccountId-test guid"
+  >
+    <!---->
+    Account
+    <!---->
+  </label>
+  
+    
+  <select
+    class="select-account-id form-control"
+    id="selectAccountId-test guid"
+  >
+    
+      
+    <option
+      value=""
+    >
+      [Choose Account]
+    </option>
+    
+    
+  </select>
+  <!---->
+</div>
 `;
