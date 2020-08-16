@@ -81,6 +81,46 @@ exports[`AccountFormView has render method 1`] = `
                       </option>
                       
     
+                      <option
+                        value="1"
+                      >
+                        Assets
+                      </option>
+                      <option
+                        value="3"
+                      >
+                        Assets::Checking
+                      </option>
+                      <option
+                        value="4"
+                      >
+                        Assets::Investments
+                      </option>
+                      <option
+                        value="5"
+                      >
+                        Assets::Investments::401k
+                      </option>
+                      <option
+                        value="2"
+                      >
+                        Assets::Savings
+                      </option>
+                      <option
+                        value="10"
+                      >
+                        Liabilities
+                      </option>
+                      <option
+                        value="11"
+                      >
+                        Liabilities::Car Loan
+                      </option>
+                      <option
+                        value="12"
+                      >
+                        Liabilities::Mortgage
+                      </option>
                     </select>
                     <!---->
                   </div>

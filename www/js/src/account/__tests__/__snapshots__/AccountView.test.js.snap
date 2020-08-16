@@ -16,7 +16,7 @@ exports[`AccountView has render method 1`] = `
       href="/ledger/1"
     >
       <!---->
-      mock assets
+      Assets
       <!---->
     </a>
     
@@ -52,5 +52,221 @@ exports[`AccountView has render method 1`] = `
   
 
   <!---->
+  <ul
+    class="accounts"
+  >
+    <li
+      class="account"
+    >
+      <!---->
+      
+
+      <div
+        class="display"
+      >
+        
+  
+        <a
+          href="/ledger/3"
+        >
+          <!---->
+          Checking
+          <!---->
+        </a>
+        
+  
+        <button
+          class="edit btn btn-sm btn-icon btn-outline-secondary"
+        >
+          <span
+            class="icon-pencil"
+          />
+        </button>
+        
+  
+        <button
+          class="create btn btn-sm btn-icon btn-outline-primary"
+        >
+          <span
+            class="icon-plus"
+          />
+        </button>
+        
+  
+        <button
+          class="delete btn btn-sm btn-icon btn-outline-danger"
+        >
+          <span
+            class="icon-trash"
+          />
+        </button>
+        
+
+      </div>
+      
+
+      <!---->
+    </li>
+    <li
+      class="placeholder"
+    >
+      <!---->
+      
+
+      <div
+        class="display"
+      >
+        
+  
+        <a
+          href="/ledger/4"
+        >
+          <!---->
+          Investments
+          <!---->
+        </a>
+        
+  
+        <button
+          class="edit btn btn-sm btn-icon btn-outline-secondary"
+        >
+          <span
+            class="icon-pencil"
+          />
+        </button>
+        
+  
+        <button
+          class="create btn btn-sm btn-icon btn-outline-primary"
+        >
+          <span
+            class="icon-plus"
+          />
+        </button>
+        
+  
+        <button
+          class="delete btn btn-sm btn-icon btn-outline-danger"
+        >
+          <span
+            class="icon-trash"
+          />
+        </button>
+        
+
+      </div>
+      
+
+      <!---->
+      <ul
+        class="accounts"
+      >
+        <li
+          class="account"
+        >
+          <!---->
+          
+
+          <div
+            class="display"
+          >
+            
+  
+            <a
+              href="/ledger/5"
+            >
+              <!---->
+              401k
+              <!---->
+            </a>
+            
+  
+            <button
+              class="edit btn btn-sm btn-icon btn-outline-secondary"
+            >
+              <span
+                class="icon-pencil"
+              />
+            </button>
+            
+  
+            <button
+              class="create btn btn-sm btn-icon btn-outline-primary"
+            >
+              <span
+                class="icon-plus"
+              />
+            </button>
+            
+  
+            <button
+              class="delete btn btn-sm btn-icon btn-outline-danger"
+            >
+              <span
+                class="icon-trash"
+              />
+            </button>
+            
+
+          </div>
+          
+
+          <!---->
+        </li>
+      </ul>
+    </li>
+    <li
+      class="account"
+    >
+      <!---->
+      
+
+      <div
+        class="display"
+      >
+        
+  
+        <a
+          href="/ledger/2"
+        >
+          <!---->
+          Savings
+          <!---->
+        </a>
+        
+  
+        <button
+          class="edit btn btn-sm btn-icon btn-outline-secondary"
+        >
+          <span
+            class="icon-pencil"
+          />
+        </button>
+        
+  
+        <button
+          class="create btn btn-sm btn-icon btn-outline-primary"
+        >
+          <span
+            class="icon-plus"
+          />
+        </button>
+        
+  
+        <button
+          class="delete btn btn-sm btn-icon btn-outline-danger"
+        >
+          <span
+            class="icon-trash"
+          />
+        </button>
+        
+
+      </div>
+      
+
+      <!---->
+    </li>
+  </ul>
 </li>
 `;

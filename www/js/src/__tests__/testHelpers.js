@@ -11,35 +11,78 @@ jest.mock("../PiggyBankUtil", () => {
 
 const mockAccountAssets = exports.mockAccountAssets = new AccountModel({
   id: 1,
-  commodityId: 1,
-  name: "mock assets",
+  currencyId: 1,
+  name: "Assets",
   isPlaceholder: 1,
   parentId: null
 })
 
 const mockAccountSavings = exports.mockAccountSavings = new AccountModel({
   id: 2,
-  commodityId: 1,
-  name: "mock savings",
+  currencyId: 1,
+  name: "Savings",
   isPlaceholder: 0,
   parentId: 1
 })
 
-const mockAccountExpenses = exports.mockAccountExpenses = new AccountModel({
+const mockAccountChecking = exports.mockAccountChecking = new AccountModel({
   id: 3,
-  commodityId: 1,
-  name: "mock expenses",
+  currencyId: 1,
+  name: "Checking",
+  isPlaceholder: 0,
+  parentId: 1
+})
+
+const mockAccountInvestments = exports.mockAccountInvestments = new AccountModel({
+  id: 4,
+  currencyId: 1,
+  name: "Investments",
+  isPlaceholder: 1,
+  parentId: 1
+})
+
+const mockAccount401k = exports.mockAccount401k = new AccountModel({
+  id: 5,
+  currencyId: 1,
+  name: "401k",
+  isPlaceholder: 0,
+  parentId: 4
+})
+
+const mockAccountLiabilities = exports.mockAccountLiabilities = new AccountModel({
+  id: 10,
+  currencyId: 1,
+  name: "Liabilities",
   isPlaceholder: 1,
   parentId: null
 })
 
-const accounts = exports.mockAccounts = new AccountCollection({
-  collection: [
-    mockAccountAssets,
-    mockAccountExpenses,
-    mockAccountSavings
-  ]
+const mockAccountCarLoan = exports.mockAccountCarLoan = new AccountModel({
+  id: 11,
+  currencyId: 1,
+  name: "Car Loan",
+  isPlaceholder: 0,
+  parentId: 10
 })
+
+const mockAccountMortgage = exports.mockAccountMortgage = new AccountModel({
+  id: 12,
+  currencyId: 1,
+  name: "Mortgage",
+  isPlaceholder: 0,
+  parentId: 10
+})
+
+const accounts = exports.mockAccounts = new AccountCollection([
+  mockAccountAssets,
+  mockAccountSavings,
+  mockAccountChecking,
+  mockAccountInvestments,
+  mockAccount401k,
+  mockAccountLiabilities,
+  mockAccountCarLoan,
+  mockAccountMortgage
+])
 accounts.unflatten()
 
 const commodities = exports.mockCommodities = new CommodityCollection({ collection: [] })
