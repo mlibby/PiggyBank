@@ -2,7 +2,6 @@
 
 import { html, render } from "../../lib/lit-html/lit-html.js"
 import { getUuid } from "../PiggyBankUtil.js"
-import { CommodityCollection } from "./CommodityCollection.js"
 
 const template = (d) => {
   d.uuid = getUuid()
@@ -11,25 +10,19 @@ const template = (d) => {
     <select id='selectCommodityId-${d.uuid}' class='select-commodity-id form-control'>
       <option value=''>[Choose Commodity]</option>
     </select>
-`;
-};
+`}
 
 export class CommoditySelectMenuView extends Backbone.View {
-  constructor(commodityCollection) {
-    super();
-    this.commodityCollection = commodityCollection;
-  }
-
   render(commodityId, label) {
     label = label || "Commodity"
     render(template({ label }), this.el)
-    this.AddCommodityOptions(this.commodityCollection, commodityId)
+    this.addCommodityOptions(window.piggybank.commodities.models, commodityId)
     return this
   }
 
-  AddCommodityOptions(collection, commodityId) {
+  addCommodityOptions(collection, commodityId) {
     const commoditySelect = this.$(".select-commodity-id")
-    for (let model of piggybank.commodities.models) {
+    for (let model of collection) {
       const option = `<option value='${model.get("id")}'>${model.get("name")}</option>`
       commoditySelect.append(option)
     }
