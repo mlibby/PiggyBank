@@ -3,57 +3,5 @@
 exports[`AccountListView has render method 1`] = `
 <ul
   class="accounts"
->
-  <li
-    class="account"
-  >
-    <!---->
-    
-
-    <div
-      class="display"
-    >
-      
-  
-      <a
-        href="/ledger/undefined"
-      >
-        <!---->
-        <!---->
-      </a>
-      
-  
-      <button
-        class="edit btn btn-sm btn-icon btn-outline-secondary"
-      >
-        <span
-          class="icon-pencil"
-        />
-      </button>
-      
-  
-      <button
-        class="create btn btn-sm btn-icon btn-outline-primary"
-      >
-        <span
-          class="icon-plus"
-        />
-      </button>
-      
-  
-      <button
-        class="delete btn btn-sm btn-icon btn-outline-danger"
-      >
-        <span
-          class="icon-trash"
-        />
-      </button>
-      
-
-    </div>
-    
-
-    <!---->
-  </li>
-</ul>
+/>
 `;

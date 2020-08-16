@@ -42,7 +42,7 @@ export class AccountView extends Backbone.View {
   render() {
     render(template({
       id: this.model.get("id"),
-      parentId: this.model.parentId,
+      parentId: this.model.get("parentId"),
       accountName: this.model.get("name"),
       isPlaceholder: this.model.get("isPlaceholder")
     }), this.el)
@@ -59,7 +59,7 @@ export class AccountView extends Backbone.View {
     this.$(".btn.create").click(e => this.create(this.model, e))
     this.$(".btn.delete").click(e => this.delete(this.model, e))
 
-    if (this.model.children) {
+    if (this.model.children.length > 0) {
       if (this.subview != null) {
         this.subview.remove()
       }

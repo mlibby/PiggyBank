@@ -2,7 +2,7 @@
 
 exports[`AccountView has render method 1`] = `
 <li
-  class="account"
+  class="placeholder"
 >
   <!---->
   
@@ -13,9 +13,10 @@ exports[`AccountView has render method 1`] = `
     
   
     <a
-      href="/ledger/undefined"
+      href="/ledger/1"
     >
       <!---->
+      mock assets
       <!---->
     </a>
     
