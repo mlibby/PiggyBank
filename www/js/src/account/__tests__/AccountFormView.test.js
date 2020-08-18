@@ -1,17 +1,10 @@
-import "../../__tests__/testHelpers"
+import { mockAccountAssets } from "../../__tests__/testHelpers"
 import { AccountFormView } from "../AccountFormView"
 import { AccountModel } from "../AccountModel"
 
 let view
 beforeEach(() => {
-  const account = new AccountModel({
-    id: 1,
-    currencyId: 1,
-    name: "Assets",
-    isPlaceholder: 1,
-    parentId: null
-  })
-  view = new AccountFormView({model: account})
+  view = new AccountFormView({ model: mockAccountAssets })
 })
 
 test("AccountFormView has render method", () => {

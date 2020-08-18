@@ -42,10 +42,7 @@ export class AccountIndexView extends Backbone.View {
   }
 
   edit(model) {
-    this.form = new AccountFormView({
-      model,
-      commodityCollection: this.commodityCollection
-    })
+    this.form = new AccountFormView({ model })
     this.form.on("saved", (e) => {
       this.render()
     })
