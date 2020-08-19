@@ -11,7 +11,6 @@ const template = (d) => html`
     <div class="modal-content">
       <div class="modal-body">
         <form class="account-editor form">
-          <input id="accountId" type="hidden" value="${d.id || ''}" />
           <div class="form-row">
             <div class="form-group col">
               <div id="parentSelect"></div>
@@ -25,7 +24,7 @@ const template = (d) => html`
           <div class="form-row">
             <div class="form-group col">
               <label for="accountName">Name</label>
-              <input id="accountName" class="mr-3 form-control" type="text" value="${d.name || ''}" />
+              <input id="accountName" class="mr-3 form-control" type="text" value="${d.name}" />
             </div>
           </div>
           <div class="form-row">
@@ -56,6 +55,9 @@ export class AccountFormView extends Backbone.View {
     this.tagName = "div"
     this.className = ""
 
+    this.parentMenu = null
+    this.commodityMenu = null
+
     this.events = {
       "click .btn.save": "save",
       "click .btn.cancel": "cancel"
@@ -65,13 +67,11 @@ export class AccountFormView extends Backbone.View {
   save(e) {
     e.preventDefault()
 
-    const id = this.$("#accountId").val()
     this.model.set({
-      "id": id ? Number(id) : null,
-      "currencyId": this.$("#commoditySelect select.select-commodity-id").find(":selected").val(),
+      "currencyId": this.commodityMenu.getSelectedId(),
       "name": this.$("#accountName").val(),
-      "isPlaceholder": this.$("#isPlaceholder")[0].checked ? 1 : 0,
-      "parentId": this.$("#parentSelect select.select-account-id").find(":selected").val()
+      "isPlaceholder": this.$("#isPlaceholder")[0].checked,
+      "parentId": this.parentMenu.getSelectedId()
     })
 
     this.model.save({}, {
@@ -96,13 +96,13 @@ export class AccountFormView extends Backbone.View {
   render() {
     render(template(this.model.attributes), this.el)
 
-    const selectMenu = new AccountSelectMenuView()
-    selectMenu.render(this.model.get("parentId"), "Parent Account", true)
-    this.$("#parentSelect").html(selectMenu.el)
+    this.parentMenu = new AccountSelectMenuView()
+    this.parentMenu.render(this.model.get("parentId"), "Parent Account", true)
+    this.$("#parentSelect").html(this.parentMenu.el)
 
-    const commodityMenu = new CommoditySelectMenuView(this.model.get("commodityCollection"))
-    commodityMenu.render(this.model.get("currencyId"), "Currency")
-    this.$("#commoditySelect").html(commodityMenu.el)
+    this.commodityMenu = new CommoditySelectMenuView(this.model.get("commodityCollection"))
+    this.commodityMenu.render(this.model.get("currencyId"), "Currency")
+    this.$("#commoditySelect").html(this.commodityMenu.el)
 
     return this
   }

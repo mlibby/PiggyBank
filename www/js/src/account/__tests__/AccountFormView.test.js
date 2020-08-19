@@ -4,18 +4,38 @@ import { AccountModel } from "../AccountModel"
 
 let view
 beforeEach(() => {
-  const account = new AccountModel({
-    id: 1,
-    currencyId: 1,
-    name: "Assets",
-    isPlaceholder: 1,
-    parentId: null
-  })
-  view = new AccountFormView({model: account})
+  view = new AccountFormView({ model: window.piggybank.accounts.models[0] })
 })
 
 test("AccountFormView has render method", () => {
   const renderedView = view.render()
   expect(view).toBe(renderedView)
   expect(view.el).toMatchSnapshot()
+})
+
+test(".close hides the modal and destroys the view", () => {
+  const modal = jest.fn()
+  view.$ = jest.fn().mockReturnValue({ modal })
+
+  view.close()
+
+  expect(view.$).toHaveBeenCalledWith("#modalForm")
+  expect(modal).toHaveBeenCalledWith("hide")
+})
+
+test(".cancel prevents default event action and calls .close", () => {
+  view.close = jest.fn()
+  const preventDefault = jest.fn()
+
+  view.cancel({ preventDefault })
+
+  expect(preventDefault).toHaveBeenCalled()
+  expect(view.close).toHaveBeenCalled()
+})
+
+test(".save updates the model, closes the form and triggers the 'saved' event", () => {
+  const preventDefault = jest.fn()
+
+  view.render()
+  view.save({ preventDefault })
 })

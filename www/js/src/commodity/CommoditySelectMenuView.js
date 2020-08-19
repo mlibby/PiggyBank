@@ -20,6 +20,10 @@ export class CommoditySelectMenuView extends Backbone.View {
     return this
   }
 
+  getSelectedId() {
+    this.$("select").find(":selected").val()
+  }
+
   addCommodityOptions(collection, commodityId) {
     const commoditySelect = this.$(".select-commodity-id")
     for (let model of collection) {

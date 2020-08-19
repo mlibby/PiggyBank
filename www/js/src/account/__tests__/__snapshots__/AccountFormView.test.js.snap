@@ -35,13 +35,6 @@ exports[`AccountFormView has render method 1`] = `
           >
             
           
-            <input
-              id="accountId"
-              type="hidden"
-              value="1"
-            />
-            
-          
             <div
               class="form-row"
             >
