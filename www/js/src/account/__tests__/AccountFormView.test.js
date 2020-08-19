@@ -1,4 +1,4 @@
-import "../../__tests__/testHelpers"
+import { mockAccountAssets } from "../../__tests__/testHelpers"
 import { AccountFormView } from "../AccountFormView"
 import { AccountModel } from "../AccountModel"
 
