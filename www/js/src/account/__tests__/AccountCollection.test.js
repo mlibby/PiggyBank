@@ -1,5 +1,4 @@
 import { mockAccounts } from "../../__tests__/testHelpers"
-import { AccountCollection } from "../AccountCollection"
 import { AccountModel } from "../AccountModel"
 
 test("new AccountCollection()", () => {

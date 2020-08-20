@@ -12,12 +12,12 @@ $().ready(function () {
     var root = window.location.protocol + "//" + window.location.host + "/"
 
     if (href.prop.slice(0, root.length) === root) {
-      e.preventDefault();
+      e.preventDefault()
       Backbone.history.navigate(href.attr, true)
     }
 
     $(".navbar-collapse").removeClass("show")
-  });
+  })
 
   piggybank.accounts = new AccountCollection()
   piggybank.commodities = new CommodityCollection()

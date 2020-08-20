@@ -1,6 +1,6 @@
-"use strict";
+"use strict"
 
-import { OfxModel } from "./OfxModel.js";
+import { OfxModel } from "./OfxModel.js"
 
 export class OfxCollection extends Backbone.Collection {
   preinitialize() {

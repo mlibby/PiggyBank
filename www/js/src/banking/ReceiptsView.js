@@ -1,6 +1,6 @@
-"use strict";
+"use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js";
+import { html, render } from "../../lib/lit-html/lit-html.js"
 
 const template = (d) => html`
 <div class='row'>
@@ -12,27 +12,27 @@ const template = (d) => html`
     <canvas></canvas>
   </div>
 </div>
-`;
+`
 
 const constraints = {
   audio: false,
   video: true
-};
+}
 
-let imageCapture;
+let imageCapture
 
 export class ReceiptIndexView extends Backbone.View {
   render() {
-    render(template(), this.el);
+    render(template(), this.el)
 
-    this.$("#snapshot-btn").click((e) => this.takeSnapshot(e));
+    this.$("#snapshot-btn").click((e) => this.takeSnapshot(e))
 
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(this.handleSuccess.bind(this))
-      .catch(this.handleError);
+      .catch(this.handleError)
 
-    return this;
+    return this
   }
 
   // const video = document.querySelector('video');
@@ -44,25 +44,25 @@ export class ReceiptIndexView extends Backbone.View {
   // canvas.height = 360;
 
   takeSnapshot(e) {
-    e.preventDefault();
-    const img = document.querySelector('#snapshot-img');
+    e.preventDefault()
+    const img = document.querySelector('#snapshot-img')
     imageCapture.takePhoto()
       .then(blob => {
         img.src = URL.createObjectURL(blob);
         img.onload = () => { URL.revokeObjectURL(this.src); }
       })
-      .catch(error => console.error('takePhoto() error:', error));
+      .catch(error => console.error("takePhoto() error: ", error))
   }
 
   handleSuccess(stream) {
-    window.stream = stream;
-    const video = this.$("video")[0];
-    video.srcObject = stream;
-    const mediaStreamTrack = stream.getVideoTracks()[0];
-    imageCapture = new ImageCapture(mediaStreamTrack);
+    window.stream = stream
+    const video = this.$("video")[0]
+    video.srcObject = stream
+    const mediaStreamTrack = stream.getVideoTracks()[0]
+    imageCapture = new ImageCapture(mediaStreamTrack)
   }
 
   handleError(error) {
-    console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+    console.log("navigator.MediaDevices.getUserMedia error: ", error.message, error.name)
   }
 }

@@ -1,7 +1,7 @@
-"use strict";
+"use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js";
-import { OfxView } from "./OfxView.js";
+import { html, render } from "../../lib/lit-html/lit-html.js"
+import { OfxView } from "./OfxView.js"
 
 const template = (d) => html`
 <tr>
@@ -16,29 +16,28 @@ const template = (d) => html`
   <th>Account Type</th>
   <th></th>
 </tr>
-`;
+`
 
 export class OfxListView extends Backbone.View {
   preinitialize() {
-    this.tagName = "table";
-    this.className = "table";
+    this.tagName = "table"
+    this.className = "table"
   }
 
   render() {
-    this.$el.html("");
-    render(template(), this.el);
+    this.$el.html("")
+    render(template(), this.el)
     for (const model of this.collection) {
-      const view = new OfxView({ model });
-      this.$el.append(view.render().el);
-      this.listenTo(view, "ofx:edit", this.edit);
+      const view = new OfxView({ model })
+      this.$el.append(view.render().el)
+      this.listenTo(view, "ofx:edit", this.edit)
     }
 
-    return this;
+    return this
   }
 
   edit(model) {
-    console.log("Edit model " + model.id);
-    this.trigger("ofx:edit", model);
+    console.log("Edit model " + model.id)
+    this.trigger("ofx:edit", model)
   }
 }
-

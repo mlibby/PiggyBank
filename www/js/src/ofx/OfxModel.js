@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 export class OfxModel extends Backbone.Model {
   preinitialize() {

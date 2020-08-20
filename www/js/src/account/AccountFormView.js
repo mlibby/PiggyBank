@@ -1,9 +1,9 @@
-"use strict";
+"use strict"
 
 import { html, render } from "../../lib/lit-html/lit-html.js"
 import { AccountCollection } from "./AccountCollection.js"
 import { AccountSelectMenuView } from "./AccountSelectMenuView.js"
-import { CommoditySelectMenuView } from "../commodity/CommoditySelectMenuView.js";
+import { CommoditySelectMenuView } from "../commodity/CommoditySelectMenuView.js"
 
 const template = (d) => html`
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true">
@@ -61,7 +61,7 @@ export class AccountFormView extends Backbone.View {
     this.events = {
       "click .btn.save": "save",
       "click .btn.cancel": "cancel"
-    };
+    }
   }
 
   save(e) {
@@ -75,17 +75,21 @@ export class AccountFormView extends Backbone.View {
     })
 
     this.model.save({}, {
-      success: () => {
-        if (this.model.children === null) {
-          this.model.children = new AccountCollection()
-        }
-        this.close()
-        this.trigger("saved")
-      },
-      error: () => {
-        alert("Error saving account")
-      }
+      success: this.saved,
+      error: this.saveError
     })
+  }
+
+  saveError() {
+    alert("error saving account")
+  }
+
+  saved() {
+    if (this.model.children === null) {
+      this.model.children = new AccountCollection()
+    }
+    this.close()
+    this.trigger("saved")
   }
 
   cancel(e) {

@@ -1,3 +1,5 @@
+"use strict"
+
 jest.mock("../../../lib/lit-html/lit-html.js", () => {
   return {
     html: jest.fn().mockImplementation(() => {

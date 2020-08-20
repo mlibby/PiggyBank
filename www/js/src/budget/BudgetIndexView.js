@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 import { html, render } from "../../lib/lit-html/lit-html.js";
 
@@ -9,11 +9,11 @@ const template = (d) => html`
     <p>[tdb]</p>
   </div>
 </div>
-`;
+`
 
 export class BudgetIndexView extends Backbone.View {
   render() {
-    render(template(), this.el);
-    return this;
+    render(template(), this.el)
+    return this
   }
 }

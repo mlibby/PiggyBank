@@ -6,30 +6,30 @@ exports[`OfxView has render method 1`] = `
     Array [
       Array [
         "
-    <td>",
+  <td>",
         "</td>
-    <td>",
+  <td>",
         "</td>
-    <td>",
+  <td>",
         "</td>
-    <td>",
+  <td>",
         "</td>
-    <td>",
+  <td>",
         "</td>
-    <td>",
+  <td>",
         "</td>
-    <td>",
+  <td>",
         "</td>
-    <td>",
+  <td>",
         "</td>
-    <td>",
+  <td>",
         "</td>
-    <td>
-      <button class=\\"edit btn btn-sm btn-icon btn-outline-secondary\\" data-toggle=\\"modal\\" data-target=\\"#modalForm\\">
-        <span class=\\"icon-pencil\\"></span>
-      </button>
-      <button class=\\"delete btn btn-sm btn-icon btn-outline-danger\\"><span class=\\"icon-trash\\"></span></button>
-    </td>
+  <td>
+    <button class=\\"edit btn btn-sm btn-icon btn-outline-secondary\\" data-toggle=\\"modal\\" data-target=\\"#modalForm\\">
+      <span class=\\"icon-pencil\\"></span>
+    </button>
+    <button class=\\"delete btn btn-sm btn-icon btn-outline-danger\\"><span class=\\"icon-trash\\"></span></button>
+  </td>
 ",
       ],
       undefined,

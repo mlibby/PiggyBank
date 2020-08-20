@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 import { html, render } from "../../lib/lit-html/lit-html.js"
 import { AccountListView } from "./AccountListView.js"

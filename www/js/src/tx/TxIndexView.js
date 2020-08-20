@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 import { html, render } from "../../lib/lit-html/lit-html.js"
 import { TxCollection } from "./TxCollection.js"
@@ -20,7 +20,7 @@ const template = (d) => html`
     </table>
   </div>
 </div>
-`;
+`
 
 export class TxIndexView extends Backbone.View {
   render() {
@@ -32,7 +32,7 @@ export class TxIndexView extends Backbone.View {
         const $table = this.$el.find("table")
         collection.each(model => {
           const modelView = new TxView({ model })
-          $table.append(modelView.render().$el);
+          $table.append(modelView.render().$el)
         })
       }
     })

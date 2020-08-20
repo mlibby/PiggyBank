@@ -5,7 +5,7 @@ import { AccountModel } from "./AccountModel.js"
 export class AccountCollection extends Backbone.Collection {
   preinitialize() {
     this.model = AccountModel
-    this.url = '/api/account'
+    this.url = "/api/account"
     this.comparator = "name"
   }
 

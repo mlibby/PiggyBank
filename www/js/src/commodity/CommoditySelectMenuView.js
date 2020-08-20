@@ -32,6 +32,6 @@ export class CommoditySelectMenuView extends Backbone.View {
     }
 
     commoditySelect.val(commodityId)
-    commoditySelect.on('change', (e) => this.trigger('change', e))
+    commoditySelect.on("change", (e) => this.trigger("change", e))
   }
 }

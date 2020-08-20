@@ -1,6 +1,5 @@
-import { mockAccountAssets } from "../../__tests__/testHelpers"
+import { mock$ } from "../../__tests__/testHelpers"
 import { AccountFormView } from "../AccountFormView"
-import { AccountModel } from "../AccountModel"
 
 let view
 beforeEach(() => {
@@ -33,9 +32,17 @@ test(".cancel prevents default event action and calls .close", () => {
   expect(view.close).toHaveBeenCalled()
 })
 
-test(".save updates the model, closes the form and triggers the 'saved' event", () => {
-  const preventDefault = jest.fn()
+test("successful .save updates the model, closes the form and calls .saved", () => {
+  view.$ = jest.fn().mockReturnValue(mock$)
+
+  view.saved = jest.fn()
+  view.model.save = jest.fn().mockImplementation((attr, opts) => {
+    opts.success.call(view.model, 200, null)
+  })
 
   view.render()
+  const preventDefault = jest.fn()
   view.save({ preventDefault })
+
+  expect(view.saved).toHaveBeenCalled()
 })

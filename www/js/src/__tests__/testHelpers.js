@@ -88,3 +88,13 @@ accounts.unflatten()
 const commodities = exports.mockCommodities = new CommodityCollection({ collection: [] })
 
 window.piggybank = { accounts, commodities }
+
+const mockModal = jest.fn()
+const mockHtml = jest.fn()
+const mockVal = jest.fn()
+const mock$ = exports.mock$ = {
+  0: { checked: true },
+  modal: mockModal,
+  html: mockHtml,
+  val: mockVal
+}

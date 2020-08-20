@@ -1,4 +1,4 @@
-import { mockTemplate } from "../../__tests__/testHelpers"
+import "../../__tests__/testHelpers"
 import { html, render } from "../../../lib/lit-html/lit-html.js"
 import { CommoditySelectMenuView } from "../CommoditySelectMenuView"
 

@@ -1,10 +1,10 @@
-"use strict";
+"use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js";
-import { OfxModel } from "./OfxModel.js";
-import { OfxCollection } from "./OfxCollection.js";
-import { OfxListView } from "./OfxListView.js";
-import { OfxFormView } from "./OfxFormView.js";
+import { html, render } from "../../lib/lit-html/lit-html.js"
+import { OfxModel } from "./OfxModel.js"
+import { OfxCollection } from "./OfxCollection.js"
+import { OfxListView } from "./OfxListView.js"
+import { OfxFormView } from "./OfxFormView.js"
 
 const template = (d) => html`
 <div class='row'>
@@ -32,26 +32,26 @@ const template = (d) => html`
     </div>
   </div>
 </div>
-`;
+`
 
 export class OfxIndexView extends Backbone.View {
   preinitialize() {
     this.events = {
       "click .btn.create": "create"
-    };
+    }
   }
 
   edit(model) {
-    this.ofxForm = new OfxFormView({ model });
+    this.ofxForm = new OfxFormView({ model })
     this.ofxForm.on({
-      "created": (e) => { this.appendCollection(e); }
-    });
-    this.$("#formContainer").html(this.ofxForm.render().el);
-    $("#modalForm").modal("show");
+      "created": (e) => { this.appendCollection(e) }
+    })
+    this.$("#formContainer").html(this.ofxForm.render().el)
+    $("#modalForm").modal("show")
   }
 
   create(e) {
-    e.preventDefault();
+    e.preventDefault()
     const model = new OfxModel({
       account_id: "",
       url: "",
@@ -62,35 +62,35 @@ export class OfxIndexView extends Backbone.View {
       bank_id: "",
       acc_id: "",
       acc_type: ""
-    });
-    this.ofxForm = new OfxFormView({ model });
+    })
+    this.ofxForm = new OfxFormView({ model })
     this.ofxForm.on({
-      "created": (e) => { this.appendCollection(e); }
-    });
-    this.$("#formContainer").html(this.ofxForm.render().el);
-    $("#modalForm").modal("show");
+      "created": (e) => { this.appendCollection(e) }
+    })
+    this.$("#formContainer").html(this.ofxForm.render().el)
+    $("#modalForm").modal("show")
   }
 
   appendCollection(model) {
-    this.listView.collection.add(model);
-    this.listView.render();
+    this.listView.collection.add(model)
+    this.listView.render()
   }
 
   render() {
-    render(template(), this.el);
+    render(template(), this.el)
 
-    const ofxCollection = new OfxCollection();
+    const ofxCollection = new OfxCollection()
     ofxCollection.fetch({
       success: (collection, resp, opts) => {
-        this.listView = new OfxListView({ collection: collection });
-        this.$("#tableContainer").html(this.listView.render().el);
-        this.listenTo(this.listView, "ofx:edit", this.edit);
+        this.listView = new OfxListView({ collection: collection })
+        this.$("#tableContainer").html(this.listView.render().el)
+        this.listenTo(this.listView, "ofx:edit", this.edit)
       },
       error: (collection, resp, opts) => {
-        alert("Error fetching OFX records");
+        alert("Error fetching OFX records")
       }
-    });
+    })
 
-    return this;
+    return this
   }
 }

@@ -20,7 +20,7 @@ const template = (d) => html`
     </table>
   </div>
 </div>
-`;
+`
 
 export class CommodityIndexView extends Backbone.View {
   render() {
@@ -32,7 +32,7 @@ export class CommodityIndexView extends Backbone.View {
         const $table = this.$el.find("table")
         collection.each(model => {
           const modelView = new CommodityView({ model })
-          $table.append(modelView.render().$el);
+          $table.append(modelView.render().$el)
         })
       }
     })
