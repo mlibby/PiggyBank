@@ -3,19 +3,18 @@
 import { html, render } from "../../lib/lit-html/lit-html.js"
 import { getUuid } from "../PiggyBankUtil.js"
 
-const template = (d) => {
-  d.uuid = getUuid()
-  return html`
-    <label for='selectAccountId-${d.uuid}'>${d.label}</label>
-    <select id='selectAccountId-${d.uuid}' class='select-account-id form-control'>
-      <option value=''>[Choose Account]</option>
-    </select>`
-}
+const template = (d) => html`
+  <label for='selectAccountId-${d.uuid}'>${d.label}</label>
+  <select id='selectAccountId-${d.uuid}' class='select-account-id form-control'>
+    <option value=''>[Choose Account]</option>
+  </select>
+`
+
 
 export class AccountSelectMenuView extends Backbone.View {
   render(accountId, label, includePlaceholders) {
     label = label || "Account"
-    render(template({ label }), this.el)
+    render(template({ uuid: getUuid(), label }), this.el)
     this.addAccountOptions(piggybank.accounts, includePlaceholders, accountId)
     return this
   }

@@ -5,19 +5,19 @@ import { PriceCollection } from "./PriceCollection.js"
 import { PriceView } from "./PriceView.js"
 
 const template = (d) => html`
-<div class='row'>
-  <div class='col'>
-    <h1>Prices</h1>
-    <table class='table'>
-      <tr>
-        <th>Date</th>
-        <th>Commodity</th>
-        <th>Value</th>
-        <th></th>
-      </tr>
-    </table>
+  <div class='row'>
+    <div class='col'>
+      <h1>Prices</h1>
+      <table class='table'>
+        <tr>
+          <th>Date</th>
+          <th>Commodity</th>
+          <th>Value</th>
+          <th></th>
+        </tr>
+      </table>
+    </div>
   </div>
-</div>
 `
 
 export class PriceIndexView extends Backbone.View {

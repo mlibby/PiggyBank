@@ -4,12 +4,12 @@ import { html, render } from "../../lib/lit-html/lit-html.js"
 import { AccountListView } from "./AccountListView.js"
 
 const template = d => html`
-<div class="display">
-  <a href="/ledger/${d.id}">${d.accountName}</a>
-  <button class="edit btn btn-sm btn-icon btn-outline-secondary"><span class="icon-pencil"></span></button>
-  <button class="create btn btn-sm btn-icon btn-outline-primary"><span class="icon-plus"></span></button>
-  <button class="delete btn btn-sm btn-icon btn-outline-danger"><span class="icon-trash"></span></button>
-</div>
+  <div class='display'>
+    <a href='/ledger/${d.id}'>${d.accountName}</a>
+    <button class='edit btn btn-sm btn-icon btn-outline-secondary'><span class='icon-pencil'></span></button>
+    <button class='create btn btn-sm btn-icon btn-outline-primary'><span class='icon-plus'></span></button>
+    <button class='delete btn btn-sm btn-icon btn-outline-danger'><span class='icon-trash'></span></button>
+  </div>
 `
 
 export class AccountView extends Backbone.View {

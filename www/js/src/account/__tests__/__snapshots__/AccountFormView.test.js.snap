@@ -8,7 +8,7 @@ exports[`AccountFormView has render method 1`] = `
   <div
     aria-hidden="true"
     class="modal fade"
-    id="modalForm"
+    id="modalForm\\""
     role="dialog"
     tabindex="-1"
   >
@@ -51,7 +51,7 @@ exports[`AccountFormView has render method 1`] = `
                   <div>
                     <!---->
                     
-    
+
                     <label
                       for="selectAccountId-test guid"
                     >
@@ -60,20 +60,20 @@ exports[`AccountFormView has render method 1`] = `
                       <!---->
                     </label>
                     
-    
+
                     <select
                       class="select-account-id form-control"
                       id="selectAccountId-test guid"
                     >
                       
-      
+  
                       <option
                         value=""
                       >
                         [Choose Account]
                       </option>
                       
-    
+
                       <option
                         value="1"
                       >
@@ -115,6 +115,8 @@ exports[`AccountFormView has render method 1`] = `
                         Liabilities::Mortgage
                       </option>
                     </select>
+                    
+
                     <!---->
                   </div>
                 </div>
@@ -142,7 +144,7 @@ exports[`AccountFormView has render method 1`] = `
                   <div>
                     <!---->
                     
-    
+
                     <label
                       for="selectCommodityId-test guid"
                     >
@@ -151,20 +153,20 @@ exports[`AccountFormView has render method 1`] = `
                       <!---->
                     </label>
                     
-    
+
                     <select
                       class="select-commodity-id form-control"
                       id="selectCommodityId-test guid"
                     >
                       
-      
+  
                       <option
                         value=""
                       >
                         [Choose Commodity]
                       </option>
                       
-    
+
                       <option
                         value="undefined"
                       >

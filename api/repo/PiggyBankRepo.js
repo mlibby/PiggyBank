@@ -28,14 +28,14 @@ exports.PiggyBankRepo = class PiggyBankRepo {
   }
 
   getMigrationLevel() {
-    const sql = 'select max(level) from migration'
+    const sql = "select max(level) from migration"
     let level = 0
     try {
       const stmt = this.db.prepare(sql)
       level = stmt.pluck().get()
     }
     catch (err) {
-      if (err.message !== 'no such table: migration') {
+      if (err.message !== "no such table: migration") {
         throw err
       }
     }

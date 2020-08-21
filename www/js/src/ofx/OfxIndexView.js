@@ -7,31 +7,31 @@ import { OfxListView } from "./OfxListView.js"
 import { OfxFormView } from "./OfxFormView.js"
 
 const template = (d) => html`
-<div class='row'>
-  <div class='col'>
-    <h1>OFX Configuration</h1>
-  </div>
-</div>
-<div class='row'>
-  <div id='formContainer' class='col'></div>
-</div>
-<div class='row'>
-  <div id="tableContainer" class='col'>
-    <div class="spinner-border text-info" role="status">
-      <span class="sr-only">Loading...</span>
+  <div class='row'>
+    <div class='col'>
+      <h1>OFX Configuration</h1>
     </div>
   </div>
-</div>
-<div class='row mb-3'>
-  <div class='col'>
-    <div id='buttonContainer'>
-      <button class="create btn btn-success">
-        <span class="icon-plus mr-2"></span>
-        <span class="label">New OFX Account</span>
-      </button>
+  <div class='row'>
+    <div id='formContainer' class='col'></div>
+  </div>
+  <div class='row'>
+    <div id='tableContainer' class='col'>
+      <div class='spinner-border text-info' role='status'>
+        <span class='sr-only'>Loading...</span>
+      </div>
     </div>
   </div>
-</div>
+  <div class='row mb-3'>
+    <div class='col'>
+      <div id='buttonContainer'>
+        <button class='create btn btn-success'>
+          <span class='icon-plus mr-2'></span>
+          <span class='label'>New OFX Account</span>
+        </button>
+      </div>
+    </div>
+  </div>
 `
 
 export class OfxIndexView extends Backbone.View {

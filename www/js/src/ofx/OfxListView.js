@@ -4,18 +4,18 @@ import { html, render } from "../../lib/lit-html/lit-html.js"
 import { OfxView } from "./OfxView.js"
 
 const template = (d) => html`
-<tr>
-  <th>Account</th>
-  <th>URL</th>
-  <th>User</th>
-  <th>Password</th>
-  <th>FID</th>
-  <th>FID Org</th>
-  <th>Bank ID</th>
-  <th>Account ID</th>
-  <th>Account Type</th>
-  <th></th>
-</tr>
+  <tr>
+    <th>Account</th>
+    <th>URL</th>
+    <th>User</th>
+    <th>Password</th>
+    <th>FID</th>
+    <th>FID Org</th>
+    <th>Bank ID</th>
+    <th>Account ID</th>
+    <th>Account Type</th>
+    <th></th>
+  </tr>
 `
 
 export class OfxListView extends Backbone.View {

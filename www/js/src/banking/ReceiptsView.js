@@ -3,15 +3,15 @@
 import { html, render } from "../../lib/lit-html/lit-html.js"
 
 const template = (d) => html`
-<div class='row'>
-  <div class='col'>
-    <h1>Receipts</h1>
-    <video playsinline autoplay style='width:340px;height:240px;'></video>
-    <button id="snapshot-btn">Take snapshot</button>
-    <img id="snapshot-img" />
-    <canvas></canvas>
+  <div class='row'>
+    <div class='col'>
+      <h1>Receipts</h1>
+      <video playsinline autoplay style='width:340px;height:240px;'></video>
+      <button id='snapshot-btn'>Take snapshot</button>
+      <img id='snapshot-img' />
+      <canvas></canvas>
+    </div>
   </div>
-</div>
 `
 
 const constraints = {
@@ -45,7 +45,7 @@ export class ReceiptIndexView extends Backbone.View {
 
   takeSnapshot(e) {
     e.preventDefault()
-    const img = document.querySelector('#snapshot-img')
+    const img = document.querySelector("#snapshot-img")
     imageCapture.takePhoto()
       .then(blob => {
         img.src = URL.createObjectURL(blob);

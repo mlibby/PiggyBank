@@ -17,8 +17,8 @@ exports[`CommodityView has render method 1`] = `
 <td>",
         "</td>
 <td>
-  <button class=\\"create btn btn-sm btn-icon btn-outline-secondary\\"><span class=\\"icon-pencil\\"></span><span class=\\"sr-only\\">Edit</span></button>
-  <button class=\\"delete btn btn-sm btn-icon btn-outline-danger\\"><span class=\\"icon-trash\\"></span><span class=\\"sr-only\\">Delete</span></button>
+  <button class='create btn btn-sm btn-icon btn-outline-secondary'><span class='icon-pencil'></span><span class='sr-only'>Edit</span></button>
+  <button class='delete btn btn-sm btn-icon btn-outline-danger'><span class='icon-trash'></span><span class='sr-only'>Delete</span></button>
 </td>
 ",
       ],

@@ -5,8 +5,8 @@ const SQLite3 = require("better-sqlite3")
 const { TxRepo } = require("../TxRepo")
 const helpers = require("../../__tests__/testHelpers.js")
 
-const origVersion = 'original version'
-const newVersion = 'new version'
+const origVersion = "original version"
+const newVersion = "new version"
 
 let repo
 let db

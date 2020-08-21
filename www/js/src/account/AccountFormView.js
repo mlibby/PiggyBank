@@ -6,48 +6,48 @@ import { AccountSelectMenuView } from "./AccountSelectMenuView.js"
 import { CommoditySelectMenuView } from "../commodity/CommoditySelectMenuView.js"
 
 const template = (d) => html`
-<div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <form class="account-editor form">
-          <div class="form-row">
-            <div class="form-group col">
-              <div id="parentSelect"></div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col">
-              <div id="commoditySelect"></div>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col">
-              <label for="accountName">Name</label>
-              <input id="accountName" class="mr-3 form-control" type="text" value="${d.name}" />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group form-check">
-              <div class="col">
-                <input id="isPlaceholder" class="form-check-input mr-1" type="checkbox" ?checked=${d.isPlaceholder} />
-                <label for="isPlaceholder" class="mr-3">
-                  Is Placeholder
-                </label>
+  <div class='modal fade' id='modalForm"' tabindex='-1' role='dialog' aria-hidden='true'>
+    <div class='modal-dialog modal-xl modal-dialog-centered' role='document'>
+      <div class='modal-content'>
+        <div class='modal-body'>
+          <form class='account-editor form'>
+            <div class='form-row'>
+              <div class='form-group col'>
+                <div id='parentSelect'></div>
               </div>
             </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <button class="save btn btn-success mr-2"><span class="icon-solid-check"></span></button>
-              <button class="cancel btn btn-danger"><span class="icon-close"></span></button>
+            <div class='form-row'>
+              <div class='form-group col'>
+                <div id='commoditySelect'></div>
+              </div>
             </div>
-          </div>
-        </form>
+            <div class='form-row'>
+              <div class='form-group col'>
+                <label for='accountName'>Name</label>
+                <input id='accountName' class='mr-3 form-control' type='text' value='${d.name}' />
+              </div>
+            </div>
+            <div class='form-row'>
+              <div class='form-group form-check'>
+                <div class='col'>
+                  <input id='isPlaceholder' class='form-check-input mr-1' type='checkbox' ?checked=${d.isPlaceholder} />
+                  <label for='isPlaceholder' class='mr-3'>
+                    Is Placeholder
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class='form-row'>
+              <div class='form-group'>
+                <button class='save btn btn-success mr-2'><span class='icon-solid-check'></span></button>
+                <button class='cancel btn btn-danger'><span class='icon-close'></span></button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
 `;
 
 export class AccountFormView extends Backbone.View {
