@@ -14,7 +14,7 @@ test("new CommodityRoutes(router, repo)", () => {
 test("sets up routes", () => {
   const routes = new CommodityRoutes(mockRouter, mockRepo)
   expect(mockRouter.get.mock.calls[0][0]).toBe("/")
-  // expect(mockRouter.post.mock.calls[0][0]).toBe("/")
+  expect(mockRouter.post.mock.calls[0][0]).toBe("/")
   // expect(mockRouter.put.mock.calls[0][0]).toBe("/:id")
   // expect(mockRouter.delete.mock.calls[0][0]).toBe("/")
 })

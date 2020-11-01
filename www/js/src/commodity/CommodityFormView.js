@@ -23,14 +23,14 @@ const template = (d) => html`
                 <label for='type'>Type</label>
                 <select id='type' class='form-control'>
                   <option value=''>[Choose Commodity Type]</option>
-                  <option value='Currency'>Currency</option>
-                  <option value='Investment'>Investment</option>
+                  <option value='1'>Currency</option>
+                  <option value='2'>Investment</option>
                 </select>
               </div>
             </div>
             <div class='form-row'>
               <div class='form-group col'>
-                <label for='symbol'>User</label>
+                <label for='symbol'>Symbol</label>
                 <input id='symbol' class='form-control' type='text' name='symbol' value='${d.symbol}' />
               </div>
             </div>
@@ -77,23 +77,18 @@ export class CommodityFormView extends Backbone.View {
     e.preventDefault()
 
     this.model.set({
-      accountId: this.$(".select-account-id").val(),
-      url: this.$("#url").val(),
-      user: this.$("#user").val(),
-      password: this.$("#password").val(),
-      fid: this.$("#fid").val(),
-      fidOrg: this.$("#fidOrg").val(),
-      bankId: this.$("#bankId").val(),
-      bankAccountId: this.$("#acctId").val(),
-      bankAccountType: this.$("#acctType").val()
+      id: this.$("#id").val(),
+      name: this.$("#name").val(),
+      type: this.$("#type").val(),
+      symbol: this.$("#symbol").val(),
+      description: this.$("#description").val(),
+      ticker: this.$("#ticker").val(),
+      version: this.$("#version").val()
     })
 
     const isNew = this.model.isNew()
     this.model.save({}, {
       success: (model) => {
-        model.attributes.password = "******"
-        const acctId = model.attributes.acctId
-        model.attributes.accontId = "****" + acctId.substring(accountId.length - 4)
         if (isNew) {
           this.trigger("created", model)
         }
@@ -104,7 +99,7 @@ export class CommodityFormView extends Backbone.View {
         this.trigger("closed")
       },
       error: () => {
-        alert("Error saving OFX")
+        alert("Error saving commodity")
       }
     })
   }

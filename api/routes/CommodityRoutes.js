@@ -4,7 +4,7 @@ exports.CommodityRoutes = class CommodityRoutes {
     this.router = router
 
     this.router.get("/", this.list.bind(this))
-    // this.router.post("/", this.create.bind(this))
+    this.router.post("/", this.create.bind(this))
     // this.router.put("/:id", this.update.bind(this))
     // this.router.delete("/", this.delete.bind(this))
   }
@@ -14,11 +14,11 @@ exports.CommodityRoutes = class CommodityRoutes {
     res.json(commodities)
   }
 
-  // async create(req, res, next) {
-  //   let account = this.requestToAccount(req)
-  //   account = await this.repo.account.insert(account)
-  //   res.json(account)
-  // }
+  create(req, res, next) {
+    let commodity = this.requestToCommodity(req)
+    commodity = this.repo.commodity.insert(commodity)
+    res.json(commodity)
+  }
 
   // async update(req, res, next) {
   //   let account = this.requestToAccount(req)
@@ -32,19 +32,20 @@ exports.CommodityRoutes = class CommodityRoutes {
   //   res.status(200).json({})
   // }
 
-  // requestToAccount(req) {
-  //   const account = {
-  //     name: req.fields.name,
-  //     currencyId: req.fields.currencyId,
-  //     isPlaceholder: req.fields.isPlaceholder,
-  //     parentId: Number(req.fields.parentId)
-  //   }
+  requestToCommodity(req) {
+    const commodity = {
+      name: req.fields.name,
+      type: req.fields.type,
+      symbol: req.fields.symbol,
+      description: req.fields.description
+    }
 
-  //   if(req.fields.accountId) {
-  //     account.accountId = req.fields.accountId,
-  //     account.md5 = req.fields.md5
-  //   }
+    if (req.fields.id) {
+      commodity.id = req.fields.id,
+      commodity.version = req.fields.version
+    }
 
-  //   return account
-  //}
+    return commodity
+  }
+
 }

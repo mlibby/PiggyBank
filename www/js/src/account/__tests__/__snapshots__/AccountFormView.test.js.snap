@@ -184,9 +184,7 @@ exports[`AccountFormView has render method 1`] = `
   
                       <option
                         value="undefined"
-                      >
-                        undefined
-                      </option>
+                      />
                     </select>
                     
 
