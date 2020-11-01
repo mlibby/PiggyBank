@@ -8,7 +8,7 @@ exports[`AccountFormView has render method 1`] = `
   <div
     aria-hidden="true"
     class="modal fade"
-    id="modalForm\\""
+    id="modalForm"
     role="dialog"
     tabindex="-1"
   >
@@ -223,25 +223,25 @@ exports[`AccountFormView has render method 1`] = `
               
               
               <div
-                class="form-group form-check"
+                class="form-group col"
               >
                 
                 
                 <div
-                  class="col"
+                  class="form-check"
                 >
                   
                   
                   <input
                     checked=""
-                    class="form-check-input mr-1"
+                    class="form-check-input"
                     id="isPlaceholder"
                     type="checkbox"
                   />
                   
                   
                   <label
-                    class="mr-3"
+                    class="form-check-label"
                     for="isPlaceholder"
                   >
                     
@@ -273,8 +273,9 @@ exports[`AccountFormView has render method 1`] = `
                   class="save btn btn-success mr-2"
                 >
                   <span
-                    class="icon-solid-check"
+                    class="btn-icon icon-solid-check"
                   />
+                   Save
                 </button>
                 
                 
@@ -282,8 +283,9 @@ exports[`AccountFormView has render method 1`] = `
                   class="cancel btn btn-danger"
                 >
                   <span
-                    class="icon-close"
+                    class="btn-icon icon-close"
                   />
+                   Cancel
                 </button>
                 
               

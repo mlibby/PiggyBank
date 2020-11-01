@@ -32,6 +32,11 @@ body {
     line-height: 1.2;
 }
 
+.btn [class^="icon-"], .btn [class*=" icon-"] {
+    margin-top: 0.25em;
+    display: inline-block;
+}
+
 .btn-icon {
     padding-top: 0.5em;
     padding-bottom: 0.15em;
@@ -59,6 +64,10 @@ body {
 
 div.accounts>ul.accounts {
     padding-left: 0px;
+}
+
+.form-check-input {
+    position: relative;
 }
 
 h1, .h1 {

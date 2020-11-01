@@ -6,7 +6,7 @@ import { AccountSelectMenuView } from "./AccountSelectMenuView.js"
 import { CommoditySelectMenuView } from "../commodity/CommoditySelectMenuView.js"
 
 const template = (d) => html`
-  <div class='modal fade' id='modalForm"' tabindex='-1' role='dialog' aria-hidden='true'>
+  <div class='modal fade' id='modalForm' tabindex='-1' role='dialog' aria-hidden='true'>
     <div class='modal-dialog modal-xl modal-dialog-centered' role='document'>
       <div class='modal-content'>
         <div class='modal-body'>
@@ -28,10 +28,10 @@ const template = (d) => html`
               </div>
             </div>
             <div class='form-row'>
-              <div class='form-group form-check'>
-                <div class='col'>
-                  <input id='isPlaceholder' class='form-check-input mr-1' type='checkbox' ?checked=${d.isPlaceholder} />
-                  <label for='isPlaceholder' class='mr-3'>
+              <div class='form-group col'>
+                <div class='form-check'>
+                  <input id='isPlaceholder' class='form-check-input' type='checkbox' ?checked=${d.isPlaceholder} />
+                  <label for='isPlaceholder' class='form-check-label'>
                     Is Placeholder
                   </label>
                 </div>
@@ -39,8 +39,8 @@ const template = (d) => html`
             </div>
             <div class='form-row'>
               <div class='form-group'>
-                <button class='save btn btn-success mr-2'><span class='icon-solid-check'></span></button>
-                <button class='cancel btn btn-danger'><span class='icon-close'></span></button>
+                <button class='save btn btn-success mr-2'><span class='icon-solid-check'></span> Save</button>
+                <button class='cancel btn btn-danger'><span class='icon-close'></span> Cancel</button>
               </div>
             </div>
           </form>

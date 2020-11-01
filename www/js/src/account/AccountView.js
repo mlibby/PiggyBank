@@ -55,9 +55,9 @@ export class AccountView extends Backbone.View {
       this.$el.removeClass("placeholder")
     }
 
-    this.$(".btn.edit").click(e => this.edit(this.model, e))
-    this.$(".btn.create").click(e => this.create(this.model, e))
-    this.$(".btn.delete").click(e => this.delete(this.model, e))
+    this.$(".btn.edit").on("click", e => this.edit(this.model, e))
+    this.$(".btn.create").on("click", e => this.create(this.model, e))
+    this.$(".btn.delete").on("click", e => this.delete(this.model, e))
 
     if (this.model.children.length > 0) {
       if (this.subview != null) {
