@@ -12,10 +12,6 @@ const template = (d) => html`
     </div>
   </div>
   <div class='row'>
-    <div id='formContainer' class='col'>
-    </div>
-  </div>
-  <div class='row'>
     <div id='tableContainer' class='accounts col'>
     </div>
   </div>
@@ -46,7 +42,8 @@ export class AccountIndexView extends Backbone.View {
     this.form.on("saved", (e) => {
       this.render()
     })
-    this.$("#formContainer").html(this.form.render().el)
+    $("#formContainer").html(this.form.render().el)
+    $("#modalForm .modal-title").text("Edit Account")
     $("#modalForm").modal("show")
   }
 
@@ -59,7 +56,8 @@ export class AccountIndexView extends Backbone.View {
     this.form.on("saved", (e) => {
       this.render()
     })
-    this.$("#formContainer").html(this.form.render().el)
+    $("#formContainer").html(this.form.render().el)
+    $("#modalForm .modal-title").text("Create Account")
     $("#modalForm").modal("show")
   }
 

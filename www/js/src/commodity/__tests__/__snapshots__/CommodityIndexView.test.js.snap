@@ -9,7 +9,10 @@ exports[`CommodityIndexView has render method 1`] = `
   <div class='row'>
     <div class='col'>
       <h1>Commodities</h1>
-      <table class='table'>
+      <button id='createCommodity' class='btn btn-primary'>
+        <span class='icon-plus'></span> New Commodity
+      </button>
+      <table class='table mt-3'>
         <tr>
           <th>Name</th>
           <th>Type</th>

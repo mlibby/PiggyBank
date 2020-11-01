@@ -32,23 +32,6 @@ exports[`AccountIndexView has render method 1`] = `
     
     
     <div
-      class="col"
-      id="formContainer"
-    >
-      
-    
-    </div>
-    
-  
-  </div>
-  
-  
-  <div
-    class="row"
-  >
-    
-    
-    <div
       class="accounts col"
       id="tableContainer"
     >

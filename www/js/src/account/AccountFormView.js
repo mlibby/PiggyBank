@@ -9,8 +9,11 @@ const template = (d) => html`
   <div class='modal fade' id='modalForm' tabindex='-1' role='dialog' aria-hidden='true'>
     <div class='modal-dialog modal-xl modal-dialog-centered' role='document'>
       <div class='modal-content'>
-        <div class='modal-body'>
-          <form class='account-editor form'>
+        <div class='modal-header'>
+          <h3 class='modal-title'>Title</h3>
+        </div>
+        <form class='account-editor form'>
+          <div class='modal-body'>
             <div class='form-row'>
               <div class='form-group col'>
                 <div id='parentSelect'></div>
@@ -37,16 +40,19 @@ const template = (d) => html`
                 </div>
               </div>
             </div>
+          </div>
+          <div class='modal-footer'>
             <div class='form-row'>
               <div class='form-group'>
                 <button class='save btn btn-success mr-2'><span class='icon-solid-check'></span> Save</button>
                 <button class='cancel btn btn-danger'><span class='icon-close'></span> Cancel</button>
               </div>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
+  </div>
   </div>
 `;
 

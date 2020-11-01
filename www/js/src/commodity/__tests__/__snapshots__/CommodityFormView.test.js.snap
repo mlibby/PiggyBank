@@ -9,74 +9,67 @@ exports[`CommodityFormView has render method 1`] = `
   <div class='modal fade' id='modalForm' tabindex='-1' role='dialog' aria-hidden='true'>
     <div class='modal-dialog modal-xl modal-dialog-centered' role='document'>
       <div class='modal-content'>
-        <div class='modal-body'>
-          <form class='commodity-editor form'>
+        <div class='modal-header'>
+          <h3 class='modal-title'>Commodity</h3>
+        </div>
+        <form class='commodity-editor form'>
+          <div class='modal-body'>
             <input id='commodityId' type='hidden' name='id' value='",
         "' />
             <div class='form-row'>
-              <div class='form-group col-md-6'>
+              <div class='form-group col'>
                 <label for='name'>Name</label>
                 <input id='name' class='form-control' type='text' name='name' value='",
         "' />
               </div>
-              <div class='form-group col-md-6'>
+            </div>
+            <div class='form-row'>
+              <div class='form-group col'>
                 <label for='type'>Type</label>
                 <select id='type' class='form-control'>
                   <option value=''>[Choose Commodity Type]</option>
-                  <option value='CD'>Certificate of Deposit</option>
-                  <option value='CHECKING'>Checking</option>
+                  <option value='Currency'>Currency</option>
+                  <option value='Investment'>Investment</option>
                 </select>
               </div>
-              <div class='form-group col-6'>
-                <label for='user'>User</label>
-                <input id='user' class='form-control' type='text' name='user' value='",
-        "' />
-              </div>
-              <div class='form-group col-6'>
-                <label for='password'>Password</label>
-                <input id='password' class='form-control' type='text' name='password' value='",
+            </div>
+            <div class='form-row'>
+              <div class='form-group col'>
+                <label for='symbol'>User</label>
+                <input id='symbol' class='form-control' type='text' name='symbol' value='",
         "' />
               </div>
             </div>
             <div class='form-row'>
-              <div class='form-group col-6 col-md-3'>
-                <label for='fid'>FID</label>
-                <input id='fid' class='form-control' type='text' name='fid' value='",
+              <div class='form-group col'>
+                <label for='description'>Description</label>
+                <input id='description' class='form-control' type='text' name='description' value='",
         "' />
-              </div>
-              <div class='form-group col-6 col-md-3'>
-                <label for='fidOrg'>FID Org</label>
-                <input id='fidOrg' class='form-control' type='text' name='fidOrg' value='",
-        "' />
-              </div>
-              <div class='form-group col-6 col-md-3'>
-                <label for='bankId'>Bank ID</label>
-                <input id='bankId' class='form-control' type='text' name='bankId' value='",
-        "' />
-              </div>
-              <div class='form-group col-6 col-md-3'>
-                <label for='bankAccountId'>Account ID</label>
-                <input id='acctId' class='form-control' type='text' name='acctId' value='",
-        "' />
-              </div>
-              <div class='form-group col-6'>
-              </div>
-              <div class='form-group col-6'>
-                <label>&nbsp;</label><br />
-                <button class='save btn btn-success ml-2'><span class='icon-solid-check'></span></button>
-                <button class='cancel btn btn-danger ml-2'><span class='icon-close'></span></button>
               </div>
             </div>
-          </form>
-        </div>
+            <div class='form-row'>
+              <div class='form-group col'>
+                <label for='ticker'>Ticker</label>
+                <input id='ticker' class='form-control' type='text' name='ticker' value='",
+        "' />
+              </div>
+            </div>
+          </div>
+          <div class='modal-footer'>
+            <div class='form-row'>
+              <div class='form-group'>
+                <button class='save btn btn-success ml-2'><span class='icon-solid-check'></span> Save</button>
+                <button class='cancel btn btn-danger ml-2'><span class='icon-close'></span> Cancel</button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+  </div>
 ",
       ],
-      undefined,
-      undefined,
-      undefined,
       undefined,
       undefined,
       undefined,

@@ -18,17 +18,15 @@ test("AccountIndexView has render method", () => {
 
 test("view.edit creates an AccountForm and displays it", () => {
   const html = jest.fn()
-  view.$el = {
-    find: jest.fn().mockReturnValue({ html })
-  }
   const modal = jest.fn()
+  const text = jest.fn()
   window.$ = jest.fn().mockImplementation(() => {
-    return { modal }
+    return { modal, html, text }
   })
 
   view.edit(mockAccountAssets)
 
-  expect(view.$el.find).toHaveBeenCalledWith("#formContainer")
   expect(html).toHaveBeenCalledWith(view.form.el)
+  expect(text).toHaveBeenCalledWith("Edit Account")
   expect(modal).toHaveBeenCalled()
 })

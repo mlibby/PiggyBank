@@ -26,12 +26,6 @@ export class CommodityView extends Backbone.View {
     this.trigger("commodity:edit", model)
   }
 
-  editCommodity(e) {
-    e.preventDefault()
-
-    // const $form = this.$el.find("form").first();
-  }
-
   render() {
     render(template({
       id: this.model.get("id"),
@@ -42,9 +36,8 @@ export class CommodityView extends Backbone.View {
       ticker: this.model.get("ticker")
     }), this.el)
 
-    this.$(".btn.edit").click((e) => this.edit(this.model, e))
-    this.$(".btn.create").click((e) => this.create(this.model, e))
-    this.$(".btn.delete").click((e) => this.delete(this.model, e))
+    this.$(".btn.edit").on("click", (e) => this.edit(this.model, e))
+    this.$(".btn.delete").on("click", (e) => this.delete(this.model, e))
 
     return this
   }
