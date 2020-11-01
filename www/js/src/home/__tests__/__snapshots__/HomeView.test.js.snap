@@ -6,12 +6,12 @@ exports[`HomeView has render method 1`] = `
     Array [
       Array [
         "
-<div class='row'>
-  <div class='col'>
-    <h1>Oink! Oink!</h1>
-    <p>Welcome to Piggy Bank.</p>
+  <div class='row'>
+    <div class='col'>
+      <h1>Oink! Oink!</h1>
+      <p>Welcome to Piggy Bank.</p>
+    </div>
   </div>
-</div>
 ",
       ],
     ],

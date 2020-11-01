@@ -6,22 +6,22 @@ exports[`ApiKeyView has render method 1`] = `
 >
   <!---->
   
-
+  
   <td>
     <!---->
     <!---->
   </td>
   
-
+  
   <td>
     <!---->
     <!---->
   </td>
   
-
+  
   <td>
     
-  
+    
     <button
       class="create btn btn-sm btn-icon btn-outline-secondary"
     >
@@ -35,7 +35,7 @@ exports[`ApiKeyView has render method 1`] = `
       </span>
     </button>
     
-  
+    
     <button
       class="delete btn btn-sm btn-icon btn-outline-danger"
     >
@@ -49,7 +49,7 @@ exports[`ApiKeyView has render method 1`] = `
       </span>
     </button>
     
-
+  
   </td>
   
 

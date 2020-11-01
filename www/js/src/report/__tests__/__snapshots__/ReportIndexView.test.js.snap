@@ -6,12 +6,12 @@ exports[`ReportIndexView has render method 1`] = `
     Array [
       Array [
         "
-<div class='row'>
-  <div class='col'>
-    <h1>Reports</h1>
-    <p>[tdb]</p>
+  <div class='row'>
+    <div class='col'>
+      <h1>Reports</h1>
+      <p>[tdb]</p>
+    </div>
   </div>
-</div>
 ",
       ],
     ],

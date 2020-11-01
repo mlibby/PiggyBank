@@ -4,7 +4,7 @@ exports[`AccountSelectMenuView has render method 1`] = `
 <div>
   <!---->
   
-
+  
   <label
     for="selectAccountId-test guid"
   >
@@ -13,20 +13,20 @@ exports[`AccountSelectMenuView has render method 1`] = `
     <!---->
   </label>
   
-
+  
   <select
     class="select-account-id form-control"
     id="selectAccountId-test guid"
   >
     
-  
+    
     <option
       value=""
     >
       [Choose Account]
     </option>
     
-
+  
   </select>
   
 

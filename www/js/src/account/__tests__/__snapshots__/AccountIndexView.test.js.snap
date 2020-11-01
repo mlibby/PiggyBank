@@ -4,59 +4,59 @@ exports[`AccountIndexView has render method 1`] = `
 <div>
   <!---->
   
-
+  
   <div
     class="row"
   >
     
-  
+    
     <div
       class="col"
     >
       
-    
+      
       <h1>
         Accounts
       </h1>
       
-  
+    
     </div>
     
-
+  
   </div>
   
-
+  
   <div
     class="row"
   >
     
-  
+    
     <div
       class="col"
       id="formContainer"
     >
       
-  
+    
     </div>
     
-
+  
   </div>
   
-
+  
   <div
     class="row"
   >
     
-  
+    
     <div
       class="accounts col"
       id="tableContainer"
     >
       
-  
+    
     </div>
     
-
+  
   </div>
   
 

@@ -4,7 +4,7 @@ exports[`AccountFormView has render method 1`] = `
 <div>
   <!---->
   
-
+  
   <div
     aria-hidden="true"
     class="modal fade"
@@ -13,45 +13,45 @@ exports[`AccountFormView has render method 1`] = `
     tabindex="-1"
   >
     
-  
+    
     <div
       class="modal-dialog modal-xl modal-dialog-centered"
       role="document"
     >
       
-    
+      
       <div
         class="modal-content"
       >
         
-      
+        
         <div
           class="modal-body"
         >
           
-        
+          
           <form
             class="account-editor form"
           >
             
-          
+            
             <div
               class="form-row"
             >
               
-            
+              
               <div
                 class="form-group col"
               >
                 
-              
+                
                 <div
                   id="parentSelect"
                 >
                   <div>
                     <!---->
                     
-
+  
                     <label
                       for="selectAccountId-test guid"
                     >
@@ -60,20 +60,20 @@ exports[`AccountFormView has render method 1`] = `
                       <!---->
                     </label>
                     
-
+  
                     <select
                       class="select-account-id form-control"
                       id="selectAccountId-test guid"
                     >
                       
-  
+    
                       <option
                         value=""
                       >
                         [Choose Account]
                       </option>
                       
-
+  
                       <option
                         value="1"
                       >
@@ -121,30 +121,30 @@ exports[`AccountFormView has render method 1`] = `
                   </div>
                 </div>
                 
-            
+              
               </div>
               
-          
+            
             </div>
             
-          
+            
             <div
               class="form-row"
             >
               
-            
+              
               <div
                 class="form-group col"
               >
                 
-              
+                
                 <div
                   id="commoditySelect"
                 >
                   <div>
                     <!---->
                     
-
+  
                     <label
                       for="selectCommodityId-test guid"
                     >
@@ -153,20 +153,20 @@ exports[`AccountFormView has render method 1`] = `
                       <!---->
                     </label>
                     
-
+  
                     <select
                       class="select-commodity-id form-control"
                       id="selectCommodityId-test guid"
                     >
                       
-  
+    
                       <option
                         value=""
                       >
                         [Choose Commodity]
                       </option>
                       
-
+  
                       <option
                         value="undefined"
                       >
@@ -179,30 +179,30 @@ exports[`AccountFormView has render method 1`] = `
                   </div>
                 </div>
                 
-            
+              
               </div>
               
-          
+            
             </div>
             
-          
+            
             <div
               class="form-row"
             >
               
-            
+              
               <div
                 class="form-group col"
               >
                 
-              
+                
                 <label
                   for="accountName"
                 >
                   Name
                 </label>
                 
-              
+                
                 <input
                   class="mr-3 form-control"
                   id="accountName"
@@ -210,28 +210,28 @@ exports[`AccountFormView has render method 1`] = `
                   value="Assets"
                 />
                 
-            
+              
               </div>
               
-          
+            
             </div>
             
-          
+            
             <div
               class="form-row"
             >
               
-            
+              
               <div
                 class="form-group form-check"
               >
                 
-              
+                
                 <div
                   class="col"
                 >
                   
-                
+                  
                   <input
                     checked=""
                     class="form-check-input mr-1"
@@ -239,36 +239,36 @@ exports[`AccountFormView has render method 1`] = `
                     type="checkbox"
                   />
                   
-                
+                  
                   <label
                     class="mr-3"
                     for="isPlaceholder"
                   >
                     
-                  Is Placeholder
-                
+                    Is Placeholder
+                  
                   </label>
                   
-              
+                
                 </div>
                 
-            
+              
               </div>
               
-          
+            
             </div>
             
-          
+            
             <div
               class="form-row"
             >
               
-            
+              
               <div
                 class="form-group"
               >
                 
-              
+                
                 <button
                   class="save btn btn-success mr-2"
                 >
@@ -277,7 +277,7 @@ exports[`AccountFormView has render method 1`] = `
                   />
                 </button>
                 
-              
+                
                 <button
                   class="cancel btn btn-danger"
                 >
@@ -286,25 +286,25 @@ exports[`AccountFormView has render method 1`] = `
                   />
                 </button>
                 
-            
+              
               </div>
               
-          
+            
             </div>
             
-        
+          
           </form>
           
-      
+        
         </div>
         
-    
+      
       </div>
       
-  
+    
     </div>
     
-
+  
   </div>
   
 

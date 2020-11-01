@@ -6,12 +6,12 @@ exports[`BudgetIndexView has render method 1`] = `
     Array [
       Array [
         "
-<div class='row'>
-  <div class='col'>
-    <h1>Budgets</h1>
-    <p>[tdb]</p>
+  <div class='row'>
+    <div class='col'>
+      <h1>Budgets</h1>
+      <p>[tdb]</p>
+    </div>
   </div>
-</div>
 ",
       ],
     ],

@@ -9,12 +9,12 @@ exports[`AccountListView has render method 1`] = `
   >
     <!---->
     
-
+  
     <div
       class="display"
     >
       
-  
+    
       <a
         href="/ledger/1"
       >
@@ -23,7 +23,7 @@ exports[`AccountListView has render method 1`] = `
         <!---->
       </a>
       
-  
+    
       <button
         class="edit btn btn-sm btn-icon btn-outline-secondary"
       >
@@ -32,7 +32,7 @@ exports[`AccountListView has render method 1`] = `
         />
       </button>
       
-  
+    
       <button
         class="create btn btn-sm btn-icon btn-outline-primary"
       >
@@ -41,7 +41,7 @@ exports[`AccountListView has render method 1`] = `
         />
       </button>
       
-  
+    
       <button
         class="delete btn btn-sm btn-icon btn-outline-danger"
       >
@@ -50,7 +50,7 @@ exports[`AccountListView has render method 1`] = `
         />
       </button>
       
-
+  
     </div>
     
 
@@ -63,12 +63,12 @@ exports[`AccountListView has render method 1`] = `
       >
         <!---->
         
-
+  
         <div
           class="display"
         >
           
-  
+    
           <a
             href="/ledger/3"
           >
@@ -77,7 +77,7 @@ exports[`AccountListView has render method 1`] = `
             <!---->
           </a>
           
-  
+    
           <button
             class="edit btn btn-sm btn-icon btn-outline-secondary"
           >
@@ -86,7 +86,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-  
+    
           <button
             class="create btn btn-sm btn-icon btn-outline-primary"
           >
@@ -95,7 +95,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-  
+    
           <button
             class="delete btn btn-sm btn-icon btn-outline-danger"
           >
@@ -104,7 +104,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-
+  
         </div>
         
 
@@ -115,12 +115,12 @@ exports[`AccountListView has render method 1`] = `
       >
         <!---->
         
-
+  
         <div
           class="display"
         >
           
-  
+    
           <a
             href="/ledger/4"
           >
@@ -129,7 +129,7 @@ exports[`AccountListView has render method 1`] = `
             <!---->
           </a>
           
-  
+    
           <button
             class="edit btn btn-sm btn-icon btn-outline-secondary"
           >
@@ -138,7 +138,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-  
+    
           <button
             class="create btn btn-sm btn-icon btn-outline-primary"
           >
@@ -147,7 +147,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-  
+    
           <button
             class="delete btn btn-sm btn-icon btn-outline-danger"
           >
@@ -156,7 +156,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-
+  
         </div>
         
 
@@ -169,12 +169,12 @@ exports[`AccountListView has render method 1`] = `
           >
             <!---->
             
-
+  
             <div
               class="display"
             >
               
-  
+    
               <a
                 href="/ledger/5"
               >
@@ -183,7 +183,7 @@ exports[`AccountListView has render method 1`] = `
                 <!---->
               </a>
               
-  
+    
               <button
                 class="edit btn btn-sm btn-icon btn-outline-secondary"
               >
@@ -192,7 +192,7 @@ exports[`AccountListView has render method 1`] = `
                 />
               </button>
               
-  
+    
               <button
                 class="create btn btn-sm btn-icon btn-outline-primary"
               >
@@ -201,7 +201,7 @@ exports[`AccountListView has render method 1`] = `
                 />
               </button>
               
-  
+    
               <button
                 class="delete btn btn-sm btn-icon btn-outline-danger"
               >
@@ -210,7 +210,7 @@ exports[`AccountListView has render method 1`] = `
                 />
               </button>
               
-
+  
             </div>
             
 
@@ -223,12 +223,12 @@ exports[`AccountListView has render method 1`] = `
       >
         <!---->
         
-
+  
         <div
           class="display"
         >
           
-  
+    
           <a
             href="/ledger/2"
           >
@@ -237,7 +237,7 @@ exports[`AccountListView has render method 1`] = `
             <!---->
           </a>
           
-  
+    
           <button
             class="edit btn btn-sm btn-icon btn-outline-secondary"
           >
@@ -246,7 +246,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-  
+    
           <button
             class="create btn btn-sm btn-icon btn-outline-primary"
           >
@@ -255,7 +255,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-  
+    
           <button
             class="delete btn btn-sm btn-icon btn-outline-danger"
           >
@@ -264,7 +264,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-
+  
         </div>
         
 
@@ -277,12 +277,12 @@ exports[`AccountListView has render method 1`] = `
   >
     <!---->
     
-
+  
     <div
       class="display"
     >
       
-  
+    
       <a
         href="/ledger/10"
       >
@@ -291,7 +291,7 @@ exports[`AccountListView has render method 1`] = `
         <!---->
       </a>
       
-  
+    
       <button
         class="edit btn btn-sm btn-icon btn-outline-secondary"
       >
@@ -300,7 +300,7 @@ exports[`AccountListView has render method 1`] = `
         />
       </button>
       
-  
+    
       <button
         class="create btn btn-sm btn-icon btn-outline-primary"
       >
@@ -309,7 +309,7 @@ exports[`AccountListView has render method 1`] = `
         />
       </button>
       
-  
+    
       <button
         class="delete btn btn-sm btn-icon btn-outline-danger"
       >
@@ -318,7 +318,7 @@ exports[`AccountListView has render method 1`] = `
         />
       </button>
       
-
+  
     </div>
     
 
@@ -331,12 +331,12 @@ exports[`AccountListView has render method 1`] = `
       >
         <!---->
         
-
+  
         <div
           class="display"
         >
           
-  
+    
           <a
             href="/ledger/11"
           >
@@ -345,7 +345,7 @@ exports[`AccountListView has render method 1`] = `
             <!---->
           </a>
           
-  
+    
           <button
             class="edit btn btn-sm btn-icon btn-outline-secondary"
           >
@@ -354,7 +354,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-  
+    
           <button
             class="create btn btn-sm btn-icon btn-outline-primary"
           >
@@ -363,7 +363,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-  
+    
           <button
             class="delete btn btn-sm btn-icon btn-outline-danger"
           >
@@ -372,7 +372,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-
+  
         </div>
         
 
@@ -383,12 +383,12 @@ exports[`AccountListView has render method 1`] = `
       >
         <!---->
         
-
+  
         <div
           class="display"
         >
           
-  
+    
           <a
             href="/ledger/12"
           >
@@ -397,7 +397,7 @@ exports[`AccountListView has render method 1`] = `
             <!---->
           </a>
           
-  
+    
           <button
             class="edit btn btn-sm btn-icon btn-outline-secondary"
           >
@@ -406,7 +406,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-  
+    
           <button
             class="create btn btn-sm btn-icon btn-outline-primary"
           >
@@ -415,7 +415,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-  
+    
           <button
             class="delete btn btn-sm btn-icon btn-outline-danger"
           >
@@ -424,7 +424,7 @@ exports[`AccountListView has render method 1`] = `
             />
           </button>
           
-
+  
         </div>
         
 
