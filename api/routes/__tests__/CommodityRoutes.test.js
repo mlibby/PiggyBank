@@ -4,7 +4,26 @@ const helpers = require("../../__tests__/testHelpers.js")
 const mockRouter = helpers.mockRouter()
 const mockRepo = helpers.mockRepo()
 const mockRequest = helpers.mockRequest()
+mockRequest.fields.name = "MOCK"
+mockRequest.fields.type = 1
+mockRequest.fields.symbol = "M"
+mockRequest.fields.description = "Mock Currency"
+mockRequest.fields.ticker = "MOCK"
 const mockResponse = helpers.mockResponse()
+
+const mockCommodityOrig = {
+  name: mockRequest.fields.name,
+  type: mockRequest.fields.type,
+  symbol: mockRequest.fields.symbol,
+  description: mockRequest.fields.description,
+  ticker: mockRequest.fields.ticker
+}
+const mockCommodityId = 890
+const mockCommodityVersion = "mock version 2"
+const mockCommodityNew = Object.assign({
+  id: mockCommodityId,
+  version: mockCommodityVersion
+}, mockCommodityOrig)
 
 test("new CommodityRoutes(router, repo)", () => {
   const routes = new CommodityRoutes(mockRouter, mockRepo)
@@ -30,15 +49,15 @@ test("list(req, res, next)", () => {
   expect(mockResponse.json).toHaveBeenCalledWith(mockCommodityList)
 })
 
-// test("create(req, res, next)", async () => {
-//   mockRepo.account.insert.mockResolvedValue(mockAccountNew)
+test("create(req, res, next)", async () => {
+  mockRepo.commodity.insert.mockReturnValue(mockCommodityNew)
 
-//   const accountRoutes = new AccountRoutes(mockRouter, mockRepo)
-//   await accountRoutes.create(mockRequest, mockResponse, null)
+  const commodityRoutes = new CommodityRoutes(mockRouter, mockRepo)
+  commodityRoutes.create(mockRequest, mockResponse, null)
 
-//   expect(mockRepo.account.insert).toHaveBeenCalledWith(mockAccountOrig)
-//   expect(mockResponse.json).toHaveBeenCalledWith(mockAccountNew)
-// })
+  expect(mockRepo.commodity.insert).toHaveBeenCalledWith(mockCommodityOrig)
+  expect(mockResponse.json).toHaveBeenCalledWith(mockCommodityNew)
+})
 
 // test("update(req, res, next)", async () => {
 //   const mockReq2 = { ...mockRequest }

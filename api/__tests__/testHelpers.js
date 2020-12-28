@@ -23,7 +23,8 @@ const testHelpers = {
         update: jest.fn()
       },
       commodity: {
-        selectAll: jest.fn()
+        selectAll: jest.fn(),
+        insert: jest.fn()
       },
       ofx: {
         selectAll: jest.fn()

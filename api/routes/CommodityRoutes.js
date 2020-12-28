@@ -37,7 +37,8 @@ exports.CommodityRoutes = class CommodityRoutes {
       name: req.fields.name,
       type: req.fields.type,
       symbol: req.fields.symbol,
-      description: req.fields.description
+      description: req.fields.description,
+      ticker: req.fields.ticker
     }
 
     if (req.fields.id) {
