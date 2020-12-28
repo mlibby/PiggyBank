@@ -59,24 +59,24 @@ test("create(req, res, next)", async () => {
   expect(mockResponse.json).toHaveBeenCalledWith(mockCommodityNew)
 })
 
-// test("update(req, res, next)", async () => {
-//   const mockReq2 = { ...mockRequest }
-//   mockReq2.fields.accountId = mockAccountId
-//   mockReq2.fields.md5 = "original Md5"
-//   const mockAccountOrig2 = {
-//     ...mockAccountOrig, ...{
-//       accountId: mockAccountId,
-//       md5: mockReq2.fields.md5
-//     }
-//   }
-//   mockRepo.account.update.mockResolvedValue(mockAccountNew)
+test("update(req, res, next)", async () => {
+  const mockReq2 = { ...mockRequest }
+  mockReq2.fields.id = mockCommodityId
+  mockReq2.fields.version = "mock version 1"
+  const mockCommodityOrig2 = {
+    ...mockCommodityOrig, ...{
+      id: mockReq2.fields.id,
+      version: mockReq2.fields.version
+    }
+  }
+  mockRepo.commodity.update.mockReturnValue(mockCommodityNew)
 
-//   const accountRoutes = new AccountRoutes(mockRouter, mockRepo)
-//   await accountRoutes.update(mockReq2, mockResponse, null)
+  const commodityRoutes = new CommodityRoutes(mockRouter, mockRepo)
+  commodityRoutes.update(mockReq2, mockResponse, null)
 
-//   expect(mockRepo.account.update).toHaveBeenCalledWith(mockAccountOrig2)
-//   expect(mockResponse.json).toHaveBeenCalledWith(mockAccountNew)
-// })
+  expect(mockRepo.commodity.update).toHaveBeenCalledWith(mockCommodityOrig2)
+  expect(mockResponse.json).toHaveBeenCalledWith(mockCommodityNew)
+})
 
 // test("delete(req, res, next)", async () => {
 //   const mockReq2 = { ...mockRequest }

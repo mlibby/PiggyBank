@@ -20,11 +20,11 @@ exports.CommodityRoutes = class CommodityRoutes {
     res.json(commodity)
   }
 
-  // async update(req, res, next) {
-  //   let account = this.requestToAccount(req)
-  //   account = await this.repo.account.update(account)
-  //   res.json(account)
-  // }
+  update(req, res, next) {
+    let commodity = this.requestToCommodity(req)
+    commodity = this.repo.commodity.update(commodity)
+    res.json(commodity)
+  }
 
   // async delete(req, res, next) {
   //   let account = this.requestToAccount(req)
