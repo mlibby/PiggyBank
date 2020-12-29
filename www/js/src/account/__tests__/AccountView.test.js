@@ -12,10 +12,21 @@ test("AccountView has render method", () => {
   expect(view.el).toMatchSnapshot()
 })
 
+test("AccountView removes existing subview during render", () => {
+  const renderedView = view.render()
+  expect(renderedView.subview).toBeTruthy()
+
+  const remove = jest.fn()
+  view.subview.remove = remove
+  view.render()
+
+  expect(remove).toHaveBeenCalled()
+})
+
 test("edit button triggers account:edit event", () => {
   const mockEdit = jest.fn()
   view.on("account:edit", mockEdit)
-
+  4
   view.render()
   view.$(".btn.edit").click()
   expect(mockEdit).toHaveBeenCalledWith(view.model)
