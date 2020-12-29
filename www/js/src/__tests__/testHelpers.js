@@ -1,6 +1,8 @@
 import { AccountModel } from "../account/AccountModel"
 import { AccountCollection } from "../account/AccountCollection"
 import { CommodityCollection } from "../commodity/CommodityCollection"
+import { ApiKeyModel } from "../banking/ApiKeyModel"
+import { ApiKeyCollection } from "../banking/ApiKeyCollection"
 
 const mockGuid = exports.mockGuid = "test guid"
 jest.mock("../PiggyBankUtil", () => {
@@ -84,6 +86,16 @@ const accounts = exports.mockAccounts = new AccountCollection([
   mockAccountMortgage
 ])
 accounts.unflatten()
+
+const mockApiKeyAlpha = exports.mockApiKeyAlpha = new ApiKeyModel({
+  id: 13,
+  description: "AlphaVantage",
+  value: "xyz123"
+})
+
+const mockApiKeys = exports.mockApiKeys = new ApiKeyCollection({
+  collection: [mockApiKeyAlpha]
+})
 
 const commodities = exports.mockCommodities = new CommodityCollection({ collection: [] })
 
