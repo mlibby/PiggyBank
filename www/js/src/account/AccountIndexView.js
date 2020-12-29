@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 import { AccountListView } from "./AccountListView.js"
 import { AccountFormView } from "./AccountFormView.js"
 import { AccountModel } from "./AccountModel.js"
@@ -25,7 +25,7 @@ export class AccountIndexView extends Backbone.View {
   }
 
   render() {
-    render(template(), this.el)
+    renderHtml(template(), this.el)
     this.renderListView()
     return this
   }
@@ -61,7 +61,7 @@ export class AccountIndexView extends Backbone.View {
     $("#modalForm").modal("show")
   }
 
-  delete(model) {
+  async delete(model) {
     model.destroy().then(() => this.render())
   }
 }
