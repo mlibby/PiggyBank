@@ -10,7 +10,6 @@ const template = (d) => html`
   </select>
 `
 
-
 export class AccountSelectMenuView extends Backbone.View {
   render(accountId, label, includePlaceholders) {
     label = label || "Account"
