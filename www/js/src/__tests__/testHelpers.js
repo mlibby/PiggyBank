@@ -75,7 +75,7 @@ const mockAccountMortgage = exports.mockAccountMortgage = new AccountModel({
   parentId: 10
 })
 
-const accounts = exports.mockAccounts = new AccountCollection([
+const mockAccounts = exports.mockAccounts = new AccountCollection([
   mockAccountAssets,
   mockAccountSavings,
   mockAccountChecking,
@@ -85,7 +85,7 @@ const accounts = exports.mockAccounts = new AccountCollection([
   mockAccountCarLoan,
   mockAccountMortgage
 ])
-accounts.unflatten()
+mockAccounts.unflatten()
 
 const mockApiKeyAlpha = exports.mockApiKeyAlpha = new ApiKeyModel({
   id: 13,
@@ -97,9 +97,14 @@ const mockApiKeys = exports.mockApiKeys = new ApiKeyCollection({
   collection: [mockApiKeyAlpha]
 })
 
-const commodities = exports.mockCommodities = new CommodityCollection({ collection: [] })
+const mockCommodities = exports.mockCommodities = new CommodityCollection({
+  collection: []
+})
 
-window.piggybank = { accounts, commodities }
+window.piggybank = {
+  accounts: mockAccounts,
+  commodities: mockCommodities
+}
 
 const mockModal = jest.fn()
 const mockHtml = jest.fn()
