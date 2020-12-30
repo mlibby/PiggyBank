@@ -60,8 +60,34 @@ test("ReceiptIndexView.takeSnapshot() takes a still from the stream", () => {
     expect(mockEvent.preventDefault).toHaveBeenCalled()
     expect(mockTakePhoto).toHaveBeenCalled()
     expect(URL.createObjectURL).toHaveBeenCalled()
-    expect(mockPhotoElem.onload).is(expect.anything())
+    expect(mockPhotoElem.onload).not.toBeUndefined()
     mockPhotoElem.onload()
     expect(URL.revokeObjectURL).toHaveBeenCalled()
+  })
+})
+
+test("ReceiptIndexView.takeSnapshot() with error alerts user", () => {
+  const mockVideo = { srcObject: null }
+  const mockOn = jest.fn()
+  view.$ = jest.fn().mockReturnValue({
+    0: mockVideo,
+    on: mockOn
+  })
+  const mockStream = {
+    getVideoTracks: jest.fn().mockReturnValue(["mock track"])
+  }
+  const mockTakePhoto = jest.fn().mockRejectedValue("mock error")
+  global.ImageCapture = jest.fn().mockReturnValue({
+    takePhoto: mockTakePhoto
+  })
+
+  view.handleSuccess(mockStream)
+
+  var mockPhotoElem = {}
+  view.$ = jest.fn().mockReturnValue(mockPhotoElem);
+  window.alert = jest.fn()
+  view.takeSnapshot(mockEvent).then(() => {
+    expect(mockTakePhoto).toHaveBeenCalled()
+    expect(window.alert).toHaveBeenCalledWith("Error: mock error")
   })
 })

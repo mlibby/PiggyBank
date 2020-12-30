@@ -60,12 +60,14 @@ export class ReceiptIndexView extends Backbone.View {
   async takeSnapshot(e) {
     e.preventDefault()
     const img = this.$("#snapshot-img")
-    this.imageCapture.takePhoto()
+    await this.imageCapture.takePhoto()
       .then(blob => {
         img.src = URL.createObjectURL(blob);
         img.onload = () => { URL.revokeObjectURL(this.src); }
       })
-      .catch(error => console.error("takePhoto() error: ", error))
+      .catch(error => {
+        alert(`Error: ${error}`)
+      })
   }
 
 }
