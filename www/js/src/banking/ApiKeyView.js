@@ -6,8 +6,10 @@ const template = (d) => html`
   <td>${d.description}</td>
   <td>${d.value}</td>
   <td>
-    <button class='create btn btn-sm btn-icon btn-outline-secondary'><span class='icon-pencil'></span><span class='sr-only'>Edit</span></button>
-    <button class='delete btn btn-sm btn-icon btn-outline-danger'><span class='icon-trash'></span><span class='sr-only'>Delete</span></button>
+    <button class='create btn btn-sm btn-icon btn-outline-secondary'><span class='icon-pencil'></span><span
+        class='sr-only'>Edit</span></button>
+    <button class='delete btn btn-sm btn-icon btn-outline-danger'><span class='icon-trash'></span><span
+        class='sr-only'>Delete</span></button>
   </td>
 `
 
@@ -18,25 +20,13 @@ export class ApiKeyView extends Backbone.View {
   }
 
   edit(e) {
-    if (e) {
-      e.preventDefault()
-    }
+    e.preventDefault()
     this.trigger("apiKey:edit", this.model)
   }
 
-  editCommodity(e) {
+  delete(e) {
     e.preventDefault()
-
-    // const $form = this.$el.find("form").first();
-
-    // $form.find("input[name='id']").val(this.model.get("id"));
-    // $form.find("input[name='parentId']").val(this.model.get("parentId"));
-    // $form.find("input[name='name']").val(this.model.get("accountName"));
-    // if (this.model.get("isPlaceholder") === 1) {
-    //   $form.find("input[name='isPlaceholder']").attr("checked", "checked");
-    // } else {
-    //   $form.find("input[name='isPlaceholder']").removeAttr("checked");
-    // }
+    this.trigger("apiKey:delete", this.model)
   }
 
   render() {
@@ -46,9 +36,8 @@ export class ApiKeyView extends Backbone.View {
       value: this.model.get("value")
     }), this.el)
 
-    this.$(".btn.edit").click((e) => this.edit(this.model, e))
-    this.$(".btn.create").click((e) => this.create(this.model, e))
-    this.$(".btn.delete").click((e) => this.delete(this.model, e))
+    this.$(".btn.edit").on("click", this.edit)
+    this.$(".btn.delete").on("click", this.delete)
 
     return this
   }

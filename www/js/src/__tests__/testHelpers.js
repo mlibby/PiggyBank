@@ -115,3 +115,6 @@ const mock$ = exports.mock$ = {
   html: mockHtml,
   val: mockVal
 }
+const mockEvent = exports.mockEvent = {
+  preventDefault: jest.fn()
+}
