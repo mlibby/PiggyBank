@@ -106,6 +106,11 @@ window.piggybank = {
   commodities: mockCommodities
 }
 
+window.URL = {
+  createObjectURL: jest.fn(),
+  revokeObjectURL: jest.fn()
+}
+
 navigator.mediaDevices = {
   getUserMedia: jest.fn().mockResolvedValue("")
 }

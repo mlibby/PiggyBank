@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ReceiptIndexView has render method 1`] = `
+exports[`ReceiptIndexView.render() get media permissions 1`] = `
 <div>
   <!---->
   
