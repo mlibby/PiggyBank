@@ -25,15 +25,17 @@ export class ApiKeyIndexView extends Backbone.View {
 
     const apiKeys = new ApiKeyCollection()
     apiKeys.fetch({
-      success: (collection, resp, opts) => {
-        const $table = this.$el.find("table")
-        collection.each(model => {
-          const modelView = new ApiKeyView({ model })
-          $table.append(modelView.render().$el);
-        })
-      }
+      success: this.fetchSuccess.bind(this)
     })
 
     return this
+  }
+
+  fetchSuccess(collection, resp, opts) {
+    const $table = this.$el.find("table")
+    collection.each(model => {
+      const modelView = new ApiKeyView({ model })
+      $table.append(modelView.render().$el);
+    })
   }
 }

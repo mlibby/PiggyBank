@@ -93,9 +93,9 @@ const mockApiKeyAlpha = exports.mockApiKeyAlpha = new ApiKeyModel({
   value: "xyz123"
 })
 
-const mockApiKeys = exports.mockApiKeys = new ApiKeyCollection({
-  collection: [mockApiKeyAlpha]
-})
+const mockApiKeys = exports.mockApiKeys = new ApiKeyCollection([
+  mockApiKeyAlpha
+])
 
 const mockCommodities = exports.mockCommodities = new CommodityCollection({
   collection: []

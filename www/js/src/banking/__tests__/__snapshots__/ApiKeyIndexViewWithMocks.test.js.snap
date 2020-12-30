@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ApiKeyIndexView has render method 1`] = `
+exports[`ApiKeyIndexView.render() creates/fetches an ApiKeyCollection and calls fetchSuccess on success 1`] = `
 <div>
   <!---->
   
