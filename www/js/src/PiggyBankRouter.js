@@ -8,7 +8,7 @@ import { CommodityIndexView } from "./commodity/CommodityIndexView.js"
 import { OfxImportView } from "./banking/OfxImportView.js"
 import { OfxIndexView } from "./ofx/OfxIndexView.js"
 import { PriceIndexView } from "./price/PriceIndexView.js"
-import { ReceiptIndexView } from "./banking/ReceiptsView.js"
+import { ReceiptIndexView } from "./banking/ReceiptIndexView.js"
 import { ReportIndexView } from "./report/ReportIndexView.js"
 import { TxIndexView } from "./tx/TxIndexView.js"
 

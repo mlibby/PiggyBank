@@ -106,6 +106,10 @@ window.piggybank = {
   commodities: mockCommodities
 }
 
+navigator.mediaDevices = {
+  getUserMedia: jest.fn().mockResolvedValue("")
+}
+
 const mockModal = jest.fn()
 const mockHtml = jest.fn()
 const mockVal = jest.fn()

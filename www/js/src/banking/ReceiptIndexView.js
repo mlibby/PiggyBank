@@ -25,8 +25,6 @@ export class ReceiptIndexView extends Backbone.View {
   render() {
     render(template(), this.el)
 
-    this.$("#snapshot-btn").click((e) => this.takeSnapshot(e))
-
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(this.handleSuccess.bind(this))
@@ -43,6 +41,21 @@ export class ReceiptIndexView extends Backbone.View {
   // canvas.width = 480;
   // canvas.height = 360;
 
+  handleSuccess(stream) {
+    window.stream = stream
+    const video = this.$("video")[0]
+    video.srcObject = stream
+    const mediaStreamTrack = stream.getVideoTracks()[0]
+    imageCapture = new ImageCapture(mediaStreamTrack)
+
+    this.$("#snapshot-btn").on("click", this.takeSnapshot)
+  }
+
+  handleError(error) {
+    console.log("navigator.MediaDevices.getUserMedia error: ", error.message, error.name)
+  }
+
+  
   takeSnapshot(e) {
     e.preventDefault()
     const img = document.querySelector("#snapshot-img")
@@ -54,15 +67,4 @@ export class ReceiptIndexView extends Backbone.View {
       .catch(error => console.error("takePhoto() error: ", error))
   }
 
-  handleSuccess(stream) {
-    window.stream = stream
-    const video = this.$("video")[0]
-    video.srcObject = stream
-    const mediaStreamTrack = stream.getVideoTracks()[0]
-    imageCapture = new ImageCapture(mediaStreamTrack)
-  }
-
-  handleError(error) {
-    console.log("navigator.MediaDevices.getUserMedia error: ", error.message, error.name)
-  }
 }
