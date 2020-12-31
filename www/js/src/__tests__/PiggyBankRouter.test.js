@@ -6,6 +6,7 @@ import { AccountIndexView } from "../account/AccountIndexView.js"
 import { ApiKeyIndexView } from "../banking/ApiKeyIndexView.js"
 import { BudgetIndexView } from "../budget/BudgetIndexView.js"
 import { CommodityIndexView } from "../commodity/CommodityIndexView.js"
+import { MortgageIndexView } from "../mortgage/MortgageIndexView.js"
 import { OfxImportView } from "../banking/OfxImportView.js"
 import { OfxIndexView } from "../ofx/OfxIndexView.js"
 import { PriceIndexView } from "../price/PriceIndexView.js"
@@ -61,12 +62,12 @@ test("route / goes to HomeView", () => {
 
 test("route /account goes to AccountIndexView", () => {
   router.routes["account"].call()
-  expect(router.switchView).toHaveBeenCalledWith(expect.any(AccountIndexView), "#navAccount")
+  expect(router.switchView).toHaveBeenCalledWith(expect.any(AccountIndexView), "#navAccounts")
 })
 
 test("route /apiKey goes to ApiKeyIndexView", () => {
   router.routes["apiKey"].call()
-  expect(router.switchView).toHaveBeenCalledWith(expect.any(ApiKeyIndexView), "#navBankingApiKey")
+  expect(router.switchView).toHaveBeenCalledWith(expect.any(ApiKeyIndexView), "#navBanking")
 })
 
 test("route /budget goes to BudgetIndexView", () => {
@@ -76,7 +77,12 @@ test("route /budget goes to BudgetIndexView", () => {
 
 test("route /commodity goes to CommodityIndexView", () => {
   router.routes["commodity"].call()
-  expect(router.switchView).toHaveBeenCalledWith(expect.any(CommodityIndexView), "#navCommodity")
+  expect(router.switchView).toHaveBeenCalledWith(expect.any(CommodityIndexView), "#navAccounts")
+})
+
+test("route /mortgage goes to MortgageIndexView", () => {
+  router.routes["mortgage"].call()
+  expect(router.switchView).toHaveBeenCalledWith(expect.any(MortgageIndexView), "#navBudget")
 })
 
 test("route /ofx goes to OfxIndexView", () => {
@@ -86,12 +92,12 @@ test("route /ofx goes to OfxIndexView", () => {
 
 test("route /ofxImport goes to OfxImportView", () => {
   router.routes["ofxImport"].call()
-  expect(router.switchView).toHaveBeenCalledWith(expect.any(OfxImportView), "#navBankingOfxImport")
+  expect(router.switchView).toHaveBeenCalledWith(expect.any(OfxImportView), "#navBanking")
 })
 
 test("route /price goes to PriceIndexView", () => {
   router.routes["price"].call()
-  expect(router.switchView).toHaveBeenCalledWith(expect.any(PriceIndexView), "#navPrice")
+  expect(router.switchView).toHaveBeenCalledWith(expect.any(PriceIndexView), "#navAccounts")
 })
 
 test("route /receipt goes to ReceiptIndexView", () => {
@@ -101,7 +107,7 @@ test("route /receipt goes to ReceiptIndexView", () => {
 
 test("route /report goes to ReportIndexView", () => {
   router.routes["report"].call()
-  expect(router.switchView).toHaveBeenCalledWith(expect.any(ReportIndexView), "#navReport")
+  expect(router.switchView).toHaveBeenCalledWith(expect.any(ReportIndexView), "#navReports")
 })
 
 test("route /tx goes to TxIndexView", () => {

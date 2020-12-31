@@ -5,6 +5,7 @@ import { AccountIndexView } from "./account/AccountIndexView.js"
 import { ApiKeyIndexView } from "./banking/ApiKeyIndexView.js"
 import { BudgetIndexView } from "./budget/BudgetIndexView.js"
 import { CommodityIndexView } from "./commodity/CommodityIndexView.js"
+import { MortgageIndexView } from "./mortgage/MortgageIndexView.js"
 import { OfxImportView } from "./banking/OfxImportView.js"
 import { OfxIndexView } from "./ofx/OfxIndexView.js"
 import { PriceIndexView } from "./price/PriceIndexView.js"
@@ -16,16 +17,17 @@ export class PiggyBankRouter extends Backbone.Router {
   preinitialize() {
     this.routes = {
       "": () => this.switchView(new HomeView(), ""),
-      "account": () => this.switchView(new AccountIndexView(), "#navAccount"),
-      "apiKey": () => this.switchView(new ApiKeyIndexView(), "#navBankingApiKey"),
+      "account": () => this.switchView(new AccountIndexView(), "#navAccounts"),
+      "apiKey": () => this.switchView(new ApiKeyIndexView(), "#navBanking"),
       // "banking": () => ,
       "budget": () => this.switchView(new BudgetIndexView(), "#navBudget"),
-      "commodity": () => this.switchView(new CommodityIndexView(), "#navCommodity"),
+      "commodity": () => this.switchView(new CommodityIndexView(), "#navAccounts"),
+      "mortgage" : () => this.switchView(new MortgageIndexView(), "#navBudget"),
       "ofx": () => this.switchView(new OfxIndexView(), "#navBanking"),
-      "ofxImport": () => this.switchView(new OfxImportView(), "#navBankingOfxImport"),
-      "price": () => this.switchView(new PriceIndexView(), "#navPrice"),
+      "ofxImport": () => this.switchView(new OfxImportView(), "#navBanking"),
+      "price": () => this.switchView(new PriceIndexView(), "#navAccounts"),
       "receipt": () => this.switchView(new ReceiptIndexView(), "#navReceipt"),
-      "report": () => this.switchView(new ReportIndexView(), "#navReport"),
+      "report": () => this.switchView(new ReportIndexView(), "#navReports"),
       "tx": () => this.switchView(new TxIndexView(), "#navTx"),
     }
   }
