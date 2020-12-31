@@ -73,6 +73,11 @@ export class CommodityFormView extends Backbone.View {
     }
   }
 
+  render() {
+    renderHtml(template(this.model.attributes), this.el)
+    return this
+  }
+
   save(e) {
     e.preventDefault()
 
@@ -88,30 +93,31 @@ export class CommodityFormView extends Backbone.View {
 
     const isNew = this.model.isNew()
     this.model.save({}, {
-      success: (model) => {
-        if (isNew) {
-          this.trigger("created", model)
-        }
-        else {
-          this.trigger("saved", model)
-        }
-        this.$("#modalForm").modal("hide")
-        this.trigger("closed")
-      },
-      error: () => {
-        alert("Error saving commodity")
-      }
+      success: (model) => { this.saved(isNew, model) },
+      error: this.saveError
     })
+  }
+
+  saved(isNew, model) {
+    this.close()
+    if (isNew) {
+      this.trigger("saved", model)
+    } 
+    else {
+      this.trigger("created", model)
+    }
+  }
+
+  saveError() {
+    alert("error saving commodity")
   }
 
   cancel(e) {
     e.preventDefault()
-    this.$("#modalForm").modal("hide")
-    this.trigger("closed")
+    this.close()
   }
 
-  render() {
-    renderHtml(template(this.model.attributes), this.el)
-    return this
+  close() {
+    this.$("#modalForm").modal("hide")
   }
 }

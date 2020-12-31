@@ -1,87 +1,304 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CommodityFormView has render method 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Array [
-        "
-  <div class='modal fade' id='modalForm' tabindex='-1' role='dialog' aria-hidden='true'>
-    <div class='modal-dialog modal-xl modal-dialog-centered' role='document'>
-      <div class='modal-content'>
-        <div class='modal-header'>
-          <h3 class='modal-title'>Commodity</h3>
+<div>
+  <!---->
+  
+  
+  <div
+    aria-hidden="true"
+    class="modal fade"
+    id="modalForm"
+    role="dialog"
+    tabindex="-1"
+  >
+    
+    
+    <div
+      class="modal-dialog modal-xl modal-dialog-centered"
+      role="document"
+    >
+      
+      
+      <div
+        class="modal-content"
+      >
+        
+        
+        <div
+          class="modal-header"
+        >
+          
+          
+          <h3
+            class="modal-title"
+          >
+            Commodity
+          </h3>
+          
+        
         </div>
-        <form class='commodity-editor form'>
-          <div class='modal-body'>
-            <input id='commodityId' type='hidden' name='id' value='",
-        "' />
-            <div class='form-row'>
-              <div class='form-group col'>
-                <label for='name'>Name</label>
-                <input id='name' class='form-control' type='text' name='name' value='",
-        "' />
+        
+        
+        <form
+          class="commodity-editor form"
+        >
+          
+          
+          <div
+            class="modal-body"
+          >
+            
+            
+            <input
+              id="commodityId"
+              name="id"
+              type="hidden"
+              value="undefined"
+            />
+            
+            
+            <div
+              class="form-row"
+            >
+              
+              
+              <div
+                class="form-group col"
+              >
+                
+                
+                <label
+                  for="name"
+                >
+                  Name
+                </label>
+                
+                
+                <input
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  type="text"
+                  value=""
+                />
+                
+              
               </div>
+              
+            
             </div>
-            <div class='form-row'>
-              <div class='form-group col'>
-                <label for='type'>Type</label>
-                <select id='type' class='form-control'>
-                  <option value=''>[Choose Commodity Type]</option>
-                  <option value='1'>Currency</option>
-                  <option value='2'>Investment</option>
+            
+            
+            <div
+              class="form-row"
+            >
+              
+              
+              <div
+                class="form-group col"
+              >
+                
+                
+                <label
+                  for="type"
+                >
+                  Type
+                </label>
+                
+                
+                <select
+                  class="form-control"
+                  id="type"
+                >
+                  
+                  
+                  <option
+                    value=""
+                  >
+                    [Choose Commodity Type]
+                  </option>
+                  
+                  
+                  <option
+                    value="1"
+                  >
+                    Currency
+                  </option>
+                  
+                  
+                  <option
+                    value="2"
+                  >
+                    Investment
+                  </option>
+                  
+                
                 </select>
+                
+              
               </div>
+              
+            
             </div>
-            <div class='form-row'>
-              <div class='form-group col'>
-                <label for='symbol'>Symbol</label>
-                <input id='symbol' class='form-control' type='text' name='symbol' value='",
-        "' />
+            
+            
+            <div
+              class="form-row"
+            >
+              
+              
+              <div
+                class="form-group col"
+              >
+                
+                
+                <label
+                  for="symbol"
+                >
+                  Symbol
+                </label>
+                
+                
+                <input
+                  class="form-control"
+                  id="symbol"
+                  name="symbol"
+                  type="text"
+                  value=""
+                />
+                
+              
               </div>
+              
+            
             </div>
-            <div class='form-row'>
-              <div class='form-group col'>
-                <label for='description'>Description</label>
-                <input id='description' class='form-control' type='text' name='description' value='",
-        "' />
+            
+            
+            <div
+              class="form-row"
+            >
+              
+              
+              <div
+                class="form-group col"
+              >
+                
+                
+                <label
+                  for="description"
+                >
+                  Description
+                </label>
+                
+                
+                <input
+                  class="form-control"
+                  id="description"
+                  name="description"
+                  type="text"
+                  value=""
+                />
+                
+              
               </div>
+              
+            
             </div>
-            <div class='form-row'>
-              <div class='form-group col'>
-                <label for='ticker'>Ticker</label>
-                <input id='ticker' class='form-control' type='text' name='ticker' value='",
-        "' />
+            
+            
+            <div
+              class="form-row"
+            >
+              
+              
+              <div
+                class="form-group col"
+              >
+                
+                
+                <label
+                  for="ticker"
+                >
+                  Ticker
+                </label>
+                
+                
+                <input
+                  class="form-control"
+                  id="ticker"
+                  name="ticker"
+                  type="text"
+                  value=""
+                />
+                
+              
               </div>
+              
+            
             </div>
+            
+          
           </div>
-          <div class='modal-footer'>
-            <div class='form-row'>
-              <div class='form-group'>
-                <button class='save btn btn-success ml-2'><span class='icon-solid-check'></span> Save</button>
-                <button class='cancel btn btn-danger ml-2'><span class='icon-close'></span> Cancel</button>
+          
+          
+          <div
+            class="modal-footer"
+          >
+            
+            
+            <div
+              class="form-row"
+            >
+              
+              
+              <div
+                class="form-group"
+              >
+                
+                
+                <button
+                  class="save btn btn-success ml-2"
+                >
+                  <span
+                    class="icon-solid-check"
+                  />
+                   Save
+                </button>
+                
+                
+                <button
+                  class="cancel btn btn-danger ml-2"
+                >
+                  <span
+                    class="icon-close"
+                  />
+                   Cancel
+                </button>
+                
+              
               </div>
+              
+            
             </div>
+            
+          
           </div>
+          
+        
         </form>
+        
+      
       </div>
+      
+    
     </div>
+    
+  
   </div>
-  </div>
-",
-      ],
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ],
-  ],
-  "results": Array [
-    Object {
-      "type": "return",
-      "value": "htmlTemplate",
-    },
-  ],
-}
+  
+  
+
+  <!---->
+</div>
 `;
