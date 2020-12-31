@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 
 const template = (d) => html`
   <div class='modal fade' id='modalForm' tabindex='-1' role='dialog' aria-hidden='true'>
@@ -111,7 +111,7 @@ export class CommodityFormView extends Backbone.View {
   }
 
   render() {
-    render(template(this.model.attributes), this.el)
+    renderHtml(template(this.model.attributes), this.el)
     return this
   }
 }

@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 import { getUuid } from "../PiggyBankUtil.js"
 
 const template = (d) => html`
@@ -13,7 +13,7 @@ const template = (d) => html`
 export class CommoditySelectMenuView extends Backbone.View {
   render(commodityId, label) {
     label = label || "Commodity"
-    render(template({ uuid: getUuid(), label }), this.el)
+    renderHtml(template({ uuid: getUuid(), label }), this.el)
     this.addCommodityOptions(window.piggybank.commodities.models, commodityId)
     return this
   }

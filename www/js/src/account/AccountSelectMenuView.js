@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 import { getUuid } from "../PiggyBankUtil.js"
 
 const template = (d) => html`
@@ -13,7 +13,7 @@ const template = (d) => html`
 export class AccountSelectMenuView extends Backbone.View {
   render(accountId, label, includePlaceholders) {
     label = label || "Account"
-    render(template({ uuid: getUuid(), label }), this.el)
+    renderHtml(template({ uuid: getUuid(), label }), this.el)
     this.addAccountOptions(piggybank.accounts, includePlaceholders, accountId)
     return this
   }

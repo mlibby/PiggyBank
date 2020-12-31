@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 import { OfxModel } from "./OfxModel.js"
 import { OfxCollection } from "./OfxCollection.js"
 import { OfxListView } from "./OfxListView.js"
@@ -77,7 +77,7 @@ export class OfxIndexView extends Backbone.View {
   }
 
   render() {
-    render(template(), this.el)
+    renderHtml(template(), this.el)
 
     const ofxCollection = new OfxCollection()
     ofxCollection.fetch({

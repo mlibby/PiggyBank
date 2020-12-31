@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 
 const template = (d) => html`
   <td>${d.name}</td>
@@ -9,8 +9,10 @@ const template = (d) => html`
   <td>${d.description}</td>
   <td>${d.ticker}</td>
   <td>
-    <button class='create btn btn-sm btn-icon btn-outline-secondary'><span class='icon-pencil'></span><span class='sr-only'>Edit</span></button>
-    <button class='delete btn btn-sm btn-icon btn-outline-danger'><span class='icon-trash'></span><span class='sr-only'>Delete</span></button>
+    <button class='create btn btn-sm btn-icon btn-outline-secondary'><span class='icon-pencil'></span><span
+        class='sr-only'>Edit</span></button>
+    <button class='delete btn btn-sm btn-icon btn-outline-danger'><span class='icon-trash'></span><span
+        class='sr-only'>Delete</span></button>
   </td>
 `
 
@@ -27,7 +29,7 @@ export class CommodityView extends Backbone.View {
   }
 
   render() {
-    render(template({
+    renderHtml(template({
       id: this.model.get("id"),
       name: this.model.get("name"),
       type: this.model.get("type"),

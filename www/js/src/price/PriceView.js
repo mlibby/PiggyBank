@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 
 const template = (d) => html`
   <td>${d.date.toDateString()}</td>
@@ -41,7 +41,7 @@ export class PriceView extends Backbone.View {
   }
 
   render() {
-    render(template({
+    renderHtml(template({
       id: this.model.get("id"),
       date: new Date(this.model.get("quoteDate")),
       commodityName: this.model.get("commodityName"),

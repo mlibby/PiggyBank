@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 import { TxCollection } from "./TxCollection.js"
 import { TxView } from "./TxView.js"
 
@@ -24,7 +24,7 @@ const template = (d) => html`
 
 export class TxIndexView extends Backbone.View {
   render() {
-    render(template(), this.el)
+    renderHtml(template(), this.el)
 
     const txes = new TxCollection()
     txes.fetch({

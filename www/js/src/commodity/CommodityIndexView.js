@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 import { CommodityCollection } from "./CommodityCollection.js"
 import { CommodityFormView } from "./CommodityFormView.js"
 import { CommodityModel } from "./CommodityModel.js"
@@ -29,7 +29,7 @@ const template = (d) => html`
 
 export class CommodityIndexView extends Backbone.View {
   render() {
-    render(template(), this.el)
+    renderHtml(template(), this.el)
 
     const commodities = new CommodityCollection()
     commodities.fetch({
@@ -49,7 +49,7 @@ export class CommodityIndexView extends Backbone.View {
 
   create() {
     let commodity = new CommodityModel()
-    this.form = new CommodityFormView({model: commodity})
+    this.form = new CommodityFormView({ model: commodity })
     this.form.on("saved", (e) => {
       this.render()
     })

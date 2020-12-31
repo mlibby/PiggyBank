@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 
 const template = (d) => html`
   <td>${d.postDate.toDateString()}</td>
@@ -44,7 +44,7 @@ export class TxView extends Backbone.View {
   }
 
   render() {
-    render(template({
+    renderHtml(template({
       id: this.model.get("id"),
       postDate: new Date(this.model.get("postDate")),
       number: this.model.get("number"),

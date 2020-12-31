@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 
 const template = (d) => html`
   <td>${d.description}</td>
@@ -30,7 +30,7 @@ export class ApiKeyView extends Backbone.View {
   }
 
   render() {
-    render(template({
+    renderHtml(template({
       id: this.model.get("id"),
       description: this.model.get("description"),
       value: this.model.get("value")

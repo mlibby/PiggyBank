@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 import { AccountSelectMenuView } from "../account/AccountSelectMenuView.js"
 
 const template = (d) => html`
@@ -124,7 +124,7 @@ export class OfxFormView extends Backbone.View {
   }
 
   render() {
-    render(template(this.model.attributes), this.el)
+    renderHtml(template(this.model.attributes), this.el)
 
     const accountSelect = new AccountSelectMenuView()
     const el = accountSelect.render(this.model.get("id")).el

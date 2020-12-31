@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 
 const template = (d) => html`
   <div class='row'>
@@ -13,7 +13,7 @@ const template = (d) => html`
 
 export class HomeView extends Backbone.View {
   render() {
-    render(template(), this.el)
+    renderHtml(template(), this.el)
     return this
   }
 }

@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 import { OfxView } from "./OfxView.js"
 
 const template = (d) => html`
@@ -26,7 +26,7 @@ export class OfxListView extends Backbone.View {
 
   render() {
     this.$el.html("")
-    render(template(), this.el)
+    renderHtml(template(), this.el)
     for (const model of this.collection) {
       const view = new OfxView({ model })
       this.$el.append(view.render().el)

@@ -1,6 +1,6 @@
 "use strict"
 
-import { html, render } from "../../lib/lit-html/lit-html.js"
+import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 import { AccountCollection } from "./AccountCollection.js"
 import { AccountSelectMenuView } from "./AccountSelectMenuView.js"
 import { CommoditySelectMenuView } from "../commodity/CommoditySelectMenuView.js"
@@ -104,7 +104,7 @@ export class AccountFormView extends Backbone.View {
   }
 
   render() {
-    render(template(this.model.attributes), this.el)
+    renderHtml(template(this.model.attributes), this.el)
 
     this.parentMenu = new AccountSelectMenuView()
     this.parentMenu.render(this.model.get("parentId"), "Parent Account", true)
