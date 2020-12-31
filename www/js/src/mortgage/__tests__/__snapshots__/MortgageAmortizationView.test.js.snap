@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MortgageIndexView has render method 1`] = `
+exports[`MortgageAmortizationView has render method 1`] = `
 <div>
   <!---->
   
@@ -16,17 +16,12 @@ exports[`MortgageIndexView has render method 1`] = `
       
       
       <h1>
-        Mortgage Tools
+        Mortgage Amortization
       </h1>
       
       
       <p>
-        Try the 
-        <a
-          href="/mortgage/amort"
-        >
-          Amortization Tool
-        </a>
+        Enter some values, click the button, get a chart
       </p>
       
     

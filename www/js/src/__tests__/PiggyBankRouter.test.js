@@ -7,6 +7,7 @@ import { ApiKeyIndexView } from "../banking/ApiKeyIndexView.js"
 import { BudgetIndexView } from "../budget/BudgetIndexView.js"
 import { CommodityIndexView } from "../commodity/CommodityIndexView.js"
 import { MortgageIndexView } from "../mortgage/MortgageIndexView.js"
+import { MortgageAmortizationView } from "../mortgage/MortgageAmortizationView"
 import { OfxImportView } from "../banking/OfxImportView.js"
 import { OfxIndexView } from "../ofx/OfxIndexView.js"
 import { PriceIndexView } from "../price/PriceIndexView.js"
@@ -83,6 +84,11 @@ test("route /commodity goes to CommodityIndexView", () => {
 test("route /mortgage goes to MortgageIndexView", () => {
   router.routes["mortgage"].call()
   expect(router.switchView).toHaveBeenCalledWith(expect.any(MortgageIndexView), "#navBudget")
+})
+
+test("route /mortgage/amort goes to MortgageAmortizationView", () => {
+  router.routes["mortgage/amort"].call()
+  expect(router.switchView).toHaveBeenCalledWith(expect.any(MortgageAmortizationView), "#navBudget")
 })
 
 test("route /ofx goes to OfxIndexView", () => {

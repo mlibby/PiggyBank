@@ -5,6 +5,7 @@ import { AccountIndexView } from "./account/AccountIndexView.js"
 import { ApiKeyIndexView } from "./banking/ApiKeyIndexView.js"
 import { BudgetIndexView } from "./budget/BudgetIndexView.js"
 import { CommodityIndexView } from "./commodity/CommodityIndexView.js"
+import { MortgageAmortizationView } from "./mortgage/MortgageAmortizationView.js"
 import { MortgageIndexView } from "./mortgage/MortgageIndexView.js"
 import { OfxImportView } from "./banking/OfxImportView.js"
 import { OfxIndexView } from "./ofx/OfxIndexView.js"
@@ -23,6 +24,7 @@ export class PiggyBankRouter extends Backbone.Router {
       "budget": () => this.switchView(new BudgetIndexView(), "#navBudget"),
       "commodity": () => this.switchView(new CommodityIndexView(), "#navAccounts"),
       "mortgage" : () => this.switchView(new MortgageIndexView(), "#navBudget"),
+      "mortgage/amort" : () => this.switchView(new MortgageAmortizationView(), "#navBudget"),
       "ofx": () => this.switchView(new OfxIndexView(), "#navBanking"),
       "ofxImport": () => this.switchView(new OfxImportView(), "#navBanking"),
       "price": () => this.switchView(new PriceIndexView(), "#navAccounts"),

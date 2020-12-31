@@ -1,12 +1,12 @@
 import { html, render as renderHtml } from "../../../lib/lit-html/lit-html.js"
-import { MortgageIndexView } from "../MortgageIndexView"
+import { MortgageAmortizationView } from "../MortgageAmortizationView"
 
 let view
 beforeEach(() => {
-  view = new MortgageIndexView()
+  view = new MortgageAmortizationView()
 })
 
-test("MortgageIndexView has render method", () => {
+test("MortgageAmortizationView has render method", () => {
   const renderedView = view.render()
   expect(view).toBe(renderedView)
   expect(view.el).toMatchSnapshot()
