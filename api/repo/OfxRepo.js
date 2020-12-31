@@ -1,3 +1,5 @@
+"use strict"
+
 exports.OfxRepo = class OfxRepo {
   constructor(db) {
     this.db = db

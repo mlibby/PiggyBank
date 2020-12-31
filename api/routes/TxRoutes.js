@@ -1,3 +1,5 @@
+"use strict"
+
 exports.TxRoutes = class TxRoutes {
   constructor(router, repo) {
     this.repo = repo

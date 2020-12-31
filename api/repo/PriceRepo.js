@@ -1,3 +1,5 @@
+"use strict"
+
 exports.PriceRepo = class PriceRepo {
   constructor(db) {
     this.db = db

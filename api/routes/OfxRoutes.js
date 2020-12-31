@@ -1,3 +1,5 @@
+"use strict"
+
 exports.OfxRoutes = class OfxRoutes {
   constructor(router, repo) {
     this.repo = repo

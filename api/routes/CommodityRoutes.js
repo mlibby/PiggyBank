@@ -1,3 +1,5 @@
+"use strict"
+
 exports.CommodityRoutes = class CommodityRoutes {
   constructor(router, repo) {
     this.repo = repo

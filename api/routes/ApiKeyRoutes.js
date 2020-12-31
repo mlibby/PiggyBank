@@ -1,3 +1,5 @@
+"use strict"
+
 exports.ApiKeyRoutes = class ApiKeyRoutes {
   constructor(router, repo) {
     this.repo = repo

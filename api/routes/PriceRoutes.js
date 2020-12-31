@@ -1,3 +1,5 @@
+"use strict"
+
 exports.PriceRoutes = class PriceRoutes {
   constructor(router, repo) {
     this.repo = repo

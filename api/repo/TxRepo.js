@@ -1,3 +1,5 @@
+"use strict"
+
 const newSplit = exports.newSplit = (tx, row) => {
   const split = {
     id: row.splitId,

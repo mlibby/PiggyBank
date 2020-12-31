@@ -1,3 +1,5 @@
+"use strict"
+
 exports.AccountRepo = class AccountRepo {
   constructor(db, validateFn) {
     this.db = db

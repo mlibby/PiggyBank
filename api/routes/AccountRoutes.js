@@ -1,3 +1,5 @@
+"use strict"
+
 exports.AccountRoutes = class AccountRoutes {
   constructor(router, repo) {
     this.repo = repo

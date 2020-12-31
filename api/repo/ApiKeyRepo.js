@@ -1,3 +1,5 @@
+"use strict"
+
 exports.ApiKeyRepo = class ApiKeyRepo {
   constructor(db, validateFn) {
     this.db = db
