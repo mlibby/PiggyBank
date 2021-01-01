@@ -67,7 +67,7 @@ exports[`MortgageAmortizationView has render method 1`] = `
         <label
           for="interest-rate"
         >
-          Interest Rate
+          Interest Rate (% APR)
         </label>
         
         
@@ -164,6 +164,32 @@ exports[`MortgageAmortizationView has render method 1`] = `
     
   
   </form>
+  
+  
+  <div
+    class="row"
+  >
+    
+    
+    <div
+      class="col"
+    >
+      
+      
+      <h2>
+        Payment Amount: $
+        <span
+          id="payment-amount"
+        >
+          --.--
+        </span>
+      </h2>
+      
+    
+    </div>
+    
+  
+  </div>
   
 
   <!---->

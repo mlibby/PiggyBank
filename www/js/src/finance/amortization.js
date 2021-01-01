@@ -5,9 +5,10 @@ export class Amortization {
     this.principal = principal
     this.rate = rate
     this.number = number
+    this.payment = this.#calculatePayment()
   }
 
-  payment() {
+  #calculatePayment() {
     const pmtRate = Math.pow(1 + this.rate, this.number)
     const pmtNum = this.principal * this.rate * pmtRate
     const pmtDen = pmtRate - 1
