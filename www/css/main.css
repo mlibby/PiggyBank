@@ -14,6 +14,10 @@ a {
   text-decoration: underline;
 }
 
+nav a {
+  text-decoration: none;
+}
+
 .bg-info-faded {
     background-color: #75e4f5 !important;
 }
