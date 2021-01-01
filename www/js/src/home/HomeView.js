@@ -7,6 +7,9 @@ const template = (d) => html`
     <div class='col'>
       <h1>Oink! Oink!</h1>
       <p>Welcome to Piggy Bank.</p>
+      <p>This is a personal finance app. It is free software and the
+        source code is at <a href="https://github.com/mlibby/PiggyBank">GitHub</a>.
+      </p>
     </div>
   </div>
 `

@@ -10,6 +10,10 @@ a.btn-icon {
     margin-top: -5px;
 }
 
+a {
+  text-decoration: underline;
+}
+
 .bg-info-faded {
     background-color: #75e4f5 !important;
 }
