@@ -23,10 +23,18 @@ export class Amortization {
 
     while(balance > 0) {
       const payment = {
+        paymentAmount: this.paymentAmount,
         interest: Math.round(balance * this.rate)
       }
       payment.principal = this.paymentAmount - payment.interest
       balance = payment.balance = balance - payment.principal
+
+      const nextInterest = Math.round(balance * this.rate)
+      if(nextInterest + balance < this.paymentAmount) {
+        payment.principal = payment.principal + balance
+        payment.paymentAmount = payment.principal + payment.interest
+        balance = 0
+      }
 
       payments.push(payment)
     }
