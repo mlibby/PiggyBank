@@ -4,5 +4,10 @@ import { Amortization } from "../amortization"
 
 test("Amortization calculates payment amount", () => {
   const amort = new Amortization(10000000, 0.06/12, 360)
-  expect(amort.payment).toBe(59955)
+  expect(amort.paymentAmount).toBe(59955)
+})
+
+test("Amortization calculates payment schedule", () => {
+  const amort = new Amortization(10000000, 0.06/12, 360)
+  //expect(amort.payments.length).toBe(360)
 })

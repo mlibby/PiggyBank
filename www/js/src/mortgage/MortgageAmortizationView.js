@@ -63,6 +63,6 @@ q
     const rate = Number(this.$("#interest-rate").val()) / 1200
     const number = Number(this.$("#payments").val())
     this.amortization = new Amortization(principal, rate, number)
-    this.$("#payment-amount").text((this.amortization.payment/100).toFixed(2))
+    this.$("#payment-amount").text((this.amortization.paymentAmount/100).toFixed(2))
   }
 }
