@@ -95,9 +95,10 @@ if (require.main === module) {
   const { PiggyBankRepo } = require("./repo/PiggyBankRepo")
   const repo = new PiggyBankRepo()
   // const https = require("https");
-  const api = new PiggyBankApi(repo, 3030)
+  const api = new PiggyBankApi(repo, process.env.PORT || 3030)
   api.start()
 }
+
 //function skipIndex(req: Request) {
 //  return ["/api/"].some((fragment) => {
 //   return req.url.substr(0, fragment.length) === fragment
