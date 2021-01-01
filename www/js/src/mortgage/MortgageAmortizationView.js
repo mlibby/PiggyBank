@@ -78,6 +78,7 @@ export class MortgageAmortizationView extends Backbone.View {
   renderScheduleRows(payments) {
     const $paymentSchedule = this.$("#payment-schedule")
     $paymentSchedule.children().remove()
+    this.renderScheduleHeaders($paymentSchedule)
     this.amortization.payments.forEach((payment, i) => {
       const $paymentRow = $("<tr></tr>")
       $paymentRow.append($(`<td>${i + 1}</td>`))
@@ -87,5 +88,15 @@ export class MortgageAmortizationView extends Backbone.View {
       $paymentRow.append($(`<td>${this.commodity.toString(payment.balance)}</td>`))
       $paymentSchedule.append($paymentRow)
     })
+  }
+
+  renderScheduleHeaders($paymentSchedule) {
+    const $headers = $("<tr></tr>")
+    $headers.append($("<th></th>"))
+    $headers.append($("<th>Payment</th>"))
+    $headers.append($("<th>Interest</th>"))
+    $headers.append($("<th>Principal</th>"))
+    $headers.append($("<th>Balance</th>"))
+    $paymentSchedule.append($headers)
   }
 }

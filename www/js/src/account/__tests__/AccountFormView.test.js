@@ -34,7 +34,7 @@ test(".cancel prevents default event action and calls .close", () => {
 })
 
 test("successful .save updates the model, closes the form and calls .saved", () => {
-  view.$ = jest.fn().mockReturnValue(mock$)
+  view.$ = mock$
 
   view.saved = jest.fn()
   view.model.save = jest.fn().mockImplementation((attr, opts) => {
@@ -71,7 +71,7 @@ test("successful .save updates the model, closes the form and calls .saved", () 
 })
 
 test("failed .save calls saveError function", () => {
-  view.$ = jest.fn().mockReturnValue(mock$)
+  view.$ = mock$
 
   view.saveError = jest.fn()
   view.model.save = jest.fn().mockImplementation((attr, opts) => {

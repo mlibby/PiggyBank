@@ -1,4 +1,4 @@
-import { mockEvent } from "../../__tests__/testHelpers"
+import { mockEvent, mock$ } from "../../__tests__/testHelpers"
 import { html, render as renderHtml } from "../../../lib/lit-html/lit-html.js"
 import { MortgageAmortizationView } from "../MortgageAmortizationView"
 
@@ -19,6 +19,7 @@ test("MortgageAmortizationView has calculate button tied to calculate()", () => 
 })
 
 test("MortgageAmortizationView.calculate() calculates amortization", () => {
+  window.$ = mock$;
   view.render()
   view.calculate(mockEvent)
   expect(mockEvent.preventDefault).toHaveBeenCalled()

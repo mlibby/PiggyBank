@@ -124,15 +124,18 @@ navigator.mediaDevices = {
   getUserMedia: jest.fn().mockResolvedValue("")
 }
 
+const mockAppend = jest.fn()
 const mockModal = jest.fn()
 const mockHtml = jest.fn()
 const mockVal = jest.fn()
-const mock$ = exports.mock$ = {
+const mock$ = exports.mock$ = jest.fn().mockReturnValue({
   0: { checked: true },
+  append: mockAppend,
   modal: mockModal,
   html: mockHtml,
   val: mockVal
-}
+})
+
 const mockEvent = exports.mockEvent = {
   preventDefault: jest.fn()
 }
