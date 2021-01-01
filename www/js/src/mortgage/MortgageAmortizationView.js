@@ -38,7 +38,12 @@ const template = (d) => html`
   </form>
   <div class='row'>
     <div class='col'>
-      <h2>Payment Amount: $<span id="payment-amount">--.--</span></h2>
+      <h2>Payment Amount: <span id="payment-amount">--.--</span></h2>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col'>
+      <table id='payment-schedule' class='table'></table>
     </div>
   </div>
 `
@@ -47,6 +52,7 @@ export class MortgageAmortizationView extends Backbone.View {
   constructor() {
     super()
     this.amortization = null
+    this.commodity = piggybank.commodities.at(0)
   }
 
   render() {
@@ -56,13 +62,30 @@ export class MortgageAmortizationView extends Backbone.View {
 
     return this
   }
-q
+
   calculate(e) {
     e.preventDefault()
     const principal = Number(this.$("#loan-amount").val()) * 100
     const rate = Number(this.$("#interest-rate").val()) / 1200
     const number = Number(this.$("#payments").val())
     this.amortization = new Amortization(principal, rate, number)
-    this.$("#payment-amount").text((this.amortization.paymentAmount/100).toFixed(2))
+
+    const paymentAmount = this.commodity.toString(this.amortization.paymentAmount)
+    this.$("#payment-amount").text(paymentAmount)
+    this.renderScheduleRows()
+  }
+
+  renderScheduleRows(payments) {
+    const $paymentSchedule = this.$("#payment-schedule")
+    $paymentSchedule.children().remove()
+    this.amortization.payments.forEach((payment, i) => {
+      const $paymentRow = $("<tr></tr>")
+      $paymentRow.append($(`<td>${i + 1}</td>`))
+      $paymentRow.append($(`<td>${this.commodity.toString(payment.paymentAmount)}</td>`))
+      $paymentRow.append($(`<td>${this.commodity.toString(payment.interest)}</td>`))
+      $paymentRow.append($(`<td>${this.commodity.toString(payment.principal)}</td>`))
+      $paymentRow.append($(`<td>${this.commodity.toString(payment.balance)}</td>`))
+      $paymentSchedule.append($paymentRow)
+    })
   }
 }

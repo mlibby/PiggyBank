@@ -33,7 +33,7 @@ export class Amortization {
       if(nextInterest + balance < this.paymentAmount) {
         payment.principal = payment.principal + balance
         payment.paymentAmount = payment.principal + payment.interest
-        balance = 0
+        balance = payment.balance = 0
       }
 
       payments.push(payment)

@@ -3,6 +3,7 @@ import { AccountCollection } from "../account/AccountCollection"
 import { CommodityCollection } from "../commodity/CommodityCollection"
 import { ApiKeyModel } from "../banking/ApiKeyModel"
 import { ApiKeyCollection } from "../banking/ApiKeyCollection"
+import { CommodityModel } from "../commodity/CommodityModel"
 
 const mockGuid = exports.mockGuid = "test guid"
 jest.mock("../PiggyBankUtil", () => {
@@ -97,8 +98,16 @@ const mockApiKeys = exports.mockApiKeys = new ApiKeyCollection([
   mockApiKeyAlpha
 ])
 
+const mockCommodityUSD = exports.mockCommodityUSD = new CommodityModel({
+  name: "USD",
+  type: 0,
+  symbol: "$",
+  description: "US Dollar",
+  ticker: "",
+})
+
 const mockCommodities = exports.mockCommodities = new CommodityCollection({
-  collection: []
+  collection: [mockCommodityUSD]
 })
 
 window.piggybank = {

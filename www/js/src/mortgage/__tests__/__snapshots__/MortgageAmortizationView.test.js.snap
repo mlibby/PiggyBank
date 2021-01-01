@@ -177,13 +177,35 @@ exports[`MortgageAmortizationView has render method 1`] = `
       
       
       <h2>
-        Payment Amount: $
+        Payment Amount: 
         <span
           id="payment-amount"
         >
           --.--
         </span>
       </h2>
+      
+    
+    </div>
+    
+  
+  </div>
+  
+  
+  <div
+    class="row"
+  >
+    
+    
+    <div
+      class="col"
+    >
+      
+      
+      <table
+        class="table"
+        id="payment-schedule"
+      />
       
     
     </div>

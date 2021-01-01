@@ -1,5 +1,6 @@
 jest.mock("../../lib/lit-html/lit-html.js")
 
+import "../__tests__/testHelpers.js"
 import { PiggyBankRouter } from "../PiggyBankRouter"
 import { HomeView } from "../home/HomeView.js"
 import { AccountIndexView } from "../account/AccountIndexView.js"
@@ -14,11 +15,6 @@ import { PriceIndexView } from "../price/PriceIndexView.js"
 import { ReceiptIndexView } from "../banking/ReceiptIndexView.js"
 import { ReportIndexView } from "../report/ReportIndexView.js"
 import { TxIndexView } from "../tx/TxIndexView.js"
-
-window.piggybank = {
-  accounts: {},
-  commodities: {}
-}
 
 let router
 beforeEach(() => {
