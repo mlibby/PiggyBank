@@ -50,7 +50,7 @@ const template = (d) => html`
               </div>
             </div>
           </div>
-          <div class='mortgage-details' style='display: none'>
+          <div id='mortgage-details' class='account-details' style='display: none'>
             <hr />
             <div class='form-row'>
               <h4 class='col'>Mortgage Details</h4>
@@ -62,15 +62,21 @@ const template = (d) => html`
               </div>
               <div class='form-group col'>
                 <label for='mortgageRate'>Rate</label>
-                <input id='mortgageRate' class='form-control' type='number' value='${d.mortgagePrincipal}' />
+                <input id='mortgageRate' class='form-control' type='number' value='${d.mortgageRate}' />
               </div>
               <div class='form-group col'>
-                <label for='mortgagePrincipal'>Principal</label>
-                <input id='mortgagePrincipal' class='form-control' type='text' value='${d.mortgagePrincipal}' />
+                <label for='mortgageStartDate'>Start Date</label>
+                <input id='mortgageStartDate' class='form-control' type='date' value='${d.mortgageStartDate}' />
               </div>
               <div class='form-group col'>
-                <label for='mortgagePrincipal'>Principal</label>
-                <input id='mortgagePrincipal' class='form-control' type='text' value='${d.mortgagePrincipal}' />
+                <label for='mortgagePayments'>Payments</label>
+                <input id='mortgagePayments' class='form-control' type='text' value='${d.mortgagePayments}' />
+              </div>
+              <div class='form-group col'>
+                <label for='mortgagePeriod'>Period</label>
+                <select id='mortgagePeriod'>
+                  <option>Monthly</option>
+                </select>
               </div>
             </div>
           </div>
@@ -103,14 +109,18 @@ export class AccountFormView extends Backbone.View {
   save(e) {
     e.preventDefault()
 
-    const currencyId = this.commodityMenu.getSelectedId()
+    const commodityId = this.commodityMenu.getSelectedId()
     const parentId = this.parentMenu.getSelectedId()
+    const type = this._getType()
+    const typeData = this._getTypeData()
 
     this.model.set({
-      currencyId,
+      commodityId,
       "name": this.$("#accountName").val(),
       "isPlaceholder": this.$("#isPlaceholder")[0].checked,
-      parentId
+      parentId,
+      type,
+      typeData
     })
 
     this.model.save({}, {
@@ -119,8 +129,8 @@ export class AccountFormView extends Backbone.View {
     })
   }
 
-  saveError() {
-    alert("error saving account")
+  saveError(e) {
+    alert("error saving account: " + e)
   }
 
   saved() {
@@ -147,10 +157,53 @@ export class AccountFormView extends Backbone.View {
     this.commodityMenu.render(this.model.get("currencyId"), "Currency")
     this.$("#commoditySelect").html(this.commodityMenu.el)
 
+    this.$("#accountType").on("change", this.showHideDetails.bind(this))
+
     return this
+  }
+
+  showHideDetails() {
+    const type = this._getType()
+    if (type < 6) {
+      this.$(".account-details").hide()
+    }
+    else if (type === 6) {
+      this.$("#mortgage-details").show()
+    }
+    else {
+      throw new Error(`Account type ${type} not supported`)
+    }
   }
 
   close() {
     this.$("#modalForm").modal("hide")
+  }
+
+  _getType() {
+    return Number(this.$("#accountType").find(":selected").val())
+  }
+
+  _getTypeData() {
+    const type = this._getType()
+    if (type < 6) {
+      return "{}"
+    }
+    else if (type === 6) {
+      return this._getMortgageData()
+    }
+    else {
+      throw new Error(`Account type ${type} not supported`)
+    }
+  }
+
+  _getMortageData() {
+    const data = {
+      mortgagePrincipal: this.$("#mortgagePrincipal").val(),
+      mortgageRate: this.$("#mortgageRate").val(),
+      mortgageStartDate: this.$("#mortgageStartDate").val(),
+      mortgagePayments: this.$("#mortgagePayments").val(),
+      mortgagePeriod: "monthly"
+    }
+    return data
   }
 }

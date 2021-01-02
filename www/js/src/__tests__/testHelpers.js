@@ -117,9 +117,10 @@ const mockApiKeys = exports.mockApiKeys = new ApiKeyCollection([
 const mockCommodityUSD = exports.mockCommodityUSD = new CommodityModel({
   name: "USD",
   type: 0,
-  symbol: "$",
   description: "US Dollar",
   ticker: "",
+  fraction: 100,
+  locale: "en-US"
 })
 
 const mockCommodities = exports.mockCommodities = new CommodityCollection({
@@ -141,14 +142,21 @@ navigator.mediaDevices = {
 }
 
 const mockAppend = jest.fn()
-const mockModal = jest.fn()
+const mockFindVal = jest.fn().mockReturnValue(1)
+const mockFind = jest.fn().mockReturnValue({
+  val: mockFindVal
+})
 const mockHtml = jest.fn()
+const mockModal = jest.fn()
+const mockOn = jest.fn()
 const mockVal = jest.fn()
 const mock$ = exports.mock$ = jest.fn().mockReturnValue({
   0: { checked: true },
   append: mockAppend,
-  modal: mockModal,
+  find: mockFind,
   html: mockHtml,
+  modal: mockModal,
+  on: mockOn,
   val: mockVal
 })
 

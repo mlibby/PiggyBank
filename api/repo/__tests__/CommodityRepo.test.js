@@ -17,9 +17,10 @@ beforeEach(() => {
     id: 123,
     name: "test commodity",
     type: 1,
-    symbol: "#",
     description: "description of test commodity",
     ticker: "TEST",
+    fraction: 100,
+    locale: "en-US",
     version: origVersion
   }
 
@@ -44,10 +45,11 @@ test("selectAll() uses correct SQL and returns rows", () => {
       SELECT
         "id",
         "type",
-        "symbol",
         "name",
         "description",
         "ticker",
+        "fraction",
+        "locale",
         "version"
       FROM commodity`
     ))
@@ -74,18 +76,20 @@ test("insert() uses correct SQL and returns updated commodity", () => {
       INSERT INTO commodity (
         "name",
         "type",
-        "symbol",
         "description",
         "ticker",
+        "fraction",
+        "locale",
         "version"
       )
-      VALUES (?, ?, ?, ?, ?, getVersion())`
+      VALUES (?, ?, ?, ?, ?, ?, getVersion())`
     ))
   expect(db.run.mock.calls[0][0]).toEqual(mockCommodity.name)
   expect(db.run.mock.calls[0][1]).toEqual(mockCommodity.type)
-  expect(db.run.mock.calls[0][2]).toEqual(mockCommodity.symbol)
-  expect(db.run.mock.calls[0][3]).toEqual(mockCommodity.description)
-  expect(db.run.mock.calls[0][4]).toEqual(mockCommodity.ticker)
+  expect(db.run.mock.calls[0][2]).toEqual(mockCommodity.description)
+  expect(db.run.mock.calls[0][3]).toEqual(mockCommodity.ticker)
+  expect(db.run.mock.calls[0][4]).toEqual(mockCommodity.fraction)
+  expect(db.run.mock.calls[0][5]).toEqual(mockCommodity.locale)
 
   expect(commodity.id).toBe(mockId)
   expect(commodity.version).toBe(newVersion)

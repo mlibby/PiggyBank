@@ -12,9 +12,10 @@ exports.CommodityRepo = class CommodityRepo {
         "id",
         "name",
         "type",
-        "symbol",
         "description",
         "ticker",
+        "fraction",
+        "locale",
         "version"
       FROM commodity`)
 
@@ -27,10 +28,11 @@ exports.CommodityRepo = class CommodityRepo {
     SELECT
       "id",
       "type",
-      "symbol",
       "name",
       "description",
       "ticker",
+      "fraction",
+      "locale",
       "version"
     FROM commodity`)
 
@@ -43,20 +45,22 @@ exports.CommodityRepo = class CommodityRepo {
       INSERT INTO commodity (
         "name",
         "type",
-        "symbol",
         "description",
         "ticker",
+        "fraction",
+        "locale",
         "version"
       )
-      VALUES (?, ?, ?, ?, ?, getVersion())
+      VALUES (?, ?, ?, ?, ?, ?, getVersion())
       `)
 
     const result = stmt.run(
       commodity.name,
       commodity.type,
-      commodity.symbol,
       commodity.description,
-      commodity.ticker
+      commodity.ticker,
+      commodity.fraction,
+      commodity.locale
     )
 
     commodity = this.select(result.lastInsertRowid)
