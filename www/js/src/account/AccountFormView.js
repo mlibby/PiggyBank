@@ -15,19 +15,28 @@ const template = (d) => html`
         <form class='account-editor form'>
           <div class='modal-body'>
             <div class='form-row'>
-              <div class='form-group col'>
+              <div class='form-group col-lg-3'>
+                <label for='accountType'>Account Type</label>
+                <select id='accountType' class='form-control'>
+                  <option value="1">Asset</option>
+                  <option value="2">Equity</option>
+                  <option value="3">Expense</option>
+                  <option value="4">Income</option>
+                  <option value="5">Liability</option>
+                  <option value="6">Mortgage</option>
+                </select>
+              </div>
+              <div class='form-group col-lg-6'>
                 <div id='parentSelect'></div>
               </div>
-            </div>
-            <div class='form-row'>
-              <div class='form-group col'>
+              <div class='form-group col-lg-3'>
                 <div id='commoditySelect'></div>
               </div>
             </div>
             <div class='form-row'>
               <div class='form-group col'>
                 <label for='accountName'>Name</label>
-                <input id='accountName' class='mr-3 form-control' type='text' value='${d.name}' />
+                <input id='accountName' class='form-control' type='text' value='${d.name}' />
               </div>
             </div>
             <div class='form-row'>
@@ -41,18 +50,26 @@ const template = (d) => html`
               </div>
             </div>
           </div>
-          <div class='modal-footer'>
+          <div class='mortgage-details' style='display: none'>
             <div class='form-row'>
-              <div class='form-group'>
-                <button class='save btn btn-success mr-2'><span class='icon-solid-check'></span> Save</button>
-                <button class='cancel btn btn-danger'><span class='icon-close'></span> Cancel</button>
+              <h4 class='col'>Mortgage Details</h4>
+            </div>
+            <div class='form-row'>
+              <div class='form-group col'>
+                <label for='mortgagePrincipal'>Principal</label>
+                <input id='mortgagePrincipal' class='form-control' type='text' value='${d.mortgagePrincipal}' />
               </div>
+            </div>
+          </div>
+          <div class='modal-footer'>
+            <div class='form-group'>
+              <button class='save btn btn-success mr-2'><span class='icon-solid-check'></span> Save</button>
+              <button class='cancel btn btn-danger'><span class='icon-close'></span> Cancel</button>
             </div>
           </div>
         </form>
       </div>
     </div>
-  </div>
   </div>
 `;
 
@@ -84,8 +101,8 @@ export class AccountFormView extends Backbone.View {
     })
 
     this.model.save({}, {
-      success: this.saved,
-      error: this.saveError
+      success: this.saved.bind(this),
+      error: this.saveError.bind(this)
     })
   }
 

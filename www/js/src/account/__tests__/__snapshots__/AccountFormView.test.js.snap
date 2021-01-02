@@ -56,7 +56,73 @@ exports[`AccountFormView has render method 1`] = `
               
               
               <div
-                class="form-group col"
+                class="form-group col-lg-3"
+              >
+                
+                
+                <label
+                  for="accountType"
+                >
+                  Account Type
+                </label>
+                
+                
+                <select
+                  class="form-control"
+                  id="accountType"
+                >
+                  
+                  
+                  <option
+                    value="1"
+                  >
+                    Asset
+                  </option>
+                  
+                  
+                  <option
+                    value="2"
+                  >
+                    Equity
+                  </option>
+                  
+                  
+                  <option
+                    value="3"
+                  >
+                    Expense
+                  </option>
+                  
+                  
+                  <option
+                    value="4"
+                  >
+                    Income
+                  </option>
+                  
+                  
+                  <option
+                    value="5"
+                  >
+                    Liability
+                  </option>
+                  
+                  
+                  <option
+                    value="6"
+                  >
+                    Mortgage
+                  </option>
+                  
+                
+                </select>
+                
+              
+              </div>
+              
+              
+              <div
+                class="form-group col-lg-6"
               >
                 
                 
@@ -139,17 +205,9 @@ exports[`AccountFormView has render method 1`] = `
               
               </div>
               
-            
-            </div>
-            
-            
-            <div
-              class="form-row"
-            >
-              
               
               <div
-                class="form-group col"
+                class="form-group col-lg-3"
               >
                 
                 
@@ -217,7 +275,7 @@ exports[`AccountFormView has render method 1`] = `
                 
                 
                 <input
-                  class="mr-3 form-control"
+                  class="form-control"
                   id="accountName"
                   type="text"
                   value="Assets"
@@ -276,7 +334,8 @@ exports[`AccountFormView has render method 1`] = `
           
           
           <div
-            class="modal-footer"
+            class="mortgage-details"
+            style="display: none"
           >
             
             
@@ -285,32 +344,78 @@ exports[`AccountFormView has render method 1`] = `
             >
               
               
+              <h4
+                class="col"
+              >
+                Mortgage Details
+              </h4>
+              
+            
+            </div>
+            
+            
+            <div
+              class="form-row"
+            >
+              
+              
               <div
-                class="form-group"
+                class="form-group col"
               >
                 
                 
-                <button
-                  class="save btn btn-success mr-2"
+                <label
+                  for="mortgagePrincipal"
                 >
-                  <span
-                    class="icon-solid-check"
-                  />
-                   Save
-                </button>
+                  Principal
+                </label>
                 
                 
-                <button
-                  class="cancel btn btn-danger"
-                >
-                  <span
-                    class="icon-close"
-                  />
-                   Cancel
-                </button>
+                <input
+                  class="form-control"
+                  id="mortgagePrincipal"
+                  type="text"
+                  value="undefined"
+                />
                 
               
               </div>
+              
+            
+            </div>
+            
+          
+          </div>
+          
+          
+          <div
+            class="modal-footer"
+          >
+            
+            
+            <div
+              class="form-group"
+            >
+              
+              
+              <button
+                class="save btn btn-success mr-2"
+              >
+                <span
+                  class="icon-solid-check"
+                />
+                 Save
+              </button>
+              
+              
+              <button
+                class="cancel btn btn-danger"
+              >
+                <span
+                  class="icon-close"
+                />
+                 Cancel
+              </button>
               
             
             </div>
@@ -329,7 +434,6 @@ exports[`AccountFormView has render method 1`] = `
     
   
   </div>
-  
   
 
   <!---->

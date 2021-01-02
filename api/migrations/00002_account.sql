@@ -9,10 +9,11 @@ DROP TABLE IF EXISTS commodity;
 CREATE TABLE commodity (
   "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   "type" INTEGER NOT NULL,
-  "symbol" TEXT NOT NULL,
   "name" TEXT NOT NULL,
   "description" TEXT NOT NULL,
   "ticker" TEXT,
+  "fraction" INTEGER NOT NULL,
+  "locale" TEXT,
   "version" TEXT NOT NULL
 );
 
@@ -21,13 +22,23 @@ CREATE INDEX commodityTypeName ON commodity ("type", "name");
 INSERT INTO
   commodity (
     "type",
-    "symbol",
     "name",
     "description",
+    "ticker",
+    "fraction",
+    "locale",
     "version"
   )
 VALUES
-  (1, '$', 'USD', 'US Dollar', getVersion());
+  (
+    1,
+    'USD',
+    'US Dollar',
+    'USD',
+    100,
+    'en-US',
+    getVersion()
+  );
 
 CREATE TABLE price (
   "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -46,7 +57,7 @@ WITH c (cid) AS (
   FROM
     commodity
   WHERE
-    symbol = '$'
+    name = 'USD'
 )
 INSERT INTO
   price (
@@ -67,10 +78,12 @@ FROM
 
 CREATE TABLE account (
   "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "currencyId" INTEGER NOT NULL REFERENCES commodity (id),
+  "parentId" INTEGER,
+  "commodityId" INTEGER NOT NULL REFERENCES commodity (id),
   "name" TEXT NOT NULL,
   "isPlaceholder" BOOLEAN NOT NULL DEFAULT FALSE,
-  "parentId" INTEGER,
+  "type" INTEGER NOT NULL,
+  "typeData" TEXT,
   "version" TEXT NOT NULL
 );
 
@@ -83,19 +96,21 @@ WITH c (cid) AS (
   FROM
     commodity
   WHERE
-    symbol = '$'
+    name = 'USD'
 )
 INSERT INTO
   account (
+    "commodityId",
     "name",
     "isPlaceholder",
-    "currencyId",
+    "type",
     "version"
   )
 SELECT
+  cid,
   'Assets',
   TRUE,
-  cid,
+  1,
   getVersion()
 FROM
   c;
@@ -106,19 +121,21 @@ WITH c (cid) AS (
   FROM
     commodity
   WHERE
-    symbol = '$'
+    name = 'USD'
 )
 INSERT INTO
   account (
+    "commodityId",
     "name",
     "isPlaceholder",
-    "currencyId",
+    "type",
     "version"
   )
 SELECT
+  cid,
   'Equity',
   TRUE,
-  cid,
+  2,
   getVersion()
 FROM
   c;
@@ -129,19 +146,21 @@ WITH c (cid) AS (
   FROM
     commodity
   WHERE
-    symbol = '$'
+    name = 'USD'
 )
 INSERT INTO
   account (
+    "commodityId",
     "name",
     "isPlaceholder",
-    "currencyId",
+    "type",
     "version"
   )
 SELECT
+  cid,
   'Expenses',
   TRUE,
-  cid,
+  3,
   getVersion()
 FROM
   c;
@@ -152,19 +171,21 @@ WITH c (cid) AS (
   FROM
     commodity
   WHERE
-    symbol = '$'
+    name = 'USD'
 )
 INSERT INTO
   account (
+    "commodityId",
     "name",
     "isPlaceholder",
-    "currencyId",
+    "type",
     "version"
   )
 SELECT
+  cid,
   'Income',
   TRUE,
-  cid,
+  4,
   getVersion()
 FROM
   c;
@@ -175,19 +196,21 @@ WITH c (cid) AS (
   FROM
     commodity
   WHERE
-    symbol = '$'
+    name = 'USD'
 )
 INSERT INTO
   account (
+    "commodityId",
     "name",
     "isPlaceholder",
-    "currencyId",
+    "type",
     "version"
   )
 SELECT
+  cid,
   'Liabilities',
   TRUE,
-  cid,
+  5,
   getVersion()
 FROM
   c;
