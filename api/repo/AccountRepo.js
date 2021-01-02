@@ -10,10 +10,12 @@ exports.AccountRepo = class AccountRepo {
     const stmt = this.db.prepare(`
       SELECT
         "id",
-        "currencyId",
+        "parentId",
+        "commodityId",
         "name",
         "isPlaceholder",
-        "parentId",
+        "type",
+        "typeData",
         "version"
       FROM account`)
 
@@ -25,10 +27,12 @@ exports.AccountRepo = class AccountRepo {
     const stmt = this.db.prepare(`
       SELECT
         "id",
+        "parentId",
         "currencyId",
         "name",
         "isPlaceholder",
-        "parentId",
+        "type",
+        "typeData",
         "version"
       FROM account`)
 
@@ -39,20 +43,24 @@ exports.AccountRepo = class AccountRepo {
   insert(account) {
     const stmt = this.db.prepare(`
       INSERT INTO account (
-        "currencyId",
+        "parentId",
+        "commodityId",
         "name",
         "isPlaceholder",
-        "parentId",
+        "type",
+        "typeData",
         "version"
       )
-      VALUES (?, ?, ?, ?, getVersion())
+      VALUES (?, ?, ?, ?, ?, ?, getVersion())
       `)
 
     const result = stmt.run(
-      account.currencyId,
+      account.parentId,
+      account.commodityId,
       account.name,
       account.isPlaceholder ? 1 : 0,
-      account.parentId,
+      account.type,
+      account.typeData
     )
 
     account = this.select(result.lastInsertRowid)
@@ -62,17 +70,22 @@ exports.AccountRepo = class AccountRepo {
   update(account) {
     const stmt = this.db.prepare(`
       UPDATE account 
-      SET "currencyId" = ?,
+      SET 
+        "parentId" = ?,
+        "commodityId" = ?,
         "name" = ?,
         "isPlaceholder" = ?,
-        "parentId" = ?
+        "type" = ?,
+        "typeData" = ?
       WHERE "id" = ? and "version" = ?`)
 
     const result = stmt.run(
-      account.currencyId,
+      account.parentId,
+      account.commodityId,
       account.name,
       account.isPlaceholder ? 1 : 0,
-      account.parentId,
+      account.type,
+      account.typeData,
       account.id,
       account.version
     )

@@ -377,6 +377,75 @@ exports[`AccountFormView has render method 1`] = `
                 <input
                   class="form-control"
                   id="mortgagePrincipal"
+                  type="number"
+                  value="undefined"
+                />
+                
+              
+              </div>
+              
+              
+              <div
+                class="form-group col"
+              >
+                
+                
+                <label
+                  for="mortgageRate"
+                >
+                  Rate
+                </label>
+                
+                
+                <input
+                  class="form-control"
+                  id="mortgageRate"
+                  type="number"
+                  value="undefined"
+                />
+                
+              
+              </div>
+              
+              
+              <div
+                class="form-group col"
+              >
+                
+                
+                <label
+                  for="mortgagePrincipal"
+                >
+                  Principal
+                </label>
+                
+                
+                <input
+                  class="form-control"
+                  id="mortgagePrincipal"
+                  type="text"
+                  value="undefined"
+                />
+                
+              
+              </div>
+              
+              
+              <div
+                class="form-group col"
+              >
+                
+                
+                <label
+                  for="mortgagePrincipal"
+                >
+                  Principal
+                </label>
+                
+                
+                <input
+                  class="form-control"
+                  id="mortgagePrincipal"
                   type="text"
                   value="undefined"
                 />

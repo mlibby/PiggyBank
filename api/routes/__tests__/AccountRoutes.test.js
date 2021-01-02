@@ -8,14 +8,18 @@ const mockRequest = helpers.mockRequest()
 mockRequest.fields.name = "mock account"
 mockRequest.fields.isPlaceholder = true
 mockRequest.fields.parentId = 123
-mockRequest.fields.currencyId = 345
+mockRequest.fields.commodityId = 345
+mockRequest.fields.type = 1
+mockRequest.fields.typeData = "{}"
 const mockResponse = helpers.mockResponse()
 
 const mockAccountOrig = {
   isPlaceholder: mockRequest.fields.isPlaceholder,
   name: mockRequest.fields.name,
   parentId: mockRequest.fields.parentId,
-  currencyId: mockRequest.fields.currencyId
+  commodityId: mockRequest.fields.commodityId,
+  type: mockRequest.fields.type,
+  typeData: mockRequest.fields.typeData
 }
 const mockAccountId = 890
 const mockAccountVersion = "mock version"

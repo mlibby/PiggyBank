@@ -15,10 +15,12 @@ let mockValidateFn
 beforeEach(() => {
   mockAccount = {
     id: 123,
-    currencyId: 1,
+    parentId: 1,
+    commodityId: 1,
     name: "test account",
     isPlaceholder: false,
-    parentId: 1,
+    type: 1,
+    typeData: {},
     version: origVersion
   }
 
@@ -41,10 +43,12 @@ test("selectAll() uses correct SQL and returns rows", () => {
     .toBe(helpers.normalize(`
       SELECT
         "id",
-        "currencyId",
+        "parentId",
+        "commodityId",
         "name",
         "isPlaceholder",
-        "parentId",
+        "type",
+        "typeData",
         "version"
       FROM account`
     ))
@@ -69,18 +73,22 @@ test("insert() uses correct SQL and returns updated account", () => {
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       INSERT INTO account (
-        "currencyId",
+        "parentId",
+        "commodityId",
         "name",
         "isPlaceholder",
-        "parentId",
+        "type",
+        "typeData",
         "version"
       )
-      VALUES (?, ?, ?, ?, getVersion())`
+      VALUES (?, ?, ?, ?, ?, ?, getVersion())`
     ))
-  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.currencyId)
-  expect(db.run.mock.calls[0][1]).toEqual(mockAccount.name)
-  expect(db.run.mock.calls[0][2]).toEqual(mockAccount.isPlaceholder ? 1 : 0)
-  expect(db.run.mock.calls[0][3]).toEqual(mockAccount.parentId)
+  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.parentId)
+  expect(db.run.mock.calls[0][1]).toEqual(mockAccount.commodityId)
+  expect(db.run.mock.calls[0][2]).toEqual(mockAccount.name)
+  expect(db.run.mock.calls[0][3]).toEqual(mockAccount.isPlaceholder ? 1 : 0)
+  expect(db.run.mock.calls[0][4]).toEqual(mockAccount.type)
+  expect(db.run.mock.calls[0][5]).toEqual(mockAccount.typeData)
 
   expect(account.id).toBe(mockId)
   expect(account.version).toBe(newVersion)
@@ -96,18 +104,23 @@ test("update() uses correct SQL and returns updated account", () => {
   expect(helpers.normalize(db.prepare.mock.calls[0][0]))
     .toBe(helpers.normalize(`
       UPDATE account 
-      SET "currencyId" = ?,
+      SET
+        "parentId" = ?, 
+        "commodityId" = ?,
         "name" = ?,
         "isPlaceholder" = ?,
-        "parentId" = ?
+        "type" = ?,
+        "typeData" = ?
       WHERE "id" = ? and "version" = ?`
     ))
-  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.currencyId)
-  expect(db.run.mock.calls[0][1]).toEqual(mockAccount.name)
-  expect(db.run.mock.calls[0][2]).toEqual(mockAccount.isPlaceholder ? 1 : 0)
-  expect(db.run.mock.calls[0][3]).toEqual(mockAccount.parentId)
-  expect(db.run.mock.calls[0][4]).toEqual(mockAccount.id)
-  expect(db.run.mock.calls[0][5]).toEqual(origVersion)
+  expect(db.run.mock.calls[0][0]).toEqual(mockAccount.parentId)
+  expect(db.run.mock.calls[0][1]).toEqual(mockAccount.commodityId)
+  expect(db.run.mock.calls[0][2]).toEqual(mockAccount.name)
+  expect(db.run.mock.calls[0][3]).toEqual(mockAccount.isPlaceholder ? 1 : 0)
+  expect(db.run.mock.calls[0][4]).toEqual(mockAccount.type)
+  expect(db.run.mock.calls[0][5]).toEqual(mockAccount.typeData)
+  expect(db.run.mock.calls[0][6]).toEqual(mockAccount.id)
+  expect(db.run.mock.calls[0][7]).toEqual(origVersion)
   expect(mockValidateFn).toBeCalledWith(mockChanges, mockAccount, "account")
   expect(account.version).toEqual(newVersion)
 })

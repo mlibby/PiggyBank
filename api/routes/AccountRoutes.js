@@ -36,10 +36,12 @@ exports.AccountRoutes = class AccountRoutes {
 
   requestToAccount(req) {
     const account = {
+      parentId: Number(req.fields.parentId),
+      commodityId: req.fields.commodityId,
       name: req.fields.name,
-      currencyId: req.fields.currencyId,
       isPlaceholder: req.fields.isPlaceholder,
-      parentId: Number(req.fields.parentId)
+      type: req.fields.type,
+      typeData: req.fields.typeData
     }
 
     if (req.fields.id) {

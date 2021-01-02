@@ -58,6 +58,18 @@ const template = (d) => html`
             <div class='form-row'>
               <div class='form-group col'>
                 <label for='mortgagePrincipal'>Principal</label>
+                <input id='mortgagePrincipal' class='form-control' type='number' value='${d.mortgagePrincipal}' />
+              </div>
+              <div class='form-group col'>
+                <label for='mortgageRate'>Rate</label>
+                <input id='mortgageRate' class='form-control' type='number' value='${d.mortgagePrincipal}' />
+              </div>
+              <div class='form-group col'>
+                <label for='mortgagePrincipal'>Principal</label>
+                <input id='mortgagePrincipal' class='form-control' type='text' value='${d.mortgagePrincipal}' />
+              </div>
+              <div class='form-group col'>
+                <label for='mortgagePrincipal'>Principal</label>
                 <input id='mortgagePrincipal' class='form-control' type='text' value='${d.mortgagePrincipal}' />
               </div>
             </div>

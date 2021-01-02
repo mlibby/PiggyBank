@@ -14,66 +14,82 @@ jest.mock("../PiggyBankUtil", () => {
 
 const mockAccountAssets = exports.mockAccountAssets = new AccountModel({
   id: 1,
-  currencyId: 1,
+  commodityId: 1,
   name: "Assets",
   isPlaceholder: 1,
-  parentId: null
+  parentId: null,
+  type: 1,
+  typeData: "{}"
 })
 
 const mockAccountSavings = exports.mockAccountSavings = new AccountModel({
   id: 2,
-  currencyId: 1,
+  commodityId: 1,
   name: "Savings",
   isPlaceholder: 0,
-  parentId: 1
+  parentId: 1,
+  type: 1,
+  typeData: "{}"
 })
 
 const mockAccountChecking = exports.mockAccountChecking = new AccountModel({
   id: 3,
-  currencyId: 1,
+  commodityId: 1,
   name: "Checking",
   isPlaceholder: 0,
-  parentId: 1
+  parentId: 1,
+  type: 1,
+  typeData: "{}"
 })
 
 const mockAccountInvestments = exports.mockAccountInvestments = new AccountModel({
   id: 4,
-  currencyId: 1,
+  commodityId: 1,
   name: "Investments",
   isPlaceholder: 1,
-  parentId: 1
+  parentId: 1,
+  type: 1,
+  typeData: "{}"
 })
 
 const mockAccount401k = exports.mockAccount401k = new AccountModel({
   id: 5,
-  currencyId: 1,
+  commodityId: 1,
   name: "401k",
   isPlaceholder: 0,
-  parentId: 4
+  parentId: 4,
+  type: 1,
+  typeData: "{}"
 })
 
 const mockAccountLiabilities = exports.mockAccountLiabilities = new AccountModel({
   id: 10,
-  currencyId: 1,
+  commodityId: 1,
   name: "Liabilities",
   isPlaceholder: 1,
-  parentId: null
+  parentId: null,
+  type: 5,
+  typeData: "{}"
 })
 
 const mockAccountCarLoan = exports.mockAccountCarLoan = new AccountModel({
   id: 11,
-  currencyId: 1,
+  commodityId: 1,
   name: "Car Loan",
   isPlaceholder: 0,
-  parentId: 10
+  parentId: 10,
+  type: 5,
+  typeData: "{}"
 })
 
 const mockAccountMortgage = exports.mockAccountMortgage = new AccountModel({
   id: 12,
-  currencyId: 1,
+  commodityId: 1,
   name: "Mortgage",
   isPlaceholder: 0,
-  parentId: 10
+  parentId: 10,
+  type: 6,
+  typeData: "{}"
 })
 
 const mockAccounts = exports.mockAccounts = new AccountCollection([
