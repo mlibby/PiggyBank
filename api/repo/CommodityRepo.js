@@ -15,7 +15,6 @@ exports.CommodityRepo = class CommodityRepo {
         "description",
         "ticker",
         "fraction",
-        "locale",
         "version"
       FROM commodity`)
 
@@ -32,7 +31,6 @@ exports.CommodityRepo = class CommodityRepo {
       "description",
       "ticker",
       "fraction",
-      "locale",
       "version"
     FROM commodity`)
 
@@ -48,10 +46,9 @@ exports.CommodityRepo = class CommodityRepo {
         "description",
         "ticker",
         "fraction",
-        "locale",
         "version"
       )
-      VALUES (?, ?, ?, ?, ?, ?, getVersion())
+      VALUES (?, ?, ?, ?, ?, getVersion())
       `)
 
     const result = stmt.run(
@@ -66,5 +63,4 @@ exports.CommodityRepo = class CommodityRepo {
     commodity = this.select(result.lastInsertRowid)
     return commodity
   }
-
 }

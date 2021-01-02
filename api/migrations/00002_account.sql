@@ -13,7 +13,6 @@ CREATE TABLE commodity (
   "description" TEXT NOT NULL,
   "ticker" TEXT,
   "fraction" INTEGER NOT NULL,
-  "locale" TEXT,
   "version" TEXT NOT NULL
 );
 
@@ -26,7 +25,6 @@ INSERT INTO
     "description",
     "ticker",
     "fraction",
-    "locale",
     "version"
   )
 VALUES
@@ -36,7 +34,6 @@ VALUES
     'US Dollar',
     'USD',
     100,
-    'en-US',
     getVersion()
   );
 
