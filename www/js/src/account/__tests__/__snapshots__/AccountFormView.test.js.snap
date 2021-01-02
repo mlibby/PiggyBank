@@ -339,6 +339,9 @@ exports[`AccountFormView has render method 1`] = `
           >
             
             
+            <hr />
+            
+            
             <div
               class="form-row"
             >

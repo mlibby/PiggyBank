@@ -51,6 +51,7 @@ const template = (d) => html`
             </div>
           </div>
           <div class='mortgage-details' style='display: none'>
+            <hr />
             <div class='form-row'>
               <h4 class='col'>Mortgage Details</h4>
             </div>
