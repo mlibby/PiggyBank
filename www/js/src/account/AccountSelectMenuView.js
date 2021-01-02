@@ -19,7 +19,7 @@ export class AccountSelectMenuView extends Backbone.View {
   }
 
   getSelectedId() {
-    this.$("select").find(":selected").val()
+    return this.$("select").find(":selected").val()
   }
 
   addAccountOptions(collection, includePlaceholders, accountId) {

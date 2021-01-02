@@ -73,11 +73,14 @@ export class AccountFormView extends Backbone.View {
   save(e) {
     e.preventDefault()
 
+    const currencyId = this.commodityMenu.getSelectedId()
+    const parentId = this.parentMenu.getSelectedId()
+
     this.model.set({
-      "currencyId": this.commodityMenu.getSelectedId(),
+      currencyId,
       "name": this.$("#accountName").val(),
       "isPlaceholder": this.$("#isPlaceholder")[0].checked,
-      "parentId": this.parentMenu.getSelectedId()
+      parentId
     })
 
     this.model.save({}, {
