@@ -71,7 +71,7 @@ exports.AccountRepo = class AccountRepo {
     const result = stmt.run(
       account.currencyId,
       account.name,
-      account.isPlaceholder,
+      account.isPlaceholder ? 1 : 0,
       account.parentId,
       account.id,
       account.version

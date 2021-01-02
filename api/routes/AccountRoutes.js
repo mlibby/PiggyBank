@@ -42,9 +42,9 @@ exports.AccountRoutes = class AccountRoutes {
       parentId: Number(req.fields.parentId)
     }
 
-    if (req.fields.accountId) {
-      account.accountId = req.fields.accountId,
-        account.md5 = req.fields.md5
+    if (req.fields.id) {
+      account.id = req.fields.id,
+        account.version = req.fields.version
     }
 
     return account

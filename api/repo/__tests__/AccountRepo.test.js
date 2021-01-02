@@ -52,8 +52,8 @@ test("selectAll() uses correct SQL and returns rows", () => {
 })
 
 test("insert() uses correct SQL and returns updated account", () => {
-  delete mockAccount.accountId
-  delete mockAccount.md5
+  delete mockAccount.id
+  delete mockAccount.version
   const mockId = 333
   db.run.mockReturnValue({
     changes: 1,
@@ -104,7 +104,7 @@ test("update() uses correct SQL and returns updated account", () => {
     ))
   expect(db.run.mock.calls[0][0]).toEqual(mockAccount.currencyId)
   expect(db.run.mock.calls[0][1]).toEqual(mockAccount.name)
-  expect(db.run.mock.calls[0][2]).toEqual(mockAccount.isPlaceholder)
+  expect(db.run.mock.calls[0][2]).toEqual(mockAccount.isPlaceholder ? 1 : 0)
   expect(db.run.mock.calls[0][3]).toEqual(mockAccount.parentId)
   expect(db.run.mock.calls[0][4]).toEqual(mockAccount.id)
   expect(db.run.mock.calls[0][5]).toEqual(origVersion)

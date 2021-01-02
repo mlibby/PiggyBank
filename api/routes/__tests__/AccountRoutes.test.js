@@ -18,10 +18,10 @@ const mockAccountOrig = {
   currencyId: mockRequest.fields.currencyId
 }
 const mockAccountId = 890
-const mockAccountMd5 = "mock md5"
+const mockAccountVersion = "mock version"
 const mockAccountNew = Object.assign({
   id: mockAccountId,
-  md5: mockAccountMd5
+  version: mockAccountVersion
 }, mockAccountOrig)
 
 test("new AccountRoutes(router, repo)", () => {
@@ -39,7 +39,7 @@ test("sets up routes", () => {
 })
 
 test("list(req, res, next)", () => {
-  const mockAccountList = [{ accountId: 1, name: "mock account" }]
+  const mockAccountList = [{ id: 1, name: "mock account" }]
   mockRepo.account.selectAll.mockReturnValue(mockAccountList)
 
   const accountRoutes = new AccountRoutes(mockRouter, mockRepo)
@@ -61,12 +61,12 @@ test("create(req, res, next)", () => {
 
 test("update(req, res, next)", () => {
   const mockReq2 = { ...mockRequest }
-  mockReq2.fields.accountId = mockAccountId
-  mockReq2.fields.md5 = "original Md5"
+  mockReq2.fields.id = mockAccountId
+  mockReq2.fields.version = "original version"
   const mockAccountOrig2 = {
     ...mockAccountOrig, ...{
-      accountId: mockAccountId,
-      md5: mockReq2.fields.md5
+      id: mockAccountId,
+      version: mockReq2.fields.version
     }
   }
   mockRepo.account.update.mockReturnValue(mockAccountNew)
@@ -80,12 +80,12 @@ test("update(req, res, next)", () => {
 
 test("delete(req, res, next)", () => {
   const mockReq2 = { ...mockRequest }
-  mockReq2.fields.accountId = mockAccountId
-  mockReq2.fields.md5 = "original Md5"
+  mockReq2.fields.id = mockAccountId
+  mockReq2.fields.version = "original version"
   const mockAccountOrig2 = {
     ...mockAccountOrig, ...{
-      accountId: mockAccountId,
-      md5: mockReq2.fields.md5
+      id: mockAccountId,
+      version: mockReq2.fields.version
     }
   }
   const mockResp2 = {
