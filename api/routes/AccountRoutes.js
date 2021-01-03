@@ -17,9 +17,18 @@ exports.AccountRoutes = class AccountRoutes {
   }
 
   create(req, res, next) {
-    let account = this.requestToAccount(req)
-    account = this.repo.account.insert(account)
-    res.json(account)
+    try {
+      let account = this.requestToAccount(req)
+      account = this.repo.account.insert(account)
+      res.json(account)
+    }
+    catch (err) {
+      res.status(500)
+      res.json({
+        code: err.code,
+        message: err.message
+      })
+    }
   }
 
   update(req, res, next) {

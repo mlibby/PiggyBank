@@ -88,7 +88,7 @@ test("insert() uses correct SQL and returns updated account", () => {
   expect(db.run.mock.calls[0][2]).toEqual(mockAccount.name)
   expect(db.run.mock.calls[0][3]).toEqual(mockAccount.isPlaceholder ? 1 : 0)
   expect(db.run.mock.calls[0][4]).toEqual(mockAccount.type)
-  expect(db.run.mock.calls[0][5]).toEqual(mockAccount.typeData)
+  expect(db.run.mock.calls[0][5]).toEqual(JSON.stringify(mockAccount.typeData))
 
   expect(account.id).toBe(mockId)
   expect(account.version).toBe(newVersion)
@@ -118,7 +118,7 @@ test("update() uses correct SQL and returns updated account", () => {
   expect(db.run.mock.calls[0][2]).toEqual(mockAccount.name)
   expect(db.run.mock.calls[0][3]).toEqual(mockAccount.isPlaceholder ? 1 : 0)
   expect(db.run.mock.calls[0][4]).toEqual(mockAccount.type)
-  expect(db.run.mock.calls[0][5]).toEqual(mockAccount.typeData)
+  expect(db.run.mock.calls[0][5]).toEqual(JSON.stringify(mockAccount.typeData))
   expect(db.run.mock.calls[0][6]).toEqual(mockAccount.id)
   expect(db.run.mock.calls[0][7]).toEqual(origVersion)
   expect(mockValidateFn).toBeCalledWith(mockChanges, mockAccount, "account")

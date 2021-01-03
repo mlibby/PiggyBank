@@ -24,13 +24,7 @@ exports[`AccountListView has render method 1`] = `
       </a>
       
     
-      <button
-        class="edit btn btn-sm btn-icon btn-outline-secondary"
-      >
-        <span
-          class="icon-pencil"
-        />
-      </button>
+      
       
     
       <button
@@ -42,13 +36,7 @@ exports[`AccountListView has render method 1`] = `
       </button>
       
     
-      <button
-        class="delete btn btn-sm btn-icon btn-outline-danger"
-      >
-        <span
-          class="icon-trash"
-        />
-      </button>
+      
       
   
     </div>
@@ -292,13 +280,7 @@ exports[`AccountListView has render method 1`] = `
       </a>
       
     
-      <button
-        class="edit btn btn-sm btn-icon btn-outline-secondary"
-      >
-        <span
-          class="icon-pencil"
-        />
-      </button>
+      
       
     
       <button
@@ -310,13 +292,7 @@ exports[`AccountListView has render method 1`] = `
       </button>
       
     
-      <button
-        class="delete btn btn-sm btn-icon btn-outline-danger"
-      >
-        <span
-          class="icon-trash"
-        />
-      </button>
+      
       
   
     </div>

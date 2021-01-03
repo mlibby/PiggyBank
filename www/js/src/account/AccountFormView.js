@@ -129,11 +129,11 @@ export class AccountFormView extends Backbone.View {
     })
   }
 
-  saveError(e) {
-    alert("error saving account: " + e)
+  saveError(model, response, opts) {
+    alert("error saving account: " + response.responseJSON.message)
   }
 
-  saved() {
+  saved(model, response, opts) {
     if (this.model.children === null) {
       this.model.children = new AccountCollection()
     }
@@ -196,7 +196,7 @@ export class AccountFormView extends Backbone.View {
     }
   }
 
-  _getMortageData() {
+  _getMortgageData() {
     const data = {
       mortgagePrincipal: this.$("#mortgagePrincipal").val(),
       mortgageRate: this.$("#mortgageRate").val(),

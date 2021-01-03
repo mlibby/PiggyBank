@@ -87,7 +87,7 @@ test("saveError alerts user about error", () => {
   window.alert = mockAlert
 
   view.render()
-  view.saveError("ERROR MSG")
+  view.saveError(null, { responseJSON: {message: "ERROR MSG"}}, null)
 
   expect(mockAlert).toHaveBeenCalledWith("error saving account: ERROR MSG")
 })

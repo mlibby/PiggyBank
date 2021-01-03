@@ -1,9 +1,9 @@
-import { mockAccountAssets } from "../../__tests__/testHelpers"
+import { mockAccountAssets, mockAccountChecking } from "../../__tests__/testHelpers"
 import { AccountView } from "../AccountView"
 
 let view
 beforeEach(() => {
-  view = new AccountView({ model: mockAccountAssets })
+  view = new AccountView({ model: mockAccountChecking })
 })
 
 test("AccountView has render method", () => {
@@ -13,6 +13,7 @@ test("AccountView has render method", () => {
 })
 
 test("AccountView removes existing subview during render", () => {
+  view.model = mockAccountAssets
   const renderedView = view.render()
   expect(renderedView.subview).toBeTruthy()
 

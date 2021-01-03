@@ -28,7 +28,7 @@ exports.AccountRepo = class AccountRepo {
       SELECT
         "id",
         "parentId",
-        "currencyId",
+        "commodityId",
         "name",
         "isPlaceholder",
         "type",
@@ -60,7 +60,7 @@ exports.AccountRepo = class AccountRepo {
       account.name,
       account.isPlaceholder ? 1 : 0,
       account.type,
-      account.typeData
+      JSON.stringify(account.typeData)
     )
 
     account = this.select(result.lastInsertRowid)
@@ -85,7 +85,7 @@ exports.AccountRepo = class AccountRepo {
       account.name,
       account.isPlaceholder ? 1 : 0,
       account.type,
-      account.typeData,
+      JSON.stringify(account.typeData),
       account.id,
       account.version
     )

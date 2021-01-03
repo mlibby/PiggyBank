@@ -6,9 +6,13 @@ import { AccountListView } from "./AccountListView.js"
 const template = d => html`
   <div class='display'>
     <a href='/ledger/${d.id}'>${d.accountName}</a>
-    <button class='edit btn btn-sm btn-icon btn-outline-secondary'><span class='icon-pencil'></span></button>
+    ${ d.parentId != null ?
+      html`<button class='edit btn btn-sm btn-icon btn-outline-secondary'><span class='icon-pencil'></span></button>`
+      : "" }
     <button class='create btn btn-sm btn-icon btn-outline-primary'><span class='icon-plus'></span></button>
-    <button class='delete btn btn-sm btn-icon btn-outline-danger'><span class='icon-trash'></span></button>
+    ${ d.parentId != null ?
+      html`<button class='delete btn btn-sm btn-icon btn-outline-danger'><span class='icon-trash'></span></button>`
+      : "" }
   </div>
 `
 
