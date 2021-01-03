@@ -20,10 +20,12 @@ const constraints = {
   video: true
 }
 
+let imageCapture
+
 export class ReceiptIndexView extends Backbone.View {
   constructor() {
     super()
-    this.imageCapture = null
+    imageCapture = null
   }
 
   render() {
@@ -46,12 +48,13 @@ export class ReceiptIndexView extends Backbone.View {
   // canvas.height = 360;
 
   handleSuccess(stream) {
+    window.stream = stream
     const video = this.$("video")[0]
     video.srcObject = stream
     const mediaStreamTrack = stream.getVideoTracks()[0]
-    this.imageCapture = new ImageCapture(mediaStreamTrack)
+    imageCapture = new ImageCapture(mediaStreamTrack)
 
-    this.$("#snapshot-btn").on("click", this.takeSnapshot.bind(this))
+    this.$("#snapshot-btn").on("click", this.takeSnapshot)
   }
 
   handleError(error) {
@@ -60,8 +63,8 @@ export class ReceiptIndexView extends Backbone.View {
 
   async takeSnapshot(e) {
     e.preventDefault()
-    const img = this.$("#snapshot-img")
-    await this.imageCapture.takePhoto()
+    const img = $("#snapshot-img")[0]
+    await imageCapture.takePhoto()
       .then(blob => {
         img.src = URL.createObjectURL(blob);
         img.onload = () => { URL.revokeObjectURL(this.src); }
@@ -70,5 +73,4 @@ export class ReceiptIndexView extends Backbone.View {
         alert(`Error: ${error}`)
       })
   }
-
 }

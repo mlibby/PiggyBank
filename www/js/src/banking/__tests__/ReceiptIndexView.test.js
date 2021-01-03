@@ -55,7 +55,7 @@ test("ReceiptIndexView.takeSnapshot() takes a still from the stream", () => {
   view.handleSuccess(mockStream)
 
   var mockPhotoElem = {}
-  view.$ = jest.fn().mockReturnValue(mockPhotoElem);
+  window.$ = jest.fn().mockReturnValue(mockPhotoElem);
   view.takeSnapshot(mockEvent).then(() => {
     expect(mockEvent.preventDefault).toHaveBeenCalled()
     expect(mockTakePhoto).toHaveBeenCalled()
