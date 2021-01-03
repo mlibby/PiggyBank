@@ -1,0 +1,1 @@
+https://www.currency-iso.org/en/home/tables/table-a1.html
