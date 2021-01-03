@@ -146,6 +146,7 @@ const mockFindVal = jest.fn().mockReturnValue(1)
 const mockFind = jest.fn().mockReturnValue({
   val: mockFindVal
 })
+const mockHide = jest.fn()
 const mockHtml = jest.fn()
 const mockModal = jest.fn()
 const mockOn = jest.fn()
@@ -154,6 +155,7 @@ const mock$ = exports.mock$ = jest.fn().mockReturnValue({
   0: { checked: true },
   append: mockAppend,
   find: mockFind,
+  hide: mockHide,
   html: mockHtml,
   modal: mockModal,
   on: mockOn,

@@ -49,34 +49,37 @@ const template = (d) => html`
                 </div>
               </div>
             </div>
-          </div>
-          <div id='mortgage-details' class='account-details' style='display: none'>
-            <hr />
-            <div class='form-row'>
-              <h4 class='col'>Mortgage Details</h4>
-            </div>
-            <div class='form-row'>
-              <div class='form-group col'>
-                <label for='mortgagePrincipal'>Principal</label>
-                <input id='mortgagePrincipal' class='form-control' type='number' value='${d.mortgagePrincipal}' />
+  
+            <div id='mortgage-details' class='account-details' style='display: none'>
+              <hr />
+              <div class='form-row'>
+                <h4 class='col'>Mortgage Details</h4>
               </div>
-              <div class='form-group col'>
-                <label for='mortgageRate'>Rate</label>
-                <input id='mortgageRate' class='form-control' type='number' value='${d.mortgageRate}' />
+              <div class='form-row'>
+                <div class='form-group col'>
+                  <label for='mortgagePrincipal'>Principal</label>
+                  <input id='mortgagePrincipal' class='form-control' type='number' value='${d.mortgagePrincipal}' />
+                </div>
+                <div class='form-group col'>
+                  <label for='mortgageRate'>Rate (% APR)</label>
+                  <input id='mortgageRate' class='form-control' type='number' value='${d.mortgageRate}' />
+                </div>
               </div>
-              <div class='form-group col'>
-                <label for='mortgageStartDate'>Start Date</label>
-                <input id='mortgageStartDate' class='form-control' type='date' value='${d.mortgageStartDate}' />
-              </div>
-              <div class='form-group col'>
-                <label for='mortgagePayments'>Payments</label>
-                <input id='mortgagePayments' class='form-control' type='text' value='${d.mortgagePayments}' />
-              </div>
-              <div class='form-group col'>
-                <label for='mortgagePeriod'>Period</label>
-                <select id='mortgagePeriod'>
-                  <option>Monthly</option>
-                </select>
+              <div class='form-row'>
+                <div class='form-group col'>
+                  <label for='mortgageStartDate'>Start Date</label>
+                  <input id='mortgageStartDate' class='form-control' type='date' value='${d.mortgageStartDate}' />
+                </div>
+                <div class='form-group col'>
+                  <label for='mortgagePayments'>Payments</label>
+                  <input id='mortgagePayments' class='form-control' type='text' value='${d.mortgagePayments}' />
+                </div>
+                <div class='form-group col'>
+                  <label for='mortgagePeriod'>Period</label>
+                  <select id='mortgagePeriod' class='form-control'>
+                    <option>Monthly</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -154,10 +157,13 @@ export class AccountFormView extends Backbone.View {
     this.$("#parentSelect").html(this.parentMenu.el)
 
     this.commodityMenu = new CommoditySelectMenuView(this.model.get("commodityCollection"))
-    this.commodityMenu.render(this.model.get("currencyId"), "Currency")
+    this.commodityMenu.render(this.model.get("commodityId"), "Commodity")
     this.$("#commoditySelect").html(this.commodityMenu.el)
 
-    this.$("#accountType").on("change", this.showHideDetails.bind(this))
+    const $accountType = this.$("#accountType")
+    $accountType.on("change", this.showHideDetails.bind(this))
+    $accountType.val(this.model.get("type"))
+    this.showHideDetails()
 
     return this
   }
@@ -171,7 +177,7 @@ export class AccountFormView extends Backbone.View {
       this.$("#mortgage-details").show()
     }
     else {
-      throw new Error(`Account type ${type} not supported`)
+      console.log(`Account type ${type} not supported`)
     }
   }
 
@@ -192,7 +198,7 @@ export class AccountFormView extends Backbone.View {
       return this._getMortgageData()
     }
     else {
-      throw new Error(`Account type ${type} not supported`)
+      console.log(`Account type ${type} not supported`)
     }
   }
 

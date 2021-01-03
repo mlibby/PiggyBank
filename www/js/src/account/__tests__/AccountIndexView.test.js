@@ -53,6 +53,8 @@ test("view.creates displays an AccountForm with a default AccountModel", () => {
   window.$ = jest.fn().mockImplementation(() => {
     return { modal, html, text }
   })
+  const hide = jest.fn()
+  view.$ = jest.fn().mockReturnValue({ hide })
 
   view.create(mockAccountAssets)
 

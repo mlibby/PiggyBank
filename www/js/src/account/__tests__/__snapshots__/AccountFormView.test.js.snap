@@ -222,7 +222,7 @@ exports[`AccountFormView has render method 1`] = `
                       for="selectCommodityId-test guid"
                     >
                       <!---->
-                      Currency
+                      Commodity
                       <!---->
                     </label>
                     
@@ -329,155 +329,165 @@ exports[`AccountFormView has render method 1`] = `
             
             </div>
             
-          
-          </div>
-          
-          
-          <div
-            class="account-details"
-            id="mortgage-details"
-            style="display: none"
-          >
-            
-            
-            <hr />
-            
+  
             
             <div
-              class="form-row"
+              class="account-details"
+              id="mortgage-details"
+              style="display: none"
             >
               
               
-              <h4
-                class="col"
-              >
-                Mortgage Details
-              </h4>
-              
-            
-            </div>
-            
-            
-            <div
-              class="form-row"
-            >
+              <hr />
               
               
               <div
-                class="form-group col"
+                class="form-row"
               >
                 
                 
-                <label
-                  for="mortgagePrincipal"
+                <h4
+                  class="col"
                 >
-                  Principal
-                </label>
-                
-                
-                <input
-                  class="form-control"
-                  id="mortgagePrincipal"
-                  type="number"
-                  value="undefined"
-                />
+                  Mortgage Details
+                </h4>
                 
               
               </div>
               
               
               <div
-                class="form-group col"
+                class="form-row"
               >
                 
                 
-                <label
-                  for="mortgageRate"
-                >
-                  Rate
-                </label>
-                
-                
-                <input
-                  class="form-control"
-                  id="mortgageRate"
-                  type="number"
-                  value="undefined"
-                />
-                
-              
-              </div>
-              
-              
-              <div
-                class="form-group col"
-              >
-                
-                
-                <label
-                  for="mortgageStartDate"
-                >
-                  Start Date
-                </label>
-                
-                
-                <input
-                  class="form-control"
-                  id="mortgageStartDate"
-                  type="date"
-                  value="undefined"
-                />
-                
-              
-              </div>
-              
-              
-              <div
-                class="form-group col"
-              >
-                
-                
-                <label
-                  for="mortgagePayments"
-                >
-                  Payments
-                </label>
-                
-                
-                <input
-                  class="form-control"
-                  id="mortgagePayments"
-                  type="text"
-                  value="undefined"
-                />
-                
-              
-              </div>
-              
-              
-              <div
-                class="form-group col"
-              >
-                
-                
-                <label
-                  for="mortgagePeriod"
-                >
-                  Period
-                </label>
-                
-                
-                <select
-                  id="mortgagePeriod"
+                <div
+                  class="form-group col"
                 >
                   
                   
-                  <option>
-                    Monthly
-                  </option>
+                  <label
+                    for="mortgagePrincipal"
+                  >
+                    Principal
+                  </label>
+                  
+                  
+                  <input
+                    class="form-control"
+                    id="mortgagePrincipal"
+                    type="number"
+                    value="undefined"
+                  />
                   
                 
-                </select>
+                </div>
+                
+                
+                <div
+                  class="form-group col"
+                >
+                  
+                  
+                  <label
+                    for="mortgageRate"
+                  >
+                    Rate (% APR)
+                  </label>
+                  
+                  
+                  <input
+                    class="form-control"
+                    id="mortgageRate"
+                    type="number"
+                    value="undefined"
+                  />
+                  
+                
+                </div>
+                
+              
+              </div>
+              
+              
+              <div
+                class="form-row"
+              >
+                
+                
+                <div
+                  class="form-group col"
+                >
+                  
+                  
+                  <label
+                    for="mortgageStartDate"
+                  >
+                    Start Date
+                  </label>
+                  
+                  
+                  <input
+                    class="form-control"
+                    id="mortgageStartDate"
+                    type="date"
+                    value="undefined"
+                  />
+                  
+                
+                </div>
+                
+                
+                <div
+                  class="form-group col"
+                >
+                  
+                  
+                  <label
+                    for="mortgagePayments"
+                  >
+                    Payments
+                  </label>
+                  
+                  
+                  <input
+                    class="form-control"
+                    id="mortgagePayments"
+                    type="text"
+                    value="undefined"
+                  />
+                  
+                
+                </div>
+                
+                
+                <div
+                  class="form-group col"
+                >
+                  
+                  
+                  <label
+                    for="mortgagePeriod"
+                  >
+                    Period
+                  </label>
+                  
+                  
+                  <select
+                    class="form-control"
+                    id="mortgagePeriod"
+                  >
+                    
+                    
+                    <option>
+                      Monthly
+                    </option>
+                    
+                  
+                  </select>
+                  
+                
+                </div>
                 
               
               </div>
