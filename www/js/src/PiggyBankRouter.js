@@ -12,6 +12,7 @@ import { OfxIndexView } from "./ofx/OfxIndexView.js"
 import { PriceIndexView } from "./price/PriceIndexView.js"
 import { ReceiptIndexView } from "./banking/ReceiptIndexView.js"
 import { ReportIndexView } from "./report/ReportIndexView.js"
+import { SettingsIndexView } from "./settings/SettingsIndexView.js"
 import { TxIndexView } from "./tx/TxIndexView.js"
 
 export class PiggyBankRouter extends Backbone.Router {
@@ -23,13 +24,14 @@ export class PiggyBankRouter extends Backbone.Router {
       // "banking": () => ,
       "budget": () => this.switchView(new BudgetIndexView(), "#navBudget"),
       "commodity": () => this.switchView(new CommodityIndexView(), "#navAccounts"),
-      "mortgage" : () => this.switchView(new MortgageIndexView(), "#navBudget"),
-      "mortgage/amort" : () => this.switchView(new MortgageAmortizationView(), "#navBudget"),
+      "mortgage": () => this.switchView(new MortgageIndexView(), "#navBudget"),
+      "mortgage/amort": () => this.switchView(new MortgageAmortizationView(), "#navBudget"),
       "ofx": () => this.switchView(new OfxIndexView(), "#navBanking"),
       "ofxImport": () => this.switchView(new OfxImportView(), "#navBanking"),
       "price": () => this.switchView(new PriceIndexView(), "#navAccounts"),
       "receipt": () => this.switchView(new ReceiptIndexView(), "#navReceipt"),
       "report": () => this.switchView(new ReportIndexView(), "#navReports"),
+      "settings": () => this.switchView(new SettingsIndexView(), "#navSettings"),
       "tx": () => this.switchView(new TxIndexView(), "#navTx"),
     }
   }

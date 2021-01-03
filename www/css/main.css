@@ -18,6 +18,11 @@ nav a {
   text-decoration: none;
 }
 
+#navSettings {
+  font-size: 1.5rem;
+  line-height: 1rem;
+}
+
 .bg-info-faded {
     background-color: #75e4f5 !important;
 }

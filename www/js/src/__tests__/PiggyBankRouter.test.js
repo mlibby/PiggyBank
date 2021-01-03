@@ -14,6 +14,7 @@ import { OfxIndexView } from "../ofx/OfxIndexView.js"
 import { PriceIndexView } from "../price/PriceIndexView.js"
 import { ReceiptIndexView } from "../banking/ReceiptIndexView.js"
 import { ReportIndexView } from "../report/ReportIndexView.js"
+import { SettingsIndexView} from "../settings/SettingsIndexView.js"
 import { TxIndexView } from "../tx/TxIndexView.js"
 
 let router
@@ -110,6 +111,11 @@ test("route /receipt goes to ReceiptIndexView", () => {
 test("route /report goes to ReportIndexView", () => {
   router.routes["report"].call()
   expect(router.switchView).toHaveBeenCalledWith(expect.any(ReportIndexView), "#navReports")
+})
+
+test("route /settings goes to SettingsIndexView", () => {
+  router.routes["settings"].call()
+  expect(router.switchView).toHaveBeenCalledWith(expect.any(SettingsIndexView), "#navSettings")
 })
 
 test("route /tx goes to TxIndexView", () => {

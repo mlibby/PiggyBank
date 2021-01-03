@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsIndexView has render method 1`] = `
+<div>
+  <!---->
+  
+  
+  <div
+    class="row"
+  >
+    
+    
+    <div
+      class="col"
+    >
+      
+      
+      <h1>
+        Settings
+      </h1>
+      
+      
+      <p>
+        [TODO: allow choosing default currency]
+      </p>
+      
+      
+      <p>
+        [TODO: allow editing locale]
+      </p>
+      
+    
+    </div>
+    
+  
+  </div>
+  
+
+  <!---->
+</div>
+`;
