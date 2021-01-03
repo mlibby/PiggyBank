@@ -48,6 +48,11 @@ exports[`ApiKeyIndexView.render() creates/fetches an ApiKeyCollection and calls 
         </tbody>
       </table>
       
+      
+      <p>
+        [TODO: Add Information on getting an AlphaVantage API key]
+      </p>
+      
     
     </div>
     

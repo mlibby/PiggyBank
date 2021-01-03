@@ -1,10 +1,10 @@
 [![npm test](https://github.com/mlibby/PiggyBank/workflows/npm%20test/badge.svg)](https://github.com/mlibby/PiggyBank/actions?query=workflow%3A"npm+test")
+
 ![license: GPL-3.0](https://img.shields.io/github/license/mlibby/PiggyBank)
 
 # Welcome to PiggyBank
 
-PiggyBank is a project to create a household financial appliance. As an appliance, PiggyBank is more than
-just an app.
+PiggyBank is a project to create a household financial appliance. As an appliance, PiggyBank is more than just an app.
 
 Traditional accounting software is a single-user app, which is hard (if not impossible) for families
 or groups to share. The app and the data live on just one computer and there's no mechanism for safely
@@ -22,6 +22,9 @@ You could access it from a laptop, a PC, tablet, or phone-- maybe even a smart T
 If you want to make PiggyBank an _actual_ home appliance, there is a 3D printable piggybank case that
 houses a Raspberry Pi and small computer screen. It's an interactive piggybank that can give you an
 always-on status report of how you're doing.
+
+A proof-of-concept demo is available at [PiggyBank@Heroku](https://piggybanklive.herokuapp.com)
+     
 
 # Status and TODO List
 

@@ -10,6 +10,7 @@ const template = (d) => html`
   <div class='row'>
     <div class='col'>
       <h1>OFX Configuration</h1>
+      <p>[TODO: describe how to use OFX/QFX download function]</p>
     </div>
   </div>
   <div class='row'>

@@ -20,6 +20,11 @@ exports[`ReceiptIndexView.render() get media permissions 1`] = `
       </h1>
       
       
+      <p>
+        [TODO: upload snapshot to DB]
+      </p>
+      
+      
       <video
         autoplay=""
         playsinline=""

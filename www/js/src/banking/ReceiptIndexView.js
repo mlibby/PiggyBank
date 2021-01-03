@@ -6,6 +6,7 @@ const template = (d) => html`
   <div class='row'>
     <div class='col'>
       <h1>Receipts</h1>
+      <p>[TODO: upload snapshot to DB]</p>
       <video playsinline autoplay style='width:340px;height:240px;'></video>
       <button id='snapshot-btn'>Take snapshot</button>
       <img id='snapshot-img' />

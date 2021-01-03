@@ -21,7 +21,7 @@ exports[`ApiKeyView has render method 1`] = `
       
       
       <p>
-        [tdb]
+        [TODO: build OFX/OFX import function]
       </p>
       
     

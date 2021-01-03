@@ -8,6 +8,7 @@ const template = (d) => html`
   <div class='row'>
     <div class='col'>
       <h1>Transactions</h1>
+      <p>[TODO: Add filters for account and date range]</p>
       <table class='table'>
         <tr>
           <th>Date</th>
@@ -18,6 +19,7 @@ const template = (d) => html`
           <th>Amount</th>
         </tr>
       </table>
+      <p>[TODO: Add a transaction display]</p>
     </div>
   </div>
 `

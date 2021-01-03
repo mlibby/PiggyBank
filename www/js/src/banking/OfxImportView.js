@@ -6,7 +6,7 @@ const template = (d) => html`
   <div class='row'>
     <div class='col'>
       <h1>OFX Import</h1>
-      <p>[tdb]</p>
+      <p>[TODO: build OFX/OFX import function]</p>
     </div>
   </div>
 `

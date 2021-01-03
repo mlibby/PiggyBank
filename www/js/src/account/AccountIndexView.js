@@ -8,11 +8,28 @@ import { AccountModel } from "./AccountModel.js"
 const template = (d) => html`
   <div class='row'>
     <div class='col'>
-      <h1>Accounts</h1>
+      <h1>Chart of Accounts</h1>
+      <p>
+        This is your <a href='https://en.wikipedia.org/wiki/Chart_of_accounts'>Chart of Accounts</a>
+      </p>
+      <p>
+        Click <span class='icon icon-plus'></span> to add a subaccount,
+        <span class='icon icon-pencil'></span> to edit an account,
+        <span class='icon icon-trash'></span> to delete an account.</p>
+      <p>
+        Assets, Liabilities, Income, Expense, and Equity are required accounts
+        and may not be edited or deleted.
+      </p>
     </div>
   </div>
   <div class='row'>
     <div id='tableContainer' class='accounts col'>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col'>
+      <p>[TODO: add ability to import COA from existing sources]</p>
+      <p>[TODO: add chart builder tool]</p>
     </div>
   </div>
 `

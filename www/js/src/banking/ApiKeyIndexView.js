@@ -15,6 +15,7 @@ const template = (d) => html`
           <th></th>
         </tr>
       </table>
+      <p>[TODO: Add Information on getting an AlphaVantage API key]</p>
     </div>
   </div>
 `

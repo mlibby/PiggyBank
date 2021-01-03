@@ -8,6 +8,8 @@ const template = (d) => html`
   <div class='row'>
     <div class='col'>
       <h1>Prices</h1>
+      <p>[TODO: add price edit form]</p>
+      <p>[TODO: add button to fetch prices from external API]</p>
       <table class='table'>
         <tr>
           <th>Date</th>

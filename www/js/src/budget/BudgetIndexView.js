@@ -5,8 +5,8 @@ import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js";
 const template = (d) => html`
   <div class='row'>
     <div class='col'>
-      <h1>Budgets</h1>
-      <p>[tdb]</p>
+      <h1>Budget</h1>
+      <p>[TODO: Add Budget Plan Table]</p>
     </div>
   </div>
 `
