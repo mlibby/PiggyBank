@@ -60,6 +60,11 @@ exports[`AccountIndexView has render method 1`] = `
       
       </p>
       
+      
+      <p>
+        [TODO: load subtypes in form correctly]
+      </p>
+      
     
     </div>
     

@@ -20,6 +20,7 @@ const template = (d) => html`
         Assets, Liabilities, Income, Expense, and Equity are required accounts
         and may not be edited or deleted.
       </p>
+      <p>[TODO: load subtypes in form correctly]</p>
     </div>
   </div>
   <div class='row'>
