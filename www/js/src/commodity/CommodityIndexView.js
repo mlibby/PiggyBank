@@ -16,10 +16,10 @@ const template = (d) => html`
       <table class='table mt-3'>
         <tr>
           <th>Name</th>
-          <th>Type</th>
-          <th>Symbol</th>
           <th>Description</th>
+          <th>Type</th>
           <th>Ticker</th>
+          <th>Fraction</th>
           <th></th>
         </tr>
       </table>

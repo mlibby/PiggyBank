@@ -4,10 +4,10 @@ import { html, render as renderHtml } from "../../lib/lit-html/lit-html.js"
 
 const template = (d) => html`
   <td>${d.name}</td>
-  <td>${d.type}</td>
-  <td>${d.symbol}</td>
   <td>${d.description}</td>
+  <td>${d.type}</td>
   <td>${d.ticker}</td>
+  <td>${d.fraction}</td>
   <td>
     <button class='create btn btn-sm btn-icon btn-outline-secondary'><span class='icon-pencil'></span><span
         class='sr-only'>Edit</span></button>
@@ -29,14 +29,15 @@ export class CommodityView extends Backbone.View {
   }
 
   render() {
-    renderHtml(template({
+    const data = {
       id: this.model.get("id"),
       name: this.model.get("name"),
-      type: this.model.get("type"),
-      symbol: this.model.get("symbol"),
       description: this.model.get("description"),
-      ticker: this.model.get("ticker")
-    }), this.el)
+      type: this.model.typeString(),
+      ticker: this.model.get("ticker"),
+      fraction: this.model.fractionString()
+    }
+    renderHtml(template(data), this.el)
 
     this.$(".btn.edit").on("click", (e) => this.edit(this.model, e))
     this.$(".btn.delete").on("click", (e) => this.delete(this.model, e))

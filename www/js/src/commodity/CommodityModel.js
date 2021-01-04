@@ -1,17 +1,20 @@
 "use strict"
 
+const types = [
+  'Currency',
+  'Investment'
+]
+
 export class CommodityModel extends Backbone.Model {
   preinitialize(args) {
     this.urlRoot = "/api/commodity"
 
     this.defaults = {
       name: "",
-      type: 0,
-      symbol: "",
       description: "",
+      type: 0,
       ticker: "",
-      fraction: 100,
-      locale: "en-US"
+      fraction: 100
     }
   }
 
@@ -22,5 +25,20 @@ export class CommodityModel extends Backbone.Model {
     else {
       return `${this.get("name")}${(amount / this.get("fraction")).toFixed(4)}`
     }
+  }
+
+  fractionString() {
+    const fraction = Number(this.get("fraction"))
+    if(fraction === 1) {
+      return "1"
+    }
+    else {
+      return "1/" + fraction.toLocaleString(piggybank.settings.locale)
+    }
+  }
+
+  typeString() {
+    const type = Number(this.get("type")) - 1
+    return types[type]
   }
 }

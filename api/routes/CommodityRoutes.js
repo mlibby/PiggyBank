@@ -17,9 +17,18 @@ exports.CommodityRoutes = class CommodityRoutes {
   }
 
   create(req, res, next) {
-    let commodity = this.requestToCommodity(req)
-    commodity = this.repo.commodity.insert(commodity)
-    res.json(commodity)
+    try {
+      let commodity = this.requestToCommodity(req)
+      commodity = this.repo.commodity.insert(commodity)
+      res.json(commodity)
+    }
+    catch (err) {
+      res.status(500)
+      res.json({
+        code: err.code,
+        message: err.message
+      })
+    }
   }
 
   update(req, res, next) {
@@ -37,15 +46,15 @@ exports.CommodityRoutes = class CommodityRoutes {
   requestToCommodity(req) {
     const commodity = {
       name: req.fields.name,
-      type: req.fields.type,
-      symbol: req.fields.symbol,
       description: req.fields.description,
-      ticker: req.fields.ticker
+      type: req.fields.type,
+      ticker: req.fields.ticker,
+      fraction: req.fields.fraction
     }
 
     if (req.fields.id) {
       commodity.id = req.fields.id,
-      commodity.version = req.fields.version
+        commodity.version = req.fields.version
     }
 
     return commodity

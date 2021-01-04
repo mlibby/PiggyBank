@@ -56,8 +56,7 @@ exports.CommodityRepo = class CommodityRepo {
       commodity.type,
       commodity.description,
       commodity.ticker,
-      commodity.fraction,
-      commodity.locale
+      commodity.fraction
     )
 
     commodity = this.select(result.lastInsertRowid)

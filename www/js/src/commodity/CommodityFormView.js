@@ -17,8 +17,6 @@ const template = (d) => html`
                 <label for='name'>Name</label>
                 <input id='name' class='form-control' type='text' name='name' value='${d.name}' />
               </div>
-            </div>
-            <div class='form-row'>
               <div class='form-group col'>
                 <label for='type'>Type</label>
                 <select id='type' class='form-control'>
@@ -26,12 +24,6 @@ const template = (d) => html`
                   <option value='1'>Currency</option>
                   <option value='2'>Investment</option>
                 </select>
-              </div>
-            </div>
-            <div class='form-row'>
-              <div class='form-group col'>
-                <label for='symbol'>Symbol</label>
-                <input id='symbol' class='form-control' type='text' name='symbol' value='${d.symbol}' />
               </div>
             </div>
             <div class='form-row'>
@@ -44,6 +36,17 @@ const template = (d) => html`
               <div class='form-group col'>
                 <label for='ticker'>Ticker</label>
                 <input id='ticker' class='form-control' type='text' name='ticker' value='${d.ticker}' />
+              </div>
+              <div class='form-group col'>
+                <label for='fraction'>Fraction</label>
+                <select id='fraction' class='form-control'>
+                  <option>[Choose Fraction]</option>
+                  <option value='1'>Whole Values (123)</option>
+                  <option value='10'>1/10 (123.4)</option>
+                  <option value='100'>1/100 (123.45)</option>
+                  <option value='1000'>1/1,000 (123.456)</option>
+                  <option value='10000'>1/10,000 (123.4567)</option>
+                </select>
               </div>
             </div>
           </div>
@@ -84,10 +87,10 @@ export class CommodityFormView extends Backbone.View {
     this.model.set({
       id: this.$("#id").val(),
       name: this.$("#name").val(),
-      type: this.$("#type").val(),
-      symbol: this.$("#symbol").val(),
       description: this.$("#description").val(),
+      type: this.$("#type").val(),
       ticker: this.$("#ticker").val(),
+      fraction: Number(this.$("#fraction").val()),
       version: this.$("#version").val()
     })
 
@@ -102,14 +105,14 @@ export class CommodityFormView extends Backbone.View {
     this.close()
     if (isNew) {
       this.trigger("saved", model)
-    } 
+    }
     else {
       this.trigger("created", model)
     }
   }
 
-  saveError() {
-    alert("error saving commodity")
+  saveError(model, response, opts) {
+    alert("error saving commodity: " + response.responseJSON.message)
   }
 
   cancel(e) {

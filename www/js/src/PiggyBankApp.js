@@ -4,9 +4,14 @@ import { PiggyBankRouter } from "./PiggyBankRouter.js"
 import { AccountCollection } from "./account/AccountCollection.js"
 import { CommodityCollection } from "./commodity/CommodityCollection.js"
 
-window.piggybank = {}
+window.piggybank = {
+  settings: {
+    locale: "en-US",
+    defaultCommodity: "USD"
+  }
+}
 
-$().ready(function () {
+$(function () {
   $(window.document).on("click", "a[href]:not([data-bypass])", function (e) {
     var href = { prop: $(this).prop("href"), attr: $(this).attr("href") }
     var root = window.location.protocol + "//" + window.location.host + "/"

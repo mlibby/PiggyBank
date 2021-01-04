@@ -5,18 +5,18 @@ const mockRouter = helpers.mockRouter()
 const mockRepo = helpers.mockRepo()
 const mockRequest = helpers.mockRequest()
 mockRequest.fields.name = "MOCK"
-mockRequest.fields.type = 1
-mockRequest.fields.symbol = "M"
 mockRequest.fields.description = "Mock Currency"
+mockRequest.fields.type = 1
 mockRequest.fields.ticker = "MOCK"
+mockRequest.fields.fraction = 100
 const mockResponse = helpers.mockResponse()
 
 const mockCommodityOrig = {
   name: mockRequest.fields.name,
-  type: mockRequest.fields.type,
-  symbol: mockRequest.fields.symbol,
   description: mockRequest.fields.description,
-  ticker: mockRequest.fields.ticker
+  type: mockRequest.fields.type,
+  ticker: mockRequest.fields.ticker,
+  fraction: mockRequest.fields.fraction
 }
 const mockCommodityId = 890
 const mockCommodityVersion = "mock version 2"

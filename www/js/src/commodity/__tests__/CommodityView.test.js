@@ -16,7 +16,9 @@ import { CommodityView } from "../CommodityView"
 
 test("CommodityView has render method", () => {
   const model = {
-    get: jest.fn()
+    get: jest.fn(),
+    typeString: jest.fn(),
+    fractionString: jest.fn()
   }
   const view = new CommodityView({ model })
   const renderedView = view.render()

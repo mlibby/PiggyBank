@@ -75,9 +75,9 @@ test("saveError alerts user about error", () => {
   window.alert = mockAlert
 
   view.render()
-  view.saveError()
+  view.saveError({}, { responseJSON: { message: "Yikes!" } }, {})
 
-  expect(mockAlert).toHaveBeenCalledWith("error saving commodity")
+  expect(mockAlert).toHaveBeenCalledWith("error saving commodity: Yikes!")
 })
 
 test("saved(isNew=true) closes view and triggers saved event", () => {
