@@ -84,6 +84,7 @@ const template = (d) => html`
             </div>
           </div>
           <div class='modal-footer'>
+            <p>[TODO: make save process update piggybank.accounts collection before render()]</p>
             <div class='form-group'>
               <button class='save btn btn-success mr-2'><span class='icon-solid-check'></span> Save</button>
               <button class='cancel btn btn-danger'><span class='icon-close'></span> Cancel</button>
@@ -141,7 +142,7 @@ export class AccountFormView extends Backbone.View {
       this.model.children = new AccountCollection()
     }
     this.close()
-    this.trigger("saved")
+    this.trigger("account:saved", model)
   }
 
   cancel(e) {

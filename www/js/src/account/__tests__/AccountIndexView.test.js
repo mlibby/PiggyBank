@@ -41,7 +41,7 @@ test("view.edit rerenders the view when the saved event is triggered", () => {
 
   view.render = jest.fn()
   view.edit(mockAccountAssets)
-  view.form.trigger("saved")
+  view.form.trigger("account:saved")
 
   expect(view.render).toHaveBeenCalled()
 })
@@ -73,7 +73,7 @@ test("view.create renders itself when the saved event is triggered", () => {
 
   view.render = jest.fn()
   view.create(mockAccountAssets)
-  view.form.trigger("saved")
+  view.form.trigger("account:saved")
 
   expect(view.render).toHaveBeenCalled()
 })

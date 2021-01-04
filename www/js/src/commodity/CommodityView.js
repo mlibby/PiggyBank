@@ -19,6 +19,7 @@ const template = (d) => html`
 export class CommodityView extends Backbone.View {
   preinitialize(args) {
     this.tagName = "tr"
+    this.className = "detail"
   }
 
   edit(model, e) {

@@ -35,6 +35,7 @@ export class CommodityIndexView extends Backbone.View {
     commodities.fetch({
       success: (collection, resp, opts) => {
         const $table = this.$el.find("table")
+        $table.find("tr.detail").remove()
         collection.each(model => {
           const modelView = new CommodityView({ model })
           $table.append(modelView.render().$el)

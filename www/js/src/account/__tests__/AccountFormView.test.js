@@ -101,6 +101,6 @@ test("saved() adds child collection, closes view, and triggers saved event", () 
   view.saved()
 
   expect(view.close).toHaveBeenCalled()
-  expect(view.trigger).toHaveBeenCalledWith("saved")
+  expect(view.trigger).toHaveBeenCalledWith("account:saved", undefined)
   expect(view.model.children).toBeInstanceOf(AccountCollection)
 })

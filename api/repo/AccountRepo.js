@@ -34,9 +34,10 @@ exports.AccountRepo = class AccountRepo {
         "type",
         "typeData",
         "version"
-      FROM account`)
+      FROM account
+      WHERE "id" = ?`)
 
-    const result = stmt.get()
+    const result = stmt.get(id)
     return result
   }
 

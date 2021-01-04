@@ -21,6 +21,7 @@ export class AccountListView extends Backbone.View {
   }
 
   render() {
+    this.$el.find(".display").remove()
     for (const model of this.collection) {
       const view = new AccountView({ model })
       this.$el.append(view.render().el)

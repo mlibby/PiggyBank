@@ -57,9 +57,8 @@ export class AccountIndexView extends Backbone.View {
 
   edit(model) {
     this.form = new AccountFormView({ model })
-    this.form.on("saved", (e) => {
-      this.render()
-    })
+    this.listenTo(this.form, "account:saved", this.saved.bind(this))
+
     $("#formContainer").html(this.form.render().el)
     $("#modalForm .modal-title").text("Edit Account")
     $("#modalForm").modal("show")
@@ -71,13 +70,17 @@ export class AccountIndexView extends Backbone.View {
       parentId: parent.get("id"),
       commodityCollection: this.commodityCollection
     })
+
     this.form = new AccountFormView({ model })
-    this.form.on("saved", (e) => {
-      this.render()
-    })
+    this.listenTo(this.form, "account:saved", this.saved)
+
     $("#formContainer").html(this.form.render().el)
     $("#modalForm .modal-title").text("Create Account")
     $("#modalForm").modal("show")
+  }
+
+  saved(model) {
+    this.render()
   }
 
   async delete(model) {

@@ -504,6 +504,11 @@ exports[`AccountFormView has render method 1`] = `
           >
             
             
+            <p>
+              [TODO: make save process update piggybank.accounts collection before render()]
+            </p>
+            
+            
             <div
               class="form-group"
             >
