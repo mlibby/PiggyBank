@@ -1,8 +1,20 @@
+GIT
+  remote: https://github.com/mlibby/ofx.git
+  revision: 03a1f9894d3f857211c8ce40505fac043d70e1ad
+  specs:
+    ofx (0.3.2)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
+    mini_portile2 (2.5.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
+    nokogiri (1.11.1)
+      mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
+    racc (1.5.2)
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
@@ -20,6 +32,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ofx!
   sequel
   sinatra
   sqlite3
