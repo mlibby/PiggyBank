@@ -4,7 +4,7 @@ require "sqlite3"
 
 DB = Sequel.connect("sqlite://piggybank.db")
 
-get "/" do 
+get "/" do
   "Oink! Oink!"
 end
 
