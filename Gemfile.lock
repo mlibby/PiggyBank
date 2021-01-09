@@ -14,6 +14,8 @@ GEM
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
+    nokogiri (1.11.1-x64-mingw32)
+      racc (~> 1.4)
     racc (1.5.2)
     rack (2.2.3)
     rack-protection (2.1.0)
@@ -30,6 +32,7 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
   ofx!
