@@ -7,18 +7,22 @@ GEM
     rack-protection (2.1.0)
       rack
     ruby2_keywords (0.0.2)
+    sequel (5.40.0)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
       rack-protection (= 2.1.0)
       tilt (~> 2.0)
+    sqlite3 (1.4.2)
     tilt (2.0.10)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  sequel
   sinatra
+  sqlite3
 
 BUNDLED WITH
    2.1.4
