@@ -16,6 +16,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.11.1-x64-mingw32)
       racc (~> 1.4)
+    pg (1.2.3)
+    pg (1.2.3-x64-mingw32)
     racc (1.5.2)
     rack (2.2.3)
     rack-protection (2.1.0)
@@ -38,6 +40,7 @@ PLATFORMS
 
 DEPENDENCIES
   ofx!
+  pg
   sequel
   sequel-seed
   sinatra
