@@ -76,6 +76,7 @@ nav section .menu {
   opacity: 0;
   padding: 1rem;
   position: absolute;
+  z-index: -1;
 }
 
 nav section:focus-within .menu,
@@ -84,6 +85,7 @@ nav section .menu:hover {
   visibility: visible;
   opacity: 1;
   display: block;
+  z-index: 1;
 }
 
 nav section .menu a {
