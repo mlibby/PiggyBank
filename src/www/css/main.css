@@ -72,7 +72,7 @@ nav section .menu {
   flex-direction: column;
   transition: all 0.5s ease;
   margin-left: -1rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   opacity: 0;
   padding: 1rem;
   position: absolute;
@@ -89,6 +89,7 @@ nav section .menu:hover {
 nav section .menu a {
   display: block;
   margin-bottom: 0.5rem;
+  line-height: 1.5rem;
 }
 
 nav a.icon {

@@ -23,14 +23,11 @@ get "/" do
   erb :"home/index", layout: :layout
 end
 
-get "/account" do
-  erb :"account/index",
-      layout: :layout,
-      locals: { accounts: pp(DB[:account].all) }
-end
-
-get "/commodity" do
-  erb :"commodity/index",
-      layout: :layout,
-      locals: { commodities: pp(DB[:commodity].all) }
-end
+require_relative("./routes/account")
+require_relative("./routes/budget")
+require_relative("./routes/commodity")
+require_relative("./routes/data")
+require_relative("./routes/price")
+require_relative("./routes/report")
+require_relative("./routes/tool")
+require_relative("./routes/tx")
