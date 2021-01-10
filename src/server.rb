@@ -3,9 +3,11 @@ require "pp"
 require "sinatra"
 require "sequel"
 require "sequel/extensions/seed"
-require "sqlite3"
+#require "sqlite3"
 
-DB = Sequel.connect("sqlite://piggybank.sqlite")
+#DB = Sequel.connect("sqlite://piggybank.sqlite")
+DB = Sequel.connect('postgres://pb_user:piggybank@localhost/piggybank') 
+
 Sequel.extension :migration
 Sequel::Migrator.run(DB, "src/db/migrations")
 
