@@ -5,10 +5,10 @@ Sequel.migration do
       String :description, text: true, null: false
       String :value, text: true, null: false
       String :version, text: true, null: false
-      
+
       index [:description], name: :api_key_uniq, unique: true
     end
-    
+
     create_table(:commodity) do
       primary_key :commodity_id
       Integer :type, null: false
@@ -17,7 +17,7 @@ Sequel.migration do
       String :ticker, text: true
       Integer :fraction, null: false
       String :version, text: true, null: false
-      
+
       index [:type, :name], name: :commodity_uniq, unique: true
     end
 
@@ -28,20 +28,20 @@ Sequel.migration do
       String :description, text: true, null: false
       String :version, text: true, null: false
     end
-    
+
     create_table(:account) do
       primary_key :account_id
       foreign_key :parent_id, :account, key: [:account_id]
-      foreign_key :commodity_id, :commodity, null: false, key: [:id]
+      foreign_key :commodity_id, :commodity, null: false, key: [:commodity_id]
       String :name, text: true, null: false
       TrueClass :is_placeholder, default: false, null: false
       Integer :type, null: false
-      String :typeData, text: true
+      String :type_data, text: true
       String :version, text: true, null: false
-      
+
       index [:name, :parent_id], name: :account_uniq, unique: true
     end
-    
+
     create_table(:price) do
       primary_key :price_id
       foreign_key :currency_id, :commodity, null: false, key: [:commodity_id]
@@ -49,10 +49,10 @@ Sequel.migration do
       String :quote_date, text: true, null: false
       BigDecimal :value, null: false
       String :version, text: true, null: false
-      
+
       index [:currency_id, :commodity_id, :quote_date], name: :price_uniq
     end
-    
+
     create_table(:ofx) do
       primary_key :ofx_id
       TrueClass :active, default: false, null: false
@@ -67,7 +67,7 @@ Sequel.migration do
       String :account_type, text: true, null: false
       String :version, text: true, null: false
     end
-    
+
     create_table(:split) do
       primary_key :split_id
       foreign_key :tx_id, :tx, null: false, key: [:tx_id]
@@ -78,7 +78,7 @@ Sequel.migration do
       BigDecimal :value, null: false
       String :version, text: true, null: false
     end
-    
+
     create_table(:ofx_import) do
       primary_key :ofx_import_id
       foreign_key :ofx_id, :ofx, null: false, key: [:ofx_id]

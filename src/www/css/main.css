@@ -1,0 +1,16 @@
+﻿@font-face {
+    font-family: 'Fira Mono';
+    src: url('fonts/FiraMono-Medium.ttf') format('truetype'), url('fonts/FiraMono-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+body, input, button, select, optgroup, textarea {
+    font-family: "Fira Mono" !important;
+}
+
+nav .icon {
+    font-size: 1.8em;
+    vertical-align: middle;
+    color: #05a172;
+}
