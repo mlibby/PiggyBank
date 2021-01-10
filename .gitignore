@@ -1,4 +1,5 @@
-piggybank.db
+*.db
+*.sqlite
 
 /dist
 /tmp
