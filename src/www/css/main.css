@@ -5,12 +5,79 @@
     font-style: normal;
 }
 
-body, input, button, select, optgroup, textarea {
+body,
+input,
+button,
+select,
+optgroup,
+textarea {
     font-family: "Fira Mono" !important;
 }
 
-nav .icon {
-    font-size: 1.8em;
-    vertical-align: middle;
+body,
+header {
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0.25rem 0 0.5rem 0;
+}
+
+main {
+    margin: 0;
+    padding: 0.5rem;
+}
+
+nav {
+    margin: 0;
+    padding: 0.33rem;
+    background-color: black;
+    display: flex;
+}
+
+nav a {
     color: #05a172;
+    vertical-align: middle;
+}
+
+nav a.label {
+    padding-top: 0.33rem;
+}
+
+nav section {
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition-duration: 0.5s;
+}
+
+nav section .menu {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    transition: all 0.5s ease;
+    margin-top: 1rem;
+    left: 0;
+    display: none;
+}
+
+nav section:focus-within .menu,
+nav section .menu:hover {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+}
+
+nav a.icon {
+    font-size: 1.8em;
+    text-decoration: none;
+}
+
+.sr-only {
+    display: none;
 }

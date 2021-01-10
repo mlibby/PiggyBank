@@ -35,39 +35,56 @@
   <script type='text/javascript' src='/js/lib/backbone-min.js'></script>
   <script type='text/javascript' src='/js/lib/popper.min.js'></script>
   <script type='text/javascript' src='/js/lib/bootstrap.bundle.min.js'></script>
-  <script type='text/javascript' src='/js/lib/imagecapture.min.js'></script>                                             %>
+  <script type='text/javascript' src='/js/lib/imagecapture.min.js'></script>                                                                             %>
   -->
   </head>
   <body>
-    <nav>
-      <a class='navbar-brand' href='/' title='Home'>
-        <span class='icon icon-pig'></span>
-        <span class='sr-only'>Home</span>
-      </a>
-      <ul>
-        <li><ul>
-          <li><a href='/account'>Accounts</a></li>
-          <li><a href='/commodity'>Commodities</a></li>
-          <li><a href='/price'>Prices</a></li>
-        </ul></li>
-        <li><a href='/tx'>Transactions</a></li>
-        <li><ul>
-          <li><a href='/budget'>Budget Planning</a></li>
-          <li><a href='/mortgage'>Mortgage Tools</a></li>
-        </ul></li>
-        <li><a href='/report'>Reports</a></li>
-        <li><ul>
-          <li><a class='dropdown-item' href='/receipt'>Receipts</a></li>
-          <li><a class='dropdown-item' href='/ofx'>OFX Configuration</a></li>
-          <li><a class='dropdown-item' href='/ofxImport'>Import OFX File</a></li>
-          <li><a class='dropdown-item' href='/apiKey'>API Keys</a></li>
-        </ul></li>
-      </ul>
-      <a href='/settings'>
-        <span class='sr-only'>Settings</span>
-        <span class='icon icon-gear'></span>
-      </a>
-    </nav>
+    <header>
+      <nav role="navigation">
+        <section>
+          <a class='icon' href='/' title='Home'>
+            <span class='icon icon-pig'></span>
+            <span class='sr-only'>Home</span>
+          </a>
+        </section>
+        <section>
+          <a href="#" class='label'>Acccounts</a>
+          <div class='menu'>
+            <a href='/account'>Accounts</a>
+            <a href='/commodity'>Commodities</a>
+            <a href='/price'>Prices</a>
+          </div>
+        </section>
+        <section>
+          <a href='/tx' class='label'>Transactions</a>
+        </section>
+        <section>
+          <a href='#' class='label'>Planning</a>
+          <div class='menu'>
+            <a href='/budget'>Budget Planning</a>
+            <a href='/mortgage'>Mortgage Tools</a>
+          </div>
+        </section>
+        <section>
+          <a href='/report' class='label'>Reports</a>
+        </section>
+        <section>
+          <a href='#' class='label'>Data</a>
+          <div class='menu'>
+            <a href='/receipt'>Receipts</a>
+            <a href='/ofx'>OFX Configuration</a>
+            <a href='/import'>Import Data</a>
+            <a href='/apikey'>API Keys</a>
+          </div>
+        </section>
+        <section>
+          <a class='icon' href='/settings'>
+            <span class='sr-only'>Settings</span>
+            <span class='icon icon-gear'></span>
+          </a>
+        </section>
+      </nav>
+    </header>
     <main role="main">
       <%= yield %>
     </main>
