@@ -9,7 +9,7 @@ gem "sequel"
 gem "sequel-seed"
 gem "sinatra"
 
-group :development, :test, :production do
+group :dev, :test, :prod do
   gem "sqlite3"
 end
 
