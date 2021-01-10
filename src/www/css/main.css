@@ -1,101 +1,88 @@
 ﻿@font-face {
-    font-family: 'Fira Mono';
-    src: url('fonts/FiraMono-Medium.ttf') format('truetype'), url('fonts/FiraMono-Medium.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
+  font-family: 'Fira Mono';
+  src: url('fonts/FiraMono-Medium.ttf') format('truetype'), url('fonts/FiraMono-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
 }
 
-body,
-input,
-button,
-select,
-optgroup,
-textarea {
-    font-family: "Fira Mono" !important;
+body, input, button, select, optgroup, textarea {
+  font-family: "Fira Mono" !important;
 }
 
-body,
-header {
-    margin: 0;
+body, header {
+  margin: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin: 0.25rem 0 0.5rem 0;
+h1, h2, h3, h4, h5, h6 {
+  margin: 0.25rem 0 0.5rem 0;
 }
 
 main {
-    margin: 0;
-    padding: 0.5rem;
+  margin: 0;
+  padding: 0.5rem;
 }
 
 nav {
-    margin: 0;
-    padding: 0.33rem;
-    background-color: black;
-    display: flex;
+  line-height: 0.75rem;
+  margin: 0;
+  padding: 0.33rem;
+  background-color: black;
+  display: flex;
 }
 
-nav a,
-nav .label {
-    color: #05a172;
-    text-decoration: none;
-    vertical-align: middle;
+nav a, nav .label {
+  color: #05a172;
+  text-decoration: none;
+  vertical-align: middle;
 }
 
 nav .label {
-    padding-top: 0.5rem;
+  padding-top: 0.5rem;
 }
 
 nav .label:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 nav section {
-    padding-right: 1rem;
-    display: flex;
-    flex-direction: column;
-    transition-duration: 0.5s;
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition-duration: 0.5s;
 }
 
 nav section:last-child {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 nav section .menu {
-    background-color: black;
-    flex-direction: column;
-    /*visibility: hidden;*/
-    transition: all 0.5s ease;
-    margin-left: -1rem;
-    margin-top: 2rem;
-    opacity: 0;
-    padding: 1rem;
-    /*display: none;*/
-    position: absolute;
+  background-color: black;
+  flex-direction: column;
+  /*visibility: hidden;*/
+  transition: all 0.5s ease;
+  margin-left: -1rem;
+  margin-top: 2rem;
+  opacity: 0;
+  padding: 1rem;
+  /*display: none;*/
+  position: absolute;
 }
 
-nav section:focus-within .menu,
-nav section:hover .menu,
-nav section .menu:hover {
-    visibility: visible;
-    opacity: 1;
-    display: block;
+nav section:focus-within .menu, nav section:hover .menu, nav section .menu:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
 }
 
 nav section .menu a {
-    display: block;
-    margin-bottom: 0.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
 nav a.icon {
-    font-size: 1.8em;
+  font-size: 1.8em;
 }
 
 .sr-only {
-    display: none;
+  display: none;
 }
