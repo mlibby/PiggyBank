@@ -40,13 +40,19 @@ nav {
     display: flex;
 }
 
-nav a {
+nav a,
+nav .label {
     color: #05a172;
+    text-decoration: none;
     vertical-align: middle;
 }
 
-nav a.label {
-    padding-top: 0.33rem;
+nav .label {
+    padding-top: 0.5rem;
+}
+
+nav .label:hover {
+    cursor: pointer;
 }
 
 nav section {
@@ -56,26 +62,38 @@ nav section {
     transition-duration: 0.5s;
 }
 
+nav section:last-child {
+    margin-left: auto;
+}
+
 nav section .menu {
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
+    background-color: black;
+    flex-direction: column;
+    /*visibility: hidden;*/
     transition: all 0.5s ease;
-    margin-top: 1rem;
-    left: 0;
-    display: none;
+    margin-left: -1rem;
+    margin-top: 2rem;
+    opacity: 0;
+    padding: 1rem;
+    /*display: none;*/
+    position: absolute;
 }
 
 nav section:focus-within .menu,
+nav section:hover .menu,
 nav section .menu:hover {
     visibility: visible;
     opacity: 1;
     display: block;
 }
 
+nav section .menu a {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
 nav a.icon {
     font-size: 1.8em;
-    text-decoration: none;
 }
 
 .sr-only {
