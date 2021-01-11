@@ -15,13 +15,4 @@ class HelloWorldTest < Minitest::Test
     Sinatra::Application
   end
 
-  def test_oink
-    get '/'
-    assert last_response.body.include?('Oink!')
-  end
-
-  def test_accounts
-    get '/accounts'
-    assert last_response.body.include?("Accounts")
-  end
 end
