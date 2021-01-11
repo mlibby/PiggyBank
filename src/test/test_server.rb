@@ -1,6 +1,6 @@
 ENV['APP_ENV'] = 'test'
 
-require 'minitest'
+require 'test/unit'
 require 'rack/test'
 require_relative "../server"
 
@@ -18,6 +18,6 @@ class HelloWorldTest < Test::Unit::TestCase
 
   def test_accounts
     get '/accounts'
-    assert last_response.body.include?("aAccounts")
+    assert last_response.body.include?("Accounts")
   end
 end

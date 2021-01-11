@@ -1,5 +1,5 @@
 get "/accounts" do
   erb :"account/index",
       layout: :layout,
-      locals: { accounts: pp(DB[:account].all) }
+      locals: { accounts: DB[:account].all.to_s }
 end

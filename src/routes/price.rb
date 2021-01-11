@@ -1,5 +1,5 @@
 get "/prices" do
   erb :"price/index",
       layout: :layout,
-      locals: { prices: pp(DB[:price].all) }
+      locals: { prices: DB[:price].all.to_s }
 end
