@@ -24,4 +24,5 @@ group :test do
   gem "guard"
   gem "guard-minitest"
   gem "rack-test"
+  gem "simplecov"
 end
