@@ -1,2 +1,2 @@
-require "./src/server.rb"
-run Sinatra::Application
+require_relative "src/piggybank.rb"
+run PiggyBank

@@ -1,8 +1,7 @@
-require 'rake/testtask'
+require "rspec/core/rake_task"
 
-task default: :test
+task default: :spec
 
-Rake::TestTask.new do |t|
-  t.libs << "src/test"
-  t.test_files = FileList["src/test/**/test_*.rb"]
+RSpec::Core::RakeTask.new(:spec) do |s|
+  s.pattern = "src/spec/**/*_spec.rb"
 end

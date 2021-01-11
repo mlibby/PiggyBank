@@ -1,0 +1,7 @@
+{
+  "rubyTestExplorer.filePattern": [
+    "*_spec.rb"
+  ],
+  "rubyTestExplorer.testFramework": "rspec",
+  "rubyTestExplorer.rspecDirectory": "./src/spec/"
+}
