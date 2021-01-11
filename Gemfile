@@ -17,3 +17,11 @@ end
 group :demo do
   gem "pg"
 end
+
+group :test do
+  gem "rake"
+  gem "minitest"
+  gem "guard"
+  gem "guard-minitest"
+  gem "rack-test"
+end
