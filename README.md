@@ -1,4 +1,4 @@
-![tests](https://github.com/mlibby/PiggyBank/workflows/Ruby/badge.svg)
+![rake tests](https://github.com/mlibby/PiggyBank/workflows/Ruby/badge.svg)
 
 ![license: GPL-3.0](https://img.shields.io/github/license/mlibby/PiggyBank)
 
