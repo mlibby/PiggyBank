@@ -20,9 +20,7 @@ end
 
 group :test do
   gem "rake"
-  gem "minitest"
-  gem "guard"
-  gem "guard-minitest"
+  gem "rspec"
   gem "rack-test"
   gem "simplecov"
 end
