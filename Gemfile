@@ -8,6 +8,7 @@ gem "ofx", git: "https://github.com/mlibby/ofx.git"
 gem "sequel"
 gem "sequel-seed"
 gem "sinatra"
+gem "thin"
 
 group :dev, :test, :prod do
   gem "sqlite3"
