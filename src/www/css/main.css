@@ -36,9 +36,9 @@ main {
 nav {
   line-height: 0.75rem;
   margin: 0;
-  padding: 0.33rem;
+  font-size: 1.25rem;
+  padding: 1rem;
   background-color: black;
-  display: flex;
 }
 
 nav a,
@@ -48,8 +48,13 @@ nav .label {
   vertical-align: middle;
 }
 
+nav a:hover,
+nav .label:hover {
+  color: white;
+}
+
 nav .label {
-  padding-top: 0.5rem;
+  padding-top: 0.75rem;
 }
 
 nav .label:hover {
@@ -58,7 +63,7 @@ nav .label:hover {
 
 nav section {
   padding-right: 1rem;
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   transition-duration: 0.5s;
 }
@@ -72,7 +77,7 @@ nav section .menu {
   flex-direction: column;
   transition: all 0.5s ease;
   margin-left: -1rem;
-  margin-top: 1.5rem;
+  margin-top: 1.33rem;
   opacity: 0;
   padding: 1rem;
   position: absolute;
