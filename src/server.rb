@@ -11,11 +11,11 @@ else
 end
 
 Sequel.extension :migration
-Sequel::Migrator.run(DB, "src/db/migrations")
+Sequel::Migrator.run(DB, __dir__ + "/db/migrations")
 
 require_relative "./db/piggybank.rb"
 Sequel.extension :seed
-Sequel::Seeder.apply(DB, "src/db/seeds")
+Sequel::Seeder.apply(DB, __dir__ + "/db/seeds")
 
 set :public_folder, __dir__ + "/www"
 
