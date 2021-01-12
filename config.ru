@@ -1,2 +1,2 @@
-require_relative "src/piggybank.rb"
-run PiggyBank
+require_relative "src/piggybank_app.rb"
+run PiggyBank::App

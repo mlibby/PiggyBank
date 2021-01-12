@@ -1,23 +1,13 @@
-#require "date"
 require "sinatra/base"
-#require "sequel"
-#require "sequel/extensions/seed"
+require_relative "repo/piggybank_repo.rb"
 
 module PiggyBank
   class App < Sinatra::Base
-    # if (ENV["DEMO"])
-    #   DB = Sequel.connect(ENV["DATABASE_URL"])
-    # else
-    #   DB = Sequel.connect("sqlite://piggybank.sqlite")
-    # end
+    db_connection = ENV["DEMO"] ?
+      ENV["DATABASE_URL"] :
+      "sqlite://piggybank.sqlite"
 
-    # Sequel.extension :migration
-    # Sequel::Migrator.run(DB, __dir__ + "/db/migrations")
-
-    # require_relative "./db/piggybank.rb"
-    # Sequel.extension :seed
-    # Sequel::Seeder.apply(DB, __dir__ + "/db/seeds")
-
+    @repo = PiggyBank::Repo.new(db_connection)
     set :public_folder, __dir__ + "/www"
 
     require_relative("./controllers/account")

@@ -1,5 +1,9 @@
-module Piggy
-  class Commodity < Sequel::Model(:commodity)
+require_relative "model.rb"
+
+module PiggyBank
+  class Commodity < Model
+    @@table = :commodity
+
     CURRENCY = 1
     INVESTMENT = 2
 
@@ -9,5 +13,9 @@ module Piggy
     # String :ticker, text: true
     # Integer :fraction, null: false
     # String :version, text: true, null: false
+    def create(attributes)
+      @attributes = attributes
+      @db[@@table].insert attributes
+    end
   end
 end

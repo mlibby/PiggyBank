@@ -5,4 +5,4 @@ end
 
 require "rspec"
 require "rack/test"
-require_relative "../piggybank.rb"
+require_relative "../piggybank_app.rb"
