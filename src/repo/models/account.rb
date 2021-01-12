@@ -1,9 +1,5 @@
-require_relative "model.rb"
-
 module PiggyBank
-  class Account < Model
-    @@table = :account
-
+  class Account < Sequel::Model(:account)
     TYPE_ASSET = 1
     TYPE_LIABILITY = 2
     TYPE_EQUITY = 3
@@ -20,9 +16,5 @@ module PiggyBank
     # Integer :type, null: false
     # String :typeData, text: true
     # String :version, text: true, null: false
-    def create(attributes)
-      @attributes = attributes
-      @db[@@table].insert attributes
-    end
   end
 end

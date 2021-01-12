@@ -8,10 +8,8 @@
       "name": "Debug PiggyBank",
       "type": "Ruby",
       "request": "launch",
+      "env": {"APP_ENV": "DEV"},
       "cwd": "${workspaceRoot}",
-      //"useBundler": true,
-      //"pathToBundler": "/usr/bin/bundle",
-      //"pathToRDebugIDE": "/usr/local/bin/rdebug-ide",
       "program": "/usr/local/bin/rackup",
       "args": [
         "-p",
