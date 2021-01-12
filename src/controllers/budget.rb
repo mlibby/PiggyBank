@@ -1,6 +1,8 @@
-class PiggyBank < Sinatra::Base
-  get "/budget" do
-    erb :"budget/index",
-        layout: :layout
+module PiggyBank
+  class App < Sinatra::Base
+    get "/budget" do
+      erb :"budget/index",
+          layout: :layout
+    end
   end
 end

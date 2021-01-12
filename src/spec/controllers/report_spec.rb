@@ -1,9 +1,9 @@
 require_relative "../spec_helper.rb"
 
-describe PiggyBank do
+describe PiggyBank::App do
   include Rack::Test::Methods
 
-  let(:app) { PiggyBank.new }
+  let(:app) { PiggyBank::App.new }
 
   context "get /report" do
     let(:response) { get "/report" }
