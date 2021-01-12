@@ -14,9 +14,14 @@ module PiggyBank
 
       require_relative "./models/account.rb"
       require_relative "./models/commodity.rb"
+      require_relative "./models/setting.rb"
 
-      Sequel.extension :seed
-      Sequel::Seeder.apply @db, "#{__dir__}/seeds"
+      if ENV["APP_ENV"] != "TEST"
+        # :nocov:
+        Sequel.extension :seed
+        Sequel::Seeder.apply @db, "#{__dir__}/seeds"
+        # :nocov:
+      end
     end
 
     def Repo.timestamp

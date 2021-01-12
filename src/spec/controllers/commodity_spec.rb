@@ -1,5 +1,4 @@
 require_relative "../spec_helper.rb"
-require_relative "../../controllers/home.rb"
 
 describe PiggyBank::App do
   include Rack::Test::Methods
