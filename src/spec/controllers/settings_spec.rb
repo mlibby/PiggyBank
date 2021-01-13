@@ -10,5 +10,8 @@ describe PiggyBank::App do
 
     it { expect(response.status).to eq 200 }
     it { expect(response.body).to include "Settings" }
+    it { expect(response.body).to include "Base Currency" }
+    it { expect(response.body).to include "Locale" }
+    it { expect(response.body).to include "Save" }
   end
 end

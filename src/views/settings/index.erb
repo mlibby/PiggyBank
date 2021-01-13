@@ -1,4 +1,22 @@
 <h1>Settings</h1>
 <p>
-  Coming soon!
+  There are no user manageable settings at this point. The following settings are informational only.
 </p>
+<form>
+  <label>Base Currency
+    <select name='currency'>
+      <% currency_options.each do |opt| %>
+        <option value='<%= opt[:value] %>' <%= opt[:selected] ? 'selected' : '' %>><%= opt[:name] %></option>
+      <% end %>
+    </select>
+  </label>
+  <label>Locale
+    <select name='locale'>
+      <% locale_options.each do |opt| %>
+        <option value='<%= opt[:value] %>' <%= opt[:selected] ? 'selected' : '' %>><%= opt[:name] %></option>
+      <% end %>
+    </select>
+  </label>
+  <input type='submit' value='Save' />
+</form>
+%>
