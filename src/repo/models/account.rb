@@ -1,12 +1,13 @@
 module PiggyBank
   class Account < Sequel::Model(:account)
-    TYPE_ASSET = 1
-    TYPE_LIABILITY = 2
-    TYPE_EQUITY = 3
-    TYPE_INCOME = 4
-    TYPE_EXPENSE = 5
-
-    TYPE_MORTGAGE = 6
+    TYPE_CODE = {
+      "Asset" => 1,
+      "Liability" => 2,
+      "Equity" => 3,
+      "Income" => 4,
+      "Expense" => 5,
+      "Mortgage" => 6
+    }
 
     # primary_key :account_id
     # foreign_key :parent_id, :account, key: [:account_id]
