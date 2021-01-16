@@ -22,6 +22,7 @@ group :test do
   gem "rake"
   gem "rspec"
   gem "rspec-mocks"
+  gem "rspec-html-matchers"
   gem "rack-test"
   gem "simplecov"
 end

@@ -2,9 +2,9 @@ module PiggyBank
   class Commodity < Sequel::Model(:commodity)
     plugin :validation_helpers
 
-    TYPE_CODE = {
-      "Currency" => 1,
-      "Investment" => 2,
+    COMMODITY_TYPE = {
+      currency: 1,
+      investment: 2,
     }
 
     def before_create
@@ -32,7 +32,7 @@ module PiggyBank
     end
 
     def type_string
-      TYPE_CODE.key(self.type)
+      COMMODITY_TYPE.key(self.type).to_s.capitalize
     end
   end
 end

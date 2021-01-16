@@ -39,6 +39,9 @@ GEM
     rspec-expectations (3.10.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
+    rspec-html-matchers (0.9.4)
+      nokogiri (~> 1)
+      rspec (>= 3.0.0.a, < 4)
     rspec-mocks (3.10.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
@@ -75,6 +78,7 @@ DEPENDENCIES
   rack-test
   rake
   rspec
+  rspec-html-matchers
   rspec-mocks
   sequel
   sequel-seed

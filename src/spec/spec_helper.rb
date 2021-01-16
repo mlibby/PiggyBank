@@ -4,7 +4,12 @@ SimpleCov.start do
 end
 
 require "rspec"
+require "rspec-html-matchers"
 require "rack/test"
+
+RSpec.configure do |config|
+  config.include RSpecHtmlMatchers
+end
 
 ENV["APP_ENV"] = "TEST"
 require_relative "../piggybank_app.rb"
