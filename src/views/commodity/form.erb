@@ -1,5 +1,6 @@
 <h2><%= header %></h2>
 <form method='POST'>
+  <input id='_token' type='hidden' name='_token' value='<%= PiggyBank::App.token %>' />
   <label>
     Type
     <select name='type'>
@@ -11,7 +12,6 @@
       <% end %>
     </select>
   </label>
-  <input id='_token' type='hidden' name='_token' value='' />
   <label>
     Name
     <input required type='text' name='name' value='<%= commodity.name %>' />

@@ -25,6 +25,11 @@ module PiggyBank
     require_relative "./controllers/tool"
     require_relative "./controllers/tx"
 
+    @@token = PiggyBank::Repo.timestamp
+    def self.token
+      @@token
+    end
+    
     run! if app_file == $0
   end
 end
