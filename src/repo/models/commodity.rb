@@ -2,6 +2,13 @@ module PiggyBank
   class Commodity < Sequel::Model(:commodity)
     plugin :validation_helpers
 
+    # Integer :type, null: false
+    # String :name, text: true, null: false
+    # String :description, text: true, null: false
+    # String :ticker, text: true
+    # Integer :fraction, null: false
+    # String :version, text: true, null: false
+
     COMMODITY_TYPE = {
       currency: 1,
       investment: 2,
@@ -16,13 +23,6 @@ module PiggyBank
       raise Sequel::ValidationFailed unless existing
     end
 
-    # Integer :type, null: false
-    # String :name, text: true, null: false
-    # String :description, text: true, null: false
-    # String :ticker, text: true
-    # Integer :fraction, null: false
-    # String :version, text: true, null: false
-
     def validate
       super
       validates_presence :type
@@ -33,6 +33,30 @@ module PiggyBank
 
     def type_string
       COMMODITY_TYPE.key(self.type).to_s.capitalize
+    end
+
+    def fraction_opts
+      opts = [
+        { value: 1, text: "Whole Values (123)" },
+        { value: 10, text: "1/10 (123.1)" },
+        { value: 100, text: "1/100 (123.12)" },
+        { value: 1000, text: "1/1,000 (123.123)" },
+        { value: 10000, text: "1/10,000 (123.1234)" },
+        { value: 100000, text: "1/100,000 (123.12345)" },
+        { value: 1000000, text: "1/1,000,000 (123.123456)" },
+      ]
+
+      opts.each do |opt|
+        opt[:selected] = opt[:value] == self.fraction
+      end
+
+      opts
+    end
+
+    def type_opts
+      opts = COMMODITY_TYPE.map do |key, value|
+        { value: value, text: key.capitalize, selected: value == self.type }
+      end
     end
   end
 end

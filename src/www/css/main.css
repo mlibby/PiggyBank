@@ -13,6 +13,7 @@
   font-style: normal;
 }
 
+a,
 body,
 input,
 button,
@@ -20,6 +21,8 @@ select,
 optgroup,
 textarea {
   font-family: "Fira Mono" !important;
+  font-size: 1rem;
+  font-weight: normal;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -58,6 +61,10 @@ header {
   color: var(--bg-color);
   background-color: var(--secondary-color);
   border-color: var(--secondary-color);
+}
+
+button {
+  cursor: pointer;
 }
 
 form {
