@@ -13,8 +13,9 @@
   font-style: normal;
 }
 
-body {
-  min-width: 640px;
+body,
+nav {
+  min-width: 310px;
 }
 
 a,
