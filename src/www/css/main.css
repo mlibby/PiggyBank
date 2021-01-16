@@ -172,7 +172,6 @@ main {
 nav {
   line-height: 0.75rem;
   margin: 0;
-  font-size: 1.25rem;
   padding: 1rem;
   background-color: var(--nav-bg);
 }
@@ -180,6 +179,7 @@ nav {
 nav a,
 nav .label {
   color: var(--primary-color);
+  font-size: 1.25rem;
   text-decoration: none;
   vertical-align: middle;
 }
