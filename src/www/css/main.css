@@ -1,4 +1,11 @@
-﻿@font-face {
+﻿:root {
+  --primary-color: #05a172;
+  --danger-color: red;
+  --nav-bg: black;
+  --bg-color: white;
+}
+
+@font-face {
   font-family: 'Fira Mono';
   src: url('fonts/FiraMono-Medium.ttf') format('truetype'), url('fonts/FiraMono-Medium.woff') format('woff');
   font-weight: 500;
@@ -25,20 +32,22 @@ header {
   vertical-align: middle;
   text-decoration: none;
   padding: 0.33rem 0.66rem;
-  border: 2px solid grey;
+  border: 2px solid var(--primary-color);
   border-radius: 0.5rem;
-  background-color: white;
+  background-color: var(--bg-color);
   margin: 0 0.5rem;
 }
 
 .btn.delete {
-  color: red;
-  border-color: red;
+  color: var(--bg-color);
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
 }
 
 .btn.edit {
-  color: green;
-  border-color: green;
+  color: var(--bg-color);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 h1,
@@ -60,19 +69,19 @@ nav {
   margin: 0;
   font-size: 1.25rem;
   padding: 1rem;
-  background-color: black;
+  background-color: var(--nav-bg);
 }
 
 nav a,
 nav .label {
-  color: #05a172;
+  color: var(--primary-color);
   text-decoration: none;
   vertical-align: middle;
 }
 
 nav a:hover,
 nav .label:hover {
-  color: white;
+  color: var(--bg-color);
 }
 
 nav .label {
@@ -95,7 +104,7 @@ nav section:last-child {
 }
 
 nav section .menu {
-  background-color: black;
+  background-color: var(--nav-bg);
   flex-direction: column;
   transition: all 0.5s ease;
   margin-left: -1rem;
@@ -132,15 +141,13 @@ nav a.icon {
 table {
   border-collapse: collapse;
   margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 thead tr {
-  background-color: #009879;
-  color: #ffffff;
+  background-color: var(--primary-color);
+  color: var(--bg-color);
   text-align: left;
 }
 
@@ -158,5 +165,5 @@ tbody tr:nth-of-type(even) {
 }
 
 tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+  border-bottom: 2px solid nav(--primary-color);
 }
