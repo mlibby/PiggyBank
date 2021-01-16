@@ -1,5 +1,6 @@
 ﻿:root {
   --primary-color: #05a172;
+  --secondary-color: #666666;
   --danger-color: red;
   --nav-bg: black;
   --bg-color: white;
@@ -19,6 +20,9 @@ select,
 optgroup,
 textarea {
   font-family: "Fira Mono" !important;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 body,
@@ -35,19 +39,113 @@ header {
   border: 2px solid var(--primary-color);
   border-radius: 0.5rem;
   background-color: var(--bg-color);
-  margin: 0 0.5rem;
+  margin: 0 0.66rem 0 0;
 }
 
-.btn.delete {
+.btn.danger {
   color: var(--bg-color);
   background-color: var(--danger-color);
   border-color: var(--danger-color);
 }
 
-.btn.edit {
+.btn.primary {
   color: var(--bg-color);
   background-color: var(--primary-color);
   border-color: var(--primary-color);
+}
+
+.btn.secondary {
+  color: var(--bg-color);
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+form {
+  padding: 1rem 0 1rem;
+}
+
+form label {
+  margin: 0 0 3px 0;
+  padding: 0px;
+  display: block;
+  font-weight: bold;
+}
+
+form input[type=text],
+form input[type=date],
+form input[type=datetime],
+form input[type=number],
+form input[type=search],
+form input[type=time],
+form input[type=url],
+form input[type=email],
+form textarea,
+form select {
+  display: block;
+  border: 1px solid #BEBEBE;
+  padding: 7px;
+  margin: 0.5rem 0 1rem;
+  outline: none;
+  max-width: 35rem;
+  width: 100%;
+}
+
+form input[type=text]:focus,
+form input[type=date]:focus,
+form input[type=datetime]:focus,
+form input[type=number]:focus,
+form input[type=search]:focus,
+form input[type=time]:focus,
+form input[type=url]:focus,
+form input[type=email]:focus,
+form textarea:focus,
+form select:focus {
+  -moz-box-shadow: 0 0 8px #88D5E9;
+  -webkit-box-shadow: 0 0 8px #88D5E9;
+  box-shadow: 0 0 8px #88D5E9;
+  border: 1px solid #88D5E9;
+}
+
+form input[type=text]:focus,
+form input[type=date]:focus,
+form input[type=datetime]:focus,
+form input[type=number]:focus,
+form input[type=search]:focus,
+form input[type=time]:focus,
+form input[type=url]:focus,
+form input[type=email]:focus,
+form textarea:focus,
+form select:focus {
+  -moz-box-shadow: 0 0 8px #88D5E9;
+  -webkit-box-shadow: 0 0 8px #88D5E9;
+  box-shadow: 0 0 8px #88D5E9;
+  border: 1px solid #88D5E9;
+}
+
+
+/* form input:invalid {
+  box-shadow: 0 0 5px 1px red;
+} */
+
+
+/* input[type=submit],
+input[type=button] {
+  background: #4B99AD;
+  padding: 8px 15px 8px 15px;
+  border: none;
+  color: #fff;
+} */
+
+input[type=submit]:hover,
+input[type=button]:hover {
+  background: #4691A4;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.required {
+  color: red;
 }
 
 h1,

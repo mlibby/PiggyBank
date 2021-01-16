@@ -11,4 +11,11 @@ describe PiggyBank::App do
     it { expect(response.status).to eq 200 }
     it { expect(response.body).to include "Commodities" }
   end
+
+  context "get /commodity/new" do
+    let(:response) { get "/commodity/new" }
+    it { expect(response.status).to eq 200 }
+    it { expect(response.body).to include "New Commodity" }
+    it { expect(response.body).to include "<form method='POST'>" }
+  end
 end

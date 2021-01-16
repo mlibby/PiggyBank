@@ -1,47 +1,37 @@
-<h3 class='modal-title'>Commodity</h3>
-<form class='commodity-editor form'>
-  <input id='commodityId' type='hidden' name='id' value='${d.id}' />
-  <div class='form-row'>
-    <div class='form-group col'>
-      <label for='name'>Name</label>
-      <input id='name' class='form-control' type='text' name='name' value='${d.name}' />
-    </div>
-    <div class='form-group col'>
-      <label for='type'>Type</label>
-      <select id='type' class='form-control'>
-        <option value=''>[Choose Commodity Type]</option>
-        <option value='1'>Currency</option>
-        <option value='2'>Investment</option>
-      </select>
-    </div>
-  </div>
-  <div class='form-row'>
-    <div class='form-group col'>
-      <label for='description'>Description</label>
-      <input id='description' class='form-control' type='text' name='description' value='${d.description}' />
-    </div>
-  </div>
-  <div class='form-row'>
-    <div class='form-group col'>
-      <label for='ticker'>Ticker</label>
-      <input id='ticker' class='form-control' type='text' name='ticker' value='${d.ticker}' />
-    </div>
-    <div class='form-group col'>
-      <label for='fraction'>Fraction</label>
-      <select id='fraction' class='form-control'>
-        <option>[Choose Fraction]</option>
-        <option value='1'>Whole Values (123)</option>
-        <option value='10'>1/10 (123.4)</option>
-        <option value='100'>1/100 (123.45)</option>
-        <option value='1000'>1/1,000 (123.456)</option>
-        <option value='10000'>1/10,000 (123.4567)</option>
-      </select>
-    </div>
-  </div>
-  <div class='form-row'>
-    <div class='form-group'>
-      <button class='save btn btn-success ml-2'><span class='icon-solid-check'></span> Save</button>
-      <button class='cancel btn btn-danger ml-2'><span class='icon-close'></span> Cancel</button>
-    </div>
-  </div>
+<h2><%= header %></h2>
+<form method='POST'>
+  <label>
+    Type
+    <select name='type'>
+      <option value=''>[Choose Commodity Type]</option>
+      <option value='1'>Currency</option>
+      <option value='2'>Investment</option>
+    </select>
+  </label>
+  <input id='_token' type='hidden' name='_token' value='' />
+  <label>
+    Name
+    <input required type='text' name='name' value='<%= commodity.name %>' />
+  </label>
+  <label>
+    Description
+    <input required type='text'  name='description' value='<%= commodity.description %>' />
+  </label>
+  <label>
+    Тicker
+    <input type='text' name='ticker' value='<%= commodity.ticker %>' />
+  </label>
+  <label >
+    Fraction
+    <select name='fraction'>
+      <option>[Choose Fraction]</option>
+      <option value='1'>Whole Values (123)</option>
+      <option value='10'>1/10 (123.4)</option>
+      <option value='100'>1/100 (123.45)</option>
+      <option value='1000'>1/1,000 (123.456)</option>
+      <option value='10000'>1/10,000 (123.4567)</option>
+    </select>
+  </label>
+  <button class='btn primary'><span class='icon-solid-check'></span> Save</button>
+  <button class='btn secondary'><span class='icon-close'></span> Cancel</button>
 </form>
