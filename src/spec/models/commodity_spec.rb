@@ -7,7 +7,7 @@ describe PiggyBank::Commodity do
     before(:example) do
       PiggyBank::Commodity.truncate
     end
-    
+
     let(:instance) { PiggyBank::Commodity.new }
 
     it "is invalid at first" do
@@ -29,6 +29,11 @@ describe PiggyBank::Commodity do
       instance.type = 1
       instance.save
       expect(instance.version).to match(/\d{4}\-\d\d-\d\dT\d\d:\d\d:\d\d\+00:00/)
+    end
+
+    it "has a type_string attribute" do
+      instance.type = 1
+      expect(instance.type_string).to eq("Currency")
     end
   end
 
