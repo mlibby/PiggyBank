@@ -30,5 +30,9 @@ module PiggyBank
       validates_presence :description
       validates_presence :fraction
     end
+
+    def type_string
+      TYPE_CODE.key(self.type)
+    end
   end
 end

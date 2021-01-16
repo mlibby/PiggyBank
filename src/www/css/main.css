@@ -19,6 +19,28 @@ header {
   margin: 0;
 }
 
+.btn {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  padding: 0.33rem 0.66rem;
+  border: 2px solid grey;
+  border-radius: 0.5rem;
+  background-color: white;
+  margin: 0 0.5rem;
+}
+
+.btn.delete {
+  color: red;
+  border-color: red;
+}
+
+.btn.edit {
+  color: green;
+  border-color: green;
+}
+
 h1,
 h2,
 h3,
@@ -105,4 +127,36 @@ nav a.icon {
 
 .sr-only {
   display: none;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 12px 15px;
+}
+
+tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
 }

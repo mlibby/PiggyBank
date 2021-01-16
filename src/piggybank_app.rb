@@ -10,7 +10,7 @@ module PiggyBank
       "DEMO" => ENV["DATABASE_URL"],
     }
 
-    @repo = PiggyBank::Repo.new db_connections[ENV["APP_ENV"] || "DEV"]
+    @@repo = PiggyBank::Repo.new db_connections[ENV["APP_ENV"] || "DEV"]
 
     set :public_folder, "#{__dir__}/www"
 
