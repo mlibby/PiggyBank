@@ -24,5 +24,14 @@ module PiggyBank
             commodity: commodity
           }
     end
+
+    get "/commodity/delete/:commodity_id" do
+      commodity = PiggyBank::Commodity.where(commodity_id: params["commodity_id"]).single_record
+      erb :"commodity/delete",
+          layout: :layout ,
+          locals: {
+            commodity: commodity
+          }
+    end
   end
 end

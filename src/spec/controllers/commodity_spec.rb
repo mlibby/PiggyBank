@@ -39,8 +39,23 @@ describe PiggyBank::App do
     it "has an edit form" do
       expect(response.body).to have_tag("form", with: { method: "POST" }) do
         with_tag "input", with: { name: "_token", type: "hidden" }
-        with_tag "option", seen: "1/100 (123.12)", with: { value: "100", selected: "selected"}
+        with_tag "option", seen: "1/100 (123.12)", with: { value: "100", selected: "selected" }
         with_tag "option", seen: "Currency", with: { value: "1", selected: "selected" }
+      end
+    end
+  end
+
+  context "GET /commodity/delete/#" do
+    let(:response) {
+      cid = PiggyBank::Commodity.where(name: "USD").single_record.commodity_id
+      get "/commodity/delete/#{cid}"
+    }
+
+    it "has a delete confirmation form" do
+      expect(response.body).to include "Delete Commodity?"
+      expect(response.status).to eq 200
+      expect(response.body).to have_tag("form", with: { method: "POST" }) do
+        with_tag "input", with: { name: "_token", type: "hidden" }
       end
     end
   end

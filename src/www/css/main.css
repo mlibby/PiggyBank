@@ -72,6 +72,23 @@ button {
   cursor: pointer;
 }
 
+.buttons {
+  margin-top: 2rem;
+}
+
+dd {
+  margin: 0 0 1rem 0;
+}
+
+dl {
+  margin: 0;
+}
+
+dt {
+  margin: 0;
+  font-weight: bold;
+}
+
 form {
   padding: 1rem 0 1rem;
 }
