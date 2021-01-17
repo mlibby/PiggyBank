@@ -1,3 +1,4 @@
+require "haml"
 require "sinatra/base"
 require "sinatra/flash"
 require_relative "repo/piggybank_repo.rb"

@@ -1,0 +1,67 @@
+!!!
+%html
+  %head
+    %title PiggyBank
+    %meta(charset='utf-8')
+    %meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+
+    %link(rel='shortcut icon' href='/favicon.ico')
+    %link(rel='icon' sizes='16x16 32x32 64x64' href='/favicon.ico')
+    %link(rel='icon' type='image/png' sizes='196x196' href='/favicon-192.png')
+    %link(rel='icon' type='image/png' sizes='160x160' href='/favicon-160.png')
+    %link(rel='icon' type='image/png' sizes='96x96' href='/favicon-96.png')
+    %link(rel='icon' type='image/png' sizes='64x64' href='/favicon-64.png')
+    %link(rel='icon' type='image/png' sizes='32x32' href='/favicon-32.png')
+    %link(rel='icon' type='image/png' sizes='16x16' href='/favicon-16.png')
+    %link(rel='apple-touch-icon' href='/favicon-57.png')
+    %link(rel='apple-touch-icon' sizes='114x114' href='/favicon-114.png')
+    %link(rel='apple-touch-icon' sizes='72x72' href='/favicon-72.png')
+    %link(rel='apple-touch-icon' sizes='144x144' href='/favicon-144.png')
+    %link(rel='apple-touch-icon' sizes='60x60' href='/favicon-60.png')
+    %link(rel='apple-touch-icon' sizes='120x120' href='/favicon-120.png')
+    %link(rel='apple-touch-icon' sizes='76x76' href='/favicon-76.png')
+    %link(rel='apple-touch-icon' sizes='152x152' href='/favicon-152.png')
+    %link(rel='apple-touch-icon' sizes='180x180' href='/favicon-180.png')
+    %meta(name='msapplication-TileColor' content='#FFFFFF')
+    %meta(name='msapplication-TileImage' content='/favicon-144.png')
+    %meta(name='msapplication-config' content='/browserconfig.xml')
+
+    %link(rel='stylesheet' type='text/css' href='/css/icomoon.css')
+    %link(rel='stylesheet' type='text/css' href='/css/main.css')
+
+    %script(type='text/javascript' src='/js/imagecapture.min.js')
+  %body
+    %header
+      %nav(role='navigation' aria-label='Main Navigation')
+        %section
+          %a.icon(href='/' title='Home')
+            %span.icon.icon-pig
+            %span.sr-only Home
+        %section
+          %span.label Accounts
+          .menu
+            %a(href='/accounts') Accounts
+            %a(href='/commodities') Commodities
+            %a(href='/prices') Prices
+        %section
+          %a.label(href='/txs') Transactions
+        %section
+          %span.label Planning
+          .menu
+            %a(href='/budget') Budget Planning
+            %a(href='/tool/mortgage') Mortgage Tools
+        %section
+          %a(href='/report' class='label') Reports
+        %section
+          %span.label Data
+          .menu
+            %a(href='/receipt') Receipts
+            %a(href='/ofx') OFX Configuration
+            %a(href='/import') Import Data
+            %a(href='/api_keys') API Keys
+        %section
+          %aicon(href='/settings')
+            %span.sr-only Settings
+            %span.icon.icon-gear
+    %main(role='main')
+      = yield

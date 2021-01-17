@@ -13,6 +13,9 @@ GEM
     docile (1.3.4)
     eventmachine (1.2.7)
     eventmachine (1.2.7-x64-mingw32)
+    haml (5.2.1)
+      temple (>= 0.8.0)
+      tilt
     mini_portile2 (2.5.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -64,6 +67,7 @@ GEM
     sinatra-flash (0.3.0)
       sinatra (>= 1.0.0)
     sqlite3 (1.4.2)
+    temple (0.8.2)
     thin (1.8.0)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -75,6 +79,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
+  haml
   ofx!
   pg
   rack-test
