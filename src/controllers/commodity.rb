@@ -15,22 +15,28 @@ module PiggyBank
           }
     end
 
+    post "/commodity/new" do
+      name = params["name"]
+      flash[:success] = "Commodity '#{name}' created."
+      redirect to "/commodities"
+    end
+
     get "/commodity/edit/:commodity_id" do
       commodity = PiggyBank::Commodity.where(commodity_id: params["commodity_id"]).single_record
       erb :"commodity/form",
           layout: :layout,
           locals: {
             header: "Edit Commodity",
-            commodity: commodity
+            commodity: commodity,
           }
     end
 
     get "/commodity/delete/:commodity_id" do
       commodity = PiggyBank::Commodity.where(commodity_id: params["commodity_id"]).single_record
       erb :"commodity/delete",
-          layout: :layout ,
+          layout: :layout,
           locals: {
-            commodity: commodity
+            commodity: commodity,
           }
     end
   end

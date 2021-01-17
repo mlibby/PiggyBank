@@ -1,8 +1,12 @@
 require "sinatra/base"
+require "sinatra/flash"
 require_relative "repo/piggybank_repo.rb"
 
 module PiggyBank
   class App < Sinatra::Base
+    enable :sessions
+    register Sinatra::Flash
+
     db_connections = {
       "DEV" => "sqlite://piggybank.sqlite",
       "TEST" => "sqlite:/",
@@ -29,7 +33,11 @@ module PiggyBank
     def self.token
       @@token
     end
-    
+
+    def form
+      params["params"]
+    end
+
     run! if app_file == $0
   end
 end

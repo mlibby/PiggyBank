@@ -1,3 +1,4 @@
+require "uri"
 require_relative "../spec_helper.rb"
 
 describe PiggyBank::App do
@@ -57,6 +58,28 @@ describe PiggyBank::App do
       expect(response.body).to have_tag("form", with: { method: "POST" }) do
         with_tag "input", with: { name: "_token", type: "hidden" }
       end
+    end
+  end
+
+  context "POST /commodity/new" do
+    let(:response) {
+      post "/commodity/new",
+           {
+             _token: PiggyBank::App.token,
+             type: 1,
+             name: "FOO",
+             description: "Foo Bar",
+             ticker: "FOO",
+             fraction: 1000,
+           }
+    }
+
+    it "creates a new commodity" do
+      expect(response.status).to eq 302
+      location = URI(response.headers["Location"])
+      expect(location.path).to eq "/commodities"
+      expect(flash).to have_key :success
+      expect(flash[:success]).to eq "Commodity 'FOO' created."
     end
   end
 end
