@@ -1,7 +1,7 @@
 module PiggyBank
   class App < Sinatra::Base
     get "/settings" do
-      erb :"settings/index",
+      haml :"settings/index",
         layout: :layout,
         locals: {
           currency_options: [
@@ -9,7 +9,7 @@ module PiggyBank
           ],
           locale_options: [
             { value: "en-US", name: "US English", selected: true },
-          ],
+          ]
         }
     end
   end

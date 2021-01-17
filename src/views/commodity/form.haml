@@ -1,0 +1,58 @@
+%h1= header
+%form(method='POST')
+  %input{
+    id: '_token',
+    type: 'hidden',
+    name: '_token',
+    value: PiggyBank::App.token
+  }
+  %label
+    Type
+    %select(name='type')
+      %option(value='') [Choose Commodity Type]
+      - commodity.type_opts.each do |opt|
+        %option{
+          value: opt[:value],
+          selected: opt[:selected]
+        }
+          = opt[:text]
+  %label
+    Name
+    %input{
+      required: true,
+      type:'text',
+      name: 'name', 
+      value: commodity.name
+    }
+  %label
+    Description
+    %input{
+      required: true,
+      type: 'text',
+      name: 'description',
+      value: commodity.description
+    }
+  %label
+    Тicker
+    %input{
+      type: 'text',
+      name: 'ticker',
+      value: commodity.ticker
+    } 
+  %label
+    Fraction
+    %select(name='fraction')
+      %option [Choose Fraction]
+      - commodity.fraction_opts.each do |opt|
+        %option{
+          value: opt[:value],
+          selected: opt[:selected]
+        }
+          = opt[:text]
+  .buttons
+    %button.btn.primary
+      %span.icon.icon-solid-check
+      Save
+    %a.btn.secondary(href='/commodities')
+      %span.icon.icon-close
+      Cancel

@@ -1,13 +1,13 @@
 module PiggyBank
   class App < Sinatra::Base
     get "/commodities" do
-      erb :"commodity/index",
+      haml :"commodity/index",
         layout: :layout,
         locals: { commodities: PiggyBank::Commodity.all }
     end
 
     get "/commodity/new" do
-      erb :"commodity/form",
+      haml :"commodity/form",
           layout: :layout,
           locals: {
             header: "New Commodity",
@@ -23,7 +23,7 @@ module PiggyBank
 
     get "/commodity/edit/:commodity_id" do
       commodity = PiggyBank::Commodity.where(commodity_id: params["commodity_id"]).single_record
-      erb :"commodity/form",
+      haml :"commodity/form",
           layout: :layout,
           locals: {
             header: "Edit Commodity",
@@ -33,7 +33,7 @@ module PiggyBank
 
     get "/commodity/delete/:commodity_id" do
       commodity = PiggyBank::Commodity.where(commodity_id: params["commodity_id"]).single_record
-      erb :"commodity/delete",
+      haml :"commodity/delete",
           layout: :layout,
           locals: {
             commodity: commodity,

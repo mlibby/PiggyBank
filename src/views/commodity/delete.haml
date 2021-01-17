@@ -1,0 +1,16 @@
+%h1 Delete Commodity?
+%form(method='POST')
+  %input{
+    id: '_token',
+    type: 'hidden',
+    name: '_token',
+    value: PiggyBank::App.token
+  }
+  = haml :"commodity/view", locals: { commodity: commodity }
+  .buttons
+    %button.btn.danger
+      %span.icon.icon-trash
+      Delete
+    %a.btn.secondary(href="/commodities")
+      %span.icon.icon-close
+        Cancel
