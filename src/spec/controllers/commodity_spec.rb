@@ -22,17 +22,27 @@ describe PiggyBank::App do
     it { expect(response.body).to include "Commodities" }
   end
 
-  context "get /commodity/new" do
-    let(:response) { get "/commodity/new" }
+  context "get /commodity" do
+    let(:response) { get "/commodity" }
     it { expect(response.status).to eq 200 }
     it { expect(response.body).to include "New Commodity" }
     it { expect(response.body).to include "<form method='POST'>" }
   end
 
-  context "get /commodity/edit/#" do
+  context "get /commodity/:id" do
     let(:response) {
       cid = PiggyBank::Commodity.where(name: "USD").single_record.commodity_id
-      get "/commodity/edit/#{cid}"
+      get "/commodity/#{cid}"
+    }
+
+    it { expect(response.status).to eq 200 }
+    it { expect(response.body).to match /Commodity \d+/  }
+  end
+
+  context "get /commodity/:id?edit" do
+    let(:response) {
+      cid = PiggyBank::Commodity.where(name: "USD").single_record.commodity_id
+      get "/commodity/#{cid}?edit"
     }
     it { expect(response.status).to eq 200 }
     it { expect(response.body).to include "Edit Commodity" }
@@ -46,10 +56,10 @@ describe PiggyBank::App do
     end
   end
 
-  context "GET /commodity/delete/#" do
+  context "GET /commodity/:id?delete" do
     let(:response) {
       cid = PiggyBank::Commodity.where(name: "USD").single_record.commodity_id
-      get "/commodity/delete/#{cid}"
+      get "/commodity/#{cid}?delete"
     }
 
     it "has a delete confirmation form" do
@@ -61,9 +71,9 @@ describe PiggyBank::App do
     end
   end
 
-  context "POST /commodity/new" do
+  context "POST /commodity" do
     let(:response) {
-      post "/commodity/new",
+      post "/commodity",
            {
              _token: PiggyBank::App.token,
              type: 1,

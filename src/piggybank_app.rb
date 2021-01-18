@@ -36,10 +36,6 @@ module PiggyBank
       @@token
     end
 
-    def form
-      params["params"]
-    end
-
     run! if app_file == $0
   end
 end

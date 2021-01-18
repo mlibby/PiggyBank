@@ -1,14 +1,9 @@
-%dl
-  %dt
-    Type
-  %dd
-    = commodity.type_string
-  %dt 
-    Name
-  %dd
-    = commodity.name
-  %dt
-    Description
-  %dd
-    = commodity.description 
-  
+%h1= "Commodity #{commodity.commodity_id}"
+= haml :"commodity/as_dl", locals: { commodity: commodity }
+-# .buttons
+-#   %button.btn.danger
+-#     %span.icon.icon-trash
+-#     Delete
+-#   %a.btn.secondary(href="/commodities")
+-#     %span.icon.icon-close
+-#       Cancel

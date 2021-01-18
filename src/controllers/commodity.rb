@@ -1,60 +1,84 @@
 module PiggyBank
   class App < Sinatra::Base
-    get "/commodities" do
+    def commodity_index
+      index = PiggyBank::Commodity.all
       haml :"commodity/index",
         layout: :layout,
-        locals: { commodities: PiggyBank::Commodity.all }
+        locals: { commodities: index }
     end
 
-    get "/commodity" do
+    def commodity_new
+      commodity = PiggyBank::Commodity.new
       haml :"commodity/form",
            layout: :layout,
            locals: {
              header: "New Commodity",
-             commodity: PiggyBank::Commodity.new,
+             commodity: commodity,
            }
     end
 
-    # FIXME: link these up to the right views
+    def commodity_create(params)
+      # TODO: save new commodity
+      name = params["name"]
+      flash[:success] = "Commodity '#{name}' created."
+      redirect to "/commodities"
+    end
+
+    def commodity_read(id)
+      PiggyBank::Commodity.where(commodity_id: id).single_record
+    end
+
+    def commodity_view(id)
+      commodity = commodity_read id
+      haml :"commodity/view",
+           layout: :layout,
+           locals: {
+             commodity: commodity,
+           }
+    end
+
+    def commodity_edit(id)
+      commodity = commodity_read id
+      haml :"commodity/form",
+           layout: :layout,
+           locals: {
+             header: "Edit Commodity",
+             commodity: commodity,
+           }
+    end
+
+    def commodity_confirm(id)
+      commodity = commodity_read id
+      haml :"commodity/delete",
+           layout: :layout,
+           locals: {
+             commodity: commodity,
+           }
+    end
+
+    get "/commodities" do
+      commodity_index
+    end
+
+    get "/commodity" do
+      commodity_new
+    end
+
     get "/commodity/:id" do |id|
       if params.has_key? "edit"
-        "You are going to edit commodity #{id}"
+        commodity_edit id
       elsif params.has_key? "delete"
-        "Confirm delete for commodity #{id}"
+        commodity_confirm id
       else
-        "You are looking at commodity #{id}"
+        commodity_view id
       end
     end
 
-    # FIXME: shorten to POST /commodity
-    # post "/commodity/new" do
-    #   # TODO: save new commodity
-    #   name = params["name"]
-    #   flash[:success] = "Commodity '#{name}' created."
-    #   redirect to "/commodities"
-    # end
+    post "/commodity" do
+      commodity_create params
+    end
 
-    # FIXME: shorten to /commodity/:id
-    # get "/commodity/edit/:commodity_id" do
-    #   commodity = PiggyBank::Commodity.where(commodity_id: params["commodity_id"]).single_record
-    #   haml :"commodity/form",
-    #       layout: :layout,
-    #       locals: {
-    #         header: "Edit Commodity",
-    #         commodity: commodity,
-    #       }
-    # end
-
-    # # TODO: PUT /commodity/:id = save updated commodity
-
-    # get "/commodity/delete/:commodity_id" do
-    #   commodity = PiggyBank::Commodity.where(commodity_id: params["commodity_id"]).single_record
-    #   haml :"commodity/delete",
-    #       layout: :layout,
-    #       locals: {
-    #         commodity: commodity,
-    #       }
-    # end
+    # TODO: PUT /commodity/:id = save updated commodity
 
     # TODO: DELETE /commodity/:id = delete commodity
   end

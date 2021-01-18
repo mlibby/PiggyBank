@@ -6,7 +6,7 @@
     name: '_token',
     value: PiggyBank::App.token
   }
-  = haml :"commodity/view", locals: { commodity: commodity }
+  = haml :"commodity/as_dl", locals: { commodity: commodity }
   .buttons
     %button.btn.danger
       %span.icon.icon-trash
