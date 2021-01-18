@@ -73,15 +73,15 @@ describe PiggyBank::App do
 
   context "POST /commodity" do
     let(:response) {
-      post "/commodity",
-           {
-             _token: PiggyBank::App.token,
-             type: 1,
-             name: "FOO",
-             description: "Foo Bar",
-             ticker: "FOO",
-             fraction: 1000,
-           }
+      params = {
+        _token: PiggyBank::App.token,
+        type: 1,
+        name: "FOO",
+        description: "Foo Bar",
+        ticker: "FOO",
+        fraction: 1000,
+      }
+      post "/commodity", params
     }
 
     it "creates a new commodity" do
@@ -95,4 +95,57 @@ describe PiggyBank::App do
       expect(c.class).to eq PiggyBank::Commodity
     end
   end
+
+  context "POST /commodity with invalid token" do
+    # TODO: do not allow create with invalid token
+  end
+
+  context "PUT /commodity/:id" do
+    let(:response) do
+      usd = PiggyBank::Commodity.where(name: "USD").single_record
+      params = {
+        name: "USB",
+        type: 2,
+        description: "Universal Serial Bus",
+        ticker: "USB",
+        fraction: 1,
+      }
+      put "/commodity/#{usd.commodity_id}", params
+    end
+
+    it "updates the DB" do
+      expect(response.status).to eq 200
+      expect(response.body).to match /Commodity \d+/
+
+      usb = PiggyBank::Commodity.where(name: "USB").single_record
+      expect(usb.name).to eq "USB"
+      expect(usb.description).to eq "Universal Serial Bus"
+      expect(usb.ticker).to eq "USB"
+      expect(usb.type).to eq 2
+      expect(usb.fraction).to eq 1
+    end
+  end
+
+  # TODO: do not allow update without valid token
+
+  # TODO: do not allow update with version mismatch
+
+  context "DELETE /commodity/:id" do
+    let(:response) do
+      usd = PiggyBank::Commodity.where(name: "USD").single_record
+      delete "/commodity/#{usd.commodity_id}"
+    end
+
+    it "deletes the commodity" do
+      expect(response.status).to eq 302
+      location = URI(response.headers["Location"])
+      expect(location.path).to eq "/commodities"
+      expect(flash).to have_key :success
+      expect(flash[:success]).to eq "Commodity 'USD' deleted."
+    end
+  end
+
+  # TODO: do not allow DELETE if token missing/changed
+
+  # TODO: do not allow DELETE with version mismatch
 end

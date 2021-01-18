@@ -54,6 +54,19 @@ module PiggyBank
            }
     end
 
+    def commodity_update(id, params)
+      commodity = commodity_read id
+
+      fields = [:name, :description, :type, :ticker, :fraction]
+      commodity.update_fields params, fields
+
+      haml :"commodity/view",
+           layout: :layout,
+           locals: {
+             commodity: commodity,
+           }
+    end
+
     def commodity_confirm(id)
       commodity = commodity_read id
       haml :"commodity/delete",
@@ -61,6 +74,13 @@ module PiggyBank
            locals: {
              commodity: commodity,
            }
+    end
+
+    def commodity_delete(id)
+      commodity = commodity_read id
+      commodity.destroy
+      flash[:success] = "Commodity '#{commodity.name}' deleted."
+      redirect to "/commodities"
     end
 
     get "/commodities" do
@@ -85,8 +105,12 @@ module PiggyBank
       commodity_create params
     end
 
-    # TODO: PUT /commodity/:id = save updated commodity
+    put "/commodity/:id" do |id|
+      commodity_update id, params
+    end
 
-    # TODO: DELETE /commodity/:id = delete commodity
+    delete "/commodity/:id" do |id|
+      commodity_delete id
+    end
   end
 end
