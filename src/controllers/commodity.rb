@@ -18,8 +18,15 @@ module PiggyBank
     end
 
     def commodity_create(params)
-      # TODO: save new commodity
       name = params["name"]
+      commodity = PiggyBank::Commodity.create(
+        name: name,
+        description: params["description"],
+        type: params["type"],
+        ticker: params["ticker"],
+        fraction: params["fraction"],
+      )
+
       flash[:success] = "Commodity '#{name}' created."
       redirect to "/commodities"
     end

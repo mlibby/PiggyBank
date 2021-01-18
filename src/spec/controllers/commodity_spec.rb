@@ -15,31 +15,31 @@ describe PiggyBank::App do
                                 fraction: 100
   end
 
-  context "get /commodities" do
+  context "GET /commodities" do
     let(:response) { get "/commodities" }
 
     it { expect(response.status).to eq 200 }
     it { expect(response.body).to include "Commodities" }
   end
 
-  context "get /commodity" do
+  context "GET /commodity" do
     let(:response) { get "/commodity" }
     it { expect(response.status).to eq 200 }
     it { expect(response.body).to include "New Commodity" }
     it { expect(response.body).to include "<form method='POST'>" }
   end
 
-  context "get /commodity/:id" do
+  context "GET /commodity/:id" do
     let(:response) {
       cid = PiggyBank::Commodity.where(name: "USD").single_record.commodity_id
       get "/commodity/#{cid}"
     }
 
     it { expect(response.status).to eq 200 }
-    it { expect(response.body).to match /Commodity \d+/  }
+    it { expect(response.body).to match /Commodity \d+/ }
   end
 
-  context "get /commodity/:id?edit" do
+  context "GET /commodity/:id?edit" do
     let(:response) {
       cid = PiggyBank::Commodity.where(name: "USD").single_record.commodity_id
       get "/commodity/#{cid}?edit"
@@ -90,6 +90,9 @@ describe PiggyBank::App do
       expect(location.path).to eq "/commodities"
       expect(flash).to have_key :success
       expect(flash[:success]).to eq "Commodity 'FOO' created."
+
+      c = PiggyBank::Commodity.where(name: "FOO").single_record
+      expect(c.class).to eq PiggyBank::Commodity
     end
   end
 end
