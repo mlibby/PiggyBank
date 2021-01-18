@@ -41,13 +41,22 @@ header {
 .btn {
   display: inline-block;
   text-align: center;
-  vertical-align: middle;
   text-decoration: none;
   padding: 0.33rem 0.66rem;
   border: 2px solid var(--primary-color);
   border-radius: 0.5rem;
   background-color: var(--bg-color);
   margin: 0 0.66rem 0 0;
+}
+
+.btn .icon {
+  float: left;
+  vertical-align: middle;
+  margin: 0.125rem 0 0;
+}
+
+.btn .text {
+  margin-left: 0.5rem;
 }
 
 .btn.danger {
