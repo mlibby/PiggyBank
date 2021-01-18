@@ -15,12 +15,15 @@ module PiggyBank
           }
     end
 
+    # FIXME: shorten to POST /commodity
     post "/commodity/new" do
+      # TODO: save new commodity
       name = params["name"]
       flash[:success] = "Commodity '#{name}' created."
       redirect to "/commodities"
     end
 
+    # FIXME: shorten to /commodity/:id 
     get "/commodity/edit/:commodity_id" do
       commodity = PiggyBank::Commodity.where(commodity_id: params["commodity_id"]).single_record
       haml :"commodity/form",
@@ -31,6 +34,8 @@ module PiggyBank
           }
     end
 
+    # TODO: PUT /commodity/:id = save updated commodity
+
     get "/commodity/delete/:commodity_id" do
       commodity = PiggyBank::Commodity.where(commodity_id: params["commodity_id"]).single_record
       haml :"commodity/delete",
@@ -39,5 +44,7 @@ module PiggyBank
             commodity: commodity,
           }
     end
+
+    # TODO: DELETE /commodity/:id = delete commodity
   end
 end
