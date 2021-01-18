@@ -26,8 +26,8 @@ module PiggyBank
     end
 
     # TODO split ofx to its own controller
-    
-    get "/ofxs" do
+
+    get "/ofx" do
       haml :"data/ofx",
            layout: :layout
       # TODO: get table of OFX configs
