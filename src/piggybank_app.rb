@@ -18,6 +18,7 @@ module PiggyBank
     @@repo = PiggyBank::Repo.new db_connections[ENV["APP_ENV"] || "DEV"]
 
     set :public_folder, "#{__dir__}/www"
+    set :strict_paths, false
 
     require_relative "./controllers/account"
     require_relative "./controllers/budget"
