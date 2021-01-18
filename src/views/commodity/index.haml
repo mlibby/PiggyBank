@@ -1,7 +1,7 @@
 %h1 Commodities
 = styled_flash
 %div
-  %a(href='/commodity/new') New Commodity 
+  %a(href='/commodity') New Commodity 
 %table
   %thead
     %tr
@@ -14,15 +14,16 @@
   %tbody>
     - commodities.each do |commodity|
       %tr
-        %td= commodity.name 
+        %td
+          %a{href: "/commodity/#{commodity.commodity_id}" }= commodity.name 
         %td= commodity.description
         %td= commodity.type_string 
         %td= commodity.ticker
         %td= commodity.fraction
         %td
-          %a.btn.primary{ href: "/commodity/edit/#{commodity.commodity_id}" }
+          %a.btn.primary{ href: "/commodity/#{commodity.commodity_id}?edit" }
             %span.icon.icon-pencil
             %span.sr-only Edit 
-          %a.btn.danger{ href: "/commodity/delete/#{commodity.commodity_id}" }
+          %a.btn.danger{ href: "/commodity/#{commodity.commodity_id}?delete" }
             %span.icon.icon-trash
             %span.sr-only Trash
