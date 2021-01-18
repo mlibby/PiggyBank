@@ -1,7 +1,11 @@
 %h1= header
 %form(method='POST')
   %input{
-    id: '_token',
+    type: 'hidden',
+    name: '_method',
+    value: method
+  }
+  %input{
     type: 'hidden',
     name: '_token',
     value: PiggyBank::App.token

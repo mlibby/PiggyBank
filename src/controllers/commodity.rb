@@ -12,6 +12,7 @@ module PiggyBank
       haml :"commodity/form",
            layout: :layout,
            locals: {
+             method: "POST",
              header: "New Commodity",
              commodity: commodity,
            }
@@ -49,6 +50,7 @@ module PiggyBank
       haml :"commodity/form",
            layout: :layout,
            locals: {
+             method: "PUT",
              header: "Edit Commodity",
              commodity: commodity,
            }
@@ -72,6 +74,7 @@ module PiggyBank
       haml :"commodity/delete",
            layout: :layout,
            locals: {
+             method: "DELETE",
              commodity: commodity,
            }
     end

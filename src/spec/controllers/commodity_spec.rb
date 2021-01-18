@@ -52,6 +52,7 @@ describe PiggyBank::App do
         with_tag "input", with: { name: "_token", type: "hidden" }
         with_tag "option", seen: "1/100 (123.12)", with: { value: "100", selected: "selected" }
         with_tag "option", seen: "Currency", with: { value: "1", selected: "selected" }
+        with_tag "input", with: { name: "_method", type: "hidden", value: "PUT" }
       end
     end
   end
