@@ -26,7 +26,12 @@ describe PiggyBank::App do
     let(:response) { get "/commodity" }
     it { expect(response.status).to eq 200 }
     it { expect(response.body).to include "New Commodity" }
-    it { expect(response.body).to include "<form method='POST'>" }
+    it "has a form" do
+      expect(response.body).to have_tag "form", with: {
+                         method: "POST",
+                         action: "/commodity",
+                       }
+    end
   end
 
   context "GET /commodity/:id" do

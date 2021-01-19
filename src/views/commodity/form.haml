@@ -1,5 +1,8 @@
 %h1= header
-%form(method='POST')
+%form{
+  method: 'POST',
+  action: action
+}
   %input{
     type: 'hidden',
     name: '_method',

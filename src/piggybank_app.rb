@@ -19,6 +19,7 @@ module PiggyBank
 
     set :public_folder, "#{__dir__}/www"
     set :strict_paths, false
+    set :method_override, true
 
     require_relative "./controllers/account"
     require_relative "./controllers/budget"
