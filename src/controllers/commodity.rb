@@ -141,6 +141,11 @@ module PiggyBank
       if params["_token"] != PiggyBank::App.token
         flash.now[:danger] = "Failed to delete, please try again"
         halt 403, commodity_confirm(commodity)
+      elsif params["version"] != commodity.version
+        orig = commodity.clone
+        commodity.set_fields params, PiggyBank::Commodity.update_fields
+        flash.now[:danger] = "Someone else updated this commodity, please re-confirm delete"
+        halt 409, commodity_confirm(commodity)
       else
         commodity_delete commodity
       end

@@ -185,11 +185,15 @@ describe PiggyBank::App do
 
   context "DELETE /commodity/:id" do
     let(:response) do
-      usd = PiggyBank::Commodity.where(name: "USD").single_record
-      delete "/commodity/#{usd.commodity_id}", { _token: PiggyBank::App.token }
+      usd = PiggyBank::Commodity.find(name: "USD")
+      delete "/commodity/#{usd.commodity_id}", { 
+        _token: PiggyBank::App.token,
+        version: usd.version
+      }
     end
 
     it "deletes the commodity" do
+      usd = PiggyBank::Commodity.find(name: "USD")
       expect(response.status).to eq 302
       location = URI(response.headers["Location"])
       expect(location.path).to eq "/commodities"
@@ -200,11 +204,14 @@ describe PiggyBank::App do
 
   context "DELETE /commodity/:id with invalid token" do
     let(:response) {
+      usd = PiggyBank::Commodity.find(name: "USD")
+      params = update_params(usd)
+      params["_token"] = "bad penny"
       usd = PiggyBank::Commodity.where(name: "USD").single_record
-      delete "/commodity/#{usd.commodity_id}", _token: "bad token"
+      delete "/commodity/#{usd.commodity_id}", params
     }
 
-    it "politely refuses to update" do
+    it "politely refuses to delete" do
       expect(response.status).to eq 403
       expect(response.body).to have_tag "h1", text: "Delete Commodity?"
       expect(response.body).to have_tag "div#flash"
@@ -212,5 +219,19 @@ describe PiggyBank::App do
     end
   end
 
-  # TODO: do not allow DELETE with version mismatch
+  context "DELETE /commodity/:id with version mismatch" do
+    let(:response) {
+      usd = PiggyBank::Commodity.find(name: "USD")
+      params = update_params(usd)
+      params[:version] = "bad version"
+      delete "/commodity/#{usd.commodity_id}", params
+    }
+
+    it "politely refuses to delete" do
+      expect(response.status).to eq 409
+      expect(response.body).to have_tag "h1", text: "Delete Commodity?"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this commodity, please re-confirm delete"
+    end
+  end
 end
