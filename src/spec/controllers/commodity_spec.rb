@@ -28,9 +28,9 @@ describe PiggyBank::App do
     it { expect(response.body).to include "New Commodity" }
     it "has a form" do
       expect(response.body).to have_tag "form", with: {
-                         method: "POST",
-                         action: "/commodity",
-                       }
+                                                  method: "POST",
+                                                  action: "/commodity",
+                                                }
     end
   end
 
@@ -110,6 +110,7 @@ describe PiggyBank::App do
     let(:response) do
       usd = PiggyBank::Commodity.where(name: "USD").single_record
       params = {
+        _token: PiggyBank::App.token,
         name: "USB",
         type: 2,
         description: "Universal Serial Bus",
@@ -139,7 +140,7 @@ describe PiggyBank::App do
   context "DELETE /commodity/:id" do
     let(:response) do
       usd = PiggyBank::Commodity.where(name: "USD").single_record
-      delete "/commodity/#{usd.commodity_id}"
+      delete "/commodity/#{usd.commodity_id}", { _token: PiggyBank::App.token }
     end
 
     it "deletes the commodity" do

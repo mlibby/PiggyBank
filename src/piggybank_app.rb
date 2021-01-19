@@ -21,6 +21,18 @@ module PiggyBank
     set :strict_paths, false
     set :method_override, true
 
+    @@token = PiggyBank::Repo.timestamp
+    def self.token
+      @@token
+    end
+
+    @@require_token = ["DELETE", "POST", "PUT"]
+    before do
+      if @@require_token.include?(request.env["REQUEST_METHOD"]) && !(params.has_key? "_token")
+        halt 403, "CSRF Token Required"
+      end
+    end
+
     require_relative "./controllers/account"
     require_relative "./controllers/budget"
     require_relative "./controllers/commodity"
@@ -31,11 +43,6 @@ module PiggyBank
     require_relative "./controllers/settings"
     require_relative "./controllers/tool"
     require_relative "./controllers/tx"
-
-    @@token = PiggyBank::Repo.timestamp
-    def self.token
-      @@token
-    end
 
     run! if app_file == $0
   end
