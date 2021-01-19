@@ -7,8 +7,8 @@ module PiggyBank
         locals: { commodities: index }
     end
 
-    def commodity_new
-      commodity = PiggyBank::Commodity.new
+    def commodity_new(commodity = nil)
+      commodity ||= PiggyBank::Commodity.new
       haml :"commodity/form",
            layout: :layout,
            locals: {
@@ -60,9 +60,7 @@ module PiggyBank
 
     def commodity_update(id, params)
       commodity = commodity_read id
-
-      fields = [:name, :description, :type, :ticker, :fraction]
-      commodity.update_fields params, fields
+      commodity.update_fields params, PiggyBank::Commodity.update_fields
 
       haml :"commodity/view",
            layout: :layout,
@@ -108,7 +106,14 @@ module PiggyBank
     end
 
     post "/commodity" do
-      commodity_create params
+      if params["_token"] != PiggyBank::App.token
+        commodity = PiggyBank::Commodity.new
+        commodity.set_fields params, PiggyBank::Commodity.update_fields
+        flash.now[:danger] = "Failed to create, please try again"
+        halt 403, commodity_new(commodity)
+      else
+        commodity_create params
+      end
     end
 
     put "/commodity/:id" do |id|

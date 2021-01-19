@@ -2,12 +2,16 @@ module PiggyBank
   class Commodity < Sequel::Model(:commodity)
     plugin :validation_helpers
 
+    # primary_key :commodity_id
     # Integer :type, null: false
     # String :name, text: true, null: false
     # String :description, text: true, null: false
     # String :ticker, text: true
     # Integer :fraction, null: false
     # String :version, text: true, null: false
+    def self.update_fields
+      return [:type, :name, :description, :ticker, :fraction]
+    end
 
     COMMODITY_TYPE = {
       currency: 1,

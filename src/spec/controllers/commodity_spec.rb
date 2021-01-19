@@ -77,17 +77,20 @@ describe PiggyBank::App do
     end
   end
 
+  def create_params
+    {
+      _token: PiggyBank::App.token,
+      type: 1,
+      name: "FOO",
+      description: "Foo Bar",
+      ticker: "FOO",
+      fraction: 1000,
+    }
+  end
+
   context "POST /commodity" do
     let(:response) {
-      params = {
-        _token: PiggyBank::App.token,
-        type: 1,
-        name: "FOO",
-        description: "Foo Bar",
-        ticker: "FOO",
-        fraction: 1000,
-      }
-      post "/commodity", params
+      post "/commodity", create_params
     }
 
     it "creates a new commodity" do
@@ -103,7 +106,18 @@ describe PiggyBank::App do
   end
 
   context "POST /commodity with invalid token" do
-    # TODO: do not allow create with invalid token
+    let(:response) {
+      params = create_params
+      params[:_token] = "bad token"
+      post "/commodity", params
+    }
+
+    it "politely refuses to create" do
+      expect(response.status).to eq 403
+      expect(response.body).to have_tag "h1", text: "New Commodity"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Failed to create, please try again"
+    end
   end
 
   context "PUT /commodity/:id" do

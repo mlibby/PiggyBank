@@ -7,6 +7,7 @@ module PiggyBank
   class App < Sinatra::Base
     enable :sessions
     register Sinatra::Flash
+    # valid flash keys for PiggyBank: :info, :success, :danger
 
     db_connections = {
       "DEV" => "sqlite://piggybank.sqlite",
