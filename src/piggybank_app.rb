@@ -34,16 +34,8 @@ module PiggyBank
       end
     end
 
-    require_relative "./controllers/account"
-    require_relative "./controllers/budget"
-    require_relative "./controllers/commodity"
-    require_relative "./controllers/data"
-    require_relative "./controllers/home.rb"
-    require_relative "./controllers/price"
-    require_relative "./controllers/report"
-    require_relative "./controllers/settings"
-    require_relative "./controllers/tool"
-    require_relative "./controllers/tx"
+    require_relative "./controllers/piggybank_controllers"
+    require_relative "./lib/piggybank_lib"
 
     run! if app_file == $0
   end

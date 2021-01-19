@@ -1,61 +1,50 @@
-# TODO: translate from JS
+module PiggyBank
+  class Amortization
+    attr_accessor :principal, :rate, :number_of_payments, :payment_amount, :payments
 
-# import { Amortization } from "../amortization"
+    def initialize(principal, rate, number_of_payments)
+      @principal = principal
+      @rate = rate
+      @number_of_payments = number_of_payments
+      @payment_amount = calculate_payment_amount
+      @payments = calculate_payments
+    end
 
-# test("Amortization calculates payment amount", () => {
-#   const amort = new Amortization(10000000, 0.06/12, 360)
-#   expect(amort.paymentAmount).toBe(59955)
-# })
+    private
 
-# test("Amortization calculates payment schedule", () => {
-#   const amort = new Amortization(10000000, 0.06/12, 360)
-#   expect(amort.payments.length).toBe(360)
+    def calculate_payment_amount
+      pmt_rate = (1 + @rate) ** @number_of_payments
+      pmt_numerator = @principal * @rate * pmt_rate
+      pmt_denominator = pmt_rate - 1
+      # FUTURE: round using Commodity#fraction
+      pmt = (pmt_numerator / pmt_denominator).round(2)
+    end
 
-#   //final payment is a "balloon" payment with extra principal
-#   expect(amort.payments[359].paymentAmount).toBe(60000)
-# })
+    def calculate_payments
+      balance = @principal
+      payments = []
 
-# "use strict"
+      while balance > 0
+        payment = {
+          total_payment: @payment_amount,
+          # FUTURE: round using Commodity#fraction
+          interest: (balance * @rate).round(2),
+        }
+        payment[:principal] = @payment_amount - payment[:interest]
+        balance = payment[:balance] = balance - payment[:principal]
 
-# export class Amortization {
-#   constructor(principal, rate, number) {
-#     this.principal = principal
-#     this.rate = rate
-#     this.number = number
-#     this.paymentAmount = this._calculatePaymentAmount()
-#     this.payments = this._calculatePayments()
-#   }
+        # FUTURE: round using Commodity#fraction
+        next_interest = (balance * @rate).round(2)
+        if next_interest + balance < @payment_amount
+          payment[:principal] = payment[:principal] + balance
+          payment[:total_payment] = payment[:principal] + payment[:interest]
+          balance = payment[:balance] = 0
+        end
 
-#   _calculatePaymentAmount() {
-#     const pmtRate = Math.pow(1 + this.rate, this.number)
-#     const pmtNum = this.principal * this.rate * pmtRate
-#     const pmtDen = pmtRate - 1
-#     const pmt = Math.round(pmtNum / pmtDen)
-#     return pmt
-#   }
+        payments << payment
+      end
 
-#   _calculatePayments() {
-#     let balance = this.principal
-#     const payments = []
-
-#     while(balance > 0) {
-#       const payment = {
-#         paymentAmount: this.paymentAmount,
-#         interest: Math.round(balance * this.rate)
-#       }
-#       payment.principal = this.paymentAmount - payment.interest
-#       balance = payment.balance = balance - payment.principal
-
-#       const nextInterest = Math.round(balance * this.rate)
-#       if(nextInterest + balance < this.paymentAmount) {
-#         payment.principal = payment.principal + balance
-#         payment.paymentAmount = payment.principal + payment.interest
-#         balance = payment.balance = 0
-#       }
-
-#       payments.push(payment)
-#     }
-
-#     return payments
-#   }
-# }
+      payments
+    end
+  end
+end
