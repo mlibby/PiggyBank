@@ -1,5 +1,9 @@
 module PiggyBank
   class App < Sinatra::Base
+    def commodity_find(id)
+      PiggyBank::Commodity.find(commodity_id: id)
+    end
+
     def commodity_index
       index = PiggyBank::Commodity.all
       haml :"commodity/index",
@@ -33,12 +37,7 @@ module PiggyBank
       redirect to "/commodities"
     end
 
-    def commodity_read(id)
-      PiggyBank::Commodity.where(commodity_id: id).single_record
-    end
-
-    def commodity_view(id)
-      commodity = commodity_read id
+    def commodity_view(commodity)
       haml :"commodity/view",
            layout: :layout,
            locals: {
@@ -46,22 +45,18 @@ module PiggyBank
            }
     end
 
-    def commodity_edit(id)
-      commodity = commodity_read id
+    def commodity_edit(commodity)
       haml :"commodity/form",
            layout: :layout,
            locals: {
-             action: "/commodity/#{id}",
+             action: "/commodity/#{commodity.commodity_id}",
              method: "PUT",
              header: "Edit Commodity",
              commodity: commodity,
            }
     end
 
-    def commodity_update(id, params)
-      commodity = commodity_read id
-      commodity.update_fields params, PiggyBank::Commodity.update_fields
-
+    def commodity_update(commodity)
       haml :"commodity/view",
            layout: :layout,
            locals: {
@@ -69,19 +64,26 @@ module PiggyBank
            }
     end
 
-    def commodity_confirm(id)
-      commodity = commodity_read id
+    def commodity_diff(orig_commodity, new_commodity)
+      haml :"commodity/diff",
+           layout: :layout,
+           locals: {
+             orig_commodity: orig_commodity,
+             new_commodity: new_commodity,
+           }
+    end
+
+    def commodity_confirm(commodity)
       haml :"commodity/delete",
            layout: :layout,
            locals: {
-             action: "/commodity/#{id}",
+             action: "/commodity/#{commodity.commodity_id}",
              method: "DELETE",
              commodity: commodity,
            }
     end
 
-    def commodity_delete(id)
-      commodity = commodity_read id
+    def commodity_delete(commodity)
       commodity.destroy
       flash[:success] = "Commodity '#{commodity.name}' deleted."
       redirect to "/commodities"
@@ -96,12 +98,13 @@ module PiggyBank
     end
 
     get "/commodity/:id" do |id|
+      commodity = commodity_find id
       if params.has_key? "edit"
-        commodity_edit id
+        commodity_edit commodity
       elsif params.has_key? "delete"
-        commodity_confirm id
+        commodity_confirm commodity
       else
-        commodity_view id
+        commodity_view commodity
       end
     end
 
@@ -117,11 +120,25 @@ module PiggyBank
     end
 
     put "/commodity/:id" do |id|
-      commodity_update id, params
+      commodity = commodity_find id
+      if params["_token"] != PiggyBank::App.token
+        commodity.set_fields params, PiggyBank::Commodity.update_fields
+        flash.now[:danger] = "Failed to save changes, please try again"
+        halt 403, commodity_edit(commodity)
+      elsif params["version"] != commodity.version
+        orig = commodity.clone
+        commodity.set_fields params, PiggyBank::Commodity.update_fields
+        flash.now[:danger] = "Someone else updated this commodity"
+        halt 409, commodity_diff(orig, commodity)
+      else
+        commodity.update_fields params, PiggyBank::Commodity.update_fields
+        commodity_update commodity
+      end
     end
 
     delete "/commodity/:id" do |id|
-      commodity_delete id
+      commodity = commodity_find id
+      commodity_delete commodity
     end
   end
 end

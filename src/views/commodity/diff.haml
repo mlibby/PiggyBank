@@ -1,0 +1,11 @@
+%h1= "Compare Old/New Commodity"
+= styled_flash
+= haml :"commodity/as_dl", locals: { commodity: orig_commodity }
+= haml :"commodity/as_dl", locals: { commodity: new_commodity }
+-# .buttons
+-#   %button.btn.danger
+-#     %span.icon.icon-trash
+-#     Delete
+-#   %a.btn.secondary(href="/commodities")
+-#     %span.icon.icon-close
+-#       Cancel

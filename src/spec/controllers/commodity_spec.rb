@@ -120,18 +120,22 @@ describe PiggyBank::App do
     end
   end
 
-  context "PUT /commodity/:id" do
+  def update_params(existing)
+    {
+      _token: PiggyBank::App.token,
+      name: "USB",
+      type: 2,
+      description: "Universal Serial Bus",
+      ticker: "USB",
+      fraction: 1,
+      version: existing.version,
+    }
+  end
+
+  context "PUT /commodity/:id with valid params" do
     let(:response) do
       usd = PiggyBank::Commodity.where(name: "USD").single_record
-      params = {
-        _token: PiggyBank::App.token,
-        name: "USB",
-        type: 2,
-        description: "Universal Serial Bus",
-        ticker: "USB",
-        fraction: 1,
-      }
-      put "/commodity/#{usd.commodity_id}", params
+      put "/commodity/#{usd.commodity_id}", update_params(usd)
     end
 
     it "updates the DB" do
@@ -147,9 +151,37 @@ describe PiggyBank::App do
     end
   end
 
-  # TODO: do not allow update without valid token
+  context "PUT /commodity/:id with invalid token" do
+    let(:response) {
+      usd = PiggyBank::Commodity.where(name: "USD").single_record
+      params = update_params(usd)
+      params[:_token] = "bad token"
+      put "/commodity/#{usd.commodity_id}", params
+    }
 
-  # TODO: do not allow update with version mismatch
+    it "politely refuses to update" do
+      expect(response.status).to eq 403
+      expect(response.body).to have_tag "h1", text: "Edit Commodity"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Failed to save changes, please try again"
+    end
+  end
+
+  context "PUT /commodity/:id with version mismatch" do
+    let(:response) {
+      usd = PiggyBank::Commodity.find(name: "USD")
+      params = update_params(usd)
+      params[:version] = "bad version"
+      put "/commodity/#{usd.commodity_id}", params
+    }
+
+    it "politely refuses to update" do
+      expect(response.status).to eq 409
+      expect(response.body).to have_tag "h1", text: "Compare Old/New Commodity"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this commodity"
+    end
+  end
 
   context "DELETE /commodity/:id" do
     let(:response) do
