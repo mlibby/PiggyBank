@@ -198,7 +198,19 @@ describe PiggyBank::App do
     end
   end
 
-  # TODO: do not allow DELETE if token missing/changed
+  context "DELETE /commodity/:id with invalid token" do
+    let(:response) {
+      usd = PiggyBank::Commodity.where(name: "USD").single_record
+      delete "/commodity/#{usd.commodity_id}", _token: "bad token"
+    }
+
+    it "politely refuses to update" do
+      expect(response.status).to eq 403
+      expect(response.body).to have_tag "h1", text: "Delete Commodity?"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Failed to delete, please try again"
+    end
+  end
 
   # TODO: do not allow DELETE with version mismatch
 end

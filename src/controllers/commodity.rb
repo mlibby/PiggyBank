@@ -138,7 +138,12 @@ module PiggyBank
 
     delete "/commodity/:id" do |id|
       commodity = commodity_find id
-      commodity_delete commodity
+      if params["_token"] != PiggyBank::App.token
+        flash.now[:danger] = "Failed to delete, please try again"
+        halt 403, commodity_confirm(commodity)
+      else
+        commodity_delete commodity
+      end
     end
   end
 end
