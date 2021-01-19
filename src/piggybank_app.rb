@@ -26,7 +26,7 @@ module PiggyBank
       @@token
     end
 
-    @@require_token = ["DELETE", "POST", "PUT"]
+    @@require_token = ["DELETE", "POST", "PUT"] 
     before do
       if @@require_token.include?(request.env["REQUEST_METHOD"]) && !(params.has_key? "_token")
         halt 403, "CSRF Token Required"

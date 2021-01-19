@@ -15,4 +15,21 @@ describe PiggyBank::App do
   context "is running" do
     it { expect(PiggyBank::App.token).to match(/\d{4}\-\d\d-\d\dT\d\d:\d\d:\d\d\+00:00/) }
   end
+
+  context "dangerous request without _token" do
+    it "responds to DELETE with 403" do
+      response = delete "/commodity/1"
+      expect(response.status).to eq 403
+    end
+
+    it "responds to POST with 403" do
+      response = post "/commodity"
+      expect(response.status).to eq 403
+    end
+
+    it "responds to PUT with 403" do
+      response = put "/commodity/1"
+      expect(response.status).to eq 403
+    end
+  end
 end
