@@ -15,8 +15,7 @@ describe PiggyBank::Amortization do
     end
 
     it "calculate last payment as a 'balloon' with extra principal" do
-      # FIXME: need to convert amortization to use BigDecimal
-      #expect(amort.payments[359][:total_payment]).to eq 600.00
+      expect(amort.payments[359][:total_payment]).to eq 600.00
     end
   end
 end

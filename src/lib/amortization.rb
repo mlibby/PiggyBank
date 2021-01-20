@@ -1,10 +1,13 @@
+require "bigdecimal"
+
 module PiggyBank
   class Amortization
     attr_accessor :principal, :rate, :number_of_payments, :payment_amount, :payments
 
     def initialize(principal, rate, number_of_payments)
-      @principal = principal
-      @rate = rate
+      # FUTURE: round using Commodity#fraction
+      @principal = BigDecimal(principal, 2)
+      @rate = BigDecimal(rate, 6)
       @number_of_payments = number_of_payments
       @payment_amount = calculate_payment_amount
       @payments = calculate_payments
