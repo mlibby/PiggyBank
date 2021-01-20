@@ -2,13 +2,21 @@
   %dt
     Type
   %dd
-    = commodity.type_string
+    = @commodity.type_string
   %dt 
     Name
   %dd
-    = commodity.name
+    = @commodity.name
   %dt
     Description
   %dd
-    = commodity.description 
-  
+    = @commodity.description 
+  %dt
+    Ticker
+  %dd
+    = @commodity.ticker
+  %dt
+    Fraction
+  %dd
+    -# TODO: make a fraction_string method
+    = @commodity.fraction

@@ -27,7 +27,7 @@ module PiggyBank
       @@token
     end
 
-    @@require_token = ["DELETE", "POST", "PUT"] 
+    @@require_token = ["DELETE", "POST", "PUT"]
     before do
       if @@require_token.include?(request.env["REQUEST_METHOD"]) && !(params.has_key? "_token")
         halt 403, "CSRF Token Required"
@@ -36,6 +36,10 @@ module PiggyBank
 
     require_relative "./controllers/piggybank_controllers"
     require_relative "./lib/piggybank_lib"
+
+    def haml_layout(view)
+      haml view, layout: :layout
+    end
 
     run! if app_file == $0
   end

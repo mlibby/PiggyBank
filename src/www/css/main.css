@@ -85,8 +85,18 @@ button {
   margin-top: 2rem;
 }
 
+.diff {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 3rem;
+  row-gap: 1.5rem;
+}
+
 dd {
-  margin: 0 0 1rem 0;
+  padding: 0.4rem 0 0.5rem 0.5rem;
+  border-bottom: 1px dashed lightgrey;
+  margin: 0.5rem 0 1rem 0;
+  border-top: 1px dashed lightgrey;
 }
 
 dl {
@@ -123,7 +133,6 @@ dt {
 #flash .info:before,
 #flash .danger:before {
   font-family: 'icomoon' !important;
-  speak: none;
   font-size: 2rem;
   font-style: normal;
   font-weight: normal;
@@ -151,10 +160,6 @@ dt {
   color: white;
   border-radius: 1rem;
   box-shadow: 0.25rem 0.25rem 0.75rem black;
-}
-
-form {
-  padding: 1rem 0 1rem;
 }
 
 form label {

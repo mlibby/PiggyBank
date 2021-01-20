@@ -12,7 +12,7 @@
       %th Fraction
       %th
   %tbody
-    - commodities.each do |commodity|
+    - @commodities.each do |commodity|
       %tr
         %td
           %a{href: "/commodity/#{commodity.commodity_id}" }= commodity.name 

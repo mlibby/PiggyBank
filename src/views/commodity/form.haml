@@ -1,13 +1,11 @@
-%h1= header
-= styled_flash
 %form{
   method: 'POST',
-  action: action
+  action: @action
 }
   %input{
     type: 'hidden',
     name: '_method',
-    value: method
+    value: @method
   }
   %input{
     type: 'hidden',
@@ -17,13 +15,13 @@
   %input{
     type: 'hidden',
     name: 'version',
-    value: commodity.version
+    value: @commodity.version
   }
   %label
     Type
     %select(name='type')
       %option(value='') [Choose Commodity Type]
-      - commodity.type_opts.each do |opt|
+      - @commodity.type_opts.each do |opt|
         %option{
           value: opt[:value],
           selected: opt[:selected]
@@ -35,7 +33,7 @@
       required: true,
       type:'text',
       name: 'name', 
-      value: commodity.name
+      value: @commodity.name
     }
   %label
     Description
@@ -43,20 +41,20 @@
       required: true,
       type: 'text',
       name: 'description',
-      value: commodity.description
+      value: @commodity.description
     }
   %label
     Тicker
     %input{
       type: 'text',
       name: 'ticker',
-      value: commodity.ticker
+      value: @commodity.ticker
     } 
   %label
     Fraction
     %select(name='fraction')
       %option [Choose Fraction]
-      - commodity.fraction_opts.each do |opt|
+      - @commodity.fraction_opts.each do |opt|
         %option{
           value: opt[:value],
           selected: opt[:selected]

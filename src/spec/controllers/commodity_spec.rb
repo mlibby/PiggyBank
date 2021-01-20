@@ -185,11 +185,10 @@ describe PiggyBank::App do
       expect(response.status).to eq 409
       expect(response.body).to have_tag "h1", text: "Compare Old/New Commodity"
       expect(response.body).to have_tag "div#flash"
-      expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this commodity"
+      expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this commodity, please confirm changes"
     end
   end
 
-  # FIXME: there is an error message after completing a delete?
   context "DELETE /commodity/:id" do
     let(:response) do
       usd = PiggyBank::Commodity.find(name: "USD")
@@ -242,3 +241,5 @@ describe PiggyBank::App do
     end
   end
 end
+
+# DONE: there is an error message after completing a delete?

@@ -2,7 +2,7 @@
 = styled_flash
 %form{
   method: 'POST',
-  action: "/commodity/#{commodity.commodity_id}"
+  action: "/commodity/#{@commodity.commodity_id}"
 }
   %input{
     type: 'hidden',
@@ -17,9 +17,9 @@
   %input{
     type: 'hidden',
     name: 'version',
-    value: commodity.version
+    value: @commodity.version
   }
-  = haml :"commodity/as_dl", locals: { commodity: commodity }
+  = haml :"commodity/as_dl"
   .buttons
     %button.btn.danger
       %span.icon.icon-trash
