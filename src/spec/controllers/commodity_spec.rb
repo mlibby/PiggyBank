@@ -189,6 +189,7 @@ describe PiggyBank::App do
     end
   end
 
+  # FIXME: there is an error message after completing a delete?
   context "DELETE /commodity/:id" do
     let(:response) do
       usd = PiggyBank::Commodity.find(name: "USD")
