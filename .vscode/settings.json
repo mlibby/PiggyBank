@@ -11,7 +11,8 @@
       "FIXME",
       "TODO",
       "FIX",
-      "FUTURE"
+      "FUTURE",
+      "ZZZ"
   ],
   "todo-tree.general.tagGroups": {
       "FIX": [
