@@ -14,6 +14,11 @@
     name: '_token',
     value: PiggyBank::App.token
   }
+  %input{
+    type: 'hidden',
+    name: 'version',
+    value: commodity.version
+  }
   %label
     Type
     %select(name='type')

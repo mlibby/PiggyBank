@@ -1,11 +1,23 @@
 %h1 Delete Commodity?
 = styled_flash
-%form(method='POST')
+%form{
+  method: 'POST',
+  action: "/commodity/#{commodity.commodity_id}"
+}
   %input{
-    id: '_token',
+    type: 'hidden',
+    name: '_method',
+    value: 'DELETE'
+  }
+  %input{
     type: 'hidden',
     name: '_token',
     value: PiggyBank::App.token
+  }
+  %input{
+    type: 'hidden',
+    name: 'version',
+    value: commodity.version
   }
   = haml :"commodity/as_dl", locals: { commodity: commodity }
   .buttons

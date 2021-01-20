@@ -46,18 +46,20 @@ describe PiggyBank::App do
 
   context "GET /commodity/:id?edit" do
     let(:response) {
-      cid = PiggyBank::Commodity.where(name: "USD").single_record.commodity_id
+      cid = PiggyBank::Commodity.find(name: "USD").commodity_id
       get "/commodity/#{cid}?edit"
     }
     it { expect(response.status).to eq 200 }
     it { expect(response.body).to include "Edit Commodity" }
 
     it "has an edit form" do
+      version = PiggyBank::Commodity.find(name: "USD").version
       expect(response.body).to have_tag("form", with: { method: "POST" }) do
         with_tag "input", with: { name: "_token", type: "hidden" }
         with_tag "option", seen: "1/100 (123.12)", with: { value: "100", selected: "selected" }
         with_tag "option", seen: "Currency", with: { value: "1", selected: "selected" }
         with_tag "input", with: { name: "_method", type: "hidden", value: "PUT" }
+        with_tag "input", with: { name: "version", type: "hidden", value: version }
       end
     end
   end
@@ -69,10 +71,14 @@ describe PiggyBank::App do
     }
 
     it "has a delete confirmation form" do
+      usd = PiggyBank::Commodity.find(name: "USD")
       expect(response.body).to include "Delete Commodity?"
       expect(response.status).to eq 200
-      expect(response.body).to have_tag("form", with: { method: "POST" }) do
+      action = "/commodity/#{usd.commodity_id}"
+      expect(response.body).to have_tag("form", with: { method: "POST", action: action }) do
         with_tag "input", with: { name: "_token", type: "hidden" }
+        with_tag "input", with: { name: "_method", type: "hidden", value: "DELETE" }
+        with_tag "input", with: { name: "version", type: "hidden", value: usd.version }
       end
     end
   end
@@ -186,9 +192,9 @@ describe PiggyBank::App do
   context "DELETE /commodity/:id" do
     let(:response) do
       usd = PiggyBank::Commodity.find(name: "USD")
-      delete "/commodity/#{usd.commodity_id}", { 
+      delete "/commodity/#{usd.commodity_id}", {
         _token: PiggyBank::App.token,
-        version: usd.version
+        version: usd.version,
       }
     end
 
