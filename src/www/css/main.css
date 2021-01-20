@@ -98,6 +98,36 @@ dt {
   font-weight: bold;
 }
 
+#flash .success {
+  margin: 1rem 1rem 1rem 0;
+  padding: 1rem;
+  border: 2px solid black;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 1rem;
+  box-shadow: 0.25rem 0.25rem 0.75rem black;
+}
+
+#flash .danger {
+  margin: 1rem 1rem 1rem 0;
+  padding: 1rem;
+  border: 2px solid black;
+  background-color: var(--danger-color);
+  color: white;
+  border-radius: 1rem;
+  box-shadow: 0.25rem 0.25rem 0.75rem black;
+}
+
+#flash .info {
+  margin: 1rem 1rem 1rem 0;
+  padding: 1rem;
+  border: 2px solid black;
+  background-color: var(--secondary-color);
+  color: white;
+  border-radius: 1rem;
+  box-shadow: 0.25rem 0.25rem 0.75rem black;
+}
+
 form {
   padding: 1rem 0 1rem;
 }
