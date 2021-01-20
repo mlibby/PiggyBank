@@ -101,17 +101,43 @@ dt {
 #flash .success {
   margin: 1rem 1rem 1rem 0;
   padding: 1rem;
-  border: 2px solid black;
   background-color: var(--primary-color);
   color: white;
   border-radius: 1rem;
   box-shadow: 0.25rem 0.25rem 0.75rem black;
 }
 
+#flash .success:before {
+  content: "\e606";
+}
+
+#flash .info:before {
+  content: "\e61d";
+}
+
+#flash .danger:before {
+  content: "\e60d";
+}
+
+#flash .success:before,
+#flash .info:before,
+#flash .danger:before {
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-size: 2rem;
+  padding-right: 1rem;
+  vertical-align: middle;
+}
+
 #flash .danger {
   margin: 1rem 1rem 1rem 0;
   padding: 1rem;
-  border: 2px solid black;
   background-color: var(--danger-color);
   color: white;
   border-radius: 1rem;
@@ -121,7 +147,6 @@ dt {
 #flash .info {
   margin: 1rem 1rem 1rem 0;
   padding: 1rem;
-  border: 2px solid black;
   background-color: var(--secondary-color);
   color: white;
   border-radius: 1rem;
