@@ -17,5 +17,10 @@ module PiggyBank
     # Integer :type, null: false
     # String :typeData, text: true
     # String :version, text: true, null: false
+
+    def Account.as_chart
+      chart = Account.all
+    end
+
   end
 end

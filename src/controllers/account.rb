@@ -1,9 +1,12 @@
 module PiggyBank
   class App < Sinatra::Base
+    def account_index
+      #@accounts = PiggyBank::Account.as_chart
+      haml_layout :"account/index"
+    end
+
     get "/accounts" do
-      haml :"account/index",
-          layout: :layout 
-          # TODO: pass list of accounts
+      account_index
     end
 
     # TODO: GET /account/new = new account form
@@ -23,3 +26,5 @@ module PiggyBank
     # TODO: GET /accounts/setup = preset account lists to choose from
   end
 end
+
+# TODO: pass list of accounts
