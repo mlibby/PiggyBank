@@ -1,7 +1,7 @@
 module PiggyBank
   class App < Sinatra::Base
     def account_index
-      #@accounts = PiggyBank::Account.as_chart
+      @accounts = PiggyBank::Account.as_chart
       haml_layout :"account/index"
     end
 

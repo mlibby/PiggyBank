@@ -8,7 +8,10 @@ module PiggyBank
   # String :type_data, text: true
   # String :version, text: true, null: false
   class Account < Sequel::Model(:account)
-    TYPE = {
+    one_to_many :subaccounts, class: self, key: :parent_id
+    many_to_one :commodity, class: PiggyBank::Commodity
+
+     TYPE = {
       asset: 1,
       liability: 2,
       equity: 3,
@@ -24,5 +27,6 @@ module PiggyBank
     def before_create
       self.version = PiggyBank::Repo.timestamp
     end
+
   end
 end

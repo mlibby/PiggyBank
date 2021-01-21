@@ -11,13 +11,18 @@ describe PiggyBank::Account do
   let(:usd) { PiggyBank::Commodity.find(name: "USD") }
 
   context "class" do
-    it "has an Account.as_chart method" do
+    it "Account.as_chart returns all accounts as tree" do
       accounts = PiggyBank::Account.as_chart
       account_names = accounts.map { |a| a.name }
       expect(accounts.length).to eq 5
       %w{Assets Liabilities Equity Income Expense}.each do |primary|
         expect(account_names).to include primary
       end
+
+      equity = accounts.find { |a| a.name == "Equity" }
+      liabilities = accounts.find { |a| a.name == "Liabilities" }
+      expect(liabilities.subaccounts).not_to be_empty
+      expect(equity.subaccounts).to be_empty
     end
   end
 
