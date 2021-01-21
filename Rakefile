@@ -4,5 +4,5 @@ task default: :spec
 
 RSpec::Core::RakeTask.new(:spec) do |s|
   ENV["APP_ENV"] = "TEST"
-  s.pattern = "src/spec/**/*_spec.rb"
+  s.pattern = "spec/**/*_spec.rb"
 end

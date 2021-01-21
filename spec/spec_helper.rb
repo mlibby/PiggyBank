@@ -12,7 +12,7 @@ RSpec.configure do |config|
 end
 
 ENV["APP_ENV"] = "TEST"
-require_relative "../piggybank_app.rb"
+require_relative "../src/piggybank_app.rb"
 
 def flash
   last_request.env["rack.session"]["flash"]
