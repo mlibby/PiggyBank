@@ -7,6 +7,9 @@ describe PiggyBank::Account do
     seed_db
   end
 
+  let(:assets) { PiggyBank::Account.find(name: "Assets") }
+  let(:usd) { PiggyBank::Commodity.find(name: "USD") }
+
   context "class" do
     it "has an Account.as_chart method" do
       accounts = PiggyBank::Account.as_chart
@@ -19,11 +22,7 @@ describe PiggyBank::Account do
   end
 
   context "new instance" do
-    # before(:example) do
-    #   PiggyBank::Account.truncate
-    # end
-
-    # let(:instance) { PiggyBank::Commodity.new }
+    let(:instance) { PiggyBank::Account.new }
 
     # it "is invalid at first" do
     #   expect(instance.valid?).to be false
@@ -37,14 +36,16 @@ describe PiggyBank::Account do
     #   expect(instance.valid?).to be true
     # end
 
-    # it "has a version after save" do
-    #   instance.name = "USD"
-    #   instance.description = "US Dollar"
-    #   instance.fraction = 100
-    #   instance.type = 1
-    #   instance.save
-    #   expect(instance.version).to match(/\d{4}\-\d\d-\d\dT\d\d:\d\d:\d\d\+00:00/)
-    # end
+    it "has a version after save" do
+      instance.name = "Checking"
+      instance.parent_id = assets.account_id
+      instance.commodity_id = usd.commodity_id
+      instance.is_placeholder = false
+      instance.type = PiggyBank::Account::TYPE_CODE[:asset]
+      instance.save
+
+      expect(instance.version).to match(/\d{4}\-\d\d-\d\dT\d\d:\d\d:\d\d\+00:00/)
+    end
 
     # it "has a type_string attribute" do
     #   instance.type = 1

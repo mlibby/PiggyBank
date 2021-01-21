@@ -22,5 +22,9 @@ module PiggyBank
       chart = Account.where(parent_id: nil).all
     end
 
+    def before_create
+      self.version = PiggyBank::Repo.timestamp
+    end
+
   end
 end
