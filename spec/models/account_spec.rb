@@ -41,7 +41,7 @@ describe PiggyBank::Account do
       instance.parent_id = assets.account_id
       instance.commodity_id = usd.commodity_id
       instance.is_placeholder = false
-      instance.type = PiggyBank::Account::TYPE_CODE[:asset]
+      instance.type = PiggyBank::Account::TYPE[:asset]
       instance.save
 
       expect(instance.version).to match(/\d{4}\-\d\d-\d\dT\d\d:\d\d:\d\d\+00:00/)
