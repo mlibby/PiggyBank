@@ -3,10 +3,14 @@ require_relative "../spec_helper.rb"
 describe PiggyBank::Account do
   include Rack::Test::Methods
 
+  before(:context) do
+    seed_db
+  end
+
   context "class" do
     it "has an Account.as_chart method" do
       accounts = PiggyBank::Account.as_chart
-      # expect(accounts.length).to eq 5
+      expect(accounts.length).to eq 5
       # expect(accounts.keys).to include "Assets"
       # expect(accounts.keys).to include "Liabilities"
       # expect(accounts.keys).to include "Equity"

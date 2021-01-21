@@ -1,12 +1,12 @@
 module PiggyBank
   class Account < Sequel::Model(:account)
     TYPE_CODE = {
-      "Asset" => 1,
-      "Liability" => 2,
-      "Equity" => 3,
-      "Income" => 4,
-      "Expense" => 5,
-      "Mortgage" => 6
+      asset: 1,
+      liability: 2,
+      equity: 3,
+      income: 4,
+      expense: 5,
+      mortgage: 6
     }
 
     # primary_key :account_id

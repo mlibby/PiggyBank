@@ -13,7 +13,9 @@ end
 
 ENV["APP_ENV"] = "TEST"
 require_relative "../src/piggybank_app.rb"
+require_relative "seeds/seed_db"
 
 def flash
   last_request.env["rack.session"]["flash"]
 end
+
