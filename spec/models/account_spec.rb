@@ -23,6 +23,8 @@ describe PiggyBank::Account do
       liabilities = accounts.find { |a| a.name == "Liabilities" }
       expect(liabilities.subaccounts).not_to be_empty
       expect(equity.subaccounts).to be_empty
+      expect(liabilities.has_subaccounts?).to be true
+      expect(equity.has_subaccounts?).to be false
     end
   end
 
