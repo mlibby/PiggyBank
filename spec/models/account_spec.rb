@@ -10,12 +10,11 @@ describe PiggyBank::Account do
   context "class" do
     it "has an Account.as_chart method" do
       accounts = PiggyBank::Account.as_chart
+      account_names = accounts.map { |a| a.name }
       expect(accounts.length).to eq 5
-      # expect(accounts.keys).to include "Assets"
-      # expect(accounts.keys).to include "Liabilities"
-      # expect(accounts.keys).to include "Equity"
-      # expect(accounts.keys).to include "Income"
-      # expect(accounts.keys).to include "Expense"
+      %w{Assets Liabilities Equity Income Expense}.each do |primary|
+        expect(account_names).to include primary
+      end
     end
   end
 

@@ -40,4 +40,13 @@ def seed_accounts
                             type: PiggyBank::Account::TYPE_CODE[:expense],
                             type_data: "",
                             version: PiggyBank::Repo.timestamp
+
+  liabilities = PiggyBank::Account.find(name: "Liabilities")
+  PiggyBank::Account.create parent_id: liabilities.account_id,
+                            commodity_id: usd_id,
+                            name: "Mortgage",
+                            is_placeholder: false,
+                            type: PiggyBank::Account::TYPE_CODE[:mortgage],
+                            type_data: "",
+                            version: PiggyBank::Repo.timestamp
 end

@@ -19,7 +19,7 @@ module PiggyBank
     # String :version, text: true, null: false
 
     def Account.as_chart
-      chart = Account.all
+      chart = Account.where(parent_id: nil).all
     end
 
   end

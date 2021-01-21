@@ -3,7 +3,6 @@
     "*_spec.rb"
   ],
   "rubyTestExplorer.testFramework": "rspec",
-  "rubyTestExplorer.rspecDirectory": "./src/spec/",
   "todo-tree.tree.showScanModeButton": false,
   "todo-tree.general.statusBar": "tags",
   "todo-tree.general.tags": [
@@ -19,5 +18,6 @@
           "BUG",
           "FIXME"
       ]
-  }
+  },
+  "rubyTestExplorer.rspecDirectory": "./spec"
 }
