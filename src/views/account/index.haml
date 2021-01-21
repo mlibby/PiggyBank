@@ -12,10 +12,11 @@
   %span.icon.icon-trash
   to delete an account.
 
--# TODO: Display chart of accounts
+= haml :"account/tree", locals: { accounts: @accounts }
 
 %p
   <em>Assets</em>, <em>Liabilities</em>, <em>Income</em>, 
   <em>Expense</em>, and <em>Equity</em> are 
   required accounts and may not be edited or deleted.
 
+-# ZZZ: Display chart of accounts

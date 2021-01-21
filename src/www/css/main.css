@@ -47,6 +47,7 @@ header {
   border-radius: 0.5rem;
   background-color: var(--bg-color);
   margin: 0 0.66rem 0 0;
+  vertical-align: middle;
 }
 
 .btn .icon {

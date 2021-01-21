@@ -11,13 +11,13 @@ module PiggyBank
     one_to_many :subaccounts, class: self, key: :parent_id
     many_to_one :commodity, class: PiggyBank::Commodity
 
-     TYPE = {
+    TYPE = {
       asset: 1,
       liability: 2,
       equity: 3,
       income: 4,
       expense: 5,
-      mortgage: 6
+      mortgage: 6,
     }
 
     def Account.as_chart
@@ -28,5 +28,8 @@ module PiggyBank
       self.version = PiggyBank::Repo.timestamp
     end
 
+    def has_subaccounts?
+      self.subaccounts.length > 0
+    end
   end
 end

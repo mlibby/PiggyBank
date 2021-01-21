@@ -1,0 +1,14 @@
+%ul.accounts
+- accounts.each do |account|
+  %li.account
+    %span{class: account.is_placeholder ? "name placeholder" : "name" }= account.name
+    %a.btn.primary{ href: "/account/#{account.account_id}?edit" }
+      %span.icon.icon-pencil
+      %span.sr-only Edit 
+    %a.btn.secondary{ href: "/account?new&parent_id=#{account.account_id}" }
+      %span.icon.icon-plus
+      %span.sr-only Add Subaccount
+    %a.btn.danger{ href: "/account/#{account.account_id}?delete" }
+      %span.icon.icon-trash
+      %span.sr-only Trash  - if account.has_subaccounts?
+    = haml :"account/tree", locals: { accounts: account.subaccounts }
