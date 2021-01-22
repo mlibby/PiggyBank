@@ -11,4 +11,16 @@ describe PiggyBank::App do
     it { expect(response.status).to eq 200 }
     it { expect(response.body).to include "Accounts" }
   end
+
+  context "GET /account" do
+    let(:response) { get "/account" }
+    it { expect(response.status).to eq 200 }
+    it { expect(response.body).to include "New Account" }
+    it "has a form" do
+      expect(response.body).to have_tag "form", with: {
+                                                  method: "POST",
+                                                  action: "/account",
+                                                }
+    end
+  end
 end

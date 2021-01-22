@@ -5,26 +5,39 @@ module PiggyBank
       haml_layout :"account/index"
     end
 
+    def account_new
+      @account ||= PiggyBank::Account.new
+
+      @method = "POST"
+      @action = "/account"
+      @header = "New Account"
+
+      haml_layout :"account/edit"
+    end
+
+    # ROUTES
+
     get "/accounts" do
       account_index
     end
 
-    # TODO: GET /account/new = new account form
+    get "/account" do
+      account_new
+    end
 
     # TODO: POST /account = create account
 
-    # TODO: GET /account/:id = edit account form
-
+    # TODO: GET /account/:id = view account
+    # TODO: GET /account/:id?edit = edit account form
     # TODO: PUT /account/:id = update account
 
-    # TODO: GET /account/delete = confirm delete
-
+    # TODO: GET /account/:id?delete = confirm delete form
     # TODO: DELETE /account/:id = delete account
 
     # TODO: GET /accounts/import = import textual chart of accounts
-
     # TODO: GET /accounts/setup = preset account lists to choose from
   end
 end
 
 # ZZZ: pass list of accounts
+# ZZZ: GET /account = new account form
