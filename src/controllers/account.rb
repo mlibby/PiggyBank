@@ -5,11 +5,25 @@ module PiggyBank
       haml_layout :"account/index"
     end
 
+    def account_new
+      @account ||= PiggyBank::Account.new
+
+      @method = "POST"
+      @action = "/account"
+      @header = "New Account"
+
+      haml_layout :"account/edit"
+    end
+
+    # ROUTES
+
     get "/accounts" do
       account_index
     end
 
-    # TODO: GET /account/new = new account form
+    get "/account" do
+      account_new
+    end
 
     # TODO: POST /account = create account
 
@@ -28,3 +42,4 @@ module PiggyBank
 end
 
 # ZZZ: pass list of accounts
+# ZZZ: GET /account = new account form
