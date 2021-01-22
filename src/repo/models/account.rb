@@ -24,6 +24,11 @@ module PiggyBank
       chart = Account.where(parent_id: nil).all
     end
 
+    def account_opts
+      opts = 
+      self.each do |account|
+    end
+
     def before_create
       self.version = PiggyBank::Repo.timestamp
     end

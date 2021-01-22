@@ -97,12 +97,12 @@ describe PiggyBank::Account do
     #   expect { instance.save }.to raise_error(Sequel::ValidationFailed)
     # end
 
-    # it "fraction_opts has correct option selected" do
-    #   instance = PiggyBank::Commodity.find(name: "USD")
-    #   fraction_opts = instance.fraction_opts
-    #   expect(fraction_opts[2][:value]).to eq 100
-    #   expect(fraction_opts[2][:selected]).to eq true
-    # end
+    it "account_opts has correct option selected" do
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+      account_opts = mortgage.account_opts
+      # expect(account_opts[2][:value]).to eq 100
+      # expect(account_opts[2][:selected]).to eq true
+    end
 
     # it "type_opts has correct option selected" do
     #   instance = PiggyBank::Commodity.find(name: "USD")
