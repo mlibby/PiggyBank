@@ -33,8 +33,8 @@ module PiggyBank
     # TODO: GET /account/:id?delete = confirm delete form
     # TODO: DELETE /account/:id = delete account
 
-    # TODO: GET /accounts/import = import textual chart of accounts
-    # TODO: GET /accounts/setup = preset account lists to choose from
+    # FUTURE: GET /accounts/import = import textual chart of accounts
+    # FUTURE: GET /accounts/setup = preset account lists to choose from
   end
 end
 
