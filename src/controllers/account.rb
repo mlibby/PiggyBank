@@ -40,15 +40,14 @@ module PiggyBank
     end
 
     post "/account" do
-      # TODO: CSRF protection for /account
-      # if params["_token"] != PiggyBank::App.token
-      #   @account = PiggyBank::Account.new
-      #   @account.set_fields params, PiggyBank::Account.update_fields
-      #   flash.now[:danger] = "Failed to create, please try again"
-      #   halt 403, commodity_new
-      # else
-      account_create params
-      # end
+      if params["_token"] != PiggyBank::App.token
+        @account = PiggyBank::Account.new
+        @account.set_fields params, PiggyBank::Account.update_fields
+        flash.now[:danger] = "Failed to create, please try again"
+        halt 403, account_new
+      else
+        account_create params
+      end
     end
 
     # TODO: GET /account/:id = view account
@@ -66,3 +65,4 @@ end
 # ZZZ: pass list of accounts
 # ZZZ: GET /account = new account form
 # ZZZ: POST /account = create account
+# ZZZ: CSRF protection for /account

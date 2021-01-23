@@ -21,7 +21,11 @@ module PiggyBank
       mortgage: 6,
     }
 
-    def Account.as_chart
+    def self.update_fields
+      return [:type, :type_data, :name, :parent_id, :commodity_id, :is_placeholder]
+    end
+    
+    def self.as_chart
       chart = Account.where(parent_id: nil).all
     end
 
