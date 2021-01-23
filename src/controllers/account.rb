@@ -6,12 +6,9 @@ module PiggyBank
     end
 
     def account_new
-      @account ||= PiggyBank::Account.new
-
       @method = "POST"
       @action = "/account"
       @header = "New Account"
-
       haml_layout :"account/edit"
     end
 
@@ -22,6 +19,8 @@ module PiggyBank
     end
 
     get "/account" do
+      @account = PiggyBank::Account.new
+      @account.parent = PiggyBank::Account.find(account_id: params[:parent_id])
       account_new
     end
 

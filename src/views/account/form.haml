@@ -14,16 +14,16 @@
         Liability
       %option{ value: 6 }
         Mortgage
-  %label
-    Parent Account
-    %select{ name: "parent_id" }
-      -# TODO: create Parent Account select menu
-      -# - PiggyBank::Account.account_opts.each do |opt|
-      -#   %option{
-      -#     value: opt[:value],
-      -#     selected: opt[:selected]
-      -#   }
-      -#     = opt[:text]
+  - if @account.parent
+    %label
+      Parent Account
+      %select{ name: "parent_id" }
+        - @account.parent.account_opts.each do |opt|
+          %option{
+            value: opt[:value],
+            selected: opt[:selected]
+          }
+            = opt[:text]
   %label
     Commodity
     %select{ name: "commodity_id"}
@@ -87,3 +87,4 @@
       %span.icon.icon-close
       %span.text Cancel
 
+-# ZZZ: create Parent Account select menu

@@ -7,12 +7,7 @@ describe PiggyBank::App do
   let(:app) { PiggyBank::App.new }
 
   before(:example) do
-    PiggyBank::Commodity.truncate
-    PiggyBank::Commodity.create name: "USD",
-                                type: PiggyBank::Commodity::COMMODITY_TYPE[:currency],
-                                description: "US Dollar",
-                                ticker: "USD",
-                                fraction: 100
+    seed_db
   end
 
   context "GET /commodities" do
@@ -66,19 +61,19 @@ describe PiggyBank::App do
 
   context "GET /commodity/:id?delete" do
     let(:response) {
-      cid = PiggyBank::Commodity.where(name: "USD").single_record.commodity_id
-      get "/commodity/#{cid}?delete"
+      jpy = PiggyBank::Commodity.find(name: "JPY")
+      get "/commodity/#{jpy.commodity_id}?delete"
     }
 
     it "has a delete confirmation form" do
-      usd = PiggyBank::Commodity.find(name: "USD")
+      jpy = PiggyBank::Commodity.find(name: "JPY")
       expect(response.body).to include "Delete Commodity?"
       expect(response.status).to eq 200
-      action = "/commodity/#{usd.commodity_id}"
+      action = "/commodity/#{jpy.commodity_id}"
       expect(response.body).to have_tag("form", with: { method: "POST", action: action }) do
         with_tag "input", with: { name: "_token", type: "hidden" }
         with_tag "input", with: { name: "_method", type: "hidden", value: "DELETE" }
-        with_tag "input", with: { name: "version", type: "hidden", value: usd.version }
+        with_tag "input", with: { name: "version", type: "hidden", value: jpy.version }
       end
     end
   end
@@ -159,7 +154,7 @@ describe PiggyBank::App do
 
   context "PUT /commodity/:id with invalid token" do
     let(:response) {
-      usd = PiggyBank::Commodity.where(name: "USD").single_record
+      usd = PiggyBank::Commodity.find(name: "USD")
       params = update_params(usd)
       params[:_token] = "bad token"
       put "/commodity/#{usd.commodity_id}", params
@@ -190,31 +185,27 @@ describe PiggyBank::App do
   end
 
   context "DELETE /commodity/:id" do
-    let(:response) do
-      usd = PiggyBank::Commodity.find(name: "USD")
-      delete "/commodity/#{usd.commodity_id}", {
-        _token: PiggyBank::App.token,
-        version: usd.version,
-      }
-    end
-
     it "deletes the commodity" do
-      usd = PiggyBank::Commodity.find(name: "USD")
+      jpy = PiggyBank::Commodity.find(name: "JPY")
+      response = delete "/commodity/#{jpy.commodity_id}", {
+        _token: PiggyBank::App.token,
+        version: jpy.version,
+      }
       expect(response.status).to eq 302
       location = URI(response.headers["Location"])
       expect(location.path).to eq "/commodities"
       expect(flash).to have_key :success
-      expect(flash[:success]).to eq "Commodity 'USD' deleted."
+      expect(flash[:success]).to eq "Commodity 'JPY' deleted."
     end
   end
 
   context "DELETE /commodity/:id with invalid token" do
     let(:response) {
-      usd = PiggyBank::Commodity.find(name: "USD")
-      params = update_params(usd)
+      jpy = PiggyBank::Commodity.find(name: "JPY")
+      params = update_params(jpy)
       params["_token"] = "bad penny"
-      usd = PiggyBank::Commodity.where(name: "USD").single_record
-      delete "/commodity/#{usd.commodity_id}", params
+      usd = PiggyBank::Commodity.find(name: "JPY")
+      delete "/commodity/#{jpy.commodity_id}", params
     }
 
     it "politely refuses to delete" do

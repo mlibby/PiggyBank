@@ -3,7 +3,7 @@ require_relative "../spec_helper.rb"
 describe PiggyBank::Account do
   include Rack::Test::Methods
 
-  before(:context) do
+  before(:example) do
     seed_db
   end
 
@@ -23,6 +23,8 @@ describe PiggyBank::Account do
       liabilities = accounts.find { |a| a.name == "Liabilities" }
       expect(liabilities.subaccounts).not_to be_empty
       expect(equity.subaccounts).to be_empty
+      expect(liabilities.has_subaccounts?).to be true
+      expect(equity.has_subaccounts?).to be false
     end
   end
 
@@ -97,11 +99,24 @@ describe PiggyBank::Account do
     #   expect { instance.save }.to raise_error(Sequel::ValidationFailed)
     # end
 
-    it "account_opts has correct option selected" do
+    it "Account#parent" do
       mortgage = PiggyBank::Account.find(name: "Mortgage")
+      expect(mortgage.parent.name).to eq "Liabilities"
+    end
+
+    it "Account#long_name" do
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+      expect(mortgage.long_name).to eq "Liabilities:Mortgage"
+    end
+
+    it "Account#account_opts has correct option selected" do
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+
       account_opts = mortgage.account_opts
-      # expect(account_opts[2][:value]).to eq 100
-      # expect(account_opts[2][:selected]).to eq true
+      expect(account_opts.length).to eq 6
+
+      mortgage_opt = account_opts.find { |ao| ao[:value] == mortgage.account_id }
+      expect(mortgage_opt[:selected]).to eq true
     end
 
     # it "type_opts has correct option selected" do

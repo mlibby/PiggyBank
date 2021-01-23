@@ -15,16 +15,16 @@ describe PiggyBank::Commodity do
     end
 
     it "is valid after attributes set" do
-      instance.name = "JPY"
-      instance.description = "Japanese Yen"
+      instance.name = "FOO"
+      instance.description = "Foo Bar"
       instance.fraction = 1
       instance.type = 1
       expect(instance.valid?).to be true
     end
 
     it "has a version after save" do
-      instance.name = "JPY"
-      instance.description = "Japanese Yen"
+      instance.name = "FOO"
+      instance.description = "Foo Bar"
       instance.fraction = 1
       instance.type = 1
       instance.save
@@ -57,7 +57,7 @@ describe PiggyBank::Commodity do
 
     it "can be changed and saved" do
       instance = PiggyBank::Commodity.find(name: "USD")
-      instance.name = "CAD"
+      instance.name = "FOO"
       expect { instance.save }.not_to raise_error
     end
 
