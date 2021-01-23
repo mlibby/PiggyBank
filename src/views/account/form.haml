@@ -57,14 +57,12 @@
       value: @account.name
     }
   .form-check
-    %input{
-      id: 'is_placeholder',
-      type: 'checkbox',
-      checked: @account.is_placeholder
-    }
-    %label{ 
-      for: 'is_placeholder'
-    }
+    %label
+      %input{
+        name: 'is_placeholder',
+        type: 'checkbox',
+        checked: @account.is_placeholder
+      }
       Is Placeholder
     -# <div id='mortgage-details' class='account-details' style='display: none'>
     -#   <hr />

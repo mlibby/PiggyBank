@@ -22,7 +22,7 @@ module PiggyBank
         type: params["type"],
         parent_id: params["parent_id"],
         commodity_id: params["commodity_id"],
-        is_placeholder: params["is_placeholder"],
+        is_placeholder: params["is_placeholder"].nil? ? false : true
       )
 
       flash[:success] = "Account '#{@account.name}' created."

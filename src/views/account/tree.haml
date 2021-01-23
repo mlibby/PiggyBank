@@ -2,7 +2,7 @@
 - accounts.each do |account|
   %li.account
     %span{class: account.is_placeholder ? "name placeholder" : "name" }
-      %a{href: "/account/#{account.account_id}"}
+      %a{href: "/account/#{account.account_id}"}<
         = account.name
     %a.btn.primary{ href: "/account/#{account.account_id}?edit" }
       %span.icon.icon-pencil

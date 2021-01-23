@@ -26,7 +26,7 @@ module PiggyBank
     end
     
     def self.as_chart
-      chart = Account.where(parent_id: nil).all
+      chart = Account.where(parent_id: nil).eager(:subaccounts).all
     end
 
     def before_create

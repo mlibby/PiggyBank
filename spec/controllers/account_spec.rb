@@ -231,7 +231,7 @@ end
 # ZZZ: POST /account = create account
 # ZZZ: CSRF protection for /account
 
-# TODO: GET /account/:id = view account
+# ZZZ: GET /account/:id = view account
 # TODO: GET /account/:id?edit = edit account form
 # TODO: PUT /account/:id = update account
 
