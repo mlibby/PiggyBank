@@ -10,7 +10,8 @@
     %a.btn.secondary{ href: "/account?parent_id=#{account.account_id}" }
       %span.icon.icon-plus
       %span.sr-only Add Subaccount
-    %a.btn.danger{ href: "/account/#{account.account_id}?delete" }
-      %span.icon.icon-trash
-      %span.sr-only Trash  - if account.has_subaccounts?
+    - if !account.parent.nil?
+      %a.btn.danger{ href: "/account/#{account.account_id}?delete" }
+        %span.icon.icon-trash
+        %span.sr-only Trash  - if account.has_subaccounts?
     = haml :"account/tree", locals: { accounts: account.subaccounts }

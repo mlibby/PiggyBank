@@ -236,6 +236,7 @@ end
 # TODO: PUT /account/:id = update account
 
 # TODO: GET /account/:id?delete = confirm delete form
+# TODO: prevent deletion of top-level accounts
 # TODO: DELETE /account/:id = delete account
 
 # FUTURE: GET /accounts/import = import textual chart of accounts
