@@ -21,7 +21,7 @@ module PiggyBank
 
     def commodity_create(params)
       name = params["name"]
-      
+
       @commodity = PiggyBank::Commodity.create(
         name: name,
         description: params["description"],
@@ -64,8 +64,8 @@ module PiggyBank
     end
 
     def commodity_delete
-      @commodity.destroy
       flash[:success] = "Commodity '#{@commodity.name}' deleted."
+      @commodity.destroy
       redirect to "/commodities"
     end
 

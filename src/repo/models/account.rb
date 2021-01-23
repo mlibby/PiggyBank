@@ -9,6 +9,7 @@ module PiggyBank
   # String :version, text: true, null: false
   class Account < Sequel::Model(:account)
     one_to_many :subaccounts, class: self, key: :parent_id
+    many_to_one :parent, class: self
     many_to_one :commodity, class: PiggyBank::Commodity
 
     TYPE = {
@@ -30,6 +31,26 @@ module PiggyBank
 
     def has_subaccounts?
       self.subaccounts.length > 0
+    end
+
+    def account_opts
+      PiggyBank::Account.all.map do |account| 
+        {
+          text: account.long_name,
+          value: account.account_id,
+          selected: account.account_id == self.account_id
+        }
+      end
+    end
+
+    def long_name
+      names = [self.name]
+      this_parent = self.parent
+      while this_parent do
+        names << this_parent.name
+        this_parent = this_parent.parent
+      end
+      names.reverse.join(":")
     end
   end
 end
