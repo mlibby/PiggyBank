@@ -86,37 +86,35 @@ describe PiggyBank::App do
     it { expect(response.body).to match /Account 'Liabilities:Mortgage'/ }
   end
 
-  # context "GET /commodity/:id?edit" do
-  #   let(:response) {
-  #     cid = PiggyBank::Commodity.find(name: "USD").commodity_id
-  #     get "/commodity/#{cid}?edit"
-  #   }
-  #   it { expect(response.status).to eq 200 }
-  #   it { expect(response.body).to include "Edit Commodity" }
+  context "GET /account/:id?edit" do
+    let(:response) {
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+      get "/account/#{mortgage.account_id}?edit"
+    }
+    it { expect(response.status).to eq 200 }
+    it { expect(response.body).to include "Edit Account" }
 
-  #   it "has an edit form" do
-  #     version = PiggyBank::Commodity.find(name: "USD").version
-  #     expect(response.body).to have_tag("form", with: { method: "POST" }) do
-  #       with_tag "input", with: { name: "_token", type: "hidden" }
-  #       with_tag "option", seen: "1/100 (123.12)", with: { value: "100", selected: "selected" }
-  #       with_tag "option", seen: "Currency", with: { value: "1", selected: "selected" }
-  #       with_tag "input", with: { name: "_method", type: "hidden", value: "PUT" }
-  #       with_tag "input", with: { name: "version", type: "hidden", value: version }
-  #     end
-  #   end
-  # end
+    it "has an edit form" do
+      version = PiggyBank::Account.find(name: "Mortgage").version
+      expect(response.body).to have_tag("form", with: { method: "POST" }) do
+        with_tag "input", with: { name: "_token", type: "hidden" }
+        with_tag "input", with: { name: "_method", type: "hidden", value: "PUT" }
+        with_tag "input", with: { name: "version", type: "hidden", value: version }
+      end
+    end
+  end
 
-  # context "GET /commodity/:id?delete" do
+  # context "GET /account/:id?delete" do
   #   let(:response) {
-  #     jpy = PiggyBank::Commodity.find(name: "JPY")
-  #     get "/commodity/#{jpy.commodity_id}?delete"
+  #     jpy = PiggyBank::account.find(name: "JPY")
+  #     get "/account/#{jpy.account_id}?delete"
   #   }
 
   #   it "has a delete confirmation form" do
-  #     jpy = PiggyBank::Commodity.find(name: "JPY")
-  #     expect(response.body).to include "Delete Commodity?"
+  #     jpy = PiggyBank::account.find(name: "JPY")
+  #     expect(response.body).to include "Delete account?"
   #     expect(response.status).to eq 200
-  #     action = "/commodity/#{jpy.commodity_id}"
+  #     action = "/account/#{jpy.account_id}"
   #     expect(response.body).to have_tag("form", with: { method: "POST", action: action }) do
   #       with_tag "input", with: { name: "_token", type: "hidden" }
   #       with_tag "input", with: { name: "_method", type: "hidden", value: "DELETE" }
@@ -125,17 +123,17 @@ describe PiggyBank::App do
   #   end
   # end
 
-  # context "PUT /commodity/:id with valid params" do
+  # context "PUT /account/:id with valid params" do
   #   let(:response) do
-  #     usd = PiggyBank::Commodity.where(name: "USD").single_record
-  #     put "/commodity/#{usd.commodity_id}", update_params(usd)
+  #     usd = PiggyBank::account.where(name: "USD").single_record
+  #     put "/account/#{usd.account_id}", update_params(usd)
   #   end
 
   #   it "updates the DB" do
   #     expect(response.status).to eq 200
-  #     expect(response.body).to match /Commodity \d+/
+  #     expect(response.body).to match /account \d+/
 
-  #     usb = PiggyBank::Commodity.where(name: "USB").single_record
+  #     usb = PiggyBank::account.where(name: "USB").single_record
   #     expect(usb.name).to eq "USB"
   #     expect(usb.description).to eq "Universal Serial Bus"
   #     expect(usb.ticker).to eq "USB"
@@ -144,42 +142,42 @@ describe PiggyBank::App do
   #   end
   # end
 
-  # context "PUT /commodity/:id with invalid token" do
+  # context "PUT /account/:id with invalid token" do
   #   let(:response) {
-  #     usd = PiggyBank::Commodity.find(name: "USD")
+  #     usd = PiggyBank::account.find(name: "USD")
   #     params = update_params(usd)
   #     params[:_token] = "bad token"
-  #     put "/commodity/#{usd.commodity_id}", params
+  #     put "/account/#{usd.account_id}", params
   #   }
 
   #   it "politely refuses to update" do
   #     expect(response.status).to eq 403
-  #     expect(response.body).to have_tag "h1", text: "Edit Commodity"
+  #     expect(response.body).to have_tag "h1", text: "Edit account"
   #     expect(response.body).to have_tag "div#flash"
   #     expect(response.body).to have_tag "div.flash.danger", text: "Failed to save changes, please try again"
   #   end
   # end
 
-  # context "PUT /commodity/:id with version mismatch" do
+  # context "PUT /account/:id with version mismatch" do
   #   let(:response) {
-  #     usd = PiggyBank::Commodity.find(name: "USD")
+  #     usd = PiggyBank::account.find(name: "USD")
   #     params = update_params(usd)
   #     params[:version] = "bad version"
-  #     put "/commodity/#{usd.commodity_id}", params
+  #     put "/account/#{usd.account_id}", params
   #   }
 
   #   it "politely refuses to update" do
   #     expect(response.status).to eq 409
-  #     expect(response.body).to have_tag "h1", text: "Compare Old/New Commodity"
+  #     expect(response.body).to have_tag "h1", text: "Compare Old/New account"
   #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this commodity, please confirm changes"
+  #     expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this account, please confirm changes"
   #   end
   # end
 
-  # context "DELETE /commodity/:id" do
-  #   it "deletes the commodity" do
-  #     jpy = PiggyBank::Commodity.find(name: "JPY")
-  #     response = delete "/commodity/#{jpy.commodity_id}", {
+  # context "DELETE /account/:id" do
+  #   it "deletes the account" do
+  #     jpy = PiggyBank::account.find(name: "JPY")
+  #     response = delete "/account/#{jpy.account_id}", {
   #       _token: PiggyBank::App.token,
   #       version: jpy.version,
   #     }
@@ -187,40 +185,40 @@ describe PiggyBank::App do
   #     location = URI(response.headers["Location"])
   #     expect(location.path).to eq "/commodities"
   #     expect(flash).to have_key :success
-  #     expect(flash[:success]).to eq "Commodity 'JPY' deleted."
+  #     expect(flash[:success]).to eq "account 'JPY' deleted."
   #   end
   # end
 
-  # context "DELETE /commodity/:id with invalid token" do
+  # context "DELETE /account/:id with invalid token" do
   #   let(:response) {
-  #     jpy = PiggyBank::Commodity.find(name: "JPY")
+  #     jpy = PiggyBank::account.find(name: "JPY")
   #     params = update_params(jpy)
   #     params["_token"] = "bad penny"
-  #     usd = PiggyBank::Commodity.find(name: "JPY")
-  #     delete "/commodity/#{jpy.commodity_id}", params
+  #     usd = PiggyBank::account.find(name: "JPY")
+  #     delete "/account/#{jpy.account_id}", params
   #   }
 
   #   it "politely refuses to delete" do
   #     expect(response.status).to eq 403
-  #     expect(response.body).to have_tag "h1", text: "Delete Commodity?"
+  #     expect(response.body).to have_tag "h1", text: "Delete account?"
   #     expect(response.body).to have_tag "div#flash"
   #     expect(response.body).to have_tag "div.flash.danger", text: "Failed to delete, please try again"
   #   end
   # end
 
-  # context "DELETE /commodity/:id with version mismatch" do
+  # context "DELETE /account/:id with version mismatch" do
   #   let(:response) {
-  #     usd = PiggyBank::Commodity.find(name: "USD")
+  #     usd = PiggyBank::account.find(name: "USD")
   #     params = update_params(usd)
   #     params[:version] = "bad version"
-  #     delete "/commodity/#{usd.commodity_id}", params
+  #     delete "/account/#{usd.account_id}", params
   #   }
 
   #   it "politely refuses to delete" do
   #     expect(response.status).to eq 409
-  #     expect(response.body).to have_tag "h1", text: "Delete Commodity?"
+  #     expect(response.body).to have_tag "h1", text: "Delete account?"
   #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this commodity, please re-confirm delete"
+  #     expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this account, please re-confirm delete"
   #   end
   # end
 end
@@ -232,7 +230,7 @@ end
 # ZZZ: CSRF protection for /account
 
 # ZZZ: GET /account/:id = view account
-# TODO: GET /account/:id?edit = edit account form
+# ZZZ: GET /account/:id?edit = edit account form
 # TODO: PUT /account/:id = update account
 
 # TODO: GET /account/:id?delete = confirm delete form

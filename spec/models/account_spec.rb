@@ -58,18 +58,6 @@ describe PiggyBank::Account do
       instance.type = PiggyBank::Account::TYPE[:equity]
       expect(instance.type_string).to eq("Equity")
     end
-
-    # it "has a fraction_opts method" do
-    #   fraction_opts = instance.fraction_opts
-    #   expect(fraction_opts.length).to eq 7
-    #   expect(fraction_opts[0][:value]).to eq 1
-    #   expect(fraction_opts[6][:value]).to eq 1000000
-    # end
-
-    # it "has a type_opts method" do
-    #   type_opts = instance.type_opts
-    #   expect(type_opts.length).to eq 2
-    # end
   end
 
   context "existing instance" do

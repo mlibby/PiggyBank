@@ -22,7 +22,7 @@ module PiggyBank
         type: params["type"],
         parent_id: params["parent_id"],
         commodity_id: params["commodity_id"],
-        is_placeholder: params["is_placeholder"].nil? ? false : true
+        is_placeholder: params["is_placeholder"].nil? ? false : true,
       )
 
       flash[:success] = "Account '#{@account.name}' created."
@@ -33,13 +33,13 @@ module PiggyBank
       haml_layout :"account/view"
     end
 
-    # def account_edit
-    #   @action = "/account/#{@account.account_id}"
-    #   @method = "PUT"
-    #   @header = "Edit account"
+    def account_edit
+      @action = "/account/#{@account.account_id}"
+      @method = "PUT"
+      @header = "Edit Account"
 
-    #   haml_layout :"account/edit"
-    # end
+      haml_layout :"account/edit"
+    end
 
     # def account_update
     #   haml :"account/view"
@@ -89,13 +89,13 @@ module PiggyBank
 
     get "/account/:id" do |id|
       @account = account_find id
-      #   if params.has_key? "edit"
-      #     account_edit
-      #   elsif params.has_key? "delete"
-      #     account_confirm
-      #   else
-      account_view
-      #   end
+      if params.has_key? "edit"
+        account_edit
+        #   elsif params.has_key? "delete"
+        #     account_confirm
+      else
+        account_view
+      end
     end
 
     # post "/account" do
