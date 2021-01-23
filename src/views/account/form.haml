@@ -1,4 +1,19 @@
 %form{method: "POST", action: @action}
+  %input{
+    type: 'hidden',
+    name: '_method',
+    value: @method
+  }
+  %input{
+    type: 'hidden',
+    name: '_token',
+    value: PiggyBank::App.token
+  }
+  %input{
+    type: 'hidden',
+    name: 'version',
+    value: @account.version
+  }
   %label 
     -# FUTURE: choose type based on parent type
     Account Type

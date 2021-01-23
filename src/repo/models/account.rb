@@ -56,5 +56,9 @@ module PiggyBank
       end
       names.reverse.join(":")
     end
+
+    def type_string
+      TYPE.key(self.type).to_s.capitalize
+    end
   end
 end

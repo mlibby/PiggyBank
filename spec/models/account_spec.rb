@@ -54,10 +54,10 @@ describe PiggyBank::Account do
       expect(instance.version).to match(/\d{4}\-\d\d-\d\dT\d\d:\d\d:\d\d\+00:00/)
     end
 
-    # it "has a type_string attribute" do
-    #   instance.type = 1
-    #   expect(instance.type_string).to eq("Currency")
-    # end
+    it "has a type_string attribute" do
+      instance.type = PiggyBank::Account::TYPE[:equity]
+      expect(instance.type_string).to eq("Equity")
+    end
 
     # it "has a fraction_opts method" do
     #   fraction_opts = instance.fraction_opts

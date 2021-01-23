@@ -78,7 +78,7 @@ module PiggyBank
     get "/commodity" do
       commodity_new
     end
-
+0
     get "/commodity/:id" do |id|
       @commodity = commodity_find id
       if params.has_key? "edit"
