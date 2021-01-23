@@ -12,6 +12,21 @@ module PiggyBank
       haml_layout :"account/edit"
     end
 
+    def account_create(params)
+      name = params["name"]
+
+      @account = PiggyBank::Account.create(
+        name: name,
+        type: params["type"],
+        parent_id: params["parent_id"],
+        commodity_id: params["commodity_id"],
+        is_placeholder: params["is_placeholder"],
+      )
+
+      flash[:success] = "Account '#{name}' created."
+      redirect to "/accounts"
+    end
+
     # ROUTES
 
     get "/accounts" do
@@ -24,7 +39,17 @@ module PiggyBank
       account_new
     end
 
-    # TODO: POST /account = create account
+    post "/account" do
+      # TODO: CSRF protection for /account
+      # if params["_token"] != PiggyBank::App.token
+      #   @account = PiggyBank::Account.new
+      #   @account.set_fields params, PiggyBank::Account.update_fields
+      #   flash.now[:danger] = "Failed to create, please try again"
+      #   halt 403, commodity_new
+      # else
+      account_create params
+      # end
+    end
 
     # TODO: GET /account/:id = view account
     # TODO: GET /account/:id?edit = edit account form
@@ -40,3 +65,4 @@ end
 
 # ZZZ: pass list of accounts
 # ZZZ: GET /account = new account form
+# ZZZ: POST /account = create account
