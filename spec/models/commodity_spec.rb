@@ -82,4 +82,15 @@ describe PiggyBank::Commodity do
       expect(type_opts[0][:selected]).to eq true
     end
   end
+
+  context ".commodity_opts(commodity)"do
+    it "has correct option selected" do
+      jpy = PiggyBank::Commodity.find(name: "JPY")
+      commodity_opts = PiggyBank::Commodity.commodity_opts jpy
+      jpy_opt = commodity_opts.find { |opt| opt[:value] == jpy.commodity_id }
+      expect(jpy_opt[:selected]).to eq true
+    end
+  end
+
+  
 end

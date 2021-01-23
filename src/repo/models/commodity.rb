@@ -59,7 +59,21 @@ module PiggyBank
 
     def type_opts
       opts = COMMODITY_TYPE.map do |key, value|
-        { value: value, text: key.capitalize, selected: value == self.type }
+        {
+          value: value,
+          text: key.capitalize, 
+          selected: value == self.type,
+        }
+      end
+    end
+
+    def self.commodity_opts(selected)
+      opts = Commodity.all.map do |commodity|
+        {
+          value: commodity.commodity_id,
+          text: commodity.name,
+          selected: !selected.nil? && commodity.commodity_id == selected.commodity_id,
+        }
       end
     end
   end

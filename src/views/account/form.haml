@@ -1,5 +1,6 @@
 %form{method: "POST", action: @action}
   %label 
+    -# FUTURE: choose type based on parent type
     Account Type
     %select{ name: "type" }
       %option{ value: 1 }
@@ -27,7 +28,12 @@
   %label
     Commodity
     %select{ name: "commodity_id"}
-    -# TODO: create Commodity select menu
+      - PiggyBank::Commodity.commodity_opts(@account.commodity).each do |opt|
+        %option{
+          value: opt[:value],
+          selected: opt[:selected]
+        }
+          = opt[:text]
   %label
     Name
     %input{ 
@@ -88,3 +94,4 @@
       %span.text Cancel
 
 -# ZZZ: create Parent Account select menu
+-# ZZZ: create Commodity select menu
