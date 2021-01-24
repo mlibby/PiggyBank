@@ -58,11 +58,11 @@ module PiggyBank
       haml_layout :"account/delete"
     end
 
-    # def account_delete
-    #   flash[:success] = "account '#{@account.name}' deleted."
-    #   @account.destroy
-    #   redirect to "/commodities"
-    # end
+    def account_delete
+      flash[:success] = "Account '#{@account.name}' deleted."
+      @account.destroy
+      redirect to "/accounts"
+    end
 
     # ROUTES
 
@@ -115,17 +115,17 @@ module PiggyBank
       end
     end
 
-    # delete "/account/:id" do |id|
-    #   @account = account_find id
-    #   if params["_token"] != PiggyBank::App.token
-    #     flash.now[:danger] = "Failed to delete, please try again"
-    #     halt 403, account_confirm
-    #   elsif params["version"] != @account.version
-    #     flash.now[:danger] = "Someone else updated this account, please re-confirm delete"
-    #     halt 409, account_confirm
-    #   else
-    #     account_delete
-    #   end
-    # end
+    delete "/account/:id" do |id|
+      @account = account_find id
+      if params["_token"] != PiggyBank::App.token
+        flash.now[:danger] = "Failed to delete, please try again"
+        halt 403, account_confirm
+      elsif params["version"] != @account.version
+        flash.now[:danger] = "Someone else updated this account, please re-confirm delete"
+        halt 409, account_confirm
+      else
+        account_delete
+      end
+    end
   end
 end

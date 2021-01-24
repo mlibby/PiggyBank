@@ -178,53 +178,47 @@ describe PiggyBank::App do
     end
   end
 
-  # context "DELETE /account/:id" do
-  #   it "deletes the account" do
-  #     jpy = PiggyBank::account.find(name: "JPY")
-  #     response = delete "/account/#{jpy.account_id}", {
-  #       _token: PiggyBank::App.token,
-  #       version: jpy.version,
-  #     }
-  #     expect(response.status).to eq 302
-  #     location = URI(response.headers["Location"])
-  #     expect(location.path).to eq "/commodities"
-  #     expect(flash).to have_key :success
-  #     expect(flash[:success]).to eq "account 'JPY' deleted."
-  #   end
-  # end
+  context "DELETE /account/:id" do
+    it "deletes the account" do
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+      response = delete "/account/#{mortgage.account_id}", {
+        _token: PiggyBank::App.token,
+        version: mortgage.version,
+      }
+      expect(response.status).to eq 302
+      location = URI(response.headers["Location"])
+      expect(location.path).to eq "/accounts"
+      expect(flash).to have_key :success
+      expect(flash[:success]).to eq "Account 'Mortgage' deleted."
+    end
+  end
 
-  # context "DELETE /account/:id with invalid token" do
-  #   let(:response) {
-  #     jpy = PiggyBank::account.find(name: "JPY")
-  #     params = update_params(jpy)
-  #     params["_token"] = "bad penny"
-  #     usd = PiggyBank::account.find(name: "JPY")
-  #     delete "/account/#{jpy.account_id}", params
-  #   }
+  context "DELETE /account/:id with invalid token" do
+    it "politely refuses to delete" do
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+      params = update_params(mortgage)
+      params["_token"] = "bad penny"
+      response = delete "/account/#{mortgage.account_id}", params
+      expect(response.status).to eq 403
+      expect(response.body).to have_tag "h1", text: "Delete Account?"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Failed to delete, please try again"
+    end
+  end
 
-  #   it "politely refuses to delete" do
-  #     expect(response.status).to eq 403
-  #     expect(response.body).to have_tag "h1", text: "Delete account?"
-  #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Failed to delete, please try again"
-  #   end
-  # end
+  context "DELETE /account/:id with version mismatch" do
+    it "politely refuses to delete" do
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+      params = update_params(mortgage)
+      params[:version] = "bad version"
+      response = delete "/account/#{mortgage.account_id}", params
 
-  # context "DELETE /account/:id with version mismatch" do
-  #   let(:response) {
-  #     usd = PiggyBank::account.find(name: "USD")
-  #     params = update_params(usd)
-  #     params[:version] = "bad version"
-  #     delete "/account/#{usd.account_id}", params
-  #   }
-
-  #   it "politely refuses to delete" do
-  #     expect(response.status).to eq 409
-  #     expect(response.body).to have_tag "h1", text: "Delete account?"
-  #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this account, please re-confirm delete"
-  #   end
-  # end
+      expect(response.status).to eq 409
+      expect(response.body).to have_tag "h1", text: "Delete Account?"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this account, please re-confirm delete"
+    end
+  end
 end
 
 # ZZZ: pass list of accounts
@@ -240,10 +234,10 @@ end
 # ZZZ: PUT /account/:id version mismatch
 
 # ZZZ: GET /account/:id?delete = confirm delete form
-# TODO: DELETE /account/:id = delete account
-# TODO: DELETE /account/:id CSRF prevention
-# TODO: DELETE /account/:id version mismatch
-# TODO: prevent deletion of top-level accounts
+# ZZZ: DELETE /account/:id = delete account
+# ZZZ: DELETE /account/:id CSRF prevention
+# ZZZ: DELETE /account/:id version mismatch
 
+# TODO: prevent deletion of top-level accounts
 # FUTURE: GET /accounts/import = import textual chart of accounts
 # FUTURE: GET /accounts/setup = preset account lists to choose from
