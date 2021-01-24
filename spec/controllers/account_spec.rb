@@ -14,6 +14,14 @@ describe PiggyBank::App do
 
     it { expect(response.status).to eq 200 }
     it { expect(response.body).to include "Accounts" }
+
+    it "has nested tree of accounts" do
+      expect(response.body).to have_tag "ul.accounts" do
+        with_tag "li", seen: "Assets" do
+          without_tag "a span", seen: "Delete"
+        end
+      end
+    end
   end
 
   context "GET /account" do
