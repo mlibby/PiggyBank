@@ -41,9 +41,9 @@ module PiggyBank
       haml_layout :"account/edit"
     end
 
-    # def account_update
-    #   haml :"account/view"
-    # end
+    def account_update
+      haml :"account/view"
+    end
 
     # def account_diff(orig_account, new_account)
     #   @account = orig_account
@@ -98,33 +98,22 @@ module PiggyBank
       end
     end
 
-    # post "/account" do
-    #   if params["_token"] != PiggyBank::App.token
-    #     @account = PiggyBank::account.new
-    #     @account.set_fields params, PiggyBank::account.update_fields
-    #     flash.now[:danger] = "Failed to create, please try again"
-    #     halt 403, account_new
-    #   else
-    #     account_create params
-    #   end
-    # end
-
-    # put "/account/:id" do |id|
-    #   @account = account_find id
-    #   if params["_token"] != PiggyBank::App.token
-    #     @account.set_fields params, PiggyBank::account.update_fields
-    #     flash.now[:danger] = "Failed to save changes, please try again"
-    #     halt 403, account_edit
-    #   elsif params["version"] != @account.version
-    #     orig = @account.clone
-    #     @account.set_fields params, PiggyBank::account.update_fields
-    #     flash.now[:danger] = "Someone else updated this account, please confirm changes"
-    #     halt 409, account_diff(orig, @account)
-    #   else
-    #     @account.update_fields params, PiggyBank::account.update_fields
-    #     account_update
-    #   end
-    # end
+    put "/account/:id" do |id|
+      @account = account_find id
+      #   if params["_token"] != PiggyBank::App.token
+      #     @account.set_fields params, PiggyBank::account.update_fields
+      #     flash.now[:danger] = "Failed to save changes, please try again"
+      #     halt 403, account_edit
+      #   elsif params["version"] != @account.version
+      #     orig = @account.clone
+      #     @account.set_fields params, PiggyBank::account.update_fields
+      #     flash.now[:danger] = "Someone else updated this account, please confirm changes"
+      #     halt 409, account_diff(orig, @account)
+      #   else
+      @account.update_fields params, PiggyBank::Account.update_fields
+      account_update
+      #   end
+    end
 
     # delete "/account/:id" do |id|
     #   @account = account_find id

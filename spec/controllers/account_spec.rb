@@ -119,24 +119,34 @@ describe PiggyBank::App do
     end
   end
 
-  # context "PUT /account/:id with valid params" do
-  #   let(:response) do
-  #     usd = PiggyBank::account.where(name: "USD").single_record
-  #     put "/account/#{usd.account_id}", update_params(usd)
-  #   end
+  def update_params(existing)
+    {
+      _token: PiggyBank::App.token,
+      name: "Home Mortgage",
+      type: 2,
+      parent_id: PiggyBank::Account.find(name: "Assets").account_id,
+      commodity_id: PiggyBank::Commodity.find(name: "CAD").commodity_id,
+      version: existing.version,
+    }
+  end
 
-  #   it "updates the DB" do
-  #     expect(response.status).to eq 200
-  #     expect(response.body).to match /account \d+/
+  context "PUT /account/:id with valid params" do
+    it "updates the DB" do
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+      response = put "/account/#{mortgage.account_id}", update_params(mortgage)
+          
+      expect(response.status).to eq 200
+      expect(response.body).to match /Account 'Mortgage'/
 
-  #     usb = PiggyBank::account.where(name: "USB").single_record
-  #     expect(usb.name).to eq "USB"
-  #     expect(usb.description).to eq "Universal Serial Bus"
-  #     expect(usb.ticker).to eq "USB"
-  #     expect(usb.type).to eq 2
-  #     expect(usb.fraction).to eq 1
-  #   end
-  # end
+      mortgage = PiggyBank::Account.find(name: "Home Mortgage")
+      assets = PiggyBank::Account.find(name: "Assets")
+      cad = PiggyBank::Commodity.find(name: "CAD")
+
+      expect(mortgage.type).to eq 2
+      expect(mortgage.parent_id).to eq assets.account_id
+      expect(mortgage.commodity_id).to eq cad.commodity_id
+    end
+  end
 
   # context "PUT /account/:id with invalid token" do
   #   let(:response) {
