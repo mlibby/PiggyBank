@@ -126,6 +126,7 @@ describe PiggyBank::App do
       type: 2,
       parent_id: PiggyBank::Account.find(name: "Assets").account_id,
       commodity_id: PiggyBank::Commodity.find(name: "CAD").commodity_id,
+      is_placeholder: true,
       version: existing.version,
     }
   end
@@ -136,7 +137,6 @@ describe PiggyBank::App do
       response = put "/account/#{mortgage.account_id}", update_params(mortgage)
           
       expect(response.status).to eq 200
-      expect(response.body).to match /Account 'Mortgage'/
 
       mortgage = PiggyBank::Account.find(name: "Home Mortgage")
       assets = PiggyBank::Account.find(name: "Assets")
@@ -145,6 +145,7 @@ describe PiggyBank::App do
       expect(mortgage.type).to eq 2
       expect(mortgage.parent_id).to eq assets.account_id
       expect(mortgage.commodity_id).to eq cad.commodity_id
+      expect(mortgage.is_placeholder).to be true
     end
   end
 
@@ -237,11 +238,15 @@ end
 
 # ZZZ: GET /account/:id = view account
 # ZZZ: GET /account/:id?edit = edit account form
-# TODO: PUT /account/:id = update account
+# ZZZ: PUT /account/:id = update account
+# TODO: PUT /account/:id CSRF prevention
+# TODO: PUT /account/:id version mismatch
 
 # ZZZ: GET /account/:id?delete = confirm delete form
 # TODO: prevent deletion of top-level accounts
 # TODO: DELETE /account/:id = delete account
+# TODO: DELETE /account/:id CSRF prevention
+# TODO: DELETE /account/:id version mismatch
 
 # FUTURE: GET /accounts/import = import textual chart of accounts
 # FUTURE: GET /accounts/setup = preset account lists to choose from
