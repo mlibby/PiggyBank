@@ -45,11 +45,11 @@ module PiggyBank
       haml :"account/view"
     end
 
-    # def account_diff(orig_account, new_account)
-    #   @account = orig_account
-    #   @new_account = new_account
-    #   haml :"account/diff"
-    # end
+    def account_diff(orig_account, new_account)
+      @account = orig_account
+      @new_account = new_account
+      haml :"account/diff"
+    end
 
     def account_confirm
       @action = "/account/#{@account.account_id}"
@@ -104,11 +104,11 @@ module PiggyBank
         @account.set_fields params, PiggyBank::Account.update_fields
         flash.now[:danger] = "Failed to save changes, please try again"
         halt 403, account_edit
-        #   elsif params["version"] != @account.version
-        #     orig = @account.clone
-        #     @account.set_fields params, PiggyBank::account.update_fields
-        #     flash.now[:danger] = "Someone else updated this account, please confirm changes"
-        #     halt 409, account_diff(orig, @account)
+      elsif params["version"] != @account.version
+        orig = @account.clone
+        @account.set_fields params, PiggyBank::Account.update_fields
+        flash.now[:danger] = "Someone else updated this account, please confirm changes"
+        halt 409, account_diff(orig, @account)
       else
         @account.update_fields params, PiggyBank::Account.update_fields
         account_update

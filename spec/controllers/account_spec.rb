@@ -135,7 +135,7 @@ describe PiggyBank::App do
     it "updates the DB" do
       mortgage = PiggyBank::Account.find(name: "Mortgage")
       response = put "/account/#{mortgage.account_id}", update_params(mortgage)
-          
+
       expect(response.status).to eq 200
 
       mortgage = PiggyBank::Account.find(name: "Home Mortgage")
@@ -165,21 +165,18 @@ describe PiggyBank::App do
     end
   end
 
-  # context "PUT /account/:id with version mismatch" do
-  #   let(:response) {
-  #     usd = PiggyBank::account.find(name: "USD")
-  #     params = update_params(usd)
-  #     params[:version] = "bad version"
-  #     put "/account/#{usd.account_id}", params
-  #   }
-
-  #   it "politely refuses to update" do
-  #     expect(response.status).to eq 409
-  #     expect(response.body).to have_tag "h1", text: "Compare Old/New account"
-  #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this account, please confirm changes"
-  #   end
-  # end
+  context "PUT /account/:id with version mismatch" do
+    it "politely refuses to update" do
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+      params = update_params(mortgage)
+      params[:version] = "bad version"
+      response = put "/account/#{mortgage.account_id}", params
+      expect(response.status).to eq 409
+      expect(response.body).to have_tag "h1", text: "Compare Old/New Account"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this account, please confirm changes"
+    end
+  end
 
   # context "DELETE /account/:id" do
   #   it "deletes the account" do
@@ -239,8 +236,8 @@ end
 # ZZZ: GET /account/:id = view account
 # ZZZ: GET /account/:id?edit = edit account form
 # ZZZ: PUT /account/:id = update account
-# TODO: PUT /account/:id CSRF prevention
-# TODO: PUT /account/:id version mismatch
+# ZZZ: PUT /account/:id CSRF prevention
+# ZZZ: PUT /account/:id version mismatch
 
 # ZZZ: GET /account/:id?delete = confirm delete form
 # TODO: DELETE /account/:id = delete account
