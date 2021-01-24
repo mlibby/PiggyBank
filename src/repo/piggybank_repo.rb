@@ -14,6 +14,7 @@ module PiggyBank
 
       require_relative "./models/commodity.rb"
       require_relative "./models/account.rb"
+      require_relative "./models/price.rb"
       require_relative "./models/setting.rb"
 
       if ENV["APP_ENV"] != "TEST"

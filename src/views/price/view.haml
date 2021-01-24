@@ -1,0 +1,13 @@
+%h1= "Account '#{@account.long_name}'"
+.links
+  %a(href="/accounts") Chart of Accounts
+= haml :"account/as_dl"
+.buttons
+  %a.btn.primary{ href: "/account/#{@account.account_id}?edit" }
+    %span.icon.icon-pencil
+    %span.text Edit 
+  %a.btn.danger{ href: "/account/#{@account.account_id}?delete" }
+    %span.icon.icon-trash
+    %span.text Delete
+
+-# ZZZ: add navigation links to this page
