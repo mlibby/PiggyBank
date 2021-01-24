@@ -1,8 +1,8 @@
-%h1 Delete Commodity?
+%h1 Delete Account?
 = styled_flash
 %form{
   method: 'POST',
-  action: "/commodity/#{@commodity.commodity_id}"
+  action: "/account/#{@account.account_id}"
 }
   %input{
     type: 'hidden',
@@ -17,14 +17,14 @@
   %input{
     type: 'hidden',
     name: 'version',
-    value: @commodity.version
+    value: @account.version
   }
-  = haml :"commodity/as_dl"
+  = haml :"account/as_dl"
   .buttons
     %button.btn.danger
       %span.icon.icon-trash
       %span.text Delete
     -# FUTURE: make this link do JS: history.back()
-    %a.btn.secondary(href="/commodities")
+    %a.btn.secondary(href="/accounts")
       %span.icon.icon-close
       %span.text Cancel

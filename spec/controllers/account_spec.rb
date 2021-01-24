@@ -104,24 +104,20 @@ describe PiggyBank::App do
     end
   end
 
-  # context "GET /account/:id?delete" do
-  #   let(:response) {
-  #     jpy = PiggyBank::account.find(name: "JPY")
-  #     get "/account/#{jpy.account_id}?delete"
-  #   }
-
-  #   it "has a delete confirmation form" do
-  #     jpy = PiggyBank::account.find(name: "JPY")
-  #     expect(response.body).to include "Delete account?"
-  #     expect(response.status).to eq 200
-  #     action = "/account/#{jpy.account_id}"
-  #     expect(response.body).to have_tag("form", with: { method: "POST", action: action }) do
-  #       with_tag "input", with: { name: "_token", type: "hidden" }
-  #       with_tag "input", with: { name: "_method", type: "hidden", value: "DELETE" }
-  #       with_tag "input", with: { name: "version", type: "hidden", value: jpy.version }
-  #     end
-  #   end
-  # end
+  context "GET /account/:id?delete" do
+    it "has a delete confirmation form" do
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+      response = get "/account/#{mortgage.account_id}?delete"
+      expect(response.body).to include "Delete Account?"
+      expect(response.status).to eq 200
+      action = "/account/#{mortgage.account_id}"
+      expect(response.body).to have_tag("form", with: { method: "POST", action: action }) do
+        with_tag "input", with: { name: "_token", type: "hidden" }
+        with_tag "input", with: { name: "_method", type: "hidden", value: "DELETE" }
+        with_tag "input", with: { name: "version", type: "hidden", value: mortgage.version }
+      end
+    end
+  end
 
   # context "PUT /account/:id with valid params" do
   #   let(:response) do
@@ -233,7 +229,7 @@ end
 # ZZZ: GET /account/:id?edit = edit account form
 # TODO: PUT /account/:id = update account
 
-# TODO: GET /account/:id?delete = confirm delete form
+# ZZZ: GET /account/:id?delete = confirm delete form
 # TODO: prevent deletion of top-level accounts
 # TODO: DELETE /account/:id = delete account
 

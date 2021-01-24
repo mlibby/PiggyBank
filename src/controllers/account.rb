@@ -51,12 +51,12 @@ module PiggyBank
     #   haml :"account/diff"
     # end
 
-    # def account_confirm
-    #   @action = "/account/#{@account.account_id}"
-    #   @method = "DELETE"
+    def account_confirm
+      @action = "/account/#{@account.account_id}"
+      @method = "DELETE"
 
-    #   haml_layout :"account/delete"
-    # end
+      haml_layout :"account/delete"
+    end
 
     # def account_delete
     #   flash[:success] = "account '#{@account.name}' deleted."
@@ -91,8 +91,8 @@ module PiggyBank
       @account = account_find id
       if params.has_key? "edit"
         account_edit
-        #   elsif params.has_key? "delete"
-        #     account_confirm
+      elsif params.has_key? "delete"
+        account_confirm
       else
         account_view
       end
