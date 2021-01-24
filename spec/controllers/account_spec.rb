@@ -17,8 +17,9 @@ describe PiggyBank::App do
 
     it "has nested tree of accounts" do
       expect(response.body).to have_tag "ul.accounts" do
-        with_tag "li", seen: "Assets" do
-          without_tag "a span", seen: "Delete"
+        with_tag "li span", text: "Assets" do
+          without_tag "a span", text: "Delete"
+          without_tag "a span", text: "Edit"
         end
       end
     end
