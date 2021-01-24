@@ -149,21 +149,21 @@ describe PiggyBank::App do
     end
   end
 
-  # context "PUT /account/:id with invalid token" do
-  #   let(:response) {
-  #     usd = PiggyBank::account.find(name: "USD")
-  #     params = update_params(usd)
-  #     params[:_token] = "bad token"
-  #     put "/account/#{usd.account_id}", params
-  #   }
+  context "PUT /account/:id with invalid token" do
+    let(:response) {
+      mortgage = PiggyBank::Account.find(name: "Mortgage")
+      params = update_params(mortgage)
+      params[:_token] = "bad token"
+      put "/account/#{mortgage.account_id}", params
+    }
 
-  #   it "politely refuses to update" do
-  #     expect(response.status).to eq 403
-  #     expect(response.body).to have_tag "h1", text: "Edit account"
-  #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Failed to save changes, please try again"
-  #   end
-  # end
+    it "politely refuses to update" do
+      expect(response.status).to eq 403
+      expect(response.body).to have_tag "h1", text: "Edit Account"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Failed to save changes, please try again"
+    end
+  end
 
   # context "PUT /account/:id with version mismatch" do
   #   let(:response) {
@@ -234,7 +234,7 @@ end
 
 # ZZZ: GET /account = new account form
 # ZZZ: POST /account = create account
-# ZZZ: CSRF protection for /account
+# ZZZ: POST /account CSRF protection
 
 # ZZZ: GET /account/:id = view account
 # ZZZ: GET /account/:id?edit = edit account form
@@ -243,10 +243,10 @@ end
 # TODO: PUT /account/:id version mismatch
 
 # ZZZ: GET /account/:id?delete = confirm delete form
-# TODO: prevent deletion of top-level accounts
 # TODO: DELETE /account/:id = delete account
 # TODO: DELETE /account/:id CSRF prevention
 # TODO: DELETE /account/:id version mismatch
+# TODO: prevent deletion of top-level accounts
 
 # FUTURE: GET /accounts/import = import textual chart of accounts
 # FUTURE: GET /accounts/setup = preset account lists to choose from
