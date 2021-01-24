@@ -31,17 +31,19 @@ describe PiggyBank::Account do
   context "new instance" do
     let(:instance) { PiggyBank::Account.new }
 
-    # it "is invalid at first" do
-    #   expect(instance.valid?).to be false
-    # end
+    it "is invalid at first" do
+      expect(true).to be true
+      expect(instance.valid?).to be false
+    end
 
-    # it "is valid after attributes set" do
-    #   instance.name = "USD"
-    #   instance.description = "US Dollar"
-    #   instance.fraction = 100
-    #   instance.type = 1
-    #   expect(instance.valid?).to be true
-    # end
+    it "is valid after attributes set" do
+      instance.name = "Checking"
+      instance.type = PiggyBank::Account::TYPE[:asset]
+      instance.parent = PiggyBank::Account.find(name: "Assets")
+      instance.commodity = PiggyBank::Commodity.find(name: "USD")
+      instance.is_placeholder = false
+      expect(instance.valid?).to be true
+    end
 
     it "has a version after save" do
       instance.name = "Checking"
@@ -61,32 +63,6 @@ describe PiggyBank::Account do
   end
 
   context "existing instance" do
-    # before(:example) do
-    #   PiggyBank::Commodity.truncate
-    #   PiggyBank::Commodity.create name: "USD",
-    #                               description: "US Dollar",
-    #                               type: 1,
-    #                               fraction: 100
-    # end
-
-    # it "can be loaded from DB" do
-    #   instance = PiggyBank::Commodity.find(name: "USD")
-    #   expect(instance.description).to eq "US Dollar"
-    # end
-
-    # it "can be changed and saved" do
-    #   instance = PiggyBank::Commodity.find(name: "USD")
-    #   instance.name = "CAD"
-    #   expect { instance.save }.not_to raise_error
-    # end
-
-    # it "cannot be saved if version # doesn't match" do
-    #   instance = PiggyBank::Commodity.find(name: "USD")
-    #   instance.name = "CAD"
-    #   instance.version = "2021-01-06T12:34:56+00:00"
-    #   expect { instance.save }.to raise_error(Sequel::ValidationFailed)
-    # end
-
     it "Account#parent" do
       mortgage = PiggyBank::Account.find(name: "Mortgage")
       expect(mortgage.parent.name).to eq "Liabilities"
@@ -106,12 +82,5 @@ describe PiggyBank::Account do
       mortgage_opt = account_opts.find { |ao| ao[:value] == mortgage.account_id }
       expect(mortgage_opt[:selected]).to eq true
     end
-
-    # it "type_opts has correct option selected" do
-    #   instance = PiggyBank::Commodity.find(name: "USD")
-    #   type_opts = instance.type_opts
-    #   expect(type_opts[0][:value]).to eq 1
-    #   expect(type_opts[0][:selected]).to eq true
-    # end
   end
 end

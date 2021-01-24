@@ -8,6 +8,8 @@ module PiggyBank
   # String :type_data, text: true
   # String :version, text: true, null: false
   class Account < Sequel::Model(:account)
+    plugin :validation_helpers
+    
     one_to_many :subaccounts, class: self, key: :parent_id
     many_to_one :parent, class: self
     many_to_one :commodity, class: PiggyBank::Commodity
@@ -59,6 +61,14 @@ module PiggyBank
 
     def type_string
       TYPE.key(self.type).to_s.capitalize
+    end
+
+    def validate
+      super
+      validates_presence :type
+      validates_presence :name
+      validates_presence :commodity_id
+      validates_presence :is_placeholder
     end
   end
 end
