@@ -17,9 +17,9 @@ module PiggyBank
       return [:currency_id, :commodity_id, :quote_date, :value]
     end
 
-    # def before_create
-    #   self.version = PiggyBank::Repo.timestamp
-    # end
+    def before_create
+      self.version = PiggyBank::Repo.timestamp
+    end
 
     def validate
       super
@@ -30,7 +30,6 @@ module PiggyBank
     end
 
     def value_string
-      self.value.to_s
     end
   end
 end

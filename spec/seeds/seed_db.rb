@@ -1,9 +1,12 @@
 require_relative "commodities"
 require_relative "accounts"
+require_relative "prices"
 
 def seed_db
   PiggyBank::Account.truncate
+  PiggyBank::Price.truncate
   PiggyBank::Commodity.truncate
   seed_commodities
   seed_accounts
+  seed_prices
 end

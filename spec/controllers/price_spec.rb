@@ -1,7 +1,12 @@
+require 'date'
 require_relative "../spec_helper.rb"
 
 describe PiggyBank::App do
   include Rack::Test::Methods
+  
+  before(:example) do
+    seed_db
+  end
 
   let(:app) { PiggyBank::App.new }
 
@@ -35,30 +40,29 @@ describe PiggyBank::App do
     end
   end
 
-  # def create_params
-  #   usd = PiggyBank::Commodity.find(name: "USD")
-  #   equity = PiggyBank::price.find(name: "Equity")
-  #   {
-  #     _token: PiggyBank::App.token,
-  #     name: "Opening Balances",
-  #     type: PiggyBank::price::TYPE[:equity],
-  #     parent_id: equity.price_id,
-  #     commodity_id: usd.commodity_id,
-  #     is_placeholder: false,
-  #   }
-  # end
+  def create_params
+    usd = PiggyBank::Commodity.find(name: "USD")
+    cad = PiggyBank::Commodity.find(name: "CAD")
+    {
+      _token: PiggyBank::App.token,
+      quote_date: Date.today.to_s,
+      commodity_id: cad.commodity_id,
+      currency_id: usd.commodity_id,
+      value: BigDecimal("123.45")
+    }
+  end
 
-  # context "POST /price" do
-  #   let(:response) { post "/price", create_params }
+  context "POST /price" do
+    it "redirects to /prices after saving price" do
+      response = post "/price", create_params
 
-  #   it "redirects to /prices" do
-  #     expect(response.status).to eq 302
-  #     location = URI(response.headers["Location"])
-  #     expect(location.path).to eq "/prices"
-  #     expect(flash).to have_key :success
-  #     expect(flash[:success]).to eq "price 'Opening Balances' created."
-  #   end
-  # end
+      expect(response.status).to eq 302
+      location = URI(response.headers["Location"])
+      expect(location.path).to eq "/prices"
+      expect(flash).to have_key :success
+      expect(flash[:success]).to eq "Price created."
+    end
+  end
 
   # context "POST /price with invalid token" do
   #   let(:response) {
@@ -220,7 +224,7 @@ describe PiggyBank::App do
   # end
 end
 
-# TODO: GET /price = new price form
+# ZZZ: GET /price = new price form
 # TODO: POST /price = create price
 # TODO: POST /price CSRF protection
 

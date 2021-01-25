@@ -186,6 +186,7 @@ describe PiggyBank::App do
 
   context "DELETE /commodity/:id" do
     it "deletes the commodity" do
+      PiggyBank::Price.truncate
       jpy = PiggyBank::Commodity.find(name: "JPY")
       response = delete "/commodity/#{jpy.commodity_id}", {
         _token: PiggyBank::App.token,

@@ -25,18 +25,17 @@ module PiggyBank
       haml_layout :"price/edit"
     end
 
-    #     def price_create(params)
-    #       @price = PiggyBank::Price.create(
-    #         name: params["name"],
-    #         type: params["type"],
-    #         parent_id: params["parent_id"],
-    #         commodity_id: params["commodity_id"],
-    #         is_placeholder: params["is_placeholder"].nil? ? false : true,
-    #       )
+    def price_create(params)
+      @price = PiggyBank::Price.create(
+        quote_date: params["quote_date"],
+        commodity_id: params["commodity_id"],
+        currency_id: params["currency_id"],
+        value: params["value"],
+      )
 
-    #       flash[:success] = "Price '#{@price.name}' created."
-    #       redirect to "/prices"
-    #     end
+      flash[:success] = "Price created."
+      redirect to "/prices"
+    end
 
     #     def price_view
     #       haml_layout :"price/view"
@@ -84,16 +83,16 @@ module PiggyBank
       price_new
     end
 
-    #     post "/price" do
-    #       if params["_token"] != PiggyBank::App.token
-    #         @price = PiggyBank::Price.new
-    #         @price.set_fields params, PiggyBank::Price.update_fields
-    #         flash.now[:danger] = "Failed to create, please try again"
-    #         halt 403, price_new
-    #       else
-    #         price_create params
-    #       end
-    #     end
+    post "/price" do
+      # if params["_token"] != PiggyBank::App.token
+      #   @price = PiggyBank::Price.new
+      #   @price.set_fields params, PiggyBank::Price.update_fields
+      #   flash.now[:danger] = "Failed to create, please try again"
+      #   halt 403, price_new
+      # else
+        price_create params
+      # end
+    end
 
     #     get "/price/:id" do |id|
     #       @price = price_find id
