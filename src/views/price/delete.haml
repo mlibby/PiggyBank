@@ -1,8 +1,8 @@
-%h1 Delete Account?
+%h1 Delete Price?
 = styled_flash
 %form{
   method: 'POST',
-  action: "/account/#{@account.account_id}"
+  action: "/price/#{@price.price_id}"
 }
   %input{
     type: 'hidden',
@@ -17,14 +17,14 @@
   %input{
     type: 'hidden',
     name: 'version',
-    value: @account.version
+    value: @price.version
   }
-  = haml :"account/as_dl"
+  = haml :"price/as_dl"
   .buttons
     %button.btn.danger
       %span.icon.icon-trash
       %span.text Delete
     -# FUTURE: make this link do JS: history.back()
-    %a.btn.secondary(href="/accounts")
+    %a.btn.secondary(href="/prices")
       %span.icon.icon-close
       %span.text Cancel
