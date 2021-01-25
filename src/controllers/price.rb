@@ -84,14 +84,14 @@ module PiggyBank
     end
 
     post "/price" do
-      # if params["_token"] != PiggyBank::App.token
-      #   @price = PiggyBank::Price.new
-      #   @price.set_fields params, PiggyBank::Price.update_fields
-      #   flash.now[:danger] = "Failed to create, please try again"
-      #   halt 403, price_new
-      # else
+      if params["_token"] != PiggyBank::App.token
+        @price = PiggyBank::Price.new
+        @price.set_fields params, PiggyBank::Price.update_fields
+        flash.now[:danger] = "Failed to create, please try again"
+        halt 403, price_new
+      else
         price_create params
-      # end
+      end
     end
 
     #     get "/price/:id" do |id|

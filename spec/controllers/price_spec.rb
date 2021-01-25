@@ -64,20 +64,17 @@ describe PiggyBank::App do
     end
   end
 
-  # context "POST /price with invalid token" do
-  #   let(:response) {
-  #     params = create_params
-  #     params[:_token] = "bad token"
-  #     post "/price", params
-  #   }
-
-  #   it "politely refuses to create" do
-  #     expect(response.status).to eq 403
-  #     expect(response.body).to have_tag "h1", text: "New price"
-  #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Failed to create, please try again"
-  #   end
-  # end
+  context "POST /price with invalid token" do
+    it "politely refuses to create" do
+      params = create_params
+      params[:_token] = "bad token"
+      response = post "/price", params
+      expect(response.status).to eq 403
+      expect(response.body).to have_tag "h1", text: "New Price"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Failed to create, please try again"
+    end
+  end
 
   # context "GET /price/:id" do
   #   let(:response) {
@@ -225,8 +222,8 @@ describe PiggyBank::App do
 end
 
 # ZZZ: GET /price = new price form
-# TODO: POST /price = create price
-# TODO: POST /price CSRF protection
+# ZZZ: POST /price = create price
+# ZZZ: POST /price CSRF protection
 
 # TODO: GET /price/:id = view price
 # TODO: GET /price/:id?edit = edit price form
