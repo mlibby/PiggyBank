@@ -10,9 +10,8 @@ module PiggyBank
   class Price < Sequel::Model(:price)
     plugin :validation_helpers
 
-    # one_to_many :subaccounts, class: self, key: :parent_id
-    # many_to_one :parent, class: self
-    # many_to_one :commodity, class: PiggyBank::Commodity
+    many_to_one :commodity, class: PiggyBank::Commodity
+    many_to_one :currency, class: PiggyBank::Commodity, key: :commodity_id
 
     def self.update_fields
       return [:currency_id, :commodity_id, :quote_date, :value]
@@ -28,6 +27,10 @@ module PiggyBank
       # validates_presence :name
       # validates_presence :commodity_id
       # validates_presence :is_placeholder
+    end
+
+    def value_string
+      self.value.to_s
     end
   end
 end

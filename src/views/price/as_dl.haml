@@ -1,21 +1,17 @@
 %dl
   %dt
-    Type
+    Date
   %dd
-    = @account.type_string
-  %dt 
-    Name
-  %dd
-    = @account.name
-  %dt
-    Parent Account
-  %dd
-    = @account.parent ? @account.parent.name : "[nil]"
+    = @price.quote_date
   %dt
     Commodity
   %dd
-    = @account.commodity.name
+    = @price.commodity.name
   %dt
-    Is Placeholder?
+    Currency
   %dd
-    = @account.is_placeholder
+    = @price.currency.name
+  %dt
+    Value
+  %dd
+    = @price.value_string

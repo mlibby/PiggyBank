@@ -1,32 +1,32 @@
 module PiggyBank
   class App < Sinatra::Base
-    get "/prices" do
-      haml :"price/index",
-           layout: :layout #,
-      # TODO: get list of prices
-      #locals: { prices: DB[:price].all.to_s }
+    def price_find(id)
+      PiggyBank::Price.find(price_id: id)
     end
 
-    # module PiggyBank
-    #   class App < Sinatra::Base
-    #     def account_find(id)
-    #       PiggyBank::Account.find(account_id: id)
+    def price_index
+      @prices = PiggyBank::Price.eager(:commodity, :currency)
+      haml_layout :"price/index"
+    end
+
+    #     def price_find(id)
+    #       PiggyBank::Price.find(price_id: id)
     #     end
 
-    #     def account_index
-    #       @accounts = PiggyBank::Account.as_chart
-    #       haml_layout :"account/index"
+    #     def price_index
+    #       @prices = PiggyBank::Price.as_chart
+    #       haml_layout :"price/index"
     #     end
 
-    #     def account_new
-    #       @method = "POST"
-    #       @action = "/account"
-    #       @header = "New Account"
-    #       haml_layout :"account/edit"
-    #     end
+    def price_new
+      @method = "POST"
+      @action = "/price"
+      @header = "New Price"
+      haml_layout :"price/edit"
+    end
 
-    #     def account_create(params)
-    #       @account = PiggyBank::Account.create(
+    #     def price_create(params)
+    #       @price = PiggyBank::Price.create(
     #         name: params["name"],
     #         type: params["type"],
     #         parent_id: params["parent_id"],
@@ -34,109 +34,106 @@ module PiggyBank
     #         is_placeholder: params["is_placeholder"].nil? ? false : true,
     #       )
 
-    #       flash[:success] = "Account '#{@account.name}' created."
-    #       redirect to "/accounts"
+    #       flash[:success] = "Price '#{@price.name}' created."
+    #       redirect to "/prices"
     #     end
 
-    #     def account_view
-    #       haml_layout :"account/view"
+    #     def price_view
+    #       haml_layout :"price/view"
     #     end
 
-    #     def account_edit
-    #       @action = "/account/#{@account.account_id}"
+    #     def price_edit
+    #       @action = "/price/#{@price.price_id}"
     #       @method = "PUT"
-    #       @header = "Edit Account"
+    #       @header = "Edit Price"
 
-    #       haml_layout :"account/edit"
+    #       haml_layout :"price/edit"
     #     end
 
-    #     def account_update
-    #       haml :"account/view"
+    #     def price_update
+    #       haml :"price/view"
     #     end
 
-    #     def account_diff(orig_account, new_account)
-    #       @account = orig_account
-    #       @new_account = new_account
-    #       haml :"account/diff"
+    #     def price_diff(orig_price, new_price)
+    #       @price = orig_price
+    #       @new_price = new_price
+    #       haml :"price/diff"
     #     end
 
-    #     def account_confirm
-    #       @action = "/account/#{@account.account_id}"
+    #     def price_confirm
+    #       @action = "/price/#{@price.price_id}"
     #       @method = "DELETE"
 
-    #       haml_layout :"account/delete"
+    #       haml_layout :"price/delete"
     #     end
 
-    #     def account_delete
-    #       flash[:success] = "Account '#{@account.name}' deleted."
-    #       @account.destroy
-    #       redirect to "/accounts"
+    #     def price_delete
+    #       flash[:success] = "Price '#{@price.name}' deleted."
+    #       @price.destroy
+    #       redirect to "/prices"
     #     end
 
-    #     # ROUTES
+    # ROUTES
 
-    #     get "/accounts" do
-    #       account_index
-    #     end
+    get "/prices" do
+      price_index
+    end
 
-    #     get "/account" do
-    #       @account = PiggyBank::Account.new
-    #       @account.parent = PiggyBank::Account.find(account_id: params[:parent_id])
-    #       account_new
-    #     end
+    get "/price" do
+      @price = PiggyBank::Price.new
+      price_new
+    end
 
-    #     post "/account" do
+    #     post "/price" do
     #       if params["_token"] != PiggyBank::App.token
-    #         @account = PiggyBank::Account.new
-    #         @account.set_fields params, PiggyBank::Account.update_fields
+    #         @price = PiggyBank::Price.new
+    #         @price.set_fields params, PiggyBank::Price.update_fields
     #         flash.now[:danger] = "Failed to create, please try again"
-    #         halt 403, account_new
+    #         halt 403, price_new
     #       else
-    #         account_create params
+    #         price_create params
     #       end
     #     end
 
-    #     get "/account/:id" do |id|
-    #       @account = account_find id
+    #     get "/price/:id" do |id|
+    #       @price = price_find id
     #       if params.has_key? "edit"
-    #         account_edit
+    #         price_edit
     #       elsif params.has_key? "delete"
-    #         account_confirm
+    #         price_confirm
     #       else
-    #         account_view
+    #         price_view
     #       end
     #     end
 
-    #     put "/account/:id" do |id|
-    #       @account = account_find id
+    #     put "/price/:id" do |id|
+    #       @price = price_find id
     #       if params["_token"] != PiggyBank::App.token
-    #         @account.set_fields params, PiggyBank::Account.update_fields
+    #         @price.set_fields params, PiggyBank::Price.update_fields
     #         flash.now[:danger] = "Failed to save changes, please try again"
-    #         halt 403, account_edit
-    #       elsif params["version"] != @account.version
-    #         orig = @account.clone
-    #         @account.set_fields params, PiggyBank::Account.update_fields
-    #         flash.now[:danger] = "Someone else updated this account, please confirm changes"
-    #         halt 409, account_diff(orig, @account)
+    #         halt 403, price_edit
+    #       elsif params["version"] != @price.version
+    #         orig = @price.clone
+    #         @price.set_fields params, PiggyBank::Price.update_fields
+    #         flash.now[:danger] = "Someone else updated this price, please confirm changes"
+    #         halt 409, price_diff(orig, @price)
     #       else
-    #         @account.update_fields params, PiggyBank::Account.update_fields
-    #         account_update
+    #         @price.update_fields params, PiggyBank::Price.update_fields
+    #         price_update
     #       end
     #     end
 
-    #     delete "/account/:id" do |id|
-    #       @account = account_find id
+    #     delete "/price/:id" do |id|
+    #       @price = price_find id
     #       if params["_token"] != PiggyBank::App.token
     #         flash.now[:danger] = "Failed to delete, please try again"
-    #         halt 403, account_confirm
-    #       elsif params["version"] != @account.version
-    #         flash.now[:danger] = "Someone else updated this account, please re-confirm delete"
-    #         halt 409, account_confirm
+    #         halt 403, price_confirm
+    #       elsif params["version"] != @price.version
+    #         flash.now[:danger] = "Someone else updated this price, please re-confirm delete"
+    #         halt 409, price_confirm
     #       else
-    #         account_delete
+    #         price_delete
     #       end
     #     end
-    #   end
-    # end
   end
 end

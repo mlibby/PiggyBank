@@ -12,25 +12,28 @@ describe PiggyBank::App do
     it { expect(response.body).to include "Prices" }
   end
 
-  # context "GET /price" do
-  #   let(:response) {
-  #     liabilities = PiggyBank::price.find(name: "Liabilities")
-  #     get "/price?parent_id=#{liabilities.price_id}"
-  #   }
-  #   it { expect(response.status).to eq 200 }
-  #   it { expect(response.body).to include "New price" }
-  #   it "has a form" do
-  #     expect(response.body).to have_tag(
-  #       "form",
-  #       with: {
-  #         method: "POST",
-  #         action: "/price",
-  #       },
-  #     ) do
-  #       with_tag "option", seen: "Liabilities", with: { selected: "selected" }
-  #     end
-  #   end
-  # end
+  context "GET /price" do
+    let(:response) {
+      get "/price"
+    }
+
+    it {
+      expect(response.status).to eq 200
+    }
+    it { expect(response.body).to include "New Price" }
+    it "has a form" do
+      expect(response.body).to have_tag(
+        "form",
+        with: {
+          method: "POST",
+          action: "/price",
+        },
+      ) do
+        with_tag "select", name: "currency_id"
+        with_tag "select", name: "commodity_id"
+      end
+    end
+  end
 
   # def create_params
   #   usd = PiggyBank::Commodity.find(name: "USD")
