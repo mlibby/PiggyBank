@@ -11,10 +11,11 @@ describe PiggyBank::App do
   let(:app) { PiggyBank::App.new }
 
   context "get /prices" do
-    let(:response) { get "/prices" }
-
-    it { expect(response.status).to eq 200 }
-    it { expect(response.body).to include "Prices" }
+    it "responds with a price table" do
+      response = get "/prices"
+      expect(response.status).to eq 200
+      expect(response.body).to include "Prices"
+    end
   end
 
   context "GET /price" do
