@@ -1,9 +1,12 @@
 ﻿:root {
   --primary-color: #05a172;
+  --primary-accent:#03e4a0;
   --secondary-color: #666666;
   --danger-color: red;
   --nav-bg: black;
   --bg-color: white;
+  --bg-shaded: #e8e8e8;
+
 }
 
 @font-face {
@@ -358,13 +361,13 @@ td {
 }
 
 tbody tr {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid var(--primary-accent);
 }
 
 tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
+  background-color: var(--bg-shaded);
 }
 
 tbody tr:last-of-type {
-  border-bottom: 2px solid nav(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
 }
