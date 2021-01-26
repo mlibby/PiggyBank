@@ -1,8 +1,8 @@
 module PiggyBank
   #
   # primary_key :price_id
-  # foreign_key :currency_id, :commodity, null: false, key: [:commodity_id]
-  # foreign_key :commodity_id, :commodity, null: false, key: [:commodity_id]
+  # foreign_key :currency_id, :commodity, null: false, key: :currency_id
+  # foreign_key :commodity_id, :commodity, null: false
   # String :quote_date, text: true, null: false
   # BigDecimal :value, null: false
   # String :version, text: true, null: false
@@ -11,7 +11,7 @@ module PiggyBank
     plugin :validation_helpers
 
     many_to_one :commodity, class: PiggyBank::Commodity
-    many_to_one :currency, class: PiggyBank::Commodity, key: :commodity_id
+    many_to_one :currency, class: PiggyBank::Commodity, key: :currency_id
 
     def self.update_fields
       return [:currency_id, :commodity_id, :quote_date, :value]
@@ -30,6 +30,7 @@ module PiggyBank
     end
 
     def value_string
+      self.commodity.format self.value
     end
   end
 end

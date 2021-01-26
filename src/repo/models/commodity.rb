@@ -2,6 +2,11 @@ module PiggyBank
   class Commodity < Sequel::Model(:commodity)
     plugin :validation_helpers
 
+    COMMODITY_TYPE = {
+      currency: 1,
+      investment: 2,
+    }
+
     # primary_key :commodity_id
     # Integer :type, null: false
     # String :name, text: true, null: false
@@ -13,10 +18,15 @@ module PiggyBank
       return [:type, :name, :description, :ticker, :fraction]
     end
 
-    COMMODITY_TYPE = {
-      currency: 1,
-      investment: 2,
-    }
+    def self.commodity_opts(selected)
+      opts = Commodity.all.map do |commodity|
+        {
+          value: commodity.commodity_id,
+          text: commodity.name,
+          selected: !selected.nil? && commodity.commodity_id == selected.commodity_id,
+        }
+      end
+    end
 
     def before_create
       self.version = PiggyBank::Repo.timestamp
@@ -27,16 +37,10 @@ module PiggyBank
       raise Sequel::ValidationFailed unless existing
     end
 
-    def validate
-      super
-      validates_presence :type
-      validates_presence :name
-      validates_presence :description
-      validates_presence :fraction
-    end
-
-    def type_string
-      COMMODITY_TYPE.key(self.type).to_s.capitalize
+    def format(value)
+      # TODO: add a symbol attribute to Commodity
+      # FUTURE: use the default locale to format the number
+      "$" + (value.to_s("F") + "00")[/.*\..{2}/]
     end
 
     def fraction_opts
@@ -61,20 +65,22 @@ module PiggyBank
       opts = COMMODITY_TYPE.map do |key, value|
         {
           value: value,
-          text: key.capitalize, 
+          text: key.capitalize,
           selected: value == self.type,
         }
       end
     end
 
-    def self.commodity_opts(selected)
-      opts = Commodity.all.map do |commodity|
-        {
-          value: commodity.commodity_id,
-          text: commodity.name,
-          selected: !selected.nil? && commodity.commodity_id == selected.commodity_id,
-        }
-      end
+    def type_string
+      COMMODITY_TYPE.key(self.type).to_s.capitalize
+    end
+
+    def validate
+      super
+      validates_presence :type
+      validates_presence :name
+      validates_presence :description
+      validates_presence :fraction
     end
   end
 end
