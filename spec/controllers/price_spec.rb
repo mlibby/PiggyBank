@@ -173,47 +173,47 @@ describe PiggyBank::App do
     end
   end
 
-  # context "DELETE /price/:id" do
-  #   it "deletes the price" do
-  #     mortgage = PiggyBank::price.find(name: "Mortgage")
-  #     response = delete "/price/#{mortgage.price_id}", {
-  #       _token: PiggyBank::App.token,
-  #       version: mortgage.version,
-  #     }
-  #     expect(response.status).to eq 302
-  #     location = URI(response.headers["Location"])
-  #     expect(location.path).to eq "/prices"
-  #     expect(flash).to have_key :success
-  #     expect(flash[:success]).to eq "price 'Mortgage' deleted."
-  #   end
-  # end
+  context "DELETE /price/:id" do
+    it "deletes the price" do
+      price = PiggyBank::Price.first
+      response = delete "/price/#{price.price_id}", {
+        _token: PiggyBank::App.token,
+        version: price.version,
+      }
+      expect(response.status).to eq 302
+      location = URI(response.headers["Location"])
+      expect(location.path).to eq "/prices"
+      expect(flash).to have_key :success
+      expect(flash[:success]).to eq "Price deleted."
+    end
+  end
 
-  # context "DELETE /price/:id with invalid token" do
-  #   it "politely refuses to delete" do
-  #     mortgage = PiggyBank::price.find(name: "Mortgage")
-  #     params = update_params(mortgage)
-  #     params["_token"] = "bad penny"
-  #     response = delete "/price/#{mortgage.price_id}", params
-  #     expect(response.status).to eq 403
-  #     expect(response.body).to have_tag "h1", text: "Delete price?"
-  #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Failed to delete, please try again"
-  #   end
-  # end
+  context "DELETE /price/:id with invalid token" do
+    it "politely refuses to delete" do
+      price = PiggyBank::Price.first
+      params = update_params(price)
+      params["_token"] = "bad penny"
+      response = delete "/price/#{price.price_id}", params
+      expect(response.status).to eq 403
+      expect(response.body).to have_tag "h1", text: "Delete Price?"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Failed to delete, please try again"
+    end
+  end
 
-  # context "DELETE /price/:id with version mismatch" do
-  #   it "politely refuses to delete" do
-  #     mortgage = PiggyBank::price.find(name: "Mortgage")
-  #     params = update_params(mortgage)
-  #     params[:version] = "bad version"
-  #     response = delete "/price/#{mortgage.price_id}", params
+  context "DELETE /price/:id with version mismatch" do
+    it "politely refuses to delete" do
+      price = PiggyBank::Price.first
+      params = update_params(price)
+      params[:version] = "bad version"
+      response = delete "/price/#{price.price_id}", params
 
-  #     expect(response.status).to eq 409
-  #     expect(response.body).to have_tag "h1", text: "Delete price?"
-  #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this price, please re-confirm delete"
-  #   end
-  # end
+      expect(response.status).to eq 409
+      expect(response.body).to have_tag "h1", text: "Delete Price?"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this price, please re-confirm delete"
+    end
+  end
 end
 
 # ZZZ: GET /price = new price form
@@ -226,7 +226,7 @@ end
 # ZZZ: PUT /price/:id CSRF prevention
 # ZZZ: PUT /price/:id version mismatch
 
-# TODO: GET /price/:id?delete = confirm delete form
-# TODO: DELETE /price/:id = delete price
-# TODO: DELETE /price/:id CSRF prevention
-# TODO: DELETE /price/:id version mismatch
+# ZZZ: GET /price/:id?delete = confirm delete form
+# ZZZ: DELETE /price/:id = delete price
+# ZZZ: DELETE /price/:id CSRF prevention
+# ZZZ: DELETE /price/:id version mismatch

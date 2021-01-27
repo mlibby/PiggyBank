@@ -56,11 +56,11 @@ module PiggyBank
       haml_layout :"price/delete"
     end
 
-    #     def price_delete
-    #       flash[:success] = "Price '#{@price.name}' deleted."
-    #       @price.destroy
-    #       redirect to "/prices"
-    #     end
+    def price_delete
+      flash[:success] = "Price deleted."
+      @price.destroy
+      redirect to "/prices"
+    end
 
     # ROUTES
 
@@ -112,17 +112,17 @@ module PiggyBank
       end
     end
 
-    #     delete "/price/:id" do |id|
-    #       @price = price_find id
-    #       if params["_token"] != PiggyBank::App.token
-    #         flash.now[:danger] = "Failed to delete, please try again"
-    #         halt 403, price_confirm
-    #       elsif params["version"] != @price.version
-    #         flash.now[:danger] = "Someone else updated this price, please re-confirm delete"
-    #         halt 409, price_confirm
-    #       else
-    #         price_delete
-    #       end
-    #     end
+    delete "/price/:id" do |id|
+      @price = price_find id
+      if params["_token"] != PiggyBank::App.token
+        flash.now[:danger] = "Failed to delete, please try again"
+        halt 403, price_confirm
+      elsif params["version"] != @price.version
+        flash.now[:danger] = "Someone else updated this price, please re-confirm delete"
+        halt 409, price_confirm
+      else
+        price_delete
+      end
+    end
   end
 end
