@@ -234,4 +234,6 @@ describe PiggyBank::App do
   end
 end
 
+# TODO: handle commodity delete with related entities
+
 # ZZZ: there is an error message after completing a delete?

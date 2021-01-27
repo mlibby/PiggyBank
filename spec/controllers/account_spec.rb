@@ -249,6 +249,7 @@ end
 
 # TODO: prevent modification of top-level accounts
 # TODO: prevent deletion of top-level accounts
+# TODO: handle account delete with related entities
 
 # FUTURE: GET /accounts/import = import textual chart of accounts
 # FUTURE: GET /accounts/setup = preset account lists to choose from
