@@ -12,10 +12,12 @@ module PiggyBank
       Sequel.extension :migration
       Sequel::Migrator.run @db, "#{__dir__}/migrations"
 
+      require_relative "./models/setting.rb"
       require_relative "./models/commodity.rb"
       require_relative "./models/account.rb"
       require_relative "./models/price.rb"
-      require_relative "./models/setting.rb"
+      require_relative "./models/split.rb"
+      require_relative "./models/tx.rb"
 
       if ENV["APP_ENV"] != "TEST"
         # :nocov:
