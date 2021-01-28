@@ -2,6 +2,7 @@ module PiggyBank
   class Tx < Sequel::Model(:tx)
     #needed because we define a relationship
   end
+
   #
   # primary_key :split_id
   # foreign_key :tx_id, :tx, null: false, key: [:tx_id]
@@ -17,6 +18,7 @@ module PiggyBank
     plugin :validation_helpers
 
     many_to_one :tx, class: PiggyBank::Tx
+    many_to_one :account, class: PiggyBank::Account
 
     # def self.update_fields
     #   return [:memo, :amount, :value]

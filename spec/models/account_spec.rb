@@ -73,10 +73,10 @@ describe PiggyBank::Account do
       expect(mortgage.long_name).to eq "Liabilities:Mortgage"
     end
 
-    it "Account#account_opts has correct option selected" do
+    it "Account.account_opts has correct option selected" do
       mortgage = PiggyBank::Account.find(name: "Mortgage")
 
-      account_opts = mortgage.account_opts
+      account_opts = PiggyBank::Account.account_opts mortgage
       expect(account_opts.length).to eq 6
 
       mortgage_opt = account_opts.find { |ao| ao[:value] == mortgage.account_id }

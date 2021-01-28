@@ -17,25 +17,23 @@ describe PiggyBank::App do
     end
   end
 
-  # context "GET /tx" do
-  #   let(:response) {
-  #     liabilities = PiggyBank::Tx.find(name: "Liabilities")
-  #     get "/tx?parent_id=#{liabilities.tx_id}"
-  #   }
-  #   it { expect(response.status).to eq 200 }
-  #   it { expect(response.body).to include "New Tx" }
-  #   it "has a form" do
-  #     expect(response.body).to have_tag(
-  #       "form",
-  #       with: {
-  #         method: "POST",
-  #         action: "/tx",
-  #       },
-  #     ) do
-  #       with_tag "option", seen: "Liabilities", with: { selected: "selected" }
-  #     end
-  #   end
-  # end
+  context "GET /tx" do
+    it "gives a new Transaction form" do
+      response = get "/tx"
+
+      expect(response.status).to eq 200
+      expect(response.body).to have_tag "h1", text: "New Transaction"
+      expect(response.body).to have_tag(
+        "form",
+        with: {
+          method: "POST",
+          action: "/tx",
+        },
+      ) do
+        with_tag "option", seen: "Liabilities", with: { selected: "selected" }
+      end
+    end
+  end
 
   # def create_params
   #   usd = PiggyBank::Commodity.find(name: "USD")
@@ -224,7 +222,7 @@ end
 
 # TODO: pass list of txs
 
-# TODO: GET /tx = new tx form
+# ZZZ: GET /tx = new tx form
 # TODO: POST /tx = create tx
 # TODO: POST /tx CSRF protection
 

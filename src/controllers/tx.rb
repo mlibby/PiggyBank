@@ -10,12 +10,12 @@ module PiggyBank
       haml_layout :"tx/index"
     end
 
-    # def tx_new
-    #   @method = "POST"
-    #   @action = "/tx"
-    #   @header = "New Tx"
-    #   haml_layout :"tx/edit"
-    # end
+    def tx_new
+      @method = "POST"
+      @action = "/tx"
+      @header = "New Transaction"
+      haml_layout :"tx/edit"
+    end
 
     # def tx_create(params)
     #   @tx = PiggyBank::Tx.create(
@@ -69,21 +69,25 @@ module PiggyBank
       tx_index
     end
 
-    # get "/tx" do
-    #   @tx = PiggyBank::Tx.new
-    #   tx_new
-    # end
+    get "/tx" do
+      @tx = PiggyBank::Tx.new
+      @splits = [
+        PiggyBank::Split.new,
+        PiggyBank::Split.new,
+      ]
+      tx_new
+    end
 
-    # post "/tx" do
-    #   if params["_token"] != PiggyBank::App.token
-    #     @tx = PiggyBank::Tx.new
-    #     @tx.set_fields params, PiggyBank::Tx.update_fields
-    #     flash.now[:danger] = "Failed to create, please try again"
-    #     halt 403, tx_new
-    #   else
-    #     tx_create params
-    #   end
-    # end
+    post "/tx" do
+      if params["_token"] != PiggyBank::App.token
+        @tx = PiggyBank::Tx.new
+        @tx.set_fields params, PiggyBank::Tx.update_fields
+        flash.now[:danger] = "Failed to create, please try again"
+        halt 403, tx_new
+      else
+        tx_create params
+      end
+    end
 
     # get "/tx/:id" do |id|
     #   @tx = tx_find id

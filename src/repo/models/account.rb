@@ -23,14 +23,24 @@ module PiggyBank
       mortgage: 6,
     }
 
-    def self.update_fields
-      return [:type, :type_data, :name, :parent_id, :commodity_id, :is_placeholder]
+    def self.account_opts(selected)
+      PiggyBank::Account.all.map do |account| 
+        {
+          text: account.long_name,
+          value: account.account_id,
+          selected: !selected.nil? && account.account_id == selected.account_id
+        }
+      end
     end
-    
+
     def self.as_chart
       chart = Account.where(parent_id: nil).eager(:subaccounts).all
     end
 
+    def self.update_fields
+      return [:type, :type_data, :name, :parent_id, :commodity_id, :is_placeholder]
+    end
+    
     def before_create
       self.version = PiggyBank::Repo.timestamp
     end
@@ -39,15 +49,6 @@ module PiggyBank
       self.subaccounts.length > 0
     end
 
-    def account_opts
-      PiggyBank::Account.all.map do |account| 
-        {
-          text: account.long_name,
-          value: account.account_id,
-          selected: account.account_id == self.account_id
-        }
-      end
-    end
 
     def long_name
       names = [self.name]

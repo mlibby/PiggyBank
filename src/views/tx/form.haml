@@ -1,56 +1,42 @@
-%form{method: "POST", action: @action}
-  %input{
-    type: 'hidden',
-    name: '_method',
-    value: @method
-  }
-  %input{
-    type: 'hidden',
-    name: '_token',
-    value: PiggyBank::App.token
-  }
-  %input{
-    type: 'hidden',
-    name: 'version',
-    value: @price.version
-  }
-  %label
-    Name
-    %input{ 
-      name: "quote_date",
-      type: "date",
-      value: @price.quote_date
-    }
-  %label
-    Commodity
-    %select{ name: "commodity_id"}
-      - PiggyBank::Commodity.commodity_opts(@price.commodity).each do |opt|
-        %option{
-          value: opt[:value],
-          selected: opt[:selected]
-        }
-          = opt[:text]
-  %label
-    Currency
-    %select{ name: "currency_id"}
-      - PiggyBank::Commodity.commodity_opts(@price.currency).each do |opt|
-        %option{
-          value: opt[:value],
-          selected: opt[:selected]
-        }
-          = opt[:text]
-  %label
-    Value
-    %input{ 
-      name: "value",
-      type: "number",
-      value: @price.value
-    }
+%form.tx{ method: "POST", action: @action }
+  %fieldset
+    %input{ type: "hidden", name: "_method", value: @method }
+    %input{ type: "hidden", name: "_token", value: PiggyBank::App.token }
+    %input{ type: "hidden", name: "version", value: @tx.version }
+    %label
+      Date
+      %input{ name: "post_date", type: "date", value: @tx.post_date }
+    %label
+      Number
+      %input{ name: "number", type: "text", value: @tx.number }
+    %label
+      Description
+      %input{ name: "description", type: "text", value: @tx.description }
+
+  - @splits.each do |split|
+    %fieldset
+      %input{ type: "hidden", name: "split[][split_id]", value: split.split_id }
+      %input{ type: "hidden", name: "split[][version]", value: split.version }
+      %label
+        Account
+        %select{ name: "split[][account_id]" }
+          - PiggyBank::Account.account_opts(split.account).each do |opt|
+            %option{ value: opt[:value], selected: opt[:selected] }
+              = opt[:text]
+      %label
+        Memo
+        %input{ name: "split[][memo]", type: "text", value: split.memo }
+      %label
+        Amount
+        %input{ name: "split[][amount]", type: "number", value: split.amount }
+      %label
+        Value
+        %input{ name: "split[][value]", type: "number", value: split.value }
   .buttons
     %button.btn.primary
       %span.icon.icon-solid-check
       %span.text Save
     -# FUTURE: make this link do JS: history.back()
-    %a.btn.secondary(href='/accounts')
+    %a.btn.secondary{ href: "/accounts" }
       %span.icon.icon-close
       %span.text Cancel
