@@ -16,6 +16,8 @@ describe PiggyBank::Tx do
     def set_attributes(tx)
       tx.post_date = "2021-01-27"
       tx.description = "tx description"
+      tx.splits << PiggyBank::Split.new
+      tx.splits << PiggyBank::Split.new
     end
 
     it "is valid after attributes set" do

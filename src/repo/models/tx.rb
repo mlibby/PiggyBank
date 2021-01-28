@@ -9,6 +9,8 @@ module PiggyBank
   class Tx < Sequel::Model(:tx)
     plugin :validation_helpers
 
+    one_to_many :splits, class: PiggyBank::Split
+
     # def self.update_fields
     #   return [:post_date, :number, :description]
     # end
@@ -21,6 +23,7 @@ module PiggyBank
       super
       validates_presence :post_date
       validates_presence :description
+      validates_min_length 2, :splits
     end
   end
 end
