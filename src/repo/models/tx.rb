@@ -9,18 +9,18 @@ module PiggyBank
   class Tx < Sequel::Model(:tx)
     plugin :validation_helpers
 
-    # many_to_one :commodity, class: PiggyBank::Commodity
-
     # def self.update_fields
     #   return [:post_date, :number, :description]
     # end
 
-    # def before_create
-    #   self.version = PiggyBank::Repo.timestamp
-    # end
+    def before_create
+      self.version = PiggyBank::Repo.timestamp
+    end
 
-    # def validate
-    #   super
-    # end
+    def validate
+      super
+      validates_presence :post_date
+      validates_presence :description
+    end
   end
 end
