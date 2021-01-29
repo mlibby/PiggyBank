@@ -1,15 +1,15 @@
-%h1 Delete Transaction?
+%h1 Delete API Key?
 = styled_flash
-%form{ method: 'POST', action: "/tx/#{@tx.tx_id}" }
+%form{ method: 'POST', action: "/api_key/#{@api_key.api_key_id}" }
   %input{ type: 'hidden', name: '_method', value: 'DELETE' }
   %input{ type: 'hidden', name: '_token',  value: PiggyBank::App.token }
-  %input{ type: 'hidden', name: 'version', value: @tx.version }
-  = haml :"tx/as_dl"
+  %input{ type: 'hidden', name: 'version', value: @api_key.version }
+  = haml :"api_key/as_dl"
   .buttons
     %button.btn.danger
       %span.icon.icon-trash
       %span.text Delete
     -# FUTURE: make this link do JS: history.back()
-    %a.btn.secondary{ href: "/prices" }
+    %a.btn.secondary{ href: "/api_keys" }
       %span.icon.icon-close
       %span.text Cancel

@@ -5,13 +5,16 @@
 %table
   %thead
     %tr
-      %th Date
+      %th Description
+      %th Value
       %th
   %tbody
     - @api_keys.each do |api_key|
       %tr
         %td
-          - #%a{href: "/api_key/#{api_key.api_key_id}" }= api_key.post_date
+          %a{href: "/api_key/#{api_key.api_key_id}" }= api_key.description
+        %td 
+          = api_key.value
         %td
           %a.btn.primary{ href: "/api_key/#{api_key.api_key_id}?edit" }
             %span.icon.icon-pencil

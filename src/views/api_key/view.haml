@@ -1,12 +1,11 @@
-%h1 Transaction
+%h1= "API Key '#{@api_key.description}'"
 .links
-  %a{ href: "/prices" } Prices Index
-= haml :"tx/as_dl"
+  %a{ href: "/api_keys" } API Key Index
+= haml :"api_key/as_dl"
 .buttons
-  %a.btn.primary{ href: "/tx/#{@tx.tx_id}?edit" }
+  %a.btn.primary{ href: "/api_key/#{@api_key.api_key_id}?edit" }
     %span.icon.icon-pencil
     %span.text Edit 
-  %a.btn.danger{ href: "/tx/#{@tx.tx_id}?delete" }
+  %a.btn.danger{ href: "/api_key/#{@api_key.api_key_id}?delete" }
     %span.icon.icon-trash
     %span.text Delete
-
