@@ -43,4 +43,12 @@ def seed_accounts
                             is_placeholder: false,
                             type: PiggyBank::Account::TYPE[:mortgage],
                             type_data: ""
+
+  assets = PiggyBank::Account.find(name: "Assets")
+  PiggyBank::Account.create parent_id: assets.account_id,
+                            commodity_id: usd_id,
+                            name: "Free Checking",
+                            is_placeholder: false,
+                            type: PiggyBank::Account::TYPE[:asset],
+                            type_data: ""
 end

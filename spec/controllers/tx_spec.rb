@@ -53,8 +53,8 @@ describe PiggyBank::App do
           memo: "",
           amount: 12.34,
           value: 12.34,
-        }
-      ]
+        },
+      ],
     }
   end
 
@@ -82,15 +82,15 @@ describe PiggyBank::App do
     end
   end
 
-  # context "GET /tx/:id" do
-  #   let(:response) {
-  #     mortgage = PiggyBank::Tx.find(name: "Mortgage")
-  #     get "/tx/#{mortgage.tx_id}"
-  #   }
+  context "GET /tx/:id" do
+    it "shows the transaction" do
+      tx = PiggyBank::Tx.first
+      response = get "/tx/#{tx.tx_id}"
 
-  #   it { expect(response.status).to eq 200 }
-  #   it { expect(response.body).to match /Tx 'Liabilities:Mortgage'/ }
-  # end
+      expect(response.status).to eq 200
+      expect(response.body).to have_tag "h1", text: "Transaction"
+    end
+  end
 
   # context "GET /tx/:id?edit" do
   #   let(:response) {

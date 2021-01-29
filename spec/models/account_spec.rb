@@ -77,7 +77,7 @@ describe PiggyBank::Account do
       mortgage = PiggyBank::Account.find(name: "Mortgage")
 
       account_opts = PiggyBank::Account.account_opts mortgage
-      expect(account_opts.length).to eq 6
+      expect(account_opts.length).to eq 7
 
       mortgage_opt = account_opts.find { |ao| ao[:value] == mortgage.account_id }
       expect(mortgage_opt[:selected]).to eq true

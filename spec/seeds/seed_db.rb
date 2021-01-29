@@ -1,6 +1,7 @@
 require_relative "commodities"
 require_relative "accounts"
 require_relative "prices"
+require_relative "tx"
 
 def seed_db
   PiggyBank::Split.truncate
@@ -11,4 +12,5 @@ def seed_db
   seed_commodities
   seed_accounts
   seed_prices
+  seed_tx
 end

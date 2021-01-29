@@ -11,7 +11,7 @@
     - @txs.each do |tx|
       %tr
         %td
-          %a{href: "/tx/#{tx.tx_id}" }= tx.date
+          %a{href: "/tx/#{tx.tx_id}" }= tx.post_date
         %td
           %a.btn.primary{ href: "/tx/#{tx.tx_id}?edit" }
             %span.icon.icon-pencil

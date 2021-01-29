@@ -1,9 +1,8 @@
 module PiggyBank
   class App < Sinatra::Base
-
-    # def tx_find(id)
-    #   PiggyBank::Tx.find(tx_id: id)
-    # end
+    def tx_find(id)
+      PiggyBank::Tx.find(tx_id: id)
+    end
 
     def tx_index
       @txs = PiggyBank::Tx.all
@@ -43,9 +42,9 @@ module PiggyBank
       redirect to "/txs"
     end
 
-    # def tx_view
-    #   haml_layout :"tx/view"
-    # end
+    def tx_view
+      haml_layout :"tx/view"
+    end
 
     # def tx_edit
     #   @action = "/tx/#{@tx.tx_id}"
@@ -77,7 +76,7 @@ module PiggyBank
     #   redirect to "/txs"
     # end
 
-    # # ROUTES
+    # ROUTES
 
     get "/txs" do
       tx_index
@@ -104,16 +103,16 @@ module PiggyBank
       end
     end
 
-    # get "/tx/:id" do |id|
-    #   @tx = tx_find id
-    #   if params.has_key? "edit"
-    #     tx_edit
-    #   elsif params.has_key? "delete"
-    #     tx_confirm
-    #   else
-    #     tx_view
-    #   end
-    # end
+    get "/tx/:id" do |id|
+      @tx = tx_find id
+      #   if params.has_key? "edit"
+      #     tx_edit
+      #   elsif params.has_key? "delete"
+      #     tx_confirm
+      #   else
+      tx_view
+      #   end
+    end
 
     # put "/tx/:id" do |id|
     #   @tx = tx_find id
