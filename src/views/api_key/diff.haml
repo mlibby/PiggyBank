@@ -1,0 +1,9 @@
+%h1 Compare Old/New Transaction
+= styled_flash
+.diff
+  .original
+    %h2 Server Version
+    = haml :"tx/as_dl"
+  .new
+    %h2 Your Changes
+    = haml :"tx/form"

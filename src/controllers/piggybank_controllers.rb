@@ -1,4 +1,5 @@
 require_relative "./account"
+require_relative "./api_key"
 require_relative "./budget"
 require_relative "./commodity"
 require_relative "./data"
