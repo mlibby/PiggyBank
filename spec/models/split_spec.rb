@@ -8,35 +8,32 @@ describe PiggyBank::Split do
   end
 
   #context "new instance" do
-    #let(:instance) { PiggyBank::Split.new }
+  #let(:instance) { PiggyBank::Split.new }
 
-    # TODO: split validation required
-    # it "is invalid at first" do
-    #   expect(true).to be true
-    #   expect(instance.valid?).to be false
-    # end
+  # it "is invalid at first" do
+  #   expect(true).to be true
+  #   expect(instance.valid?).to be false
+  # end
 
-    # TODO: validate required attributes
-    # it "is valid after attributes set" do
-    #   instance.name = "Checking"
-    #   instance.type = PiggyBank::Split::TYPE[:asset]
-    #   instance.parent = PiggyBank::Split.find(name: "Assets")
-    #   instance.commodity = PiggyBank::Commodity.find(name: "USD")
-    #   instance.is_placeholder = false
-    #   expect(instance.valid?).to be true
-    # end
+  # it "is valid after attributes set" do
+  #   instance.name = "Checking"
+  #   instance.type = PiggyBank::Split::TYPE[:asset]
+  #   instance.parent = PiggyBank::Split.find(name: "Assets")
+  #   instance.commodity = PiggyBank::Commodity.find(name: "USD")
+  #   instance.is_placeholder = false
+  #   expect(instance.valid?).to be true
+  # end
 
-    # TODO: version on save
-    # it "has a version after save" do
-    #   instance.name = "Checking"
-    #   instance.parent_id = assets.split_id
-    #   instance.commodity_id = usd.commodity_id
-    #   instance.is_placeholder = false
-    #   instance.type = PiggyBank::Split::TYPE[:asset]
-    #   instance.save
+  # it "has a version after save" do
+  #   instance.name = "Checking"
+  #   instance.parent_id = assets.split_id
+  #   instance.commodity_id = usd.commodity_id
+  #   instance.is_placeholder = false
+  #   instance.type = PiggyBank::Split::TYPE[:asset]
+  #   instance.save
 
-    #   expect(instance.version).to match(/\d{4}\-\d\d-\d\dT\d\d:\d\d:\d\d\+00:00/)
-    # end
+  #   expect(instance.version).to match(/\d{4}\-\d\d-\d\dT\d\d:\d\d:\d\d\+00:00/)
+  # end
   # end
 
   # context "existing instance" do
@@ -61,3 +58,7 @@ describe PiggyBank::Split do
   #   end
   #end
 end
+
+# TODO: split validation required
+# TODO: validate required attributes
+# TODO: version on save

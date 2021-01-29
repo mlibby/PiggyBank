@@ -247,9 +247,9 @@ end
 # ZZZ: DELETE /account/:id CSRF prevention
 # ZZZ: DELETE /account/:id version mismatch
 
-# TODO: prevent modification of top-level accounts
-# TODO: prevent deletion of top-level accounts
-# TODO: handle account delete with related entities
+# FUTURE: prevent modification of top-level accounts
+# FUTURE: prevent deletion of top-level accounts
+# FUTURE: handle account delete with related entities
 
 # FUTURE: GET /accounts/import = import textual chart of accounts
 # FUTURE: GET /accounts/setup = preset account lists to choose from
