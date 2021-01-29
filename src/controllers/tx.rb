@@ -70,11 +70,14 @@ module PiggyBank
       haml_layout :"tx/delete"
     end
 
-    # def tx_delete
-    #   flash[:success] = "Tx deleted."
-    #   @tx.destroy
-    #   redirect to "/txs"
-    # end
+    def tx_delete
+      @tx.splits.each do |split|
+        split.destroy
+      end 
+      @tx.destroy
+      flash[:success] = "Transaction deleted."
+      redirect to "/txs"
+    end
 
     # ROUTES
 
@@ -130,18 +133,17 @@ module PiggyBank
       end
     end
 
-    # delete "/tx/:id" do |id|
-    #   @tx = tx_find id
-    #   if params["_token"] != PiggyBank::App.token
-    #     flash.now[:danger] = "Failed to delete, please try again"
-    #     halt 403, tx_confirm
-    #   elsif params["version"] != @tx.version
-    #     flash.now[:danger] = "Someone else updated this tx, please re-confirm delete"
-    #     halt 409, tx_confirm
-    #   else
-    #     tx_delete
-    #   end
-    # end
-
+    delete "/tx/:id" do |id|
+      @tx = tx_find id
+      if params["_token"] != PiggyBank::App.token
+        flash.now[:danger] = "Failed to delete, please try again"
+        halt 403, tx_confirm
+      elsif params["version"] != @tx.version
+        flash.now[:danger] = "Someone else updated this tx, please re-confirm delete"
+        halt 409, tx_confirm
+      else
+        tx_delete
+      end
+    end
   end
 end

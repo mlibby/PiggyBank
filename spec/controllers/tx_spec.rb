@@ -187,47 +187,47 @@ describe PiggyBank::App do
     end
   end
 
-  # context "DELETE /tx/:id" do
-  #   it "deletes the tx" do
-  #     mortgage = PiggyBank::Tx.find(name: "Mortgage")
-  #     response = delete "/tx/#{mortgage.tx_id}", {
-  #       _token: PiggyBank::App.token,
-  #       version: mortgage.version,
-  #     }
-  #     expect(response.status).to eq 302
-  #     location = URI(response.headers["Location"])
-  #     expect(location.path).to eq "/txs"
-  #     expect(flash).to have_key :success
-  #     expect(flash[:success]).to eq "Tx 'Mortgage' deleted."
-  #   end
-  # end
+  context "DELETE /tx/:id" do
+    it "deletes the tx" do
+      tx = PiggyBank::Tx.first
+      response = delete "/tx/#{tx.tx_id}", {
+        _token: PiggyBank::App.token,
+        version: tx.version,
+      }
+      expect(response.status).to eq 302
+      location = URI(response.headers["Location"])
+      expect(location.path).to eq "/txs"
+      expect(flash).to have_key :success
+      expect(flash[:success]).to eq "Transaction deleted."
+    end
+  end
 
-  # context "DELETE /tx/:id with invalid token" do
-  #   it "politely refuses to delete" do
-  #     mortgage = PiggyBank::Tx.find(name: "Mortgage")
-  #     params = update_params(mortgage)
-  #     params["_token"] = "bad penny"
-  #     response = delete "/tx/#{mortgage.tx_id}", params
-  #     expect(response.status).to eq 403
-  #     expect(response.body).to have_tag "h1", text: "Delete Tx?"
-  #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Failed to delete, please try again"
-  #   end
-  # end
+  context "DELETE /tx/:id with invalid token" do
+    it "politely refuses to delete" do
+      tx = PiggyBank::Tx.first
+      params = update_params tx
+      params["_token"] = "bad penny"
+      response = delete "/tx/#{tx.tx_id}", params
+      expect(response.status).to eq 403
+      expect(response.body).to have_tag "h1", text: "Delete Transaction?"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Failed to delete, please try again"
+    end
+  end
 
-  # context "DELETE /tx/:id with version mismatch" do
-  #   it "politely refuses to delete" do
-  #     mortgage = PiggyBank::Tx.find(name: "Mortgage")
-  #     params = update_params(mortgage)
-  #     params[:version] = "bad version"
-  #     response = delete "/tx/#{mortgage.tx_id}", params
+  context "DELETE /tx/:id with version mismatch" do
+    it "politely refuses to delete" do
+      tx = PiggyBank::Tx.first
+      params = update_params tx
+      params[:version] = "bad version"
+      response = delete "/tx/#{tx.tx_id}", params
 
-  #     expect(response.status).to eq 409
-  #     expect(response.body).to have_tag "h1", text: "Delete Tx?"
-  #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this tx, please re-confirm delete"
-  #   end
-  # end
+      expect(response.status).to eq 409
+      expect(response.body).to have_tag "h1", text: "Delete Transaction?"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Someone else updated this tx, please re-confirm delete"
+    end
+  end
 end
 
 # ZZZ: pass list of txs
@@ -243,6 +243,6 @@ end
 # ZZZ: PUT /tx/:id version mismatch
 
 # ZZZ: GET /tx/:id?delete = confirm delete form
-# TODO: DELETE /tx/:id = delete tx
-# TODO: DELETE /tx/:id CSRF prevention
-# TODO: DELETE /tx/:id version mismatch
+# ZZZ: DELETE /tx/:id = delete tx
+# ZZZ: DELETE /tx/:id CSRF prevention
+# ZZZ: DELETE /tx/:id version mismatch
