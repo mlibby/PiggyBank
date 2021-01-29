@@ -29,9 +29,7 @@ describe PiggyBank::App do
           method: "POST",
           action: "/tx",
         },
-      ) do
-        with_tag "option", seen: "Liabilities", with: { selected: "selected" }
-      end
+      )
     end
   end
 

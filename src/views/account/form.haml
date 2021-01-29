@@ -1,19 +1,7 @@
-%form{method: "POST", action: @action}
-  %input{
-    type: 'hidden',
-    name: '_method',
-    value: @method
-  }
-  %input{
-    type: 'hidden',
-    name: '_token',
-    value: PiggyBank::App.token
-  }
-  %input{
-    type: 'hidden',
-    name: 'version',
-    value: @account.version
-  }
+%form{ method: "POST", action: @action }
+  %input{ type: 'hidden', name: '_method', value: @method }
+  %input{ type: 'hidden', name: '_token', value: PiggyBank::App.token }
+  %input{ type: 'hidden', name: 'version', value: @account.version }
   %label 
     -# FUTURE: choose type based on parent type
     Account Type
@@ -34,35 +22,21 @@
     %label
       Parent Account
       %select{ name: "parent_id" }
-        - @account.parent.account_opts.each do |opt|
-          %option{
-            value: opt[:value],
-            selected: opt[:selected]
-          }
+        - PiggyBank::Account.account_opts(@account.parent).each do |opt|
+          %option{ value: opt[:value], selected: opt[:selected] }
             = opt[:text]
   %label
     Commodity
     %select{ name: "commodity_id"}
       - PiggyBank::Commodity.commodity_opts(@account.commodity).each do |opt|
-        %option{
-          value: opt[:value],
-          selected: opt[:selected]
-        }
+        %option{ value: opt[:value], selected: opt[:selected] }
           = opt[:text]
   %label
     Name
-    %input{ 
-      name: "name",
-      type: "text",
-      value: @account.name
-    }
+    %input{ name: "name", type: "text", value: @account.name }
   .form-check
     %label
-      %input{
-        name: 'is_placeholder',
-        type: 'checkbox',
-        checked: @account.is_placeholder
-      }
+      %input{ name: 'is_placeholder', type: 'checkbox', checked: @account.is_placeholder }
       Is Placeholder
     -# <div id='mortgage-details' class='account-details' style='display: none'>
     -#   <hr />
@@ -102,7 +76,7 @@
       %span.icon.icon-solid-check
       %span.text Save
     -# FUTURE: make this link do JS: history.back()
-    %a.btn.secondary(href='/accounts')
+    %a.btn.secondary{ href: '/accounts' }
       %span.icon.icon-close
       %span.text Cancel
 

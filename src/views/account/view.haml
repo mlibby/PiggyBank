@@ -1,6 +1,6 @@
 %h1= "Account '#{@account.long_name}'"
 .links
-  %a(href="/accounts") Chart of Accounts
+  %a{ href: "/accounts"} Chart of Accounts
 = haml :"account/as_dl"
 .buttons
   %a.btn.primary{ href: "/account/#{@account.account_id}?edit" }
