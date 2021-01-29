@@ -19,6 +19,7 @@ module PiggyBank
       require_relative "./models/split.rb"
       require_relative "./models/tx.rb"
       require_relative "./models/api_key.rb"
+      require_relative "./models/ofx.rb"
 
       if ENV["APP_ENV"] != "TEST"
         # :nocov:

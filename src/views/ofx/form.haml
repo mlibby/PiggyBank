@@ -1,0 +1,19 @@
+%form.ofx{ method: "POST", action: @action }
+  %fieldset
+    %input{ type: "hidden", name: "_method", value: @method }
+    %input{ type: "hidden", name: "_token", value: PiggyBank::App.token }
+    %input{ type: "hidden", name: "version", value: @ofx.version }
+    %label
+      Description
+      %input{ name: "description", type: "text", value: @ofx.description }
+    %label
+      Value
+      %input{ name: "value", type: "text", value: @ofx.value }
+  .buttons
+    %button.btn.primary
+      %span.icon.icon-solid-check
+      %span.text Save
+    -# FUTURE: make this link do JS: history.back()
+    %a.btn.secondary{ href: "/ofxs" }
+      %span.icon.icon-close
+      %span.text Cancel
