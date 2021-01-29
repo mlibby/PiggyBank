@@ -54,15 +54,15 @@ module PiggyBank
       haml_layout :"tx/edit"
     end
 
-    # def tx_update
-    #   haml :"tx/view"
-    # end
+    def tx_update
+      haml :"tx/view"
+    end
 
-    # def tx_diff(orig_tx, new_tx)
-    #   @tx = orig_tx
-    #   @new_tx = new_tx
-    #   haml :"tx/diff"
-    # end
+    def tx_diff(orig_tx, new_tx)
+      @tx = orig_tx
+      @new_tx = new_tx
+      haml :"tx/diff"
+    end
 
     def tx_confirm
       @action = "/tx/#{@tx.tx_id}"
@@ -84,10 +84,8 @@ module PiggyBank
 
     get "/tx" do
       @tx = PiggyBank::Tx.new
-      @splits = [
-        PiggyBank::Split.new,
-        PiggyBank::Split.new,
-      ]
+      @tx.splits << PiggyBank::Split.new
+      @tx.splits << PiggyBank::Split.new
       tx_new
     end
 
@@ -95,7 +93,8 @@ module PiggyBank
       if params["_token"] != PiggyBank::App.token
         @tx = PiggyBank::Tx.new
         @tx.set_fields params, PiggyBank::Tx.update_fields
-        @splits = [PiggyBank::Split.new, PiggyBank::Split.new]
+        @tx.splits << PiggyBank::Split.new
+        @tx.splits << PiggyBank::Split.new
         flash.now[:danger] = "Failed to create, please try again"
         halt 403, tx_new
       else
@@ -105,7 +104,6 @@ module PiggyBank
 
     get "/tx/:id" do |id|
       @tx = tx_find id
-      @splits = @tx.splits
       if params.has_key? "edit"
         tx_edit
       elsif params.has_key? "delete"
@@ -115,22 +113,22 @@ module PiggyBank
       end
     end
 
-    # put "/tx/:id" do |id|
-    #   @tx = tx_find id
-    #   if params["_token"] != PiggyBank::App.token
-    #     @tx.set_fields params, PiggyBank::Tx.update_fields
-    #     flash.now[:danger] = "Failed to save changes, please try again"
-    #     halt 403, tx_edit
-    #   elsif params["version"] != @tx.version
-    #     orig = @tx.clone
-    #     @tx.set_fields params, PiggyBank::Tx.update_fields
-    #     flash.now[:danger] = "Someone else updated this tx, please confirm changes"
-    #     halt 409, tx_diff(orig, @tx)
-    #   else
-    #     @tx.update_fields params, PiggyBank::Tx.update_fields
-    #     tx_update
-    #   end
-    # end
+    put "/tx/:id" do |id|
+      @tx = tx_find id
+      if params["_token"] != PiggyBank::App.token
+        @tx.set_fields params, PiggyBank::Tx.update_fields
+        flash.now[:danger] = "Failed to save changes, please try again"
+        halt 403, tx_edit
+      elsif params["version"] != @tx.version
+        orig = @tx.clone
+        @tx.set_fields params, PiggyBank::Tx.update_fields
+        flash.now[:danger] = "Someone else updated this tx, please confirm changes"
+        halt 409, tx_diff(orig, @tx)
+      else
+        @tx.update_fields params, PiggyBank::Tx.update_fields
+        tx_update
+      end
+    end
 
     # delete "/tx/:id" do |id|
     #   @tx = tx_find id
