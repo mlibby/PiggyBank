@@ -92,38 +92,39 @@ describe PiggyBank::App do
     end
   end
 
-  # context "GET /tx/:id?edit" do
-  #   let(:response) {
-  #     mortgage = PiggyBank::Tx.find(name: "Mortgage")
-  #     get "/tx/#{mortgage.tx_id}?edit"
-  #   }
-  #   it { expect(response.status).to eq 200 }
-  #   it { expect(response.body).to include "Edit Tx" }
+  context "GET /tx/:id?edit" do
+    it "has an edit form" do
+      tx = PiggyBank::Tx.first
+      response = get "/tx/#{tx.tx_id}?edit"
+      expect(response.status).to eq 200
+      expect(response.body).to have_tag "h1", text: "Edit Transaction"
+      expect(response.body).to have_tag("form", with: { method: "POST" }) do
+        with_tag "input", with: { name: "_token", type: "hidden" }
+        with_tag "input", with: { name: "_method", type: "hidden", value: "PUT" }
+        with_tag "input", with: { name: "version", type: "hidden", value: tx.version }
+      end
+    end
+  end
 
-  #   it "has an edit form" do
-  #     version = PiggyBank::Tx.find(name: "Mortgage").version
-  #     expect(response.body).to have_tag("form", with: { method: "POST" }) do
-  #       with_tag "input", with: { name: "_token", type: "hidden" }
-  #       with_tag "input", with: { name: "_method", type: "hidden", value: "PUT" }
-  #       with_tag "input", with: { name: "version", type: "hidden", value: version }
-  #     end
-  #   end
-  # end
-
-  # context "GET /tx/:id?delete" do
-  #   it "has a delete confirmation form" do
-  #     mortgage = PiggyBank::Tx.find(name: "Mortgage")
-  #     response = get "/tx/#{mortgage.tx_id}?delete"
-  #     expect(response.body).to include "Delete Tx?"
-  #     expect(response.status).to eq 200
-  #     action = "/tx/#{mortgage.tx_id}"
-  #     expect(response.body).to have_tag("form", with: { method: "POST", action: action }) do
-  #       with_tag "input", with: { name: "_token", type: "hidden" }
-  #       with_tag "input", with: { name: "_method", type: "hidden", value: "DELETE" }
-  #       with_tag "input", with: { name: "version", type: "hidden", value: mortgage.version }
-  #     end
-  #   end
-  # end
+  context "GET /tx/:id?delete" do
+    it "has a delete confirmation form" do
+      tx = PiggyBank::Tx.first
+      response = get "/tx/#{tx.tx_id}?delete"
+      expect(response.body).to include "Delete Transaction?"
+      expect(response.status).to eq 200
+      expect(response.body).to have_tag(
+        "form",
+        with: {
+          method: "POST",
+          action: "/tx/#{tx.tx_id}",
+        },
+      ) do
+        with_tag "input", with: { name: "_token", type: "hidden" }
+        with_tag "input", with: { name: "_method", type: "hidden", value: "DELETE" }
+        with_tag "input", with: { name: "version", type: "hidden", value: tx.version }
+      end
+    end
+  end
 
   # def update_params(existing)
   #   {
@@ -227,7 +228,7 @@ describe PiggyBank::App do
   # end
 end
 
-# TODO: pass list of txs
+# ZZZ: pass list of txs
 
 # ZZZ: GET /tx = new tx form
 # ZZZ: POST /tx = create tx

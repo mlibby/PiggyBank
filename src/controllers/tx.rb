@@ -46,13 +46,13 @@ module PiggyBank
       haml_layout :"tx/view"
     end
 
-    # def tx_edit
-    #   @action = "/tx/#{@tx.tx_id}"
-    #   @method = "PUT"
-    #   @header = "Edit Tx"
+    def tx_edit
+      @action = "/tx/#{@tx.tx_id}"
+      @method = "PUT"
+      @header = "Edit Transaction"
 
-    #   haml_layout :"tx/edit"
-    # end
+      haml_layout :"tx/edit"
+    end
 
     # def tx_update
     #   haml :"tx/view"
@@ -64,11 +64,11 @@ module PiggyBank
     #   haml :"tx/diff"
     # end
 
-    # def tx_confirm
-    #   @action = "/tx/#{@tx.tx_id}"
-    #   @method = "DELETE"
-    #   haml_layout :"tx/delete"
-    # end
+    def tx_confirm
+      @action = "/tx/#{@tx.tx_id}"
+      @method = "DELETE"
+      haml_layout :"tx/delete"
+    end
 
     # def tx_delete
     #   flash[:success] = "Tx deleted."
@@ -105,13 +105,14 @@ module PiggyBank
 
     get "/tx/:id" do |id|
       @tx = tx_find id
-      #   if params.has_key? "edit"
-      #     tx_edit
-      #   elsif params.has_key? "delete"
-      #     tx_confirm
-      #   else
-      tx_view
-      #   end
+      @splits = @tx.splits
+      if params.has_key? "edit"
+        tx_edit
+      elsif params.has_key? "delete"
+        tx_confirm
+      else
+        tx_view
+      end
     end
 
     # put "/tx/:id" do |id|
