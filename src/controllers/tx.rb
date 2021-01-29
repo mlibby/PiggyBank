@@ -17,17 +17,31 @@ module PiggyBank
       haml_layout :"tx/edit"
     end
 
-    # def tx_create(params)
-    #   @tx = PiggyBank::Tx.create(
-    #     quote_date: params["quote_date"],
-    #     commodity_id: params["commodity_id"],
-    #     currency_id: params["currency_id"],
-    #     value: params["value"],
-    #   )
+    def tx_create(params)
+      tx = PiggyBank::Tx.new(
+        post_date: params["post_date"],
+        number: params["number"],
+        description: params["description"],
+      )
+      splits = []
+      0.upto(params["splits"].length - 1) do |i|
+        splits << PiggyBank::Split.new(
+          memo: params["splits"][i]["memo"],
+          account_id: params["splits"][i]["account_id"],
+          amount: params["splits"][i]["amount"],
+          value: params["splits"][i]["value"],
+        )
+      end
 
-    #   flash[:success] = "Tx created."
-    #   redirect to "/txs"
-    # end
+      tx.save
+      splits.each do |split|
+        tx.add_split split
+      end
+      tx.save
+
+      flash[:success] = "Transaction created."
+      redirect to "/txs"
+    end
 
     # def tx_view
     #   haml_layout :"tx/view"
@@ -82,6 +96,7 @@ module PiggyBank
       if params["_token"] != PiggyBank::App.token
         @tx = PiggyBank::Tx.new
         @tx.set_fields params, PiggyBank::Tx.update_fields
+        @splits = [PiggyBank::Split.new, PiggyBank::Split.new]
         flash.now[:danger] = "Failed to create, please try again"
         halt 403, tx_new
       else

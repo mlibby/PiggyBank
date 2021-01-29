@@ -11,9 +11,9 @@ module PiggyBank
 
     one_to_many :splits, class: PiggyBank::Split
 
-    # def self.update_fields
-    #   return [:post_date, :number, :description]
-    # end
+    def self.update_fields
+      return [:post_date, :number, :description]
+    end
 
     def before_create
       self.version = PiggyBank::Repo.timestamp
@@ -23,7 +23,6 @@ module PiggyBank
       super
       validates_presence :post_date
       validates_presence :description
-      validates_min_length 2, :splits
     end
   end
 end

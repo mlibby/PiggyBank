@@ -15,28 +15,28 @@
 
   - @splits.each do |split|
     %fieldset
-      %input{ type: "hidden", name: "split[][split_id]", value: split.split_id }
-      %input{ type: "hidden", name: "split[][version]", value: split.version }
+      %input{ type: "hidden", name: "splits[][split_id]", value: split.split_id }
+      %input{ type: "hidden", name: "splits[][version]", value: split.version }
       %label
         Account
-        %select{ name: "split[][account_id]" }
+        %select{ name: "splits[][account_id]" }
           - PiggyBank::Account.account_opts(split.account).each do |opt|
             %option{ value: opt[:value], selected: opt[:selected] }
               = opt[:text]
       %label
         Memo
-        %input{ name: "split[][memo]", type: "text", value: split.memo }
+        %input{ name: "splits[][memo]", type: "text", value: split.memo }
       %label
         Amount
-        %input{ name: "split[][amount]", type: "number", value: split.amount }
+        %input{ name: "splits[][amount]", type: "number", value: split.amount }
       %label
         Value
-        %input{ name: "split[][value]", type: "number", value: split.value }
+        %input{ name: "splits[][value]", type: "number", value: split.value }
   .buttons
     %button.btn.primary
       %span.icon.icon-solid-check
       %span.text Save
     -# FUTURE: make this link do JS: history.back()
-    %a.btn.secondary{ href: "/accounts" }
+    %a.btn.secondary{ href: "/txs" }
       %span.icon.icon-close
       %span.text Cancel

@@ -24,9 +24,9 @@ module PiggyBank
     #   return [:memo, :amount, :value]
     # end
 
-    # def before_create
-    #   self.version = PiggyBank::Repo.timestamp
-    # end
+    def before_create
+      self.version = PiggyBank::Repo.timestamp
+    end
 
     # def validate
     #   super

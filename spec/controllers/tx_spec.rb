@@ -33,45 +33,54 @@ describe PiggyBank::App do
     end
   end
 
-  # def create_params
-  #   usd = PiggyBank::Commodity.find(name: "USD")
-  #   equity = PiggyBank::Tx.find(name: "Equity")
-  #   {
-  #     _token: PiggyBank::App.token,
-  #     name: "Opening Balances",
-  #     type: PiggyBank::Tx::TYPE[:equity],
-  #     parent_id: equity.tx_id,
-  #     commodity_id: usd.commodity_id,
-  #     is_placeholder: false,
-  #   }
-  # end
+  def create_params
+    equity = PiggyBank::Account.find(name: "Equity")
+    asset = PiggyBank::Account.find(name: "Assets")
+    tx = {
+      _token: PiggyBank::App.token,
+      post_date: "2021-01-28",
+      number: 1,
+      description: "opening balance",
+      splits: [
+        {
+          account_id: equity.account_id,
+          memo: "",
+          amount: -12.34,
+          value: -12.34,
+        },
+        {
+          account_id: asset.account_id,
+          memo: "",
+          amount: 12.34,
+          value: 12.34,
+        }
+      ]
+    }
+  end
 
-  # context "POST /tx" do
-  #   let(:response) { post "/tx", create_params }
+  context "POST /tx" do
+    it "redirects to /txs" do
+      response = post "/tx", create_params
+      expect(response.status).to eq 302
+      location = URI(response.headers["Location"])
+      expect(location.path).to eq "/txs"
+      expect(flash).to have_key :success
+      expect(flash[:success]).to eq "Transaction created."
+    end
+  end
 
-  #   it "redirects to /txs" do
-  #     expect(response.status).to eq 302
-  #     location = URI(response.headers["Location"])
-  #     expect(location.path).to eq "/txs"
-  #     expect(flash).to have_key :success
-  #     expect(flash[:success]).to eq "Tx 'Opening Balances' created."
-  #   end
-  # end
+  context "POST /tx with invalid token" do
+    it "politely refuses to create" do
+      params = create_params
+      params[:_token] = "bad token"
+      response = post "/tx", params
 
-  # context "POST /tx with invalid token" do
-  #   let(:response) {
-  #     params = create_params
-  #     params[:_token] = "bad token"
-  #     post "/tx", params
-  #   }
-
-  #   it "politely refuses to create" do
-  #     expect(response.status).to eq 403
-  #     expect(response.body).to have_tag "h1", text: "New Tx"
-  #     expect(response.body).to have_tag "div#flash"
-  #     expect(response.body).to have_tag "div.flash.danger", text: "Failed to create, please try again"
-  #   end
-  # end
+      expect(response.status).to eq 403
+      expect(response.body).to have_tag "h1", text: "New Transaction"
+      expect(response.body).to have_tag "div#flash"
+      expect(response.body).to have_tag "div.flash.danger", text: "Failed to create, please try again"
+    end
+  end
 
   # context "GET /tx/:id" do
   #   let(:response) {
@@ -221,8 +230,8 @@ end
 # TODO: pass list of txs
 
 # ZZZ: GET /tx = new tx form
-# TODO: POST /tx = create tx
-# TODO: POST /tx CSRF protection
+# ZZZ: POST /tx = create tx
+# ZZZ: POST /tx CSRF protection
 
 # TODO: GET /tx/:id = view tx
 # TODO: GET /tx/:id?edit = edit tx form

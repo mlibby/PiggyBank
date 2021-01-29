@@ -3,6 +3,8 @@ require_relative "accounts"
 require_relative "prices"
 
 def seed_db
+  PiggyBank::Split.truncate
+  PiggyBank::Tx.truncate
   PiggyBank::Account.truncate
   PiggyBank::Price.truncate
   PiggyBank::Commodity.truncate
