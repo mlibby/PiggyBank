@@ -23,10 +23,10 @@ module PiggyBank
 
     def validate
       super
-      # validates_presence :type
-      # validates_presence :name
-      # validates_presence :commodity_id
-      # validates_presence :is_placeholder
+      validates_presence :quote_date
+      validates_presence :commodity_id
+      validates_presence :currency_id
+      validates_presence :value
     end
 
     def value_string
