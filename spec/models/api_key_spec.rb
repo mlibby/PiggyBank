@@ -33,6 +33,6 @@ describe PiggyBank::ApiKey do
   end
 end
 
-# TODO: api_key validation required
-# TODO: validate required attributes
-# TODO: version on save
+# ZZZ: api_key validation required
+# ZZZ: validate required attributes
+# ZZZ: version on save

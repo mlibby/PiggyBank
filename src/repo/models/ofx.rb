@@ -14,9 +14,17 @@ module PiggyBank
   class Ofx < Sequel::Model(:ofx)
     plugin :validation_helpers
 
-    # def self.update_fields
-    #   return [:description, :value]
-    # end
+    many_to_one :account, class: PiggyBank::Account
+
+    def self.update_fields
+      return [
+        :active, :account_id, :url, 
+        :user, :password, 
+        :fid, :fid_org, 
+        :bank_id, :bank_account_id,
+        :account_type
+      ]
+    end
 
     def before_create
       self.version = PiggyBank::Repo.timestamp
@@ -24,8 +32,13 @@ module PiggyBank
 
     def validate
       super
-      # validates_presence :description
-      # validates_presence :value
+      validates_presence :url
+      validates_presence :user
+      validates_presence :fid
+      validates_presence :fid_org
+      validates_presence :bank_id
+      validates_presence :bank_account_id
+      validates_presence :account_type
     end
   end
 end

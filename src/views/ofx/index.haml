@@ -5,16 +5,16 @@
 %table
   %thead
     %tr
-      %th Description
-      %th Value
+      %th Active
+      %th Account
       %th
   %tbody
     - @ofxs.each do |ofx|
       %tr
-        %td
-          -# %a{href: "/ofx/#{ofx.ofx_id}" }= ofx.description
         %td 
-          -# = ofx.value
+          = ofx.active
+        %td
+          %a{href: "/ofx/#{ofx.ofx_id}" }= ofx.account.name
         %td
           %a.btn.primary{ href: "/ofx/#{ofx.ofx_id}?edit" }
             %span.icon.icon-pencil

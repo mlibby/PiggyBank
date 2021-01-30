@@ -4,11 +4,36 @@
     %input{ type: "hidden", name: "_token", value: PiggyBank::App.token }
     %input{ type: "hidden", name: "version", value: @ofx.version }
     %label
-      Description
-      %input{ name: "description", type: "text", value: @ofx.description }
+      %input{ name: "active", type: "checkbox", checked: @ofx.active }
+      Active?
     %label
-      Value
-      %input{ name: "value", type: "text", value: @ofx.value }
+      Account
+      %input{ name: "account_id", type: "text", value: @ofx.account_id }
+    %label 
+      URL
+      %input{ name: "url", type: "text", value: @ofx.url }
+    %label
+      User
+      %input{ name: "user", type: "text", value: @ofx.user }
+    %label
+      Password 
+      %input{ name: "password", type: "text", value: @ofx.password }
+    %label
+      FID
+      %input{ name: "fid", type: "text", value: @ofx.fid }
+    %label 
+      FID Org
+      %input{ name: "fid_org", type: "text", value: @ofx.fid_org }
+    %label
+      Bank ID
+      %input{ name: "bank_id", type: "text", value: @ofx.bank_id }
+    %label
+      Bank Account ID
+      %input{ name: "bank_account_id", type: "text", value: @ofx.bank_account_id }
+    %label
+      Account Type
+      %input{ name: "account_type", type: "text", value: @ofx.account_type } 
+
   .buttons
     %button.btn.primary
       %span.icon.icon-solid-check
