@@ -1,11 +1,10 @@
 module PiggyBank
   class App < Sinatra::Base
 
-    # TODO: plan budget feature
+    # FUTURE: plan budget feature
 
     get "/budget" do
-      haml :"budget/index",
-           layout: :layout
+      haml_layout :"budget/index"
     end
   end
 end
