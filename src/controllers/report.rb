@@ -1,15 +1,23 @@
 module PiggyBank
   class App < Sinatra::Base
     get "/report" do
-      haml :"report/index",
-           layout: :layout
+      haml_layout :"report/index"
     end
 
-    # TODO: GET /report/balance
+    get "/report/balance" do
+      haml_layout :"report/balance"
+    end
 
-    # TODO: GET /report/income
+    get "/report/income" do
+      haml_layout :"report/income"
+    end
 
-    # TODO: GET /report/cash
-    
+    get "/report/cash" do
+      haml_layout :"report/cash"
+    end
   end
 end
+
+# ZZZ: GET /report/balance
+# ZZZ: GET /report/income
+# ZZZ: GET /report/cash

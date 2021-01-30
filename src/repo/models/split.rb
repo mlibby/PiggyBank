@@ -1,13 +1,11 @@
 module PiggyBank
   class Tx < Sequel::Model(:tx)
-    #needed because we define a relationship
+    # we need the basic class here to allow for a circular relationship
   end
-
   #
   # primary_key :split_id
   # foreign_key :tx_id, :tx, null: false, key: [:tx_id]
-  # foreign_key :account_id, :account, null: false, key: [:account_id]
-  # TODO: remove commodity -- it's inherent to account
+  # foreign_key :account_id, :account, null: false, key: [:account_id]  
   # foreign_key :commodity_id, :commodity, null: false, key: [:commodity_id]
   # String :memo, text: true
   # BigDecimal :amount, null: false
@@ -33,3 +31,5 @@ module PiggyBank
     # end
   end
 end
+
+# ZZZ: remove commodity -- it's inherent to account
