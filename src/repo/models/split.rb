@@ -1,12 +1,8 @@
 module PiggyBank
-  class Tx < Sequel::Model(:tx)
-    # we need the basic class here to allow for a circular relationship
-  end
   #
   # primary_key :split_id
   # foreign_key :tx_id, :tx, null: false, key: [:tx_id]
   # foreign_key :account_id, :account, null: false, key: [:account_id]  
-  # foreign_key :commodity_id, :commodity, null: false, key: [:commodity_id]
   # String :memo, text: true
   # BigDecimal :amount, null: false
   # BigDecimal :value, null: false
@@ -15,8 +11,8 @@ module PiggyBank
   class Split < Sequel::Model(:split)
     plugin :validation_helpers
 
-    many_to_one :tx, class: PiggyBank::Tx
-    many_to_one :account, class: PiggyBank::Account
+    many_to_one :tx, class: "PiggyBank::Tx"
+    many_to_one :account, class: "PiggyBank::Account"
 
     # def self.update_fields
     #   return [:memo, :amount, :value]
