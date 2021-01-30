@@ -44,12 +44,11 @@
             %a{ href: "/commodities" } Commodities
             %a{ href: "/prices" } Prices
         %section
-          %a.label{ href: "/txs" } Transactions
-        %section
-          %span.label Planning
+          %span.label Transactions
           .menu
-            %a{ href: "/budget" } Budget Planning
-            %a{ href: "/tool/mortgage" } Mortgage Tools
+            %a{ href: "/import" } Import Data
+            %a{ href: "/txs" } Transactions
+            %a{ href: "/receipts" } Receipts            
         %section
           %span.label Reports
           .menu
@@ -58,15 +57,18 @@
             %a{ href: "/report/income" } Income Statement
             %a{ href: "/report/cash" } Cash Flow
         %section
-          %span.label Data
+          %span.label Planning
           .menu
-            %a{ href: "/receipt" } Receipts
-            %a{ href: "/ofxs" } OFX Configuration
-            %a{ href: "/import" } Import Data
-            %a{ href: "/api_keys" } API Keys
+            %a{ href: "/budget" } Budget Planning
+            %a{ href: "/tool/mortgage" } Mortgage Tools
         %section
-          %a.icon{ href: "/settings" }
+          %span.label
             %span.sr-only Settings
             %span.icon.icon-gear
+          .menu
+            %a{ href: "/settings" } General Settings
+            %a{ href: "/ofxs" } OFX Configuration
+            %a{ href: "/api_keys" } API Keys
+            
     %main{ role: "main" }
       = yield
