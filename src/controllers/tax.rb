@@ -5,10 +5,12 @@ module PiggyBank
     end
 
     get "/tax/data/general" do
+      @general = PiggyBank::Tax::General.new
       haml_layout :"tax/data/general"
     end
 
     post "/tax/data/general" do
+      @general = PiggyBank::Tax::General.new
       haml_layout :"tax/data/general"
     end
 

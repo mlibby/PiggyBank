@@ -1,2 +1,29 @@
 %h1 
   General Information
+%form.ofx{ method: "POST" }
+  %input{ type: "hidden", name: "_token", value: PiggyBank::App.token }
+%fieldset
+  %legend 
+    Taxpayer
+  %label
+    First Name and Middle Initial
+    %input{ name: "first_name", type: "text", value: @general.first_name }
+  %label 
+    Last Name
+    %input{ name: "last_name", type: "text", value: @general.last_name }
+  %label
+    SSN 
+    %input{ name: "ssn", type: "text", value: @general.ssn}
+
+%fieldset
+  %legend 
+    Spouse
+  %label
+    First Name and Middle Initial
+    %input{ name: "spouse_first_name", type: "text", value: @general.spouse_first_name }
+  %label 
+    Last Name
+    %input{ name: "spouse_last_name", type: "text", value: @general.spouse_last_name }
+  %label
+    SSN 
+    %input{ name: "spouse_ssn", type: "text", value: @general.spouse_ssn}

@@ -20,6 +20,8 @@ module PiggyBank
       require_relative "./models/tx.rb"
       require_relative "./models/api_key.rb"
       require_relative "./models/ofx.rb"
+      require_relative "./models/blob.rb"
+      require_relative "./models/tax_general.rb"
 
       if ENV["APP_ENV"] != "TEST"
         # :nocov:
