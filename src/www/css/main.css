@@ -173,6 +173,7 @@ form label {
 }
 
 form input[type=text],
+form input[type=checkbox],
 form input[type=date],
 form input[type=datetime],
 form input[type=number],
@@ -191,7 +192,12 @@ form select {
   width: 100%;
 }
 
+form input[type=checkbox] {
+  width: 2rem;
+}
+
 form input[type=text]:focus,
+form input[type=checkbox]:focus,
 form input[type=date]:focus,
 form input[type=datetime]:focus,
 form input[type=number]:focus,

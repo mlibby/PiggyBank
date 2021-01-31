@@ -11,7 +11,11 @@ module PiggyBank
 
     post "/tax/data/general" do
       @general = PiggyBank::Tax::General.new
-      haml_layout :"tax/data/general"
+      @general.update params
+      @general.save
+
+      flash[:success] = "General tax data saved."
+      redirect to "/tax/data"
     end
 
     get "/tax/data/income" do
