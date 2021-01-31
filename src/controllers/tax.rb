@@ -8,7 +8,15 @@ module PiggyBank
       haml_layout :"tax/data/general"
     end
 
+    post "/tax/data/general" do
+      haml_layout :"tax/data/general"
+    end
+
     get "/tax/data/income" do
+      haml_layout :"tax/data/income"
+    end
+
+    post "/tax/data/income" do
       haml_layout :"tax/data/income"
     end
 
@@ -16,7 +24,15 @@ module PiggyBank
       haml_layout :"tax/data/deduct"
     end
 
+    post "/tax/data/deduct" do
+      haml_layout :"tax/data/deduct"
+    end
+
     get "/tax/data/tax" do
+      haml_layout :"tax/data/tax"
+    end
+
+    post "/tax/data/tax" do
       haml_layout :"tax/data/tax"
     end
 
