@@ -1,5 +1,6 @@
+![GitHub top language](https://img.shields.io/github/languages/top/mlibby/PiggyBank)
 ![rake test](https://github.com/mlibby/PiggyBank/workflows/rake%20test/badge.svg)
-![license: AGPL-3.0](https://img.shields.io/github/license/mlibby/PiggyBank)
+![license: AGPL-3.0](https://img.shields.io/github/license/mlibby/PiggyBank?style=flat-square)
 
 # Welcome to PiggyBank
 
