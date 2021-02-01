@@ -1,21 +1,33 @@
 module PiggyBank
   class App < Sinatra::Base
+    def general_form
+      haml_layout :"tax/data/general"
+    end
+
     get "/tax/data" do
       haml_layout :"tax/data"
     end
 
     get "/tax/data/general" do
       @general = PiggyBank::Tax::General.new
-      haml_layout :"tax/data/general"
+      general_form
     end
 
     post "/tax/data/general" do
       @general = PiggyBank::Tax::General.new
       @general.update params
-      @general.save
 
-      flash[:success] = "General tax data saved."
-      redirect to "/tax/data"
+      if params.has_key? "add_dep"
+        @general.add_dependent
+        general_form
+      elsif params.has_key? "rm_dep"
+        @general.rm_dependent params["rm_dep"]
+        general_form
+      else
+        @general.save
+        flash[:success] = "General tax data saved."
+        redirect to "/tax/data"
+      end
     end
 
     get "/tax/data/income" do

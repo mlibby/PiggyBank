@@ -1,10 +1,41 @@
 %h1 General Information
 = styled_flash
-%form.ofx{ method: "POST" }
+%form{ method: "POST" }
   %input{ type: "hidden", name: "_token", value: PiggyBank::App.token }
+  %h2 Address
+  %fieldset 
+    %legend Line 1
+    %label
+      Street Address
+      %input{ name: "street", type: "text", value: @general.street }
+    %label
+      Apt No
+      %input{ name: "apt_no", type: "text", value: @general.apt_no }
+  %fieldset 
+    %legend Line 2
+    %label
+      City
+      %input{ name: "city", type: "text", value: @general.city }
+    %label
+      State
+      %input{ name: "state", type: "text", value: @general.state }
+    %label
+      ZIP Code
+      %input{ name: "zip", type: "text", value: @general.zip }
+  %fieldset 
+    %legend Foreign
+    %label
+      Country
+      %input{ name: "country", type: "text", value: @general.country }
+    %label
+      Province/State/County
+      %input{ name: "province", type: "text", value: @general.province }
+    %label
+      Postal Code
+      %input{ name: "post_code", type: "text", value: @general.post_code }
+  %h2 Taxpayers
   %fieldset
-    %legend 
-      Taxpayer
+    %legend Individual
     %label
       First Name and MI
       %input{ name: "first_name", type: "text", value: @general.first_name }
@@ -21,8 +52,7 @@
       Is Blind?
       %input{ name: "blind", type: "checkbox", checked: @general.blind } 
   %fieldset
-    %legend 
-      Spouse
+    %legend Spouse
     %label
       First Name and MI
       %input{ name: "spouse_first_name", type: "text", value: @general.spouse_first_name }
@@ -38,10 +68,37 @@
     %label
       Is Blind?
       %input{ name: "spouse_blind", type: "checkbox", checked: @general.spouse_blind } 
+  %h2 Dependents
+  - @general.dependents.each_with_index do |depend, n|
+    %fieldset
+      %legend= "Dependent ##{n+1}"
+      %label 
+        Name 
+        %input{ name: "dependents[][name]", type: "text", value: depend.name }
+      %label 
+        Social Security Number 
+        %input{ name: "dependents[][ssn]", type: "text", value: depend.ssn }
+      %label
+        Relation
+        %input{ name: "dependents[][relation]", type: "text", value: depend.relation }
+      %label
+        Child Tax Credit?
+        %input{ name: "dependents[][child_credit]", type: "checkbox", checked: depend.child_credit }
+      %label 
+        Credit for Other Dependents?
+        %input{ name: "dependents[][other_credit]", type: "checkbox", checked: depend.other_credit }
+      %button.btn.danger{ formaction: "/tax/data/general?rm_dep=#{n}" }
+        %span.icon.icon-trash
+        %span.text Remove Dependent
   .buttons
-    %button.btn.primary
+    %button.btn.primary{ formaction: "/tax/data/general?add_dep" }
+      %span.icon.icon-plus
+      %span.text Add Dependent
+
+  .buttons
+    %button.btn.primary{ formaction: "/tax/data/general" }
       %span.icon.icon-solid-check
       %span.text Save
-    %a.btn.secondary(href='/tax/data')
+    %a.btn.secondary{ href: '/tax/data' }
       %span.icon.icon-close
       %span.text Cancel

@@ -231,24 +231,24 @@ form select:focus {
 
 form fieldset {
   display: flex;
-  border-bottom: 0;
-  border-right: 0;
-  border-left: 1px dashed grey;
-  border-top: 1px dashed grey;
-}
-
-form fieldset:last-of-type {
-  border-bottom: 1px dashed grey;
+  flex-wrap: wrap;
+  border: 1px dashed grey;
+  margin-bottom: 0.5rem;
 }
 
 form fieldset label {
   margin-top: 0.66rem;
   margin-right: 2rem;
+  min-width: 17%;
 }
 
 form fieldset input,
 form fieldset select {
   height: 2rem;
+}
+
+form fieldset legend {
+  font-weight: bold;
 }
 
 input[type=submit]:hover,
