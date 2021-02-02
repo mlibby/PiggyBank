@@ -4,6 +4,10 @@ module PiggyBank
       haml_layout :"tax/data/general"
     end
 
+    def income_form
+      haml_layout :"tax/data/income"
+    end
+
     get "/tax/data" do
       haml_layout :"tax/data"
     end
@@ -31,11 +35,25 @@ module PiggyBank
     end
 
     get "/tax/data/income" do
+      @income = PiggyBank::Tax::Income.new
       haml_layout :"tax/data/income"
     end
 
     post "/tax/data/income" do
-      haml_layout :"tax/data/income"
+      @income = PiggyBank::Tax::Income.new
+      @income.update params
+
+      if params.has_key? "add_w2"
+        @income.add_w2
+        income_form
+      elsif params.has_key? "rm_w2"
+        @income.rm_w2 params["rm_w2"]
+        income_form
+      else
+        @income.save
+        flash[:success] = "Income data saved."
+        redirect to "/tax/data"
+      end
     end
 
     get "/tax/data/deduct" do

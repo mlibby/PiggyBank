@@ -23,7 +23,11 @@ describe PiggyBank::App do
   context "POST /tax/data/income" do
     it "saves income data" do
       response = post "/tax/data/income", save_params
-      expect(response.status).to eq 200
+      expect(response.status).to eq 302
+      location = URI(response.headers["Location"])
+      expect(location.path).to eq "/tax/data"
+      expect(flash).to have_key :success
+      expect(flash[:success]).to eq "Income data saved."
     end
   end
 end
