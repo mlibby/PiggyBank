@@ -15,18 +15,11 @@
   font-style: normal;
 }
 
-body,
-nav {
+body, nav {
   min-width: 310px;
 }
 
-a,
-body,
-input,
-button,
-select,
-optgroup,
-textarea {
+a, body, input, button, select, optgroup, textarea {
   font-family: "Fira Mono" !important;
   font-size: 1rem;
   font-weight: normal;
@@ -35,8 +28,7 @@ textarea {
   -moz-box-sizing: border-box;
 }
 
-body,
-header {
+body, header {
   margin: 0;
 }
 
@@ -132,9 +124,7 @@ dt {
   content: "\e60d";
 }
 
-#flash .success:before,
-#flash .info:before,
-#flash .danger:before {
+#flash .success:before, #flash .info:before, #flash .danger:before {
   font-family: 'icomoon' !important;
   font-size: 2rem;
   font-style: normal;
@@ -172,21 +162,11 @@ form label {
   font-weight: bold;
 }
 
-form input[type=text],
-form input[type=checkbox],
-form input[type=date],
-form input[type=datetime],
-form input[type=number],
-form input[type=search],
-form input[type=time],
-form input[type=url],
-form input[type=email],
-form textarea,
-form select {
+form input[type=text], form input[type=checkbox], form input[type=date], form input[type=datetime], form input[type=number], form input[type=search], form input[type=time], form input[type=url], form input[type=email], form textarea, form select {
   display: block;
   border: 1px solid #BEBEBE;
   padding: 7px;
-  margin: 0.5rem 0 1rem;
+  margin: 0.25rem 0;
   outline: none;
   max-width: 35rem;
   width: 100%;
@@ -196,33 +176,14 @@ form input[type=checkbox] {
   width: 2rem;
 }
 
-form input[type=text]:focus,
-form input[type=checkbox]:focus,
-form input[type=date]:focus,
-form input[type=datetime]:focus,
-form input[type=number]:focus,
-form input[type=search]:focus,
-form input[type=time]:focus,
-form input[type=url]:focus,
-form input[type=email]:focus,
-form textarea:focus,
-form select:focus {
+form input[type=text]:focus, form input[type=checkbox]:focus, form input[type=date]:focus, form input[type=datetime]:focus, form input[type=number]:focus, form input[type=search]:focus, form input[type=time]:focus, form input[type=url]:focus, form input[type=email]:focus, form textarea:focus, form select:focus {
   -moz-box-shadow: 0 0 8px #88D5E9;
   -webkit-box-shadow: 0 0 8px #88D5E9;
   box-shadow: 0 0 8px #88D5E9;
   border: 1px solid #88D5E9;
 }
 
-form input[type=text]:focus,
-form input[type=date]:focus,
-form input[type=datetime]:focus,
-form input[type=number]:focus,
-form input[type=search]:focus,
-form input[type=time]:focus,
-form input[type=url]:focus,
-form input[type=email]:focus,
-form textarea:focus,
-form select:focus {
+form input[type=text]:focus, form input[type=date]:focus, form input[type=datetime]:focus, form input[type=number]:focus, form input[type=search]:focus, form input[type=time]:focus, form input[type=url]:focus, form input[type=email]:focus, form textarea:focus, form select:focus {
   -moz-box-shadow: 0 0 8px #88D5E9;
   -webkit-box-shadow: 0 0 8px #88D5E9;
   box-shadow: 0 0 8px #88D5E9;
@@ -236,23 +197,28 @@ form fieldset {
   margin-bottom: 0.5rem;
 }
 
+form fieldset .buttons {
+  margin-top: 1rem;
+}
+
 form fieldset label {
   margin-top: 0.66rem;
   margin-right: 2rem;
   min-width: 17%;
 }
 
-form fieldset input,
-form fieldset select {
+form fieldset input, form fieldset select {
   height: 2rem;
 }
 
 form fieldset legend {
   font-weight: bold;
+  font-size: 1.25rem;
+  margin-left: -0.33rem;
+  padding: 0 1rem;
 }
 
-input[type=submit]:hover,
-input[type=button]:hover {
+input[type=submit]:hover, input[type=button]:hover {
   background: #4691A4;
   box-shadow: none;
   -moz-box-shadow: none;
@@ -263,12 +229,7 @@ input[type=button]:hover {
   color: red;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   margin: 0.25rem 0 0.5rem 0;
 }
 
@@ -302,16 +263,14 @@ nav {
   background-color: var(--nav-bg);
 }
 
-nav a,
-nav .label {
+nav a, nav .label {
   color: var(--primary-color);
   font-size: 1.25rem;
   text-decoration: none;
   vertical-align: middle;
 }
 
-nav a:hover,
-nav .label:hover {
+nav a:hover, nav .label:hover {
   color: var(--bg-color);
 }
 
@@ -346,9 +305,7 @@ nav section .menu {
   z-index: -1;
 }
 
-nav section:focus-within .menu,
-nav section:hover .menu,
-nav section .menu:hover {
+nav section:focus-within .menu, nav section:hover .menu, nav section .menu:hover {
   visibility: visible;
   opacity: 1;
   display: block;
@@ -387,8 +344,7 @@ thead tr {
   text-align: left;
 }
 
-th,
-td {
+th, td {
   padding: 12px 15px;
 }
 

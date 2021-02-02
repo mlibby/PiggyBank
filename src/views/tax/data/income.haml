@@ -6,6 +6,12 @@
     %fieldset 
       %legend= "W2 ##{n+1}"
       %label
+        b - EIN
+        %input{ name: "w2[][ein]", type: "text", value: w2.ein }
+      %label
+        c - Employer
+        %input{ name: "w2[][employer]", type: "text", value: w2.employer }
+      %label
         1 - Wages
         %input{ name: "w2[][wages]", type: "number", step: 0.01, min: 0, value: w2.wages }
       %label
@@ -40,16 +46,16 @@
         %input{ name: "w2[][nonqual_plans]", type: "number", step: 0.01, min: 0, value: w2.nonqual_plans }
       %label
         Box 12a
-        %input{ name: "w2[][box_12a]", type: "number", step: 0.01, min: 0, value: w2.box_12a }      
+        %input{ name: "w2[][box_12a]", type: "text", value: w2.box_12a }      
       %label
         Box 12b
-        %input{ name: "w2[][box_12b]", type: "number", step: 0.01, min: 0, value: w2.box_12b }
+        %input{ name: "w2[][box_12b]", type: "text", value: w2.box_12b }
       %label
         Box 12c
-        %input{ name: "w2[][box_12c]", type: "number", step: 0.01, min: 0, value: w2.box_12c }      
+        %input{ name: "w2[][box_12c]", type: "text", value: w2.box_12c }      
       %label
         Box 12d
-        %input{ name: "w2[][box_12d]", type: "number", step: 0.01, min: 0, value: w2.box_12d }      
+        %input{ name: "w2[][box_12d]", type: "text", value: w2.box_12d }      
       %label
         13 - Statutory Employee?
         %input{ name: "w2[][statutory_employee]", type: "checkbox", selected: w2.statutory_employee }
@@ -80,9 +86,10 @@
       %label
         20 - Local Tax
         %input{ name: "w2[][locality]", type: "text", value: w2.locality }
-      %button.btn.danger{ formaction: "/tax/data/income?rm_w2=#{n}" }
-        %span.icon.icon-trash
-        %span.text Remove W2
+      .buttons
+        %button.btn.danger{ formaction: "/tax/data/income?rm_w2=#{n}" }
+          %span.icon.icon-trash
+          %span.text Remove W2
   .buttons
     %button.btn.primary{ formaction: "/tax/data/income?add_w2" }
       %span.icon.icon-plus

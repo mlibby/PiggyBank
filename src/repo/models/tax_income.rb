@@ -4,6 +4,8 @@ module PiggyBank
   module Tax
     class W2
       FIELDS = [
+        :ein,
+        :employer,
         :wages,
         :fed_wh,
         :soc_sec_wages,
@@ -52,7 +54,7 @@ module PiggyBank
       end
 
       def w2s
-        @values[:w2s] || [W2.new]
+        @values[:w2s] || []
       end
 
       def add_w2
