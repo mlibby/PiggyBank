@@ -32,10 +32,6 @@ module PiggyBank
       ]
 
       attr_accessor *FIELDS
-
-      # FIELDS.each do |field| 
-      #   attr_accessor field
-      # end
     end
 
     class Income
