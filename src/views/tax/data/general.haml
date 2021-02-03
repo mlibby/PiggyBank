@@ -2,11 +2,16 @@
 = styled_flash
 %form{ method: "POST" }
   %input{ type: "hidden", name: "_token", value: PiggyBank::App.token }
-  %label
-    Filing Status
-    %select{ name: "filing_Status" }
-      - PiggyBank::Tax::General::FILING_STATUSES.each do |k, v|
-        %option{ value: k, selected: k == @general.filing_status }= v
+  %fieldset
+    %legend General Questions
+    %label
+      Filing Status
+      %select{ name: "filing_status" }
+        - PiggyBank::Tax::General::FILING_STATUSES.each do |k, v|
+          %option{ value: k, selected: k.to_s == @general.filing_status }= v
+    %label
+      Virtual Currency?
+      %input{ name: "virtual", type: "checkbox", checked: @general.virtual }
   %fieldset 
     %legend Address
     %label
@@ -49,7 +54,10 @@
       %input{ name: "birthday", type: "date", value: @general.birthday }
     %label
       Is Blind?
-      %input{ name: "blind", type: "checkbox", checked: @general.blind } 
+      %input{ name: "blind", type: "checkbox", checked: @general.blind }
+    %label
+      Campaign Fund?
+      %input{ name: "campaign", type: "checkbox", checked: @general.campaign } 
   %fieldset
     %legend Spouse
     %label
@@ -67,6 +75,9 @@
     %label
       Is Blind?
       %input{ name: "spouse_blind", type: "checkbox", checked: @general.spouse_blind } 
+    %label
+      Campaign Fund?
+      %input{ name: "spouse_campaign", type: "checkbox", checked: @general.spouse_campaign } 
   - @general.dependents.each_with_index do |depend, n|
     %fieldset
       %legend= "Dependent ##{n+1}"

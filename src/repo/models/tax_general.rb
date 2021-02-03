@@ -8,11 +8,11 @@ module PiggyBank
 
     class General
       FIELDS = [
-        :filing_status, 
+        :filing_status, :virtual,
         :first_name, :last_name, :ssn,
-        :birthday, :blind,
+        :birthday, :blind, :campaign,
         :spouse_first_name, :spouse_last_name, :spouse_ssn,
-        :spouse_birthday, :spouse_blind,
+        :spouse_birthday, :spouse_blind, :spouse_campaign,
         :street, :apt_no,
         :city, :state, :zip,
         :country, :province, :post_code,
@@ -20,8 +20,8 @@ module PiggyBank
 
       FILING_STATUSES = {
         single: "Single",
-        married: "Married",
-        mfs: "Married Filing Single",
+        married: "Married Filing Jointly",
+        mfs: "Married Filing Separately",
         hoh: "Head of Household",
         qw: "Qualifying Widower"
       }
