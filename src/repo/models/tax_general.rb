@@ -8,6 +8,7 @@ module PiggyBank
 
     class General
       FIELDS = [
+        :filing_status, 
         :first_name, :last_name, :ssn,
         :birthday, :blind,
         :spouse_first_name, :spouse_last_name, :spouse_ssn,
@@ -16,6 +17,14 @@ module PiggyBank
         :city, :state, :zip,
         :country, :province, :post_code,
       ]
+
+      FILING_STATUSES = {
+        single: "Single",
+        married: "Married",
+        mfs: "Married Filing Single",
+        hoh: "Head of Household",
+        qw: "Qualifying Widower"
+      }
 
       def initialize
         @blob = PiggyBank::Blob.find(name: "2020-tax-general") ||

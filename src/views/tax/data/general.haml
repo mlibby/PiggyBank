@@ -2,17 +2,19 @@
 = styled_flash
 %form{ method: "POST" }
   %input{ type: "hidden", name: "_token", value: PiggyBank::App.token }
-  %h2 Address
+  %label
+    Filing Status
+    %select{ name: "filing_Status" }
+      - PiggyBank::Tax::General::FILING_STATUSES.each do |k, v|
+        %option{ value: k, selected: k == @general.filing_status }= v
   %fieldset 
-    %legend Line 1
+    %legend Address
     %label
       Street Address
       %input{ name: "street", type: "text", value: @general.street }
     %label
       Apt No
       %input{ name: "apt_no", type: "text", value: @general.apt_no }
-  %fieldset 
-    %legend Line 2
     %label
       City
       %input{ name: "city", type: "text", value: @general.city }
@@ -22,18 +24,15 @@
     %label
       ZIP Code
       %input{ name: "zip", type: "text", value: @general.zip }
-  %fieldset 
-    %legend Foreign
     %label
-      Country
+      Foreign Country
       %input{ name: "country", type: "text", value: @general.country }
     %label
       Province/State/County
       %input{ name: "province", type: "text", value: @general.province }
     %label
-      Postal Code
+      Foreign Postal Code
       %input{ name: "post_code", type: "text", value: @general.post_code }
-  %h2 Taxpayers
   %fieldset
     %legend Individual
     %label
@@ -68,7 +67,6 @@
     %label
       Is Blind?
       %input{ name: "spouse_blind", type: "checkbox", checked: @general.spouse_blind } 
-  %h2 Dependents
   - @general.dependents.each_with_index do |depend, n|
     %fieldset
       %legend= "Dependent ##{n+1}"

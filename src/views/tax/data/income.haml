@@ -86,10 +86,9 @@
       %label
         20 - Local Tax
         %input{ name: "w2[][locality]", type: "text", value: w2.locality }
-      .buttons
-        %button.btn.danger{ formaction: "/tax/data/income?rm_w2=#{n}" }
-          %span.icon.icon-trash
-          %span.text Remove W2
+      %button.btn.danger{ formaction: "/tax/data/income?rm_w2=#{n}" }
+        %span.icon.icon-trash
+        %span.text Remove W2
   .buttons
     %button.btn.primary{ formaction: "/tax/data/income?add_w2" }
       %span.icon.icon-plus
