@@ -1,15 +1,15 @@
 module PiggyBank
   class App < Sinatra::Base
     def general_form
-      haml_layout :"tax/data/general"
+      haml_layout :"tax/data/general/index"
     end
 
     def income_form
-      haml_layout :"tax/data/income"
+      haml_layout :"tax/data/income/index"
     end
 
     get "/tax/data" do
-      haml_layout :"tax/data"
+      haml_layout :"tax/data/index"
     end
 
     get "/tax/data/general" do
@@ -36,7 +36,7 @@ module PiggyBank
 
     get "/tax/data/income" do
       @income = PiggyBank::Tax::Income.new
-      haml_layout :"tax/data/income"
+      haml_layout :"tax/data/income/index"
     end
 
     post "/tax/data/income" do
@@ -52,28 +52,28 @@ module PiggyBank
       else
         @income.save
         flash[:success] = "Income data saved."
-        redirect to "/tax/data"
+        redirect to "/tax/data/index"
       end
     end
 
     get "/tax/data/deduct" do
-      haml_layout :"tax/data/deduct"
+      haml_layout :"tax/data/deduct/index"
     end
 
     post "/tax/data/deduct" do
-      haml_layout :"tax/data/deduct"
+      haml_layout :"tax/data/deduct/index"
     end
 
     get "/tax/data/tax" do
-      haml_layout :"tax/data/tax"
+      haml_layout :"tax/data/tax/index"
     end
 
     post "/tax/data/tax" do
-      haml_layout :"tax/data/tax"
+      haml_layout :"tax/data/tax/index"
     end
 
     get "/tax/forms" do
-      haml_layout :"tax/forms"
+      haml_layout :"tax/forms/index"
     end
 
     get "/tax/form/:unit/:form" do |unit, form|

@@ -1,0 +1,86 @@
+%fieldset 
+  %legend= "W2 ##{n+1}"
+  %label
+    b - EIN
+    %input{ name: "w2[][ein]", type: "text", value: w2.ein }
+  %label
+    c - Employer
+    %input{ name: "w2[][employer]", type: "text", value: w2.employer }
+  %label
+    1 - Wages
+    %input{ name: "w2[][wages]", type: "number", step: 0.01, min: 0, value: w2.wages }
+  %label
+    2 - Federal W/H
+    %input{ name: "w2[][fed_wh]", type: "number", step: 0.01, min: 0, value: w2.fed_wh }
+  %label
+    3 - Soc Sec Wages
+    %input{ name: "w2[][soc_sec_wages]", type: "number", step: 0.01, min: 0, value: w2.wages }      
+  %label
+    4 - Soc Sec Tax W/H
+    %input{ name: "w2[][soc_sec_wh]", type: "number", step: 0.01, min: 0, value: w2.soc_sec_wh }
+  %label
+    5 - Medicare Wages
+    %input{ name: "w2[][medicare_wages]", type: "number", step: 0.01, min: 0, value: w2.medicare_wages }      
+  %label
+    6 - Medicare Taxes
+    %input{ name: "w2[][medicare_taxes]", type: "number", step: 0.01, min: 0, value: w2.medicare_taxes }
+  %label
+    7 - Soc Sec Tips
+    %input{ name: "w2[][soc_sec_tips]", type: "number", step: 0.01, min: 0, value: w2.soc_sec_tips }      
+  %label
+    8 - Allocated Tips
+    %input{ name: "w2[][allocated_tips]", type: "number", step: 0.01, min: 0, value: w2.allocated_tips }
+  %label
+    Box 9
+    %input{ name: "w2[][box_9]", type: "number", step: 0.01, min: 0, value: w2.box_9, disabled: true }
+  %label
+    10 - Dep Care Benefits
+    %input{ name: "w2[][dep_care_benefits]", type: "number", step: 0.01, min: 0, value: w2.dep_care_benefits }      
+  %label
+    11 - Nonqual Plans
+    %input{ name: "w2[][nonqual_plans]", type: "number", step: 0.01, min: 0, value: w2.nonqual_plans }
+  %label
+    Box 12a
+    %input{ name: "w2[][box_12a]", type: "text", value: w2.box_12a }      
+  %label
+    Box 12b
+    %input{ name: "w2[][box_12b]", type: "text", value: w2.box_12b }
+  %label
+    Box 12c
+    %input{ name: "w2[][box_12c]", type: "text", value: w2.box_12c }      
+  %label
+    Box 12d
+    %input{ name: "w2[][box_12d]", type: "text", value: w2.box_12d }      
+  %label
+    13 - Statutory Employee?
+    %input{ name: "w2[][statutory_employee]", type: "checkbox", selected: w2.statutory_employee }
+  %label
+    13 - Retirement Plan?
+    %input{ name: "w2[][retirement_plan]", type: "checkbox", selected: w2.retirement_plan }
+  %label
+    13 - 3rd Party Sick Pay?
+    %input{ name: "w2[][sick_pay]", type: "checkbox", selected: w2.sick_pay }
+  %label
+    14 - Other
+    %input{ name: "w2[][other]", type: "number", step: 0.01, min: 0, value: w2.other }      
+  %label
+    15 - State
+    %input{ name: "w2[][state]", type: "text", step: 0.01, min: 0, value: w2.state }      
+  %label
+    16 - State Wages
+    %input{ name: "w2[][state_wages]", type: "number", step: 0.01, min: 0, value: w2.state_wages }
+  %label
+    17 - State Tax
+    %input{ name: "w2[][state_tax]", type: "number", step: 0.01, min: 0, value: w2.state_tax }      
+  %label
+    18 - Local Wages
+    %input{ name: "w2[][local_wages]", type: "number", step: 0.01, min: 0, value: w2.local_wages }      
+  %label
+    19 - Local Tax
+    %input{ name: "w2[][local_tax]", type: "number", step: 0.01, min: 0, value: w2.local_tax }
+  %label
+    20 - Local Tax
+    %input{ name: "w2[][locality]", type: "text", value: w2.locality }
+  %button.btn.danger{ formaction: "/tax/data/income?rm_w2=#{n}" }
+    %span.icon.icon-trash
+    %span.text Remove W2

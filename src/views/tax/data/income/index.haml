@@ -1,0 +1,17 @@
+%h1 Income Data
+= styled_flash
+%form{ method: "POST" }
+  %input{ type: "hidden", name: "_token", value: PiggyBank::App.token }
+  - @income.w2s.each_with_index do |w2, n|
+    = haml :"tax/data/income/w2", locals: {w2: w2, n: n}
+  .buttons
+    %button.btn.primary{ formaction: "/tax/data/income?add_w2" }
+      %span.icon.icon-plus
+      %span.text Add W2
+  .buttons
+    %button.btn.primary{ formaction: "/tax/data/income" }
+      %span.icon.icon-solid-check
+      %span.text Save
+    %a.btn.secondary{ href: '/tax/data' }
+      %span.icon.icon-close
+      %span.text Cancel
