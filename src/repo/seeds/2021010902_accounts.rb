@@ -4,7 +4,7 @@ Sequel.seed do
                               commodity_id: 1,
                               name: "Assets",
                               is_placeholder: true,
-                              type: PiggyBank::Account::TYPE_ASSET,
+                              type: PiggyBank::Account::TYPE[:asset],
                               type_data: "",
                               version: PiggyBank::Repo.timestamp
 
@@ -12,7 +12,7 @@ Sequel.seed do
                               commodity_id: 1,
                               name: "Liabilities",
                               is_placeholder: true,
-                              type: PiggyBank::Account::TYPE_LIABILITY,
+                              type: PiggyBank::Account::TYPE[:liability],
                               type_data: "",
                               version: PiggyBank::Repo.timestamp
 
@@ -20,7 +20,7 @@ Sequel.seed do
                               commodity_id: 1,
                               name: "Equity",
                               is_placeholder: true,
-                              type: PiggyBank::Account::TYPE_EQUITY,
+                              type: PiggyBank::Account::TYPE[:equity],
                               type_data: "",
                               version: PiggyBank::Repo.timestamp
 
@@ -28,7 +28,7 @@ Sequel.seed do
                               commodity_id: 1,
                               name: "Income",
                               is_placeholder: true,
-                              type: PiggyBank::Account::TYPE_INCOME,
+                              type: PiggyBank::Account::TYPE[:income],
                               type_data: "",
                               version: PiggyBank::Repo.timestamp
 
@@ -36,7 +36,7 @@ Sequel.seed do
                               commodity_id: 1,
                               name: "Expense",
                               is_placeholder: true,
-                              type: PiggyBank::Account::TYPE_EXPENSE,
+                              type: PiggyBank::Account::TYPE[:expense],
                               type_data: "",
                               version: PiggyBank::Repo.timestamp
   end
