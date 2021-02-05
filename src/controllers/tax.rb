@@ -8,6 +8,10 @@ module PiggyBank
       haml_layout :"tax/data/income/index"
     end
 
+    def deduct_form
+      haml_layout :"tax/data/deduct/index"
+    end
+
     get "/tax/data" do
       haml_layout :"tax/data/index"
     end
@@ -57,11 +61,25 @@ module PiggyBank
     end
 
     get "/tax/data/deduct" do
-      haml_layout :"tax/data/deduct/index"
+      @deduct = PiggyBank::Tax::Deduct.new
+      deduct_form
     end
 
     post "/tax/data/deduct" do
-      haml_layout :"tax/data/deduct/index"
+      @deduct = PiggyBank::Tax::Deduct.new
+      @deduct.update params
+
+      if params.has_key? "add_1098"
+        @deduct.add_1098
+        deduct_form
+      elsif params.has_key? "rm_1098"
+        @deduct.rm_1098 params["rm_1098"]
+        deduct_form
+      else
+        @deduct.save
+        flash[:success] = "Deduction data saved."
+        redirect to "/tax/data"
+      end
     end
 
     get "/tax/data/tax" do

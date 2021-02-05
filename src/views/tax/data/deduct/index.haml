@@ -1,2 +1,17 @@
 %h1 Deductions 
 = styled_flash
+%form{ method: "POST" }
+  %input{ type: "hidden", name: "_token", value: PiggyBank::App.token }
+  - @deduct.form1098s.each_with_index do |form1098, n|
+    = haml :"tax/data/deduct/1098", locals: {form1098: form1098, n: n}
+  .buttons
+    %button.btn.primary{ formaction: "/tax/data/deduct?add_1098" }
+      %span.icon.icon-plus
+      %span.text Add 1098
+  .buttons
+    %button.btn.primary{ formaction: "/tax/data/deduct" }
+      %span.icon.icon-solid-check
+      %span.text Save
+    %a.btn.secondary{ href: '/tax/data' }
+      %span.icon.icon-close
+      %span.text Cancel

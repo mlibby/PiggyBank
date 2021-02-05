@@ -4,6 +4,17 @@ module PiggyBank
   module Tax
     class Form1098
       FIELDS = [
+        :interest,
+        :outstanding,
+        :origination,
+        :refund,
+        :premiums,
+        :points_paid,
+        :same_address,
+        :address,
+        :properties,
+        :other,
+        :acquisition
       ]
 
       attr_accessor *FIELDS
