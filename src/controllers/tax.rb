@@ -52,7 +52,7 @@ module PiggyBank
       else
         @income.save
         flash[:success] = "Income data saved."
-        redirect to "/tax/data/index"
+        redirect to "/tax/data"
       end
     end
 
@@ -73,7 +73,7 @@ module PiggyBank
     end
 
     get "/tax/forms" do
-      haml_layout :"tax/forms/index"
+      haml_layout :"tax/form/index"
     end
 
     get "/tax/form/:unit/:form" do |unit, form|
