@@ -1,6 +1,6 @@
 Sequel.seed do
   def run
-    PiggyBank::Commodity.create type: PiggyBank::Commodity::CURRENCY,
+    PiggyBank::Commodity.create type: PiggyBank::Commodity::COMMODITY_TYPE[:currency],
                                 name: "USD",
                                 description: "US Dollar",
                                 ticker: "USD",
