@@ -22,9 +22,13 @@ describe PiggyBank::App do
 
   context "POST /tax/data/deduct" do
     it "saves deductions data" do
-      response = post "/tax/data/deduct", save_params
-      expect(response.status).to eq 200
-    end
+        response = post "/tax/data/deduct", save_params
+        expect(response.status).to eq 302
+        location = URI(response.headers["Location"])
+        expect(location.path).to eq "/tax/data"
+        expect(flash).to have_key :success
+        expect(flash[:success]).to eq "Deduction data saved."
+      end
   end
 end
 
