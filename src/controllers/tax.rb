@@ -94,6 +94,12 @@ module PiggyBank
       haml_layout :"tax/form/index"
     end
 
+    get "/tax/form/us/1040" do
+      require_relative "../lib/tax/form/writer/us/form1040.rb"
+      pdf = PiggyBank::TaxFormWriter::Form1040.new.write_form
+      halt 200, { "Content-Type" => "application/pdf" }, pdf.string
+    end
+
     get "/tax/form/:unit/:form" do |unit, form|
       haml_layout :"tax/form/#{unit}/#{form}"
     end
