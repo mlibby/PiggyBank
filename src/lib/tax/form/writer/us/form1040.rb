@@ -10,22 +10,20 @@ module PiggyBank
 
       def write_form
         @doc = get_doc
-        @doc.acro_form.need_appearances!
         @fields = get_fields
+        update_fields
 
         canvas = @doc.pages[0].canvas(type: :overlay)
         canvas.font "Courier", variant: :bold, size: 12
         canvas.text "123-45-6789", at: [475, 671]
 
-        update_fields
         write_pdf
       end
 
       private
 
       def get_doc
-        template = File.open("./src/lib/tax/form/pdf/2020/us/f1040.pdf", "rb")
-        HexaPDF::Document.new(io: template)
+        HexaPDF::Document.open("src/lib/tax/form/pdf/2020/us/f1040.pdf")
       end
 
       def get_fields
@@ -36,21 +34,19 @@ module PiggyBank
       end
 
       def update_fields
-        @fields[6].field_value = @general.first_name
-        @fields[6][:DA] = "Courier-Bold 10.00"
-        @fields[7].field_value = @general.last_name
-        @fields[7][:DA] = "Courier-Bold 10.00"
-        @fields[9].field_value = @general.spouse_first_name
-        @fields[10].field_value = @general.spouse_last_name
+        @fields[6].field_value = @general.first_name || ""
+        @fields[7].field_value = @general.last_name || ""
+        @fields[9].field_value = @general.spouse_first_name || ""
+        @fields[10].field_value = @general.spouse_last_name || ""
 
-        @fields[12].field_value = @general.street
-        @fields[13].field_value = @general.apt_no
-        @fields[14].field_value = @general.city
-        @fields[15].field_value = @general.state
-        @fields[16].field_value = @general.zip
-        @fields[17].field_value = @general.country
-        @fields[18].field_value = @general.province
-        @fields[19].field_value = @general.post_code
+        @fields[12].field_value = @general.street || ""
+        @fields[13].field_value = @general.apt_no || ""
+        @fields[14].field_value = @general.city || ""
+        @fields[15].field_value = @general.state || ""
+        @fields[16].field_value = @general.zip || ""
+        @fields[17].field_value = @general.country || ""
+        @fields[18].field_value = @general.province || ""
+        @fields[19].field_value = @general.post_code || ""
       end
 
       def write_pdf
