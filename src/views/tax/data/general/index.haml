@@ -80,7 +80,10 @@
       %input{ name: "spouse_campaign", type: "checkbox", checked: @general.spouse_campaign } 
   - @general.dependents.each_with_index do |depend, n|
     = haml :"tax/data/general/dependent", locals: { depend: depend, n: n }
-
+  .buttons
+    %button.btn.primary{ formaction: "/tax/data/general?add_dep" }
+      %span.icon.icon-plus
+      %span.text Add Dependent
   .buttons
     %button.btn.primary{ formaction: "/tax/data/general" }
       %span.icon.icon-solid-check
