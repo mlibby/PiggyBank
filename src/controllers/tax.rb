@@ -97,7 +97,7 @@ module PiggyBank
     get "/tax/form/us/1040" do
       require_relative "../lib/tax/form/writer/us/form1040.rb"
       pdf = PiggyBank::TaxFormWriter::Form1040.new.write_form
-      halt 200, { "Content-Type" => "application/pdf" }, pdf.string
+      halt 200, { "Content-Type" => "application/pdf" }, pdf
     end
 
     get "/tax/form/:unit/:form" do |unit, form|
