@@ -30,50 +30,50 @@ module PiggyBank
 
       def text_fields
         {
-          "topmostSubform[0].Page1[0].f1_02[0]" => @general.first_name.upcase || "",
-          "topmostSubform[0].Page1[0].f1_03[0]" => @general.last_name.upcase || "",
-          "topmostSubform[0].Page1[0].YourSocial[0].f1_04[0]" => format_ssn(@general.ssn || ""),
-          "topmostSubform[0].Page1[0].f1_05[0]" => @general.spouse_first_name.upcase || "",
-          "topmostSubform[0].Page1[0].f1_06[0]" => @general.spouse_last_name.upcase || "",
-          "topmostSubform[0].Page1[0].SpousesSocial[0].f1_07[0]" => format_ssn(@general.spouse_ssn || ""),
-          "topmostSubform[0].Page1[0].Address[0].f1_08[0]" => @general.street.upcase || "",
-          "topmostSubform[0].Page1[0].Address[0].f1_09[0]" => @general.apt_no.upcase || "",
-          "topmostSubform[0].Page1[0].Address[0].f1_10[0]" => @general.city.upcase || "",
-          "topmostSubform[0].Page1[0].Address[0].f1_11[0]" => @general.state.upcase || "",
-          "topmostSubform[0].Page1[0].Address[0].f1_12[0]" => @general.zip.upcase || "",
-          "topmostSubform[0].Page1[0].Address[0].f1_13[0]" => @general.country.upcase || "",
-          "topmostSubform[0].Page1[0].Address[0].f1_14[0]" => @general.province.upcase || "",
-          "topmostSubform[0].Page1[0].Address[0].f1_15[0]" => @general.post_code || "",
+          "topmostSubform[0].Page1[0].f1_02[0]" => @general.first_name,
+          "topmostSubform[0].Page1[0].f1_03[0]" => @general.spouse_last_name,
+          "topmostSubform[0].Page1[0].YourSocial[0].f1_04[0]" => format_ssn(@general.ssn),
+          "topmostSubform[0].Page1[0].f1_05[0]" => @general.spouse_first_name,
+          "topmostSubform[0].Page1[0].f1_06[0]" => @general.spouse_last_name,
+          "topmostSubform[0].Page1[0].SpousesSocial[0].f1_07[0]" => format_ssn(@general.spouse_ssn),
+          "topmostSubform[0].Page1[0].Address[0].f1_08[0]" => @general.street,
+          "topmostSubform[0].Page1[0].Address[0].f1_09[0]" => @general.apt_no,
+          "topmostSubform[0].Page1[0].Address[0].f1_10[0]" => @general.city,
+          "topmostSubform[0].Page1[0].Address[0].f1_11[0]" => @general.state,
+          "topmostSubform[0].Page1[0].Address[0].f1_12[0]" => @general.zip,
+          "topmostSubform[0].Page1[0].Address[0].f1_13[0]" => @general.country,
+          "topmostSubform[0].Page1[0].Address[0].f1_14[0]" => @general.province,
+          "topmostSubform[0].Page1[0].Address[0].f1_15[0]" => @general.post_code,
         }
       end
 
       def dependent_fields
         df = { text: {}, button: {} }
         unless @general.dependents[0].nil?
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_16[0]"] = @general.dependents[0].name.upcase
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_16[0]"] = @general.dependents[0].name
           df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_17[0]"] = format_ssn(@general.dependents[0].ssn)
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_18[0]"] = @general.dependents[0].relation.upcase
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_18[0]"] = @general.dependents[0].relation
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].c1_13[0]"] = @general.dependents[0].child_credit
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].c1_14[0]"] = @general.dependents[0].other_credit
         end
         unless @general.dependents[1].nil?
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_19[0]"] = @general.dependents[1].name.upcase
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_19[0]"] = @general.dependents[1].name
           df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_20[0]"] = format_ssn(@general.dependents[1].ssn)
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_21[0]"] = @general.dependents[1].relation.upcase
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_21[0]"] = @general.dependents[1].relation
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].c1_15[0]"] = @general.dependents[1].child_credit
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].c1_16[0]"] = @general.dependents[1].other_credit
         end
         unless @general.dependents[2].nil?
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_22[0]"] = @general.dependents[2].name.upcase
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_23[0]"] = format_ssn(@general.dependents[2].ssn)
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_24[0]"] = @general.dependents[2].relation.upcase
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_22[0]"] = @general.dependents[2].name
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_23[0]"] = format_ssn(@general.dependents[2].ssn) 
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_24[0]"] = @general.dependents[2].relation
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].c1_17[0]"] = @general.dependents[2].child_credit
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].c1_18[0]"] = @general.dependents[2].other_credit
         end
         unless @general.dependents[3].nil?
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_25[0]"] = @general.dependents[3].name.upcase
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_26[0]"] = format_ssn(@general.dependents[3].ssn)
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_27[0]"] = @general.dependents[3].relation.upcase
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_25[0]"] = @general.dependents[3].name
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_26[0]"] = format_ssn(@general.dependents[3].ssn) 
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_27[0]"] = @general.dependents[3].relation
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].c1_19[0]"] = @general.dependents[3].child_credit
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].c1_20[0]"] = @general.dependents[3].other_credit
         end
@@ -94,9 +94,9 @@ module PiggyBank
           # "topmostSubform[0].Page1[0].c1_05[0]" => @general.dependent,
           # "topmostSubform[0].Page1[0].c1_06[0]" => @general.spouse_dependent,
           # "topmostSubform[0].Page1[0].c1_07[0]" => @general.spouse_itemizes,
-          "topmostSubform[0].Page1[0].c1_08[0]" => @general.birthday < "1956-01-02",
+          "topmostSubform[0].Page1[0].c1_08[0]" => !@general.birthday.nil? && @general.birthday < "1956-01-02",
           "topmostSubform[0].Page1[0].c1_09[0]" => @general.blind,
-          "topmostSubform[0].Page1[0].c1_10[0]" => @general.spouse_birthday < "1956-01-02",
+          "topmostSubform[0].Page1[0].c1_10[0]" => !@general.spouse_birthday.nil? && @general.spouse_birthday < "1956-01-02",
           "topmostSubform[0].Page1[0].c1_11[0]" => @general.spouse_blind,
           "topmostSubform[0].Page1[0].Dependents_ReadOrder[0].c1_12[0]" => @general.dependents.size > 4,
         }
@@ -114,14 +114,16 @@ module PiggyBank
           field = form_fields.find { |f| f.full_field_name == name }
           raise "Cannot find PDF field #{name}" if field.nil?
           x, y = field[:Rect]
-          canvas.text value, at: [x + 6, y + 4]
+          text = value.nil? ? "" : value.upcase
+          canvas.text text, at: [x + 6, y + 4]
         end
 
         dependent_fields[:text].each do |name, value|
           field = form_fields.find { |f| f.full_field_name == name }
           raise "Cannot find PDF field #{name}" if field.nil?
           x, y = field[:Rect]
-          canvas.text value, at: [x + 1, y + 2]
+          text = value.nil? ? "" : value.upcase
+          canvas.text text, at: [x + 1, y + 2]
         end
 
         button_fields.each do |name, value|
@@ -150,7 +152,7 @@ module PiggyBank
       private
 
       def format_ssn(ssn)
-        return if ssn == ""
+        return if ssn.nil? || ssn == ""
         ssn.insert 3, " "
         ssn.insert 6, " "
       end
