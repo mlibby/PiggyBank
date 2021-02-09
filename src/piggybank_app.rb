@@ -31,7 +31,7 @@ module PiggyBank
     before do
       if @@require_token.include?(request.env["REQUEST_METHOD"])
         if ENV["APP_ENV"] == "DEMO"
-          halt 405, "Making changes to the Demo site are not allowed."
+          halt 405, "Making changes to the Demo site are not allowed. <a href='javascript:history.back()'>Go Back</a>"
         end
         if !(params.has_key? "_token")
           halt 403, "CSRF Token Required"
