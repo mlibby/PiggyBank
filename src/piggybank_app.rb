@@ -29,6 +29,9 @@ module PiggyBank
 
     @@require_token = ["DELETE", "POST", "PUT"]
     before do
+      if ENV["APP_ENV"] == "DEMO"
+        halt 405, "Making changes to the Demo site are not allowed."
+      end
       if @@require_token.include?(request.env["REQUEST_METHOD"]) && !(params.has_key? "_token")
         halt 403, "CSRF Token Required"
       end
