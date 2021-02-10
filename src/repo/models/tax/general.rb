@@ -4,18 +4,32 @@ module PiggyBank
   module Tax
     class Dependent
       attr_accessor :name, :ssn, :relation, :child_credit, :other_credit
+
+      def child_credit=(val)
+        @child_credit = !val.nil?
+      end
+
+      def other_credit=(val)
+        @other_credit = !val.nil?
+      end
     end
 
     class General
       FIELDS = [
-        :filing_status, :virtual,
+        :filing_status,
         :first_name, :last_name, :ssn,
-        :birthday, :blind, :campaign,
+        :birthday,
         :spouse_first_name, :spouse_last_name, :spouse_ssn,
-        :spouse_birthday, :spouse_blind, :spouse_campaign,
+        :spouse_birthday,
         :street, :apt_no,
         :city, :state, :zip,
         :country, :province, :post_code,
+      ]
+
+      BUTTONS = [
+        :virtual, 
+        :blind, :spouse_blind,
+        :campaign, :spouse_campaign
       ]
 
       FILING_STATUSES = {
@@ -46,9 +60,11 @@ module PiggyBank
         define_method sym do
           @values[sym]
         end
+      end
 
-        define_method "#{sym.to_s}=" do |value|
-          @values[sym] = value
+      BUTTONS.each do |sym|
+        define_method sym do
+          @values[sym]
         end
       end
 
@@ -69,6 +85,10 @@ module PiggyBank
       def update(params)
         FIELDS.each do |sym|
           @values[sym] = params[sym.to_s]
+        end
+
+        BUTTONS.each do |sym|
+          @values[sym] = !params[sym.to_s].nil?
         end
 
         @values[:dependents] = []
