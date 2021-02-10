@@ -129,6 +129,7 @@ module PiggyBank
         button_fields.each do |name, value|
           if value
             field = form_fields.find { |f| f.full_field_name == name }
+            raise "Cannot find PDF field #{name}" if field.nil?
             x, y = field[:Rect]
             canvas.text "X", at: [x + 0.5, y + 0.5]
           end
@@ -137,6 +138,7 @@ module PiggyBank
         dependent_fields[:button].each do |name, value|
           if value
             field = form_fields.find { |f| f.full_field_name == name }
+            raise "Cannot find PDF field #{name}" if field.nil?
             x, y = field[:Rect]
             canvas.text "X", at: [x + 0.5, y + 0.5]
           end
