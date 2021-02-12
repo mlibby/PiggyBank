@@ -1,3 +1,4 @@
+require "bigdecimal"
 require "yaml"
 
 module PiggyBank
@@ -89,6 +90,10 @@ module PiggyBank
       def save
         @blob.yaml = @values.to_yaml
         @blob.save
+      end
+
+      def total_wages
+        w2s.sum{|w| BigDecimal(w.wages) }
       end
     end
   end

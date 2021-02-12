@@ -6,6 +6,7 @@ module PiggyBank
     class Form1040
       def initialize
         @general = PiggyBank::Tax::General.new
+        @income = PiggyBank::Tax::Income.new
       end
 
       def write_form
@@ -31,7 +32,7 @@ module PiggyBank
       def text_fields
         {
           "topmostSubform[0].Page1[0].f1_02[0]" => @general.first_name,
-          "topmostSubform[0].Page1[0].f1_03[0]" => @general.spouse_last_name,
+          "topmostSubform[0].Page1[0].f1_03[0]" => @general.last_name,
           "topmostSubform[0].Page1[0].YourSocial[0].f1_04[0]" => format_ssn(@general.ssn),
           "topmostSubform[0].Page1[0].f1_05[0]" => @general.spouse_first_name,
           "topmostSubform[0].Page1[0].f1_06[0]" => @general.spouse_last_name,
@@ -44,6 +45,12 @@ module PiggyBank
           "topmostSubform[0].Page1[0].Address[0].f1_13[0]" => @general.country,
           "topmostSubform[0].Page1[0].Address[0].f1_14[0]" => @general.province,
           "topmostSubform[0].Page1[0].Address[0].f1_15[0]" => @general.post_code,
+        }
+      end
+
+      def money_fields
+        {
+          "topmostSubform[0].Page1[0].Lines1-11_ReadOrder[0].f1_28[0]" => @income.total_wages,
         }
       end
 
@@ -65,14 +72,14 @@ module PiggyBank
         end
         unless @general.dependents[2].nil?
           df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_22[0]"] = @general.dependents[2].name
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_23[0]"] = format_ssn(@general.dependents[2].ssn) 
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_23[0]"] = format_ssn(@general.dependents[2].ssn)
           df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_24[0]"] = @general.dependents[2].relation
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].c1_17[0]"] = @general.dependents[2].child_credit
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].c1_18[0]"] = @general.dependents[2].other_credit
         end
         unless @general.dependents[3].nil?
           df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_25[0]"] = @general.dependents[3].name
-          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_26[0]"] = format_ssn(@general.dependents[3].ssn) 
+          df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_26[0]"] = format_ssn(@general.dependents[3].ssn)
           df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_27[0]"] = @general.dependents[3].relation
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].c1_19[0]"] = @general.dependents[3].child_credit
           df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].c1_20[0]"] = @general.dependents[3].other_credit
@@ -111,19 +118,23 @@ module PiggyBank
         form.each_field { |f| form_fields << f }
 
         text_fields.each do |name, value|
-          field = form_fields.find { |f| f.full_field_name == name }
-          raise "Cannot find PDF field #{name}" if field.nil?
-          x, y = field[:Rect]
-          text = value.nil? ? "" : value.upcase
-          canvas.text text, at: [x + 6, y + 4]
+          if value
+            field = form_fields.find { |f| f.full_field_name == name }
+            raise "Cannot find PDF field #{name}" if field.nil?
+            x, y = field[:Rect]
+            text = value.upcase
+            canvas.text text, at: [x + 6, y + 4]
+          end
         end
 
         dependent_fields[:text].each do |name, value|
-          field = form_fields.find { |f| f.full_field_name == name }
-          raise "Cannot find PDF field #{name}" if field.nil?
-          x, y = field[:Rect]
-          text = value.nil? ? "" : value.upcase
-          canvas.text text, at: [x + 1, y + 2]
+          if value
+            field = form_fields.find { |f| f.full_field_name == name }
+            raise "Cannot find PDF field #{name}" if field.nil?
+            x, y = field[:Rect]
+            text = value.upcase
+            canvas.text text, at: [x + 1, y + 2]
+          end
         end
 
         button_fields.each do |name, value|
@@ -143,6 +154,21 @@ module PiggyBank
             canvas.text "X", at: [x + 0.5, y + 0.5]
           end
         end
+
+        font = canvas.font.wrapped_font
+        m_width = font.width :m 
+        font_scale = canvas.graphics_state.scaled_font_size
+        m_scale = m_width * font_scale
+
+        money_fields.each do |name, value|
+          if value
+            field = form_fields.find { |f| f.full_field_name == name }
+            raise "Cannot find PDF field #{name}" if field.nil?
+            a, y, x = field[:Rect]
+            amount = format_currency value
+            canvas.text amount, at: [x - amount.size * m_scale, y + 2]
+          end
+        end
       end
 
       def write_pdf
@@ -152,6 +178,13 @@ module PiggyBank
       end
 
       private
+
+      def format_currency(value)
+        segments = []
+        value.round.digits.each_slice(3) { |s| segments << s.join }
+        curr = segments.join(",").reverse
+        "#{curr}."
+      end
 
       def format_ssn(ssn)
         return if ssn.nil? || ssn == ""
