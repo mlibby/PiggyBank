@@ -19,8 +19,9 @@ module PiggyBank::Tax::Form::Writer::US
 
     def money_fields
       {
- #"topmostSubform[0].Page1[0].Lines1-11_ReadOrder[0].f1_28[0]" => @income.total_wages,
-        }
+        "form1[0].Page1[0].f1_03[0]" => @format.as_currency(@adapter.line_1),
+        "form1[0].Page1[0].f1_14[0]" => @format.as_currency(@adapter.line_9),
+      }
     end
 
     def button_fields
@@ -32,6 +33,7 @@ module PiggyBank::Tax::Form::Writer::US
     def draw_fields
       create_canvas
       draw_text_fields(text_fields, 3, 2)
+      draw_number_fields(money_fields)
     end
   end
 end

@@ -46,6 +46,17 @@ class PiggyBank::Tax::Data::W2
 end
 
 class PiggyBank::Tax::Data::Income
+  FIELDS = [
+    :state_refund,
+    :other_credits
+  ]
+
+  FIELDS.each do |sym|
+    define_method sym do
+      @values[sym]
+    end
+  end
+
   def initialize
     @blob = PiggyBank::Blob.find(name: "2020-tax-income") ||
             PiggyBank::Blob.create(
@@ -77,11 +88,15 @@ class PiggyBank::Tax::Data::Income
   end
 
   def update(params)
+    FIELDS.each do |sym|
+      @values[sym] = params[sym.to_s]
+    end
+    
     @values[:w2s] = []
     if params.has_key? "w2"
       params["w2"].each do |pw|
-        w = W2.new
-        W2::FIELDS.each do |f|
+        w = PiggyBank::Tax::Data::W2.new
+        PiggyBank::Tax::Data::W2::FIELDS.each do |f|
           w.send("#{f}=", pw[f])
         end
         @values[:w2s] << w

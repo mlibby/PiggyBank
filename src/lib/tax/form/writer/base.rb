@@ -13,6 +13,7 @@ module PiggyBank::Tax::Form::Writer; end
 # writer class
 class PiggyBank::Tax::Form::Writer::Base
   def initialize
+    @format = PiggyBank::Formatter.new
     open_template @template
     extract_fields
   end 
