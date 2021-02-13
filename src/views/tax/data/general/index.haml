@@ -7,7 +7,7 @@
     %label
       Filing Status
       %select{ name: "filing_status" }
-        - PiggyBank::Tax::General::FILING_STATUSES.each do |k, v|
+        - PiggyBank::Tax::Data::General::FILING_STATUSES.each do |k, v|
           %option{ value: k, selected: k.to_s == @general.filing_status }= v
     %label
       Virtual Currency?

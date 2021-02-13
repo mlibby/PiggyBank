@@ -25,31 +25,31 @@ def seed_blobs
       :province: ''
       :post_code: ''
       :dependents:
-      - !ruby/object:PiggyBank::Tax::Dependent
+      - !ruby/object:PiggyBank::Tax::Data::Dependent
         name: Dave McFly
         ssn: '555445555'
         relation: Child
         child_credit: true
         other_credit: false
-      - !ruby/object:PiggyBank::Tax::Dependent
+      - !ruby/object:PiggyBank::Tax::Data::Dependent
         name: Linda McFly
         ssn: '111221111'
         relation: Child
         child_credit: true
         other_credit: false
-      - !ruby/object:PiggyBank::Tax::Dependent
+      - !ruby/object:PiggyBank::Tax::Data::Dependent
         name: Marty McFly
         ssn: '101010101'
         relation: Child
         child_credit: true
         other_credit: false
-      - !ruby/object:PiggyBank::Tax::Dependent
+      - !ruby/object:PiggyBank::Tax::Data::Dependent
         name: Emmett Brown
         ssn: '909090909'
         relation: Uncle
         child_credit: false
         other_credit: true
-      - !ruby/object:PiggyBank::Tax::Dependent
+      - !ruby/object:PiggyBank::Tax::Data::Dependent
         name: Einstein Brown
         ssn: '010101010'
         relation: Pet Dog
@@ -61,7 +61,7 @@ def seed_blobs
     <<~YAML
       ---
       :w2s:
-      - !ruby/object:PiggyBank::Tax::W2
+      - !ruby/object:PiggyBank::Tax::Data::W2
         ssn: '123-45-6789'
         ein: '00-0000011'
         employer: Hill Valley College
@@ -95,7 +95,7 @@ def seed_blobs
         local_wages: ''
         local_tax: ''
         locality: ''
-      - !ruby/object:PiggyBank::Tax::W2
+      - !ruby/object:PiggyBank::Tax::Data::W2
         ssn: '987-65-4321'
         ein: '00-0000012'
         employer: Flux Corporation

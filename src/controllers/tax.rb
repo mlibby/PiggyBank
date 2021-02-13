@@ -17,12 +17,12 @@ module PiggyBank
     end
 
     get "/tax/data/general" do
-      @general = PiggyBank::Tax::General.new
+      @general = PiggyBank::Tax::Data::General.new
       general_form
     end
 
     post "/tax/data/general" do
-      @general = PiggyBank::Tax::General.new
+      @general = PiggyBank::Tax::Data::General.new
       @general.update params
 
       if params.has_key? "add_dep"
@@ -39,12 +39,12 @@ module PiggyBank
     end
 
     get "/tax/data/income" do
-      @income = PiggyBank::Tax::Income.new
+      @income = PiggyBank::Tax::Data::Income.new
       haml_layout :"tax/data/income/index"
     end
 
     post "/tax/data/income" do
-      @income = PiggyBank::Tax::Income.new
+      @income = PiggyBank::Tax::Data::Income.new
       @income.update params
 
       if params.has_key? "add_w2"
@@ -61,12 +61,12 @@ module PiggyBank
     end
 
     get "/tax/data/deduct" do
-      @deduct = PiggyBank::Tax::Deduct.new
+      @deduct = PiggyBank::Tax::Data::Deduct.new
       deduct_form
     end
 
     post "/tax/data/deduct" do
-      @deduct = PiggyBank::Tax::Deduct.new
+      @deduct = PiggyBank::Tax::Data::Deduct.new
       @deduct.update params
 
       if params.has_key? "add_1098"
@@ -94,15 +94,15 @@ module PiggyBank
       haml_layout :"tax/form/index"
     end
 
-    get "/tax/form/us/1040" do
+    get "/tax/form/us/f1040" do
       require_relative "../lib/tax/form/writer/us/form1040.rb"
-      pdf = PiggyBank::TaxFormWriter::US::Form1040.new.write_form
+      pdf = PiggyBank::Tax::Form::Writer::US::Form1040.new.write_form
       halt 200, { "Content-Type" => "application/pdf" }, pdf
     end
 
-    get "/tax/form/us/s1" do
-      require_relative "../lib/tax/form/writer/us/schedule1.rb"
-      pdf = PiggyBank::TaxFormWriter::US::Schedule1.new.write_form
+    get "/tax/form/us/sched1" do
+      require_relative "../lib/tax/form/writer/us/sched1.rb"
+      pdf = PiggyBank::Tax::Form::Writer::US::Schedule1.new.write_form
       halt 200, { "Content-Type" => "application/pdf" }, pdf
     end
   end

@@ -16,17 +16,17 @@ describe PiggyBank::App do
     end
   end
 
-  context "GET /tax/form/us/1040" do
+  context "GET /tax/form/us/f1040" do
     it "gets the specified form as a PDF" do
-      response = get "/tax/form/us/1040"
+      response = get "/tax/form/us/f1040"
       expect(response.status).to eq 200
       expect(response.content_type).to eq "application/pdf"
     end
   end
 
-  context "GET /tax/forms/us/1040s1" do
+  context "GET /tax/forms/us/sched1" do
     it "gets the 1040 schedule 1 as a PDF" do
-      response = get "/tax/form/us/s1"
+      response = get "/tax/form/us/sched1"
       expect(response.status).to eq 200
       expect(response.content_type).to eq "application/pdf"
     end

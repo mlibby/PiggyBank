@@ -1,37 +1,39 @@
-require "hexapdf"
-require "stringio"
+require_relative "../base"
 
-module PiggyBank
-  module TaxFormWriter
-    module US
-      class Form1040
-        def initialize
-          @general = PiggyBank::Tax::General.new
-          @income = PiggyBank::Tax::Income.new
-        end
+module PiggyBank; end
+module PiggyBank::Tax; end
+module PiggyBank::Tax::Form; end
+module PiggyBank::Tax::Form::Writer; end
+module PiggyBank::Tax::Form::Writer::US; end
 
-        def write_form
-          @doc = get_doc
-          @fields = get_fields
-          update_fields
-          write_pdf
-        end
+class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer::Base
+  def initialize
+    @general = PiggyBank::Tax::Data::General.new
+    @income = PiggyBank::Tax::Data::Income.new
+  end
 
-        private
+  def write_form
+    @doc = get_doc
+    @fields = get_fields
+    update_fields
+    write_pdf
+  end
 
-        def get_doc
-          HexaPDF::Document.open("src/lib/tax/form/pdf/2020/us/f1040.pdf")
-        end
+  private
 
-        def get_fields
-          page1 = @doc.pages[0]
-          widgets = page1[:Annots]&.filter { |a| a[:Subtype] == :Widget }
-          form_fields = widgets.map { |w| w.form_field }
-          form_fields.filter { |f| f.concrete_field_type != :push_button }
-        end
+  def get_doc
+    HexaPDF::Document.open("src/lib/tax/form/pdf/2020/us/f1040.pdf")
+  end
 
-        def text_fields
-          {
+  def get_fields
+    page1 = @doc.pages[0]
+    widgets = page1[:Annots]&.filter { |a| a[:Subtype] == :Widget }
+    form_fields = widgets.map { |w| w.form_field }
+    form_fields.filter { |f| f.concrete_field_type != :push_button }
+  end
+
+  def text_fields
+    {
             "topmostSubform[0].Page1[0].f1_02[0]" => @general.first_name,
             "topmostSubform[0].Page1[0].f1_03[0]" => @general.last_name,
             "topmostSubform[0].Page1[0].YourSocial[0].f1_04[0]" => format_ssn(@general.ssn),
@@ -47,49 +49,49 @@ module PiggyBank
             "topmostSubform[0].Page1[0].Address[0].f1_14[0]" => @general.province,
             "topmostSubform[0].Page1[0].Address[0].f1_15[0]" => @general.post_code,
           }
-        end
+  end
 
-        def money_fields
-          {
+  def money_fields
+    {
             "topmostSubform[0].Page1[0].Lines1-11_ReadOrder[0].f1_28[0]" => @income.total_wages,
           }
-        end
+  end
 
-        def dependent_fields
-          df = { text: {}, button: {} }
-          unless @general.dependents[0].nil?
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_16[0]"] = @general.dependents[0].name
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_17[0]"] = format_ssn(@general.dependents[0].ssn)
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_18[0]"] = @general.dependents[0].relation
-            df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].c1_13[0]"] = @general.dependents[0].child_credit
-            df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].c1_14[0]"] = @general.dependents[0].other_credit
-          end
-          unless @general.dependents[1].nil?
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_19[0]"] = @general.dependents[1].name
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_20[0]"] = format_ssn(@general.dependents[1].ssn)
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_21[0]"] = @general.dependents[1].relation
-            df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].c1_15[0]"] = @general.dependents[1].child_credit
-            df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].c1_16[0]"] = @general.dependents[1].other_credit
-          end
-          unless @general.dependents[2].nil?
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_22[0]"] = @general.dependents[2].name
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_23[0]"] = format_ssn(@general.dependents[2].ssn)
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_24[0]"] = @general.dependents[2].relation
-            df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].c1_17[0]"] = @general.dependents[2].child_credit
-            df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].c1_18[0]"] = @general.dependents[2].other_credit
-          end
-          unless @general.dependents[3].nil?
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_25[0]"] = @general.dependents[3].name
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_26[0]"] = format_ssn(@general.dependents[3].ssn)
-            df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_27[0]"] = @general.dependents[3].relation
-            df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].c1_19[0]"] = @general.dependents[3].child_credit
-            df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].c1_20[0]"] = @general.dependents[3].other_credit
-          end
-          df
-        end
+  def dependent_fields
+    df = { text: {}, button: {} }
+    unless @general.dependents[0].nil?
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_16[0]"] = @general.dependents[0].name
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_17[0]"] = format_ssn(@general.dependents[0].ssn)
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_18[0]"] = @general.dependents[0].relation
+      df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].c1_13[0]"] = @general.dependents[0].child_credit
+      df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].c1_14[0]"] = @general.dependents[0].other_credit
+    end
+    unless @general.dependents[1].nil?
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_19[0]"] = @general.dependents[1].name
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_20[0]"] = format_ssn(@general.dependents[1].ssn)
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_21[0]"] = @general.dependents[1].relation
+      df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].c1_15[0]"] = @general.dependents[1].child_credit
+      df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].c1_16[0]"] = @general.dependents[1].other_credit
+    end
+    unless @general.dependents[2].nil?
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_22[0]"] = @general.dependents[2].name
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_23[0]"] = format_ssn(@general.dependents[2].ssn)
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_24[0]"] = @general.dependents[2].relation
+      df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].c1_17[0]"] = @general.dependents[2].child_credit
+      df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].c1_18[0]"] = @general.dependents[2].other_credit
+    end
+    unless @general.dependents[3].nil?
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_25[0]"] = @general.dependents[3].name
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_26[0]"] = format_ssn(@general.dependents[3].ssn)
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_27[0]"] = @general.dependents[3].relation
+      df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].c1_19[0]"] = @general.dependents[3].child_credit
+      df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].c1_20[0]"] = @general.dependents[3].other_credit
+    end
+    df
+  end
 
-        def button_fields
-          {
+  def button_fields
+    {
             "topmostSubform[0].Page1[0].FilingStatus[0].c1_01[0]" => @general.filing_status == "single",
             "topmostSubform[0].Page1[0].FilingStatus[0].c1_01[1]" => @general.filing_status == "married",
             "topmostSubform[0].Page1[0].FilingStatus[0].c1_01[2]" => @general.filing_status == "mfs",
@@ -108,92 +110,89 @@ module PiggyBank
             "topmostSubform[0].Page1[0].c1_11[0]" => @general.spouse_blind,
             "topmostSubform[0].Page1[0].Dependents_ReadOrder[0].c1_12[0]" => @general.dependents.size > 4,
           }
-        end
+  end
 
-        def update_fields
-          canvas = @doc.pages[0].canvas(type: :overlay)
-          canvas.font "Courier", size: 12, variant: :bold
+  def update_fields
+    canvas = @doc.pages[0].canvas(type: :overlay)
+    canvas.font "Courier", size: 12, variant: :bold
 
-          form = @doc.acro_form
-          form_fields = []
-          form.each_field { |f| form_fields << f }
+    form = @doc.acro_form
+    form_fields = []
+    form.each_field { |f| form_fields << f }
 
-          text_fields.each do |name, value|
-            if value
-              field = form_fields.find { |f| f.full_field_name == name }
-              raise "Cannot find PDF field #{name}" if field.nil?
-              x, y = field[:Rect]
-              text = value.upcase
-              canvas.text text, at: [x + 6, y + 4]
-            end
-          end
-
-          dependent_fields[:text].each do |name, value|
-            if value
-              field = form_fields.find { |f| f.full_field_name == name }
-              raise "Cannot find PDF field #{name}" if field.nil?
-              x, y = field[:Rect]
-              text = value.upcase
-              canvas.text text, at: [x + 1, y + 2]
-            end
-          end
-
-          button_fields.each do |name, value|
-            if value
-              field = form_fields.find { |f| f.full_field_name == name }
-              raise "Cannot find PDF field #{name}" if field.nil?
-              x, y = field[:Rect]
-              canvas.text "X", at: [x + 0.5, y + 0.5]
-            end
-          end
-
-          dependent_fields[:button].each do |name, value|
-            if value
-              field = form_fields.find { |f| f.full_field_name == name }
-              raise "Cannot find PDF field #{name}" if field.nil?
-              x, y = field[:Rect]
-              canvas.text "X", at: [x + 0.5, y + 0.5]
-            end
-          end
-
-          font = canvas.font.wrapped_font
-          m_width = font.width :m
-          font_scale = canvas.graphics_state.scaled_font_size
-          m_scale = m_width * font_scale
-
-          money_fields.each do |name, value|
-            if value
-              field = form_fields.find { |f| f.full_field_name == name }
-              raise "Cannot find PDF field #{name}" if field.nil?
-              a, y, x = field[:Rect]
-              amount = format_currency value
-              canvas.text amount, at: [x - amount.size * m_scale, y + 2]
-            end
-          end
-        end
-
-        def write_pdf
-          strio = StringIO.new
-          @doc.write(strio, validate: false, incremental: false, update_fields: true, optimize: false)
-          strio.string
-        end
-
-        private
-
-        def format_currency(value)
-          segments = []
-          value.round.digits.each_slice(3) { |s| segments << s.join }
-          curr = segments.join(",").reverse
-          "#{curr}."
-        end
-
-        def format_ssn(ssn)
-          return if ssn.nil? || ssn == ""
-          ssn = ssn.tr "-", ""
-          ssn.insert 3, " "
-          ssn.insert 6, " "
-        end
+    text_fields.each do |name, value|
+      if value
+        field = form_fields.find { |f| f.full_field_name == name }
+        raise "Cannot find PDF field #{name}" if field.nil?
+        x, y = field[:Rect]
+        text = value.upcase
+        canvas.text text, at: [x + 6, y + 4]
       end
     end
+
+    dependent_fields[:text].each do |name, value|
+      if value
+        field = form_fields.find { |f| f.full_field_name == name }
+        raise "Cannot find PDF field #{name}" if field.nil?
+        x, y = field[:Rect]
+        text = value.upcase
+        canvas.text text, at: [x + 1, y + 2]
+      end
+    end
+
+    button_fields.each do |name, value|
+      if value
+        field = form_fields.find { |f| f.full_field_name == name }
+        raise "Cannot find PDF field #{name}" if field.nil?
+        x, y = field[:Rect]
+        canvas.text "X", at: [x + 0.5, y + 0.5]
+      end
+    end
+
+    dependent_fields[:button].each do |name, value|
+      if value
+        field = form_fields.find { |f| f.full_field_name == name }
+        raise "Cannot find PDF field #{name}" if field.nil?
+        x, y = field[:Rect]
+        canvas.text "X", at: [x + 0.5, y + 0.5]
+      end
+    end
+
+    font = canvas.font.wrapped_font
+    m_width = font.width :m
+    font_scale = canvas.graphics_state.scaled_font_size
+    m_scale = m_width * font_scale
+
+    money_fields.each do |name, value|
+      if value
+        field = form_fields.find { |f| f.full_field_name == name }
+        raise "Cannot find PDF field #{name}" if field.nil?
+        a, y, x = field[:Rect]
+        amount = format_currency value
+        canvas.text amount, at: [x - amount.size * m_scale, y + 2]
+      end
+    end
+  end
+
+  def write_pdf
+    strio = StringIO.new
+    @doc.write(strio, validate: false, incremental: false, update_fields: true, optimize: false)
+    strio.string
+  end
+
+  private
+
+  def format_currency(value)
+    segments = []
+    value.round.digits.each_slice(3) { |s| segments << s.join }
+    curr = segments.join(",").reverse
+    "#{curr}."
+  end
+
+  def format_ssn(ssn)
+    return if ssn.nil? || ssn == ""
+    ssn = ssn.tr "-", ""
+    ssn.insert 3, " "
+    ssn.insert 6, " "
   end
 end

@@ -1,6 +1,6 @@
 require_relative "../../spec_helper.rb"
 
-describe PiggyBank::Tax::Income do
+describe PiggyBank::Tax::Data::Income do
   include Rack::Test::Methods
 
   before(:example) do
@@ -8,7 +8,7 @@ describe PiggyBank::Tax::Income do
   end
 
   context ".new" do
-    let(:income) { PiggyBank::Tax::Income.new }
+    let(:income) { PiggyBank::Tax::Data::Income.new }
 
     it "has W2s" do
       expect(income.w2s.size).to eq 2

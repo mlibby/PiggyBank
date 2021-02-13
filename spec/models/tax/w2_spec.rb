@@ -1,6 +1,6 @@
 require_relative "../../spec_helper.rb"
 
-describe PiggyBank::Tax::W2 do
+describe PiggyBank::Tax::Data::W2 do
   include Rack::Test::Methods
 
   before(:example) do
@@ -8,7 +8,7 @@ describe PiggyBank::Tax::W2 do
   end
 
   context ".new" do
-    let(:w2) { PiggyBank::Tax::W2.new }
+    let(:w2) { PiggyBank::Tax::Data::W2.new }
 
     it "translates 'on' into boolean for #statutory_employee" do
       w2.statutory_employee = "on"
