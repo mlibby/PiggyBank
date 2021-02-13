@@ -31,6 +31,11 @@ module PiggyBank
         Sequel::Seeder.apply @db, "#{__dir__}/seeds"
         # :nocov:
       end
+
+      if ["DEMO", "DUMP"].include? ENV["APP_ENV"] 
+        require_relative "seeds/seed_db"
+        seed_db
+      end
     end
 
     def Repo.timestamp
