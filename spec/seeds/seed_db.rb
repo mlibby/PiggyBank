@@ -7,15 +7,14 @@ require_relative "ofx"
 require_relative "blobs"
 
 def seed_db
-  PiggyBank::OfxImport.truncate
-  PiggyBank::Ofx.truncate
-  PiggyBank::Split.truncate
-  PiggyBank::Tx.truncate
-  PiggyBank::Account.truncate
-  PiggyBank::Price.truncate
-  PiggyBank::Commodity.truncate
-  PiggyBank::ApiKey.truncate
-  PiggyBank::Blob.truncate
+  PiggyBank::Ofx.dataset.delete
+  PiggyBank::Split.dataset.delete
+  PiggyBank::Tx.dataset.delete
+  PiggyBank::Account.dataset.delete
+  PiggyBank::Price.dataset.delete
+  PiggyBank::Commodity.dataset.delete
+  PiggyBank::ApiKey.dataset.delete
+  PiggyBank::Blob.dataset.delete
   
   seed_commodities
   seed_accounts
