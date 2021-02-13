@@ -7,6 +7,7 @@ require_relative "ofx"
 require_relative "blobs"
 
 def seed_db
+  PiggyBank::OfxImport.truncate
   PiggyBank::Ofx.truncate
   PiggyBank::Split.truncate
   PiggyBank::Tx.truncate
