@@ -6,13 +6,13 @@ def seed_blobs
       :virtual: false
       :first_name: George 
       :last_name: McFly
-      :ssn: '123456789'
+      :ssn: '123-45-6789'
       :birthday: '1955-07-04'
       :blind: true
       :campaign: true
       :spouse_first_name: Lorraine
       :spouse_last_name: Baines-McFly
-      :spouse_ssn: '987654321'
+      :spouse_ssn: '987-65-4321'
       :spouse_birthday: '1956-05-04'
       :spouse_blind: false
       :spouse_campaign: false

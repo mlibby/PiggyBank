@@ -17,5 +17,11 @@ describe PiggyBank::Tax::Income do
     it "calculates total wages" do
       expect(income.total_wages).to eq 36323
     end
+
+    it "#add_w2 adds blank w2" do
+      count = income.w2s.size
+      income.add_w2
+      expect(income.w2s.size).to eq count + 1
+    end
   end
 end
