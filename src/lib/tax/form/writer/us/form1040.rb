@@ -7,17 +7,10 @@ module PiggyBank::Tax::Form::Writer; end
 module PiggyBank::Tax::Form::Writer::US; end
 
 class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer::Base
-
-
   def initialize
     @template = "src/lib/tax/form/pdf/2020/us/f1040.pdf"
     super
     @adapter = PiggyBank::Tax::Form::Adapter::US::Form1040.new
-  end
-
-  def write_form
-    draw_fields
-    write_pdf
   end
 
   private
@@ -109,11 +102,5 @@ class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer:
     draw_button_fields(button_fields)
     draw_button_fields(dependent_fields[:button])
     draw_number_fields(money_fields)
-  end
-
-  def write_pdf
-    strio = StringIO.new
-    @doc.write(strio, validate: false, incremental: false, update_fields: true, optimize: false)
-    strio.string
   end
 end

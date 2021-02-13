@@ -8,6 +8,7 @@ module PiggyBank::Tax::Form::Adapter::US; end
 
 class PiggyBank::Tax::Form::Adapter::US::Form1040
   def initialize
+    @format = PiggyBank::Formatter.new
     @general = PiggyBank::Tax::Data::General.new
     @income = PiggyBank::Tax::Data::Income.new
   end
@@ -21,7 +22,7 @@ class PiggyBank::Tax::Form::Adapter::US::Form1040
   end
 
   def ssn
-    format_ssn(@general.ssn)
+    @format.as_spaced_ssn @general.ssn
   end
 
   def spouse_first_name
@@ -33,7 +34,7 @@ class PiggyBank::Tax::Form::Adapter::US::Form1040
   end
 
   def spouse_ssn
-    format_ssn(@general.spouse_ssn)
+    @format.as_spaced_ssn @general.spouse_ssn
   end
 
   def street
@@ -69,11 +70,10 @@ class PiggyBank::Tax::Form::Adapter::US::Form1040
   end
 
   def dependents
-    dstruct = Struct.new(:name, :ssn, :relation, :child_credit, :other_credit)
-    deps = @general.dependents || []
-    deps.map do |dep|
-      dstruct.new dep.name,
-        format_ssn(dep.ssn),
+    dependent = Struct.new(:name, :ssn, :relation, :child_credit, :other_credit)
+    @general.dependents.map do |dep|
+      dependent.new dep.name,
+        @format.as_spaced_ssn(dep.ssn),
         dep.relation,
         dep.child_credit,
         dep.other_credit
@@ -134,22 +134,6 @@ class PiggyBank::Tax::Form::Adapter::US::Form1040
 
   # Total Wages
   def line_1
-    format_currency @income.w2s.sum { |w| BigDecimal(w.wages) }
-  end
-
-  private
-
-  def format_currency(value)
-    segments = []
-    value.round.digits.each_slice(3) { |s| segments << s.join }
-    curr = segments.join(",").reverse
-    "#{curr}."
-  end
-
-  def format_ssn(ssn)
-    return if ssn.nil? || ssn == ""
-    ssn = ssn.tr "-", ""
-    ssn.insert 3, " "
-    ssn.insert 6, " "
+    @format.as_currency @income.w2s.sum { |w| BigDecimal(w.wages) }
   end
 end

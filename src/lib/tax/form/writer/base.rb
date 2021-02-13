@@ -6,11 +6,21 @@ module PiggyBank::Tax; end
 module PiggyBank::Tax::Form; end
 module PiggyBank::Tax::Form::Writer; end
 
+# Subclass this to create a new form writer
+# Define your form's initialize method (be
+# sure to call `super`) and define a custom
+# ::Writer#draw_fields method in your form
+# writer class
 class PiggyBank::Tax::Form::Writer::Base
   def initialize
     open_template @template
     extract_fields
   end 
+    
+  def write_form
+    draw_fields
+    write_pdf
+  end
 
   private
   
@@ -40,7 +50,7 @@ class PiggyBank::Tax::Form::Writer::Base
         raise "Cannot find PDF field #{name}" if field.nil?
         x, y = field[:Rect]
         text = value.upcase
-        @canvas.text text, at: [x + 6, y + 4]
+        @canvas.text text, at: [x + x_offset, y + y_offset]
       end
     end
   end
@@ -66,4 +76,10 @@ class PiggyBank::Tax::Form::Writer::Base
       end
     end
   end 
+
+  def write_pdf
+    strio = StringIO.new
+    @doc.write(strio, validate: false, incremental: false, update_fields: true, optimize: false)
+    strio.string
+  end
 end

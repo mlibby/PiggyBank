@@ -112,13 +112,4 @@ class PiggyBank::Tax::Data::General
     @blob.save
   end
 
-  def names
-    primary_name = [@values[:first_name], @values[:last_name]].join " "
-    if @values[:spouse_first_name] && @values[:spouse_last_name]
-      spouse_name = [@values[:spouse_first_name], @values[:spouse_last_name]].join " "
-      return [primary_name, spouse_name].join ", "
-    else
-      return primary_name
-    end
-  end
 end
