@@ -94,7 +94,4 @@ class PiggyBank::Tax::Data::Income
     @blob.save
   end
 
-  def total_wages
-    w2s.sum { |w| BigDecimal(w.wages) }
-  end
 end
