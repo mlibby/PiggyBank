@@ -33,7 +33,7 @@ module PiggyBank
       end
 
       if ["DEMO", "DUMP"].include? ENV["APP_ENV"] 
-        require_relative "seeds/seed_db"
+        require_relative "../spec/seeds/seed_db"
         seed_db
       end
     end
