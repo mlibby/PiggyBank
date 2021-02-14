@@ -60,6 +60,8 @@ def seed_blobs
   income_yaml =
     <<~YAML
       ---
+      :state_refund: '123.45'
+      :other_credits: '0.00'
       :w2s:
       - !ruby/object:PiggyBank::Tax::Data::W2
         ssn: '123-45-6789'
