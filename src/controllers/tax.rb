@@ -94,7 +94,7 @@ module PiggyBank
       haml_layout :"tax/form/index"
     end
 
-    get "/tax/form/us/f_1040" do
+    get "/tax/form/us/form_1040" do
       pdf = PiggyBank::Tax::Form::Writer::US::Form1040.new.write_form
       halt 200, { "Content-Type" => "application/pdf" }, pdf
     end
