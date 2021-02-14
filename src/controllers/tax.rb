@@ -94,17 +94,17 @@ module PiggyBank
       haml_layout :"tax/form/index"
     end
 
-    get "/tax/form/us/f1040" do
+    get "/tax/form/us/f_1040" do
       pdf = PiggyBank::Tax::Form::Writer::US::Form1040.new.write_form
       halt 200, { "Content-Type" => "application/pdf" }, pdf
     end
 
-    get "/tax/form/us/sched1" do
+    get "/tax/form/us/sched_1" do
       pdf = PiggyBank::Tax::Form::Writer::US::Schedule1.new.write_form
       halt 200, { "Content-Type" => "application/pdf" }, pdf
     end
 
-    get "/tax/form/us/schede" do
+    get "/tax/form/us/sched_e" do
       pdf = PiggyBank::Tax::Form::Writer::US::ScheduleE.new.write_form
       halt 200, { "Content-Type" => "application/pdf" }, pdf
     end
