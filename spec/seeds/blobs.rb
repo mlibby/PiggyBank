@@ -62,6 +62,9 @@ def seed_blobs
       ---
       :state_refund: '123.45'
       :other_credits: '0.00'
+      :rentals: 
+      - !ruby/object:PiggyBank::Tax::Data::Rental
+        physical_address: '1809 Mason Street, Hill Valley, CA 65420'
       :w2s:
       - !ruby/object:PiggyBank::Tax::Data::W2
         ssn: '123-45-6789'

@@ -1,0 +1,8 @@
+%fieldset
+  %legend= "Rental ##{n+1}"
+  %label
+    Physical Address 
+    %input{ name: "rental[][physical_address]", type: "text", value: rental.physical_address }
+  %button.btn.danger{ formaction: "/tax/data/income?rm_rental=#{n}" }
+    %span.icon.icon-trash
+    %span.text Remove Rental

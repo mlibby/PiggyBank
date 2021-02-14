@@ -53,6 +53,12 @@ module PiggyBank
       elsif params.has_key? "rm_w2"
         @income.rm_w2 params["rm_w2"]
         income_form
+      elsif params.has_key? "add_rental"
+        @income.add_rental
+        income_form
+      elsif params.has_key? "rm_rental"
+        @income.rm_rental params["rm_rental"]
+        income_form
       else
         @income.save
         flash[:success] = "Income data saved."
