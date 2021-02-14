@@ -103,5 +103,10 @@ module PiggyBank
       pdf = PiggyBank::Tax::Form::Writer::US::Schedule1.new.write_form
       halt 200, { "Content-Type" => "application/pdf" }, pdf
     end
+
+    get "/tax/form/us/schede" do
+      pdf = PiggyBank::Tax::Form::Writer::US::ScheduleE.new.write_form
+      halt 200, { "Content-Type" => "application/pdf" }, pdf
+    end
   end
 end
