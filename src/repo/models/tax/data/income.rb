@@ -76,6 +76,17 @@ class PiggyBank::Tax::Data::Income
         @values[:w2s] << w
       end
     end
+
+    @values[:rentals] = []
+    if params.has_key? "rentals"
+      params["rentals"].each do |rental|
+        r = PiggyBank::Tax::Data::Rental.new
+        PiggyBank::Tax::Data::Rental::FIELDS.each do |f|
+          r.send("#{f}=", pw[f])
+        end
+        @values[:rentals] << r
+      end
+    end
   end
 
   def save
