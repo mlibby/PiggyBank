@@ -32,7 +32,7 @@ module PiggyBank
     before do
       if @@require_token.include?(request.env["REQUEST_METHOD"])
         if ENV["APP_ENV"] == "DEMO"
-          halt 405, "Making changes to the Demo site are not allowed. <a href='javascript:history.back()'>Go Back</a>"
+          halt 405, "Making changes to the Demo site is not allowed. <a href='javascript:history.back()'>Go Back</a>"
         end
         if !(params.has_key? "_token")
           halt 403, "CSRF Token Required"
@@ -40,8 +40,8 @@ module PiggyBank
       end
     end
 
-    require_relative "./controllers/piggybank_controllers"
     require_relative "./lib/piggybank_lib"
+    require_relative "./controllers/piggybank_controllers"
 
     def haml_layout(view)
       haml view, layout: :layout
