@@ -100,19 +100,25 @@ module PiggyBank
       haml_layout :"tax/form/index"
     end
 
-    get "/tax/form/us/form_1040" do
-      pdf = PiggyBank::Tax::Form::Writer::US::Form1040.new.write_form
-      halt 200, { "Content-Type" => "application/pdf" }, pdf
-    end
+    forms = {
+      "us" => {
+        "form_1040" => PiggyBank::Tax::Form::Writer::US::Form1040,
+        "form_8283" => PiggyBank::Tax::Form::Writer::US::Form8283,
+        "form_8889" => PiggyBank::Tax::Form::Writer::US::Form8889,
+        "sched_1" => PiggyBank::Tax::Form::Writer::US::Schedule1,
+        "sched_3" => PiggyBank::Tax::Form::Writer::US::Schedule3,
+        "sched_a" => PiggyBank::Tax::Form::Writer::US::ScheduleA,
+        "sched_e" => PiggyBank::Tax::Form::Writer::US::ScheduleE,
+      },
+    }
 
-    get "/tax/form/us/sched_1" do
-      pdf = PiggyBank::Tax::Form::Writer::US::Schedule1.new.write_form
-      halt 200, { "Content-Type" => "application/pdf" }, pdf
-    end
-
-    get "/tax/form/us/sched_e" do
-      pdf = PiggyBank::Tax::Form::Writer::US::ScheduleE.new.write_form
-      halt 200, { "Content-Type" => "application/pdf" }, pdf
+    forms.each_key do |group|
+      forms[group].each_pair do |form, writer|
+        get "/tax/form/#{group}/#{form}" do
+          pdf = writer.new.write_form
+          halt 200, { "Content-Type" => "application/pdf" }, pdf
+        end
+      end
     end
   end
 end

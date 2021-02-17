@@ -40,8 +40,8 @@ module PiggyBank
       end
     end
 
-    require_relative "./controllers/piggybank_controllers"
     require_relative "./lib/piggybank_lib"
+    require_relative "./controllers/piggybank_controllers"
 
     def haml_layout(view)
       haml view, layout: :layout
