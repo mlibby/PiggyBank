@@ -1,0 +1,67 @@
+Page 1
+  YourFirstNameandInitial (Your First Name and Initial)
+    └─ nil
+  LastName (Last Name)
+    └─ nil
+  YourSocialSecurityNumber (Your Social Security Number)
+    └─ nil
+  M1SAline1 (1)
+    └─ nil
+  M1SAline2 (2)
+    └─ nil
+  M1SAline3 (3)
+    └─ nil
+  M1SAline4 (4)
+    └─ nil
+  M1SAline5 (5)
+    └─ nil
+  M1SAline6 (6)
+    └─ nil
+  M1SAline7 (7)
+    └─ nil
+  M1SAline8 (8)
+    └─ nil
+  M1SAline9 (9)
+    └─ nil
+  seeinstructions (see instructions)
+    └─ nil
+  M1SAline10 (10)
+    └─ nil
+  M1SAline11 (11)
+    └─ nil
+  listhomemortgage (list home mortgage)
+    └─ nil
+  M1SAline12 (12)
+    └─ nil
+  M1SAline13 (13)
+    └─ nil
+  M1SAline14 (14)
+    └─ nil
+  M1SAline15 (15 Charitable contributions by other than cash or check (see instructions) .. 15)
+    └─ nil
+  M1SAline16 (16)
+    └─ nil
+  M1SAline17 (17)
+    └─ nil
+  M1SAline18 (18)
+    └─ nil
+  M1SAline19 (19)
+    └─ nil
+  M1SAline20 (20 Other expenses such as tax prep fees, safe deposit, etc. (see instructions) 20)
+    └─ nil
+  M1SAline21 (21)
+    └─ nil
+  M1SAline22 (22)
+    └─ nil
+  M1SAline23 (23)
+    └─ nil
+  M1SAline24 (24)
+    └─ nil
+  listtypeandamount (list type and amount)
+    └─ nil
+  M1SAline25 (25)
+    └─ nil
+  M1SAline26 (26)
+    └─ nil
+  M1SAline27 (27)
+    └─ nil

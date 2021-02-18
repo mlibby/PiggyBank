@@ -1,0 +1,67 @@
+Page 1
+  YourFirstNameandInitial (Your First Name and Initial)
+    └─ nil
+  yourlastname (your last name)
+    └─ nil
+  YourSocialSecurityNumber (Your Social Security Number)
+    └─ nil
+  m1cline1 (Credit for long-term care insurance premiums paid (enclose Schedule M1LTI) . . . . . . . . . . . . . . . . . . . . . . . . . 1)
+    └─ nil
+  m1cline2 (Credit for past military service (see instructions) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2)
+    └─ nil
+  m1cline3 (Credit for increasing research activities (enclose Schedule KPI, KS, or KF) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3)
+    └─ nil
+  m1cline4 (Employer Transit Pass Credit (enclose Schedule ETP) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4)
+    └─ nil
+  m1cline5 (Alternative Minimum Tax Credit (enclose Schedule M1MTC) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5)
+    └─ nil
+  m1cline6 (SEED Capital Investment Credit (see instructions; enclose certification) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6)
+    └─ nil
+  m1cline7 (Education Savings Account Contribution Credit (enclose Schedule M1529) . . . . . . . . . . . . . . . . . . . . . . . . . . . 7)
+    └─ nil
+  m1cline8 (Credit for Attaining Master’s Degree in Teacher’s Licensure Field (enclose Schedule M1CMD) . . . . . . . . . . . . 8)
+    └─ nil
+  m1cline9 (Student Loan Credit (enclose Schedule M1SLC) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9)
+    └─ nil
+  m1cline10 (unused credits for research)
+    └─ nil
+  bf (list the years)
+    └─ nil
+  m1cline11 (alternative minimum tax)
+    └─ nil
+  ao (ao)
+    └─ nil
+  ao2 (ao2)
+    └─ nil
+  ao3 (ao3)
+    └─ nil
+  m1cline12 (credit for research)
+    └─ nil
+  m1cline13 (carryforward)
+    └─ nil
+  bfyear1 (bfyear1)
+    └─ nil
+  bf1line10 (bf1line10)
+    └─ nil
+  bfyear2 (bfyear2)
+    └─ nil
+  bf2line10 (bf2line10)
+    └─ nil
+  m1cline14 (carryforward)
+    └─ nil
+  aoyear1 (aoyear1)
+    └─ nil
+  ao1line11 (ao1line11)
+    └─ nil
+  aoyear2 (aoyear2)
+    └─ nil
+  ao2line11 (ao2line11)
+    └─ nil
+  m1cline15 (carryforward)
+    └─ nil
+  listtheyears (list the years)
+    └─ nil
+  m1cline16 (AMT)
+    └─ nil
+  m1cline17 (total)
+    └─ nil

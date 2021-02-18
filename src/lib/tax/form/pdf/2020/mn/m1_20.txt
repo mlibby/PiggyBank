@@ -1,0 +1,172 @@
+Page 1
+  yourfirstnameandinitial (your first name and initial)
+    └─ nil
+  LastName (your last name)
+    └─ nil
+  YourSocialSecurityNumber (Your Social Security Number)
+    └─ nil
+  YourDateofBirth (Your Date of Birth)
+    └─ nil
+  SpousesFirstNameandInitial (If a Joint Return, Spouse’s First Name and Initial)
+    └─ nil
+  Spouseslastname (spouse last name)
+    └─ nil
+  SpousesSocialSecurityNumber (Spouse’s Social Security Number)
+    └─ nil
+  spousesdateofbirth (your spouse's date of birth)
+    └─ nil
+  CurrentHomeAddress (Current Home Address)
+    └─ nil
+  city (city)
+    └─ nil
+  state (state)
+    └─ nil
+  zipcode (zip code)
+    └─ nil
+  checkhereifanewaddress (check here if a new address)
+    └─ false
+  checkhereifaforeignaddress (check here if a foreign address)
+    └─ false
+  checkifsingle (check if single)
+    └─ false
+  checkifmarriedfilingjoint (check if married filing joint)
+    └─ false
+  checkifmarriedfilingseparately (check if married filing separately)
+    └─ false
+  checkifheadofhousehold (check if head of household)
+    └─ false
+  checkifqualifyingwidower (check if qualifying widower)
+    └─ false
+  Enterspousename (Enter spouse name )
+    └─ nil
+  EnterspouseSocialSecuritynumber (Enter spouse Social Security number)
+    └─ nil
+  dependent1first (Enter name of first dependent)
+    └─ nil
+  dependent1last (Enter last name of first dependent)
+    └─ nil
+  dependent1ssn (Enter ssn of first dependent)
+    └─ nil
+  dependent1relationship (Enter first relationship to you)
+    └─ nil
+  dependent2first (Enter name of second dependent)
+    └─ nil
+  dependent2last (Enter last name of second dependent)
+    └─ nil
+  dependent2ssn (Enter ssn of second dependent)
+    └─ nil
+  dependent2relationship (Enter second dependent relationship to you)
+    └─ nil
+  dependent3first (Enter name of third dependent)
+    └─ nil
+  dependent3last (Enter last name of third dependent)
+    └─ nil
+  dependent3ssn (Enter ssn of third dependent)
+    └─ nil
+  dependent3relationship (Enter third dependent relationship to you)
+    └─ nil
+  Yourcode (Your code)
+    └─ nil
+  Spousecode (Spouse code)
+    └─ nil
+  wages, salaries, tips (wages, salaries, tips)
+    └─ nil
+  irapensionsannuities (ira, pensions, annuities)
+    └─ nil
+  unemployment (unemployment)
+    └─ nil
+  FAGI (FAGI)
+    └─ nil
+  m1line1 (enter line 1 here)
+    └─ nil
+  m1line2 (2)
+    └─ nil
+  m1line3 (3)
+    └─ nil
+  m1line4 (enter line 4 here)
+    └─ nil
+  m1line5 (5)
+    └─ nil
+  m1line6 (6)
+    └─ nil
+  m1line7 (7)
+    └─ nil
+  m1line8 (8)
+    └─ nil
+  m1line9 (9)
+    └─ nil
+  m1line10 (10)
+    └─ nil
+  m1line11 (11)
+    └─ nil
+Page 2
+  m1line12 (12)
+    └─ nil
+  m1line13 (13)
+    └─ nil
+  m1line13a (a)
+    └─ nil
+  m1line13b (b)
+    └─ nil
+  checkforschedulem1home (checkforschedulem1home)
+    └─ false
+  checkforschedulem1529 (checkforschedulem1529)
+    └─ false
+  checkforschedulels (checkforschedulels)
+    └─ false
+  m1line14 (14)
+    └─ nil
+  m1line15 (15)
+    └─ nil
+  m1line16 (16)
+    └─ nil
+  m1line17 (17)
+    └─ nil
+  m1line18 (18)
+    └─ nil
+  m1line19 (19)
+    └─ nil
+  m1line20 (20)
+    └─ nil
+  m1line21 (21)
+    └─ nil
+  m1line22 (22)
+    └─ nil
+  m1line23 (23)
+    └─ nil
+  m1line24 (24)
+    └─ nil
+  checkifchecking (check if checking)
+    └─ false
+  checkifsavings (check if savings)
+    └─ false
+  Routingnumber (routing number)
+    └─ nil
+  AccountNumber (Account Number)
+    └─ nil
+  m1line26 (26)
+    └─ nil
+  m1line27 (27)
+    └─ nil
+  m1line28 (28)
+    └─ nil
+  m1line29 (29)
+    └─ nil
+  preparersignaturedate (date your preparer signed this form)
+    └─ nil
+  Taxpayersdaytimephone (Taxpayer’s daytime phone)
+    └─ nil
+  Youremailaddress (Your email address)
+    └─ nil
+  signaturedate (date you signed this form)
+    └─ nil
+  PTINorVITATCErequired (PTIN or VITA/TCE # (required))
+    └─ nil
+  Preparersdaytimephone (Preparer’s daytime phone)
+    └─ nil
+  Preparersemailaddress (Preparer’s email address)
+    └─ nil
+  checkifyoudontwantyourpreparertofileelectronically (check if you don't want your preparer to file electronically)
+    └─ false
+  checktoauthorizeyourpaidpreparer (check to authorize your paid preparer)
+    └─ false
