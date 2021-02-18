@@ -1,18 +1,18 @@
 require_relative "../base"
 
 module PiggyBank::Tax::Form::Writer::MN
-  class M1 < PiggyBank::Tax::Form::Writer::Base
+  class M1M < PiggyBank::Tax::Form::Writer::Base
     def initialize
-      @template = "src/lib/tax/form/pdf/2020/mn/m1_20.pdf"
+      @template = "src/lib/tax/form/pdf/2020/mn/m1m_20.pdf"
       super
-      @adapter = PiggyBank::Tax::Form::Adapter::MN::M1.new
+      @adapter = PiggyBank::Tax::Form::Adapter::MN::M1M.new
     end
 
     private
 
     def text_fields
       {
-        "yourfirstnameandinitial" => @adapter.first_name,
+        "YourFirstNameandInitial" => @adapter.first_name,
         "YourSocialSecurityNumber" => @adapter.ssn,
       }
     end
