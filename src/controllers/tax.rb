@@ -110,6 +110,15 @@ module PiggyBank
         "sched_a" => PiggyBank::Tax::Form::Writer::US::ScheduleA,
         "sched_e" => PiggyBank::Tax::Form::Writer::US::ScheduleE,
       },
+      "mn" => {
+        "m1" => PiggyBank::Tax::Form::Writer::MN::M1,
+        "m1c" => PiggyBank::Tax::Form::Writer::MN::M1C,
+        "m1m" => PiggyBank::Tax::Form::Writer::MN::M1M,
+        "m1ma" => PiggyBank::Tax::Form::Writer::MN::M1MA,
+        "m1sa" => PiggyBank::Tax::Form::Writer::MN::M1SA,
+        "m1w" => PiggyBank::Tax::Form::Writer::MN::M1W,
+        "m1529" => PiggyBank::Tax::Form::Writer::MN::M1529
+      }
     }
 
     forms.each_key do |group|
