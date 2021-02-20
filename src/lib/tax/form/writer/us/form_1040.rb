@@ -15,14 +15,25 @@ class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer:
 
   private
 
+  def ssn_fields
+    [
+      "topmostSubform[0].Page1[0].YourSocial[0].f1_04[0]",
+      "topmostSubform[0].Page1[0].SpousesSocial[0].f1_07[0]",
+      "topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_17[0]",
+      "topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_20[0]",
+      "topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_23[0]",
+      "topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_26[0]",
+    ]
+  end
+
   def text_fields
     {
       "topmostSubform[0].Page1[0].f1_02[0]" => @adapter.first_name,
       "topmostSubform[0].Page1[0].f1_03[0]" => @adapter.last_name,
-      "topmostSubform[0].Page1[0].YourSocial[0].f1_04[0]" => @format.as_spaced_ssn(@adapter.ssn),
+      "topmostSubform[0].Page1[0].YourSocial[0].f1_04[0]" => @format.as_1040_ssn(@adapter.ssn),
       "topmostSubform[0].Page1[0].f1_05[0]" => @adapter.spouse_first_name,
       "topmostSubform[0].Page1[0].f1_06[0]" => @adapter.spouse_last_name,
-      "topmostSubform[0].Page1[0].SpousesSocial[0].f1_07[0]" => @format.as_spaced_ssn(@adapter.spouse_ssn),
+      "topmostSubform[0].Page1[0].SpousesSocial[0].f1_07[0]" => @format.as_1040_ssn(@adapter.spouse_ssn),
       "topmostSubform[0].Page1[0].Address[0].f1_08[0]" => @adapter.street,
       "topmostSubform[0].Page1[0].Address[0].f1_09[0]" => @adapter.apt_no,
       "topmostSubform[0].Page1[0].Address[0].f1_10[0]" => @adapter.city,
@@ -45,28 +56,28 @@ class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer:
     df = { text: {}, button: {} }
     unless @adapter.dependents[0].nil?
       df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_16[0]"] = @adapter.dependents[0].name
-      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_17[0]"] = @format.as_spaced_ssn(@adapter.dependents[0].ssn)
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_17[0]"] = @format.as_1040_ssn(@adapter.dependents[0].ssn)
       df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].f1_18[0]"] = @adapter.dependents[0].relation
       df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].c1_13[0]"] = @adapter.dependents[0].child_credit
       df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow1[0].c1_14[0]"] = @adapter.dependents[0].other_credit
     end
     unless @adapter.dependents[1].nil?
       df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_19[0]"] = @adapter.dependents[1].name
-      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_20[0]"] = @format.as_spaced_ssn(@adapter.dependents[1].ssn)
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_20[0]"] = @format.as_1040_ssn(@adapter.dependents[1].ssn)
       df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].f1_21[0]"] = @adapter.dependents[1].relation
       df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].c1_15[0]"] = @adapter.dependents[1].child_credit
       df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow2[0].c1_16[0]"] = @adapter.dependents[1].other_credit
     end
     unless @adapter.dependents[2].nil?
       df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_22[0]"] = @adapter.dependents[2].name
-      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_23[0]"] = @format.as_spaced_ssn(@adapter.dependents[2].ssn)
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_23[0]"] = @format.as_1040_ssn(@adapter.dependents[2].ssn)
       df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].f1_24[0]"] = @adapter.dependents[2].relation
       df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].c1_17[0]"] = @adapter.dependents[2].child_credit
       df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow3[0].c1_18[0]"] = @adapter.dependents[2].other_credit
     end
     unless @adapter.dependents[3].nil?
       df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_25[0]"] = @adapter.dependents[3].name
-      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_26[0]"] = @format.as_spaced_ssn(@adapter.dependents[3].ssn)
+      df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_26[0]"] = @format.as_1040_ssn(@adapter.dependents[3].ssn)
       df[:text]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].f1_27[0]"] = @adapter.dependents[3].relation
       df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].c1_19[0]"] = @adapter.dependents[3].child_credit
       df[:button]["topmostSubform[0].Page1[0].Table_Dependents[0].BodyRow4[0].c1_20[0]"] = @adapter.dependents[3].other_credit
@@ -97,11 +108,20 @@ class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer:
   end
 
   def draw_fields
-    create_canvas
-    draw_text_fields(text_fields, 6, 4)
-    draw_text_fields(dependent_fields[:text], 1, 2)
-    draw_button_fields(button_fields)
-    draw_button_fields(dependent_fields[:button])
-    draw_number_fields(money_fields)
+    fix_ssn_fields
+    set_field_values text_fields
+    set_field_values dependent_fields[:text]
+    set_field_values button_fields
+    set_field_values dependent_fields[:button]
+    set_field_values money_fields
+  end
+
+  def fix_ssn_fields
+    ssn_fields.each do |name|
+      ssn = @fields.find { |f| f.full_field_name == name }
+      raise "Cannot find PDF field #{name}" if ssn.nil?
+      ssn.unflag(:comb)
+      ssn.text_alignment(:center)
+    end
   end
 end

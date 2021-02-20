@@ -7,12 +7,10 @@ module PiggyBank
       "#{curr}."
     end
   
-    def as_spaced_ssn(ssn)
+    def as_1040_ssn(ssn)
       return if ssn.nil? || ssn == ""
       ssn = ssn.tr "-", ""
-      ssn.insert 3, " "
-      ssn.insert 6, " "
-      ssn.insert 0, " "
+      "#{ssn[0]} #{ssn[1]} #{ssn[2]}     #{ssn[3]} #{ssn[4]}     #{ssn[5]} #{ssn[6]} #{ssn[7]} #{ssn[8]}     "
     end
   end
 end

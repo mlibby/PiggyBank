@@ -45,31 +45,9 @@ module PiggyBank::Tax::Form::Writer::MN
       }
     end
 
-    def do_buttons(fields)
-      fields.each do |name, value|
-        if value
-          field = @fields.find { |f| f.full_field_name == name }
-          raise "Cannot find PDF field #{name}" if field.nil?
-          field.field_value = value
-        end
-      end
-    end
-
-    def write_texts(fields)
-      fields.each do |name, value|
-        if value
-          field = @fields.find { |f| f.full_field_name == name }
-          raise "Cannot find PDF field #{name}" if field.nil?
-          field.field_value = value
-        end
-      end
-    end
-
     def draw_fields
-      #create_canvas
-      write_texts(text_fields)
-      do_buttons(button_fields)
-      #draw_number_fields(money_fields)
+      set_field_values text_fields
+      set_field_values button_fields 
     end
   end
 end
