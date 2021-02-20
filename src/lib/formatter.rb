@@ -1,6 +1,7 @@
 module PiggyBank
   class Formatter
     def as_currency(value)
+      return "" if value.nil? || value == 0
       segments = []
       value.round.digits.each_slice(3) { |s| segments << s.join }
       curr = segments.join(",").reverse

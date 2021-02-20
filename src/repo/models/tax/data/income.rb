@@ -27,6 +27,7 @@ class PiggyBank::Tax::Data::Income
     if @blob.yaml.nil?
       @values = {
         w2s: [],
+        rentals: []
       }
     else
       @values = YAML.load(@blob.yaml)
@@ -78,11 +79,11 @@ class PiggyBank::Tax::Data::Income
     end
 
     @values[:rentals] = []
-    if params.has_key? "rentals"
-      params["rentals"].each do |rental|
+    if params.has_key? "rental"
+      params["rental"].each do |rental|
         r = PiggyBank::Tax::Data::Rental.new
         PiggyBank::Tax::Data::Rental::FIELDS.each do |f|
-          r.send("#{f}=", pw[f])
+          r.send("#{f}=", rental[f])
         end
         @values[:rentals] << r
       end

@@ -62,9 +62,32 @@ def seed_blobs
       ---
       :state_refund: '123.45'
       :other_credits: '0.00'
-      :rentals: 
+      :other_credits: '0.00'
+      :rentals:
       - !ruby/object:PiggyBank::Tax::Data::Rental
-        physical_address: '1809 Mason Street, Hill Valley, CA 65420'
+        physical_address: 3793 Oakhurst Street, Hilldale, CA 91732
+        property_type: '3'
+        fair_rental_days: '365'
+        personal_days: '0'
+        qualified_joint_venture: 
+        rents_received: '1024'
+        royalties_received: ''
+        advertising: ''
+        auto: ''
+        cleaning: ''
+        commissions: ''
+        insurance: ''
+        legal_fees: ''
+        management_fees: '256'
+        mortgage_interest: ''
+        other_interest: ''
+        repairs: ''
+        supplies: ''
+        taxes: '128'
+        utilities: ''
+        depreciation: ''
+        other_desc: ''
+        other_amount: ''
       :w2s:
       - !ruby/object:PiggyBank::Tax::Data::W2
         ssn: '123-45-6789'

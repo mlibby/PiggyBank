@@ -9,6 +9,11 @@ module PiggyBank::Tax::Form::Adapter
       @income = PiggyBank::Tax::Data::Income.new
     end
 
+    def get_big_decimal(value)
+      value = "0.00" if value.nil? || value == ""
+      BigDecimal(value)
+    end
+
     def names
       primary_name = [@general.first_name, @general.last_name].join " "
       if @general.spouse_first_name && @general.spouse_last_name
