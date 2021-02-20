@@ -37,7 +37,7 @@ class PiggyBank::Tax::Form::Writer::Base
 
   def create_canvas
     @canvas = @doc.pages[0].canvas(type: :overlay)
-    @canvas.font "Courier", size: 12, variant: :bold
+    @canvas.font "Courier", size: 10, variant: :bold
     font = @canvas.font.wrapped_font
     m_width = font.width :m
     font_scale = @canvas.graphics_state.scaled_font_size

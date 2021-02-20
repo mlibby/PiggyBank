@@ -7,62 +7,6 @@ module PiggyBank::Tax::Form::Adapter::US
       @sched1 = PiggyBank::Tax::Form::Adapter::US::Schedule1.new
     end
 
-    def first_name
-      @general.first_name
-    end
-
-    def last_name
-      @general.last_name
-    end
-
-    def ssn
-      @general.ssn
-    end
-
-    def spouse_first_name
-      @general.spouse_first_name
-    end
-
-    def spouse_last_name
-      @general.spouse_last_name
-    end
-
-    def spouse_ssn
-      @general.spouse_ssn
-    end
-
-    def street
-      @general.street
-    end
-
-    def apt_no
-      @general.apt_no
-    end
-
-    def city
-      @general.city
-    end
-
-    def state
-      @general.state
-    end
-
-    def zip
-      @general.zip
-    end
-
-    def country
-      @general.country
-    end
-
-    def province
-      @general.province
-    end
-
-    def post_code
-      @general.post_code
-    end
-
     def dependents
       dependent = Struct.new(:name, :ssn, :relation, :child_credit, :other_credit)
       @general.dependents.map do |dep|
@@ -72,26 +16,6 @@ module PiggyBank::Tax::Form::Adapter::US
           dep.child_credit,
           dep.other_credit
       end
-    end
-
-    def single?
-      @general.filing_status == "single"
-    end
-
-    def married_joint?
-      @general.filing_status == "married"
-    end
-
-    def married_separately?
-      @general.filing_status == "mfs"
-    end
-
-    def head_of_household?
-      @general.filing_status == "hoh"
-    end
-
-    def qualified_widow?
-      @general.filing_status == "qw"
     end
 
     def campaign?

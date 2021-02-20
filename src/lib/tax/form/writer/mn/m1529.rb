@@ -32,7 +32,7 @@ module PiggyBank::Tax::Form::Writer::MN
 
     def draw_fields
       create_canvas
-      draw_text_fields(text_fields, 3, 2)
+      draw_text_fields(text_fields, 3, 6)
       draw_number_fields(money_fields)
     end
   end

@@ -12,6 +12,7 @@ module PiggyBank
       ssn = ssn.tr "-", ""
       ssn.insert 3, " "
       ssn.insert 6, " "
+      ssn.insert 0, " "
     end
   end
 end

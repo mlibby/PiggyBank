@@ -13,7 +13,18 @@ module PiggyBank::Tax::Form::Writer::MN
     def text_fields
       {
         "yourfirstnameandinitial" => @adapter.first_name,
+        "LastName" => @adapter.last_name,
         "YourSocialSecurityNumber" => @adapter.ssn,
+        "YourDateofBirth" => @adapter.birthday,
+        "SpousesFirstNameandInitial" => @adapter.spouse_first_name,
+        "Spouseslastname" => @adapter.spouse_last_name,
+        "SpousesSocialSecurityNumber" => @adapter.spouse_ssn,
+        "spousesdateofbirth" => @adapter.spouse_birthday,
+        "CurrentHomeAddress" => @adapter.address,
+        "city" => @adapter.city,
+        "state" => @adapter.state,
+        "zipcode" => @adapter.zip,
+        "m1line1" => "12,345."
       }
     end
 
@@ -26,14 +37,39 @@ module PiggyBank::Tax::Form::Writer::MN
 
     def button_fields
       {
- #"topmostSubform[0].Page1[0].FilingStatus[0].c1_01[0]" => @general.filing_status == "single",
-        }
+        "checkifsingle" => @adapter.single?,
+        "checkifmarriedfilingjoint" => @adapter.married_joint?,
+        "checkifmarriedfilingseparately" => @adapter.married_separately?,
+        "checkifheadofhousehold" => @adapter.head_of_household?,
+        "checkifqualifyingwidower" => @adapter.qualified_widow?,
+      }
+    end
+
+    def do_buttons(fields)
+      fields.each do |name, value|
+        if value
+          field = @fields.find { |f| f.full_field_name == name }
+          raise "Cannot find PDF field #{name}" if field.nil?
+          field.field_value = value
+        end
+      end
+    end
+
+    def write_texts(fields)
+      fields.each do |name, value|
+        if value
+          field = @fields.find { |f| f.full_field_name == name }
+          raise "Cannot find PDF field #{name}" if field.nil?
+          field.field_value = value
+        end
+      end
     end
 
     def draw_fields
-      create_canvas
-      draw_text_fields(text_fields, 3, 2)
-      draw_number_fields(money_fields)
+      #create_canvas
+      write_texts(text_fields)
+      do_buttons(button_fields)
+      #draw_number_fields(money_fields)
     end
   end
 end
