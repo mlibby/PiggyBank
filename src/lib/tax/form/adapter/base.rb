@@ -92,16 +92,20 @@ module PiggyBank::Tax::Form::Adapter
       @general.post_code
     end
 
+    def filing_status 
+      @general.filing_status.to_sym
+    end
+
     def single?
       @general.filing_status == "single"
     end
 
     def married_joint?
-      @general.filing_status == "married"
+      @general.filing_status == "joint"
     end
 
     def married_separately?
-      @general.filing_status == "mfs"
+      @general.filing_status == "separate"
     end
 
     def head_of_household?
@@ -109,7 +113,7 @@ module PiggyBank::Tax::Form::Adapter
     end
 
     def qualified_widow?
-      @general.filing_status == "qw"
+      @general.filing_status == "widow"
     end
   end
 end

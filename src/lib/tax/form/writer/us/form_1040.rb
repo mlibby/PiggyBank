@@ -49,6 +49,13 @@ class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer:
     {
       "topmostSubform[0].Page1[0].Lines1-11_ReadOrder[0].f1_28[0]" => @format.as_currency(@adapter.line_1),
       "topmostSubform[0].Page1[0].Lines1-11_ReadOrder[0].f1_40[0]" => @format.as_currency(@adapter.line_8),
+      "topmostSubform[0].Page1[0].Lines1-11_ReadOrder[0].f1_41[0]" => @format.as_currency(@adapter.line_9),
+      "topmostSubform[0].Page1[0].Lines1-11_ReadOrder[0].f1_45[0]" => @format.as_currency(@adapter.line_11),
+      "topmostSubform[0].Page1[0].f1_46[0]" => @format.as_currency(@adapter.line_12),
+      "topmostSubform[0].Page1[0].f1_47[0]" => @format.as_currency(@adapter.line_13),
+      "topmostSubform[0].Page1[0].f1_48[0]" => @format.as_currency(@adapter.line_14),
+      "topmostSubform[0].Page1[0].f1_49[0]" => @format.as_currency(@adapter.line_15),
+      "topmostSubform[0].Page2[0].f2_02[0]" => @format.as_currency(@adapter.line_16),
     }
   end
 

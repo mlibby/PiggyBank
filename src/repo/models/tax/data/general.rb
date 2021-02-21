@@ -36,10 +36,10 @@ class PiggyBank::Tax::Data::General
 
   FILING_STATUSES = {
     single: "Single",
-    married: "Married Filing Jointly",
-    mfs: "Married Filing Separately",
+    joint: "Married Filing Jointly",
+    separate: "Married Filing Separately",
     hoh: "Head of Household",
-    qw: "Qualifying Widower",
+    widow: "Qualifying Widower",
   }
 
   def initialize
@@ -96,7 +96,7 @@ class PiggyBank::Tax::Data::General
     @values[:dependents] = []
     if params.has_key? "dependents"
       params["dependents"].each do |dp|
-        d = Dependent.new
+        d = PiggyBank::Tax::Data::Dependent.new
         d.name = dp["name"]
         d.ssn = dp["ssn"]
         d.relation = dp["relation"]

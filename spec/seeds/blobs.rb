@@ -2,7 +2,7 @@ def seed_blobs
   general_yaml =
     <<~YAML
       ---
-      :filing_status: married
+      :filing_status: joint
       :virtual: false
       :first_name: George 
       :last_name: McFly
