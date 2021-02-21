@@ -20,6 +20,7 @@ module PiggyBank::Tax::Form::Writer::US
     def money_fields
       {
         "form1[0].Page1[0].f1_03[0]" => @format.as_currency(@adapter.line_1),
+        "form1[0].Page1[0].f1_08[0]" => @format.as_currency(@adapter.line_5),
         "form1[0].Page1[0].f1_14[0]" => @format.as_currency(@adapter.line_9),
       }
     end

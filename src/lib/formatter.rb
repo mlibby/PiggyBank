@@ -2,12 +2,18 @@ module PiggyBank
   class Formatter
     def as_currency(value)
       return "" if value.nil? || value == 0
+      negative = value < 0
+      value = value.abs
       segments = []
       value.round.digits.each_slice(3) { |s| segments << s.join }
       curr = segments.join(",").reverse
-      "#{curr}."
+      if negative
+        return "(#{curr}.)"
+      else
+        "#{curr}."
+      end
     end
-  
+
     def as_1040_ssn(ssn)
       return if ssn.nil? || ssn == ""
       ssn = ssn.tr "-", ""
