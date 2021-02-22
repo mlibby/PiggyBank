@@ -1,3 +1,6 @@
+require "bigdecimal"
+alias _d BigDecimal
+
 require "simplecov"
 SimpleCov.start do
   add_filter "/spec/"
@@ -18,4 +21,3 @@ require_relative "seeds/seed_db"
 def flash
   last_request.env["rack.session"]["flash"]
 end
-

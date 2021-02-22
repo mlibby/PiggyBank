@@ -1,3 +1,6 @@
+require "bigdecimal"
+alias _d BigDecimal
+
 module PiggyBank; end
 module PiggyBank::Tax; end
 module PiggyBank::Tax::Form; end
@@ -11,7 +14,7 @@ module PiggyBank::Tax::Form::Adapter
 
     def get_big_decimal(value)
       value = "0.00" if value.nil? || value == ""
-      BigDecimal(value)
+      _d(value)
     end
 
     def names
