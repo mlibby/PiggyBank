@@ -5,6 +5,7 @@ module PiggyBank::Tax::Form::Adapter::US
     def initialize
       super
       @sched1 = PiggyBank::Tax::Form::Adapter::US::Schedule1.new
+      @sched3 = PiggyBank::Tax::Form::Adapter::US::Schedule3.new
       @scheda = PiggyBank::Tax::Form::Adapter::US::ScheduleA.new
     end
 
@@ -190,6 +191,8 @@ module PiggyBank::Tax::Form::Adapter::US
     end
 
     def get_tax_amount(income, filing_status)
+      # this algorithm was adapted from Open Tax Solver's TaxRateFunction 
+      # https://sourceforge.net/p/opentaxsolver/SrcCodeRepo/HEAD/tree/trunk/OTS_2020/src/taxsolve_US_1040_2020.c
       if income < _d("100000.0")
         spread = if income < _d("25.0")
             _d("5.0")
@@ -210,6 +213,111 @@ module PiggyBank::Tax::Form::Adapter::US
 
     def line_16
       get_tax_amount line_15, filing_status
+    end
+
+    def line_17
+      # FUTURE: implement Schedule 2
+      _d("0.0")
+    end
+
+    def line_18
+      line_16 + line_17
+    end
+
+    def line_19
+      # TODO: update dependent info and build a worksheet
+      _d("0.0")
+    end
+
+    def line_20
+      @sched3.line_7
+    end
+
+    def line_21
+      line_19 + line_20
+    end
+
+    def line_22
+      amount = line_18 - line_21
+      amount < 0 ? _d("0.0") : amount
+    end
+
+    def line_23
+      # FUTURE: implement schedule 2
+      _d("0.0")
+    end
+
+    def line_24
+      line_22 + line_23
+    end
+
+    def line_25a
+      @income.w2s.sum { |w| _d(w.fed_wh) }
+    end
+
+    def line_25b
+      # FUTURE: implement 1099 w/h
+      _d("0.0")
+    end
+
+    def line_25c
+      # FUTURE: other forms w/h
+      _d("0.0")
+    end
+
+    def line_25d
+      [line_25a, line_25b, line_25c].sum
+    end
+
+    def line_26
+      # FUTURE: capture previous return payment
+      _d("0.0")
+    end
+
+    def line_27
+    # FUTURE: implement EIC
+    _d("0.0")
+    end
+
+    def line_28
+      # FUTURE: implement sched 8812
+      _d("0.0")
+    end
+
+    def line_29
+      # FUTURE: implement form 8863
+      _d("0.0")
+    end
+
+    def line_30
+      # TODO: recovery rebate credit?
+      _d("0.0")
+    end
+
+    def line_31
+      @sched3.line_13
+    end
+
+    def line_32
+      [line_27, line_28, line_29, line_30, line_31].sum
+    end
+
+    def line_33
+      [line_25d, line_26, line_32].sum
+    end
+
+    def line_34
+      overpaid = line_33 - line_24
+      overpaid > 0 ? overpaid : 0
+    end
+
+    def line_35a
+      line_34
+    end
+
+    def line_37
+      overpaid = line_33 - line_24
+      overpaid < 0 ? overpaid.abs : 0
     end
   end
 end
