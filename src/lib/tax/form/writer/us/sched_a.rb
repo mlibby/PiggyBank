@@ -19,8 +19,12 @@ module PiggyBank::Tax::Form::Writer::US
 
     def money_fields
       {
-        #"form1[0].Page1[0].f1_03[0]" => @format.as_currency(@adapter.line_1),
-        #"form1[0].Page1[0].f1_14[0]" => @format.as_currency(@adapter.line_9),
+        "topmostSubform[0].Page1[0].f1_7[0]" => @format.as_currency(@adapter.line_5a),
+        "topmostSubform[0].Page1[0].f1_8[0]" => @format.as_currency(@adapter.line_5b),
+        "topmostSubform[0].Page1[0].f1_9[0]" => @format.as_currency(@adapter.line_5c),
+        "topmostSubform[0].Page1[0].f1_10[0]" => @format.as_currency(@adapter.line_5d),
+        "topmostSubform[0].Page1[0].f1_11[0]" => @format.as_currency(@adapter.line_5e),
+        "topmostSubform[0].Page1[0].f1_15[0]" => @format.as_currency(@adapter.line_7),
       }
     end
 

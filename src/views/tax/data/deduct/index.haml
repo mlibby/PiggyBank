@@ -2,6 +2,14 @@
 = styled_flash
 %form{ method: "POST" }
   %input{ type: "hidden", name: "_token", value: PiggyBank::App.token }
+  %fieldset
+    %legend General Deductions
+    %label
+      State/Local Real Estate Tax
+      %input{ name: "real_estate_tax", type: "text", value: @deduct.real_estate_tax }
+    %label
+      State/Local Property Tax
+      %input{ name: "property_tax", type: "text", value: @deduct.property_tax }
   - @deduct.form1098s.each_with_index do |form1098, n|
     = haml :"tax/data/deduct/1098", locals: {form1098: form1098, n: n}
   .buttons

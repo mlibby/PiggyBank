@@ -1,5 +1,4 @@
-require "bigdecimal"
-alias _d BigDecimal
+require_relative "../../../under_decimal"
 
 module PiggyBank; end
 module PiggyBank::Tax; end
@@ -10,11 +9,7 @@ module PiggyBank::Tax::Form::Adapter
     def initialize
       @general = PiggyBank::Tax::Data::General.new
       @income = PiggyBank::Tax::Data::Income.new
-    end
-
-    def get_big_decimal(value)
-      value = "0.00" if value.nil? || value == ""
-      _d(value)
+      @deduct = PiggyBank::Tax::Data::Deduct.new
     end
 
     def names

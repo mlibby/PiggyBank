@@ -23,6 +23,11 @@ class PiggyBank::Tax::Data::Form1098
 end
 
 class PiggyBank::Tax::Data::Deduct
+  FIELDS = [
+    :real_estate_tax,
+    :property_tax
+  ]
+
   def initialize
     @blob = PiggyBank::Blob.find(name: "2020-tax-deduct") ||
             PiggyBank::Blob.create(
@@ -36,6 +41,12 @@ class PiggyBank::Tax::Data::Deduct
       }
     else
       @values = YAML.load(@blob.yaml)
+    end
+  end
+
+  FIELDS.each do |sym|
+    define_method sym do
+      @values[sym]
     end
   end
 
@@ -54,6 +65,10 @@ class PiggyBank::Tax::Data::Deduct
   end
 
   def update(params)
+    FIELDS.each do |sym|
+      @values[sym] = params[sym.to_s]
+    end
+
     @values[:form1098s] = []
     if params.has_key? "form1098"
       params["form1098"].each do |pw|

@@ -57,6 +57,14 @@ def seed_blobs
         other_credit: false
     YAML
 
+  deduct_yaml =
+    <<~YAML
+      ---
+      :real_estate_tax: '9205'
+      :property_tax: '256'
+      :form1098s: []
+    YAML
+
   income_yaml =
     <<~YAML
       ---
@@ -164,4 +172,7 @@ def seed_blobs
 
   PiggyBank::Blob.create name: "2020-tax-income",
                          yaml: income_yaml
+
+  PiggyBank::Blob.create name: "2020-tax-deduct",
+                         yaml: deduct_yaml
 end
