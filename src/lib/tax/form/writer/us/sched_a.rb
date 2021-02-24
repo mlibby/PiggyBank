@@ -25,6 +25,13 @@ module PiggyBank::Tax::Form::Writer::US
         "topmostSubform[0].Page1[0].f1_10[0]" => @format.as_currency(@adapter.line_5d),
         "topmostSubform[0].Page1[0].f1_11[0]" => @format.as_currency(@adapter.line_5e),
         "topmostSubform[0].Page1[0].f1_15[0]" => @format.as_currency(@adapter.line_7),
+        "topmostSubform[0].Page1[0].f1_16[0]" => @format.as_currency(@adapter.line_8a),
+        "topmostSubform[0].Page1[0].f1_22[0]" => @format.as_currency(@adapter.line_8e),
+        "topmostSubform[0].Page1[0].f1_24[0]" => @format.as_currency(@adapter.line_10),
+        "topmostSubform[0].Page1[0].f1_25[0]" => @format.as_currency(@adapter.line_11),
+        "topmostSubform[0].Page1[0].f1_26[0]" => @format.as_currency(@adapter.line_12),
+        "topmostSubform[0].Page1[0].f1_28[0]" => @format.as_currency(@adapter.line_14),
+        "topmostSubform[0].Page1[0].f1_34[0]" => @format.as_currency(@adapter.line_17),
       }
     end
 

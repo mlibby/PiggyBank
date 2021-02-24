@@ -62,7 +62,19 @@ def seed_blobs
       ---
       :real_estate_tax: '9205'
       :property_tax: '256'
-      :form1098s: []
+      :form1098s:
+      - !ruby/object:PiggyBank::Tax::Data::Form1098
+        interest: '4321.99'
+        outstanding: '123456.78'
+        origination: '2016-02-02'
+        refund: ''
+        premiums: ''
+        points_paid: ''
+        same_address: 
+        address: ''
+        properties: '1'
+        other: ''
+        acquisition: '2018-09-09'
     YAML
 
   income_yaml =

@@ -1,0 +1,11 @@
+%fieldset 
+  %legend= "Non-Cash Donation ##{n+1}"
+  %label
+    Charity
+    %input{ name: "noncash_donation[][charity]", type: "text", value: noncash_donation.charity }
+  %label
+    Amount
+    %input{ name: "noncash_donation[][amount]", type: "number", step: 0.01, min: 0, value: noncash_donation.amount }
+  %button.btn.danger{ formaction: "/tax/data/deduct?rm_ncd=#{n}" }
+    %span.icon.icon-trash
+    %span.text Remove Donation

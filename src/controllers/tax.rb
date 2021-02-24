@@ -81,6 +81,18 @@ module PiggyBank
       elsif params.has_key? "rm_1098"
         @deduct.rm_1098 params["rm_1098"]
         deduct_form
+      elsif params.has_key? "add_cd"
+        @deduct.add_cd
+        deduct_form
+      elsif params.has_key? "rm_cd"
+        @deduct.rm_cd params["rm_cd"]
+        deduct_form
+      elsif params.has_key? "add_ncd"
+        @deduct.add_ncd
+        deduct_form
+      elsif params.has_key? "rm_ncd"
+        @deduct.rm_ncd params["rm_ncd"]
+        deduct_form
       else
         @deduct.save
         flash[:success] = "Deduction data saved."
@@ -117,8 +129,8 @@ module PiggyBank
         "m1ma" => PiggyBank::Tax::Form::Writer::MN::M1MA,
         "m1sa" => PiggyBank::Tax::Form::Writer::MN::M1SA,
         "m1w" => PiggyBank::Tax::Form::Writer::MN::M1W,
-        "m1529" => PiggyBank::Tax::Form::Writer::MN::M1529
-      }
+        "m1529" => PiggyBank::Tax::Form::Writer::MN::M1529,
+      },
     }
 
     forms.each_key do |group|
