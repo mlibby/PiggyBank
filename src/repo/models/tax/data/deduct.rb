@@ -55,7 +55,7 @@ class PiggyBank::Tax::Data::Deduct
   end
 
   def add_1098
-    w = Form1098.new
+    w = PiggyBank::Tax::Data::Form1098.new
     @values[:form1098s] ||= []
     @values[:form1098s] << w
   end
