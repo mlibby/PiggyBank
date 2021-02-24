@@ -75,6 +75,14 @@ def seed_blobs
         properties: '1'
         other: ''
         acquisition: '2018-09-09'
+      :cash_donations:
+      - !ruby/object:PiggyBank::Tax::Data::CashDonation
+        charity: ACLU
+        amount: '256'
+      - !ruby/object:PiggyBank::Tax::Data::CashDonation
+        charity: Doctors without Borders
+        amount: '23456'
+      :noncash_donations: []
     YAML
 
   income_yaml =
