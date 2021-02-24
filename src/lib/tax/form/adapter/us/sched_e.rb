@@ -22,19 +22,19 @@ class PiggyBank::Tax::Form::Adapter::US::ScheduleE < PiggyBank::Tax::Form::Adapt
   end
 
   def line_3A
-    get_big_decimal(@income.rentals[0]&.rents_received)
+    _d(@income.rentals[0]&.rents_received)
   end
 
   def line_4A
-    get_big_decimal(@income.rentals[0]&.royalties_received)
+    _d(@income.rentals[0]&.royalties_received)
   end
 
   def line_11A
-    get_big_decimal(@income.rentals[0]&.management_fees)
+    _d(@income.rentals[0]&.management_fees)
   end
 
   def line_16A
-    get_big_decimal(@income.rentals[0]&.taxes)
+    _d(@income.rentals[0]&.taxes)
   end
 
   def line_20A
