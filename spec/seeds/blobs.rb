@@ -89,8 +89,42 @@ def seed_blobs
         description: Clothes, Games
         date: '2020-02-01'
         amount: '414'
-        method: itsdeductible.com
-            
+        method: comparable prices
+      - !ruby/object:PiggyBank::Tax::Data::NonCashDonation
+        charity: Sortawill
+        address: 511 Thirdhand Street
+        description: Kitchenware
+        date: '2020-04-01'
+        amount: '113'
+        method: guessing
+      - !ruby/object:PiggyBank::Tax::Data::NonCashDonation
+        charity: Badwill
+        address: 987 Tossout Blvd
+        description: Clutter
+        date: '2020-06-11'
+        amount: '227'
+        method: looking/shrugging
+      - !ruby/object:PiggyBank::Tax::Data::NonCashDonation
+        charity: Neutralwill
+        address: 7881 Washington Circle
+        description: Books
+        date: '2020-09-09'
+        amount: '332'
+        method: comparable items
+      - !ruby/object:PiggyBank::Tax::Data::NonCashDonation
+        charity: Stuff for People
+        address: 999 123nd Ave SE
+        description: Home Decor
+        date: '2020-10-31'
+        amount: '112'
+        method: Fibonacci sequence 
+      - !ruby/object:PiggyBank::Tax::Data::NonCashDonation
+        charity: People w/o Stuff
+        address: 1 Two Street
+        description: Blankets
+        date: '2020-12-25'
+        amount: '33'
+        method: rolling dice
     YAML
 
   income_yaml =

@@ -4,10 +4,16 @@ module PiggyBank::Tax::Form::Writer::US
   class Form8283 < PiggyBank::Tax::Form::Writer::Base
     def initialize
       @template = "src/lib/tax/form/pdf/2020/us/f8283.pdf"
+      @format = PiggyBank::Formatter.new
+      @deduct = PiggyBank::Tax::Data::Deduct.new
       super
-      deductions = PiggyBank::Tax::Data::Deduct.new
-      noncash = deductions.noncash_donations[0..4]
+    end
+
+    def write_form
+      noncash = @deduct.noncash_donations[0..4]
       @adapter = PiggyBank::Tax::Form::Adapter::US::Form8283.new noncash
+      draw_fields
+      write_pdf
     end
 
     private
@@ -20,6 +26,26 @@ module PiggyBank::Tax::Form::Writer::US
         "topmostSubform[0].Page1[0].Table_Line1_ColsA-C[0].Row1A[0].f1_05[0]" => @adapter.line_Ac,
         "topmostSubform[0].Page1[0].Table_Line1_ColsD-I[0].Row1A[0].f1_18[0]" => @adapter.line_Ad,
         "topmostSubform[0].Page1[0].Table_Line1_ColsD-I[0].Row1A[0].f1_23[0]" => @adapter.line_Ai,
+
+        "topmostSubform[0].Page1[0].Table_Line1_ColsA-C[0].Row1B[0].f1_06[0]" => @adapter.line_Ba,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsA-C[0].Row1B[0].f1_08[0]" => @adapter.line_Bc,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsD-I[0].Row1B[0].f1_24[0]" => @adapter.line_Bd,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsD-I[0].Row1B[0].f1_29[0]" => @adapter.line_Bi,
+
+        "topmostSubform[0].Page1[0].Table_Line1_ColsA-C[0].Row1C[0].f1_09[0]" => @adapter.line_Ca,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsA-C[0].Row1C[0].f1_11[0]" => @adapter.line_Cc,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsD-I[0].Row1C[0].f1_30[0]" => @adapter.line_Cd,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsD-I[0].Row1C[0].f1_35[0]" => @adapter.line_Ci,
+
+        "topmostSubform[0].Page1[0].Table_Line1_ColsA-C[0].Row1D[0].f1_12[0]" => @adapter.line_Da,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsA-C[0].Row1D[0].f1_14[0]" => @adapter.line_Dc,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsD-I[0].Row1D[0].f1_36[0]" => @adapter.line_Dd,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsD-I[0].Row1D[0].f1_41[0]" => @adapter.line_Di,
+
+        "topmostSubform[0].Page1[0].Table_Line1_ColsA-C[0].Row1E[0].f1_15[0]" => @adapter.line_Ea,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsA-C[0].Row1E[0].f1_17[0]" => @adapter.line_Ec,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsD-I[0].Row1E[0].f1_42[0]" => @adapter.line_Ed,
+        "topmostSubform[0].Page1[0].Table_Line1_ColsD-I[0].Row1E[0].f1_47[0]" => @adapter.line_Ei,
       }
     end
 

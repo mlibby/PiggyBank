@@ -27,7 +27,7 @@ class PiggyBank::Tax::Form::Adapter::US::Form8283 < PiggyBank::Tax::Form::Adapte
   end
 
   def line_Ba
-    @noncash[1]&.charity + "\n" + @noncash[1]&.address
+    "#{@noncash[1]&.charity}\n#{@noncash[1]&.address}"
   end
 
   def line_Bc
@@ -47,7 +47,7 @@ class PiggyBank::Tax::Form::Adapter::US::Form8283 < PiggyBank::Tax::Form::Adapte
   end
 
   def line_Ca
-    @noncash[2]&.charity + "\n" + @noncash[2]&.address
+    "#{@noncash[2]&.charity}\n#{@noncash[2]&.address}"
   end
 
   def line_Cc
@@ -67,7 +67,7 @@ class PiggyBank::Tax::Form::Adapter::US::Form8283 < PiggyBank::Tax::Form::Adapte
   end
 
   def line_Da
-    @noncash[3]&.charity + "\n" + @noncash[3]&.address
+    "#{@noncash[3]&.charity}\n#{@noncash[3]&.address}"
   end
 
   def line_Dc
@@ -87,7 +87,7 @@ class PiggyBank::Tax::Form::Adapter::US::Form8283 < PiggyBank::Tax::Form::Adapte
   end
 
   def line_Ea
-    @noncash[4]&.charity + "\n" + @noncash[4]&.address
+    "#{@noncash[4]&.charity}\n#{@noncash[4]&.address}"
   end
 
   def line_Ec
