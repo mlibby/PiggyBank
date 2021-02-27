@@ -34,7 +34,11 @@ end
 class PiggyBank::Tax::Data::NonCashDonation
   FIELDS = [
     :charity,
-    :amount
+    :address,
+    :description,
+    :date,
+    :amount,
+    :method
   ]
 
   attr_accessor *FIELDS
@@ -146,7 +150,7 @@ class PiggyBank::Tax::Data::Deduct
         PiggyBank::Tax::Data::NonCashDonation::FIELDS.each do |f|
           d.send("#{f}=", nd[f])
         end
-        @values[:cash_donations] << d
+        @values[:noncash_donations] << d
       end
     end
   end

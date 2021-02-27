@@ -82,7 +82,15 @@ def seed_blobs
       - !ruby/object:PiggyBank::Tax::Data::CashDonation
         charity: Doctors without Borders
         amount: '23456'
-      :noncash_donations: []
+      :noncash_donations:
+      - !ruby/object:PiggyBank::Tax::Data::NonCashDonation
+        charity: Goodwill
+        address: 555 Secondhand Street
+        description: Clothes, Games
+        date: '2020-02-01'
+        amount: '414'
+        method: itsdeductible.com
+            
     YAML
 
   income_yaml =

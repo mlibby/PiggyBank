@@ -4,8 +4,20 @@
     Charity
     %input{ name: "noncash_donation[][charity]", type: "text", value: noncash_donation.charity }
   %label
+    Address
+    %input{ name: "noncash_donation[][address]", type: "text", value: noncash_donation.address }
+  %label
+    Description
+    %input{ name: "noncash_donation[][description]", type: "text", value: noncash_donation.description }
+  %label
+    Date
+    %input{ name: "noncash_donation[][date]", type: "date", value: noncash_donation.date }
+  %label
     Amount
     %input{ name: "noncash_donation[][amount]", type: "number", step: 0.01, min: 0, value: noncash_donation.amount }
+  %label
+    Method
+    %input{ name: "noncash_donation[][method]", type: "text", value: noncash_donation.method }
   %button.btn.danger{ formaction: "/tax/data/deduct?rm_ncd=#{n}" }
     %span.icon.icon-trash
     %span.text Remove Donation
