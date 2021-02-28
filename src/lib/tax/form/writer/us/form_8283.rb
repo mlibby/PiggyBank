@@ -2,15 +2,16 @@ require_relative "../base"
 
 module PiggyBank::Tax::Form::Writer::US
   class Form8283 < PiggyBank::Tax::Form::Writer::Base
-    def initialize
+    def initialize(form_number)
+      @form_number = form_number.to_i
       @template = "src/lib/tax/form/pdf/2020/us/f8283.pdf"
       @format = PiggyBank::Formatter.new
       @deduct = PiggyBank::Tax::Data::Deduct.new
-      super
+      super()
     end
 
     def write_form
-      noncash = @deduct.noncash_donations[0..4]
+      noncash = @deduct.noncash_donations.each_slice(5).to_a[@form_number - 1]
       @adapter = PiggyBank::Tax::Form::Adapter::US::Form8283.new noncash
       draw_fields
       write_pdf

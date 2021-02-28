@@ -34,8 +34,11 @@
         %a{ href: "/tax/form/us/sched_e"} Schedule E
         &mdash; Supplemental Income
       %li
-        %a{ href: "/tax/form/us/form_8283" } Form 8283
-        &mdash; Noncash Charitable Contributions
+        Form 8283 &mdash; Noncash Charitable Contributions:
+        - 1.upto(@us_8283_count) do |fn|
+          %a{ href: "/tax/form/us/form_8283/#{fn}" }<
+            = "Form ##{fn}"
+          = " "
       %li
         %a{ href: "/tax/form/us/form_8889" } Form 8889
         &mdash; Health Savings Accounts

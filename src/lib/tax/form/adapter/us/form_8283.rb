@@ -1,6 +1,12 @@
 require_relative "../base"
 
 class PiggyBank::Tax::Form::Adapter::US::Form8283 < PiggyBank::Tax::Form::Adapter::Base
+  def self.count
+    deduct = PiggyBank::Tax::Data::Deduct.new
+    noncash = deduct.noncash_donations
+    (noncash.size.to_f / 5.0).ceil
+  end
+
   def initialize(noncash)
     @noncash = noncash
     super()
