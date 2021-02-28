@@ -100,12 +100,12 @@ module PiggyBank
       end
     end
 
-    get "/tax/data/tax" do
-      haml_layout :"tax/data/tax/index"
+    get "/tax/data/education" do
+      haml_layout :"tax/data/education/index"
     end
 
-    post "/tax/data/tax" do
-      haml_layout :"tax/data/tax/index"
+    post "/tax/data/education" do
+      haml_layout :"tax/data/education/index"
     end
 
     get "/tax/forms" do
@@ -122,6 +122,7 @@ module PiggyBank
     forms = {
       "us" => {
         "form_1040" => PiggyBank::Tax::Form::Writer::US::Form1040,
+        "form_8863" => PiggyBank::Tax::Form::Writer::US::Form8863,
         "form_8889" => PiggyBank::Tax::Form::Writer::US::Form8889,
         "sched_1" => PiggyBank::Tax::Form::Writer::US::Schedule1,
         "sched_3" => PiggyBank::Tax::Form::Writer::US::Schedule3,
