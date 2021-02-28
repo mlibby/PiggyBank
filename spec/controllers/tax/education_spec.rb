@@ -9,9 +9,9 @@ describe PiggyBank::App do
 
   let(:app) { PiggyBank::App.new }
 
-  context "GET /tax/data/tax" do
-    it "has a tax form" do
-      response = get "/tax/data/tax"
+  context "GET /tax/data/education" do
+    it "has a page for education expenses" do
+      response = get "/tax/data/education"
       expect(response.status).to eq 200
     end
   end
@@ -20,11 +20,10 @@ describe PiggyBank::App do
     _token: PiggyBank::App.token
   }
   
-  context "POST /tax/data/tax" do
-    it "saves deductions data" do
-      response = post "/tax/data/tax", save_params
+  context "POST /tax/data/education" do
+    it "saves education data" do
+      response = post "/tax/data/education", save_params
       expect(response.status).to eq 200
     end
   end
 end
-
