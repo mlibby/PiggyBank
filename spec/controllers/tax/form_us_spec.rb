@@ -26,7 +26,7 @@ describe PiggyBank::App do
 
   context "GET /tax/form/us/form_8283" do
     it "gets the specified form as a PDF" do
-      response = get "/tax/form/us/form_8283"
+      response = get "/tax/form/us/form_8283/1"
       expect(response.status).to eq 200
       expect(response.content_type).to eq "application/pdf"
     end
