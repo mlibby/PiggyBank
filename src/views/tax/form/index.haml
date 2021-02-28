@@ -34,11 +34,17 @@
         %a{ href: "/tax/form/us/sched_e"} Schedule E
         &mdash; Supplemental Income
       %li
+        %a{ href: "/tax/form/us/form_6198" } Form 6198
+        &mdash; At-Risk Limitations
+      %li
         Form 8283 &mdash; Noncash Charitable Contributions:
         - 1.upto(@us_8283_count) do |fn|
           %a{ href: "/tax/form/us/form_8283/#{fn}" }<
             = "Form ##{fn}"
           = " "
+      %li
+        %a{ href: "/tax/form/us/form_8582" } Form 8582
+        &mdash; Passive Activity Loss Limitations
       %li
         %a{ href: "/tax/form/us/form_8863" } Form 8863
         &mdash; Education Credits

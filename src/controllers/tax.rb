@@ -122,6 +122,8 @@ module PiggyBank
     forms = {
       "us" => {
         "form_1040" => PiggyBank::Tax::Form::Writer::US::Form1040,
+        "form_6198" => PiggyBank::Tax::Form::Writer::US::Form6198,
+        "form_8582" => PiggyBank::Tax::Form::Writer::US::Form8582,
         "form_8863" => PiggyBank::Tax::Form::Writer::US::Form8863,
         "form_8889" => PiggyBank::Tax::Form::Writer::US::Form8889,
         "sched_1" => PiggyBank::Tax::Form::Writer::US::Schedule1,
