@@ -24,33 +24,40 @@ def seed_blobs
       :country: ''
       :province: ''
       :post_code: ''
+      :mn_campaign: "15"
+      :spouse_mn_campaign: "16"
       :dependents:
       - !ruby/object:PiggyBank::Tax::Data::Dependent
-        name: Dave McFly
+        first_name: Dave
+        last_name: McFly
         ssn: '555445555'
         relation: Child
         child_credit: true
         other_credit: false
       - !ruby/object:PiggyBank::Tax::Data::Dependent
-        name: Linda McFly
+        first_name: Linda
+        last_name: McFly
         ssn: '111221111'
         relation: Child
         child_credit: true
         other_credit: false
       - !ruby/object:PiggyBank::Tax::Data::Dependent
-        name: Marty McFly
+        first_name: Marty
+        last_name: McFly
         ssn: '101010101'
         relation: Child
         child_credit: true
         other_credit: false
       - !ruby/object:PiggyBank::Tax::Data::Dependent
-        name: Emmett Brown
+        first_name: Emmett
+        last_name: Brown
         ssn: '909090909'
         relation: Uncle
         child_credit: false
         other_credit: true
       - !ruby/object:PiggyBank::Tax::Data::Dependent
-        name: Einstein Brown
+        first_name: Einstein
+        last_name: Brown
         ssn: '010101010'
         relation: Pet Dog
         child_credit: false

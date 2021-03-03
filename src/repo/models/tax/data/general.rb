@@ -5,7 +5,7 @@ module PiggyBank::Tax; end
 module PiggyBank::Tax::Data; end
 
 class PiggyBank::Tax::Data::Dependent
-  attr_accessor :name, :ssn, :relation, :child_credit, :other_credit
+  attr_accessor :first_name, :last_name, :ssn, :relation, :child_credit, :other_credit
 
   def child_credit=(val)
     @child_credit = !val.nil?
@@ -13,6 +13,10 @@ class PiggyBank::Tax::Data::Dependent
 
   def other_credit=(val)
     @other_credit = !val.nil?
+  end
+
+  def name
+    [@first_name, @last_name].join " "
   end
 end
 
@@ -26,6 +30,7 @@ class PiggyBank::Tax::Data::General
     :street, :apt_no,
     :city, :state, :zip,
     :country, :province, :post_code,
+    :mn_campaign, :spouse_mn_campaign
   ]
 
   BUTTONS = [
@@ -40,6 +45,18 @@ class PiggyBank::Tax::Data::General
     separate: "Married Filing Separately",
     hoh: "Head of Household",
     widow: "Qualifying Widower",
+  }
+
+  MN_CAMPAIGN_OPTS = {
+    "": "None",
+    "11": "Republican",
+    "12": "DFL",
+    "13": "Independence",
+    "14": "Grassroots",
+    "15": "Green",
+    "16": "Libertarian",
+    "17": "Legal Marijuana",
+    "99": "General Fund"
   }
 
   def initialize

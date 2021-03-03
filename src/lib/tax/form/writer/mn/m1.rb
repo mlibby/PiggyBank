@@ -11,7 +11,7 @@ module PiggyBank::Tax::Form::Writer::MN
     private
 
     def text_fields
-      {
+      text_fields = {
         "yourfirstnameandinitial" => @adapter.first_name,
         "LastName" => @adapter.last_name,
         "YourSocialSecurityNumber" => @adapter.ssn,
@@ -24,14 +24,34 @@ module PiggyBank::Tax::Form::Writer::MN
         "city" => @adapter.city,
         "state" => @adapter.state,
         "zipcode" => @adapter.zip,
-        "m1line1" => "12,345."
+        "Yourcode" => @adapter.mn_campaign,
+        "Spousecode" => @adapter.spouse_mn_campaign
       }
+
+      unless @adapter.dependents[0].nil?
+        text_fields["dependent1first"] = @adapter.dependents[0].first_name
+        text_fields["dependent1last"] = @adapter.dependents[0].last_name
+        text_fields["dependent1ssn"] = @adapter.dependents[0].ssn
+        text_fields["dependent1relationship"] = @adapter.dependents[0].relation
+      end
+      unless @adapter.dependents[1].nil?
+        text_fields["dependent2first"] = @adapter.dependents[1].first_name
+        text_fields["dependent2last"] = @adapter.dependents[1].last_name
+        text_fields["dependent2ssn"] = @adapter.dependents[1].ssn
+        text_fields["dependent2relationship"] = @adapter.dependents[1].relation
+      end
+      unless @adapter.dependents[2].nil?
+        text_fields["dependent3first"] = @adapter.dependents[2].first_name
+        text_fields["dependent3last"] = @adapter.dependents[2].last_name
+        text_fields["dependent3ssn"] = @adapter.dependents[2].ssn
+        text_fields["dependent3relationship"] = @adapter.dependents[2].relation
+      end
+      text_fields
     end
 
     def money_fields
       {
- #  "form1[0].Page1[0].f1_03[0]" => @format.as_currency(@adapter.line_1),
-               # "form1[0].Page1[0].f1_14[0]" => @format.as_currency(@adapter.line_9),
+        "m1line1" => @format.as_currency(_("12345.00"))
         }
     end
 

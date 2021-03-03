@@ -1,8 +1,11 @@
 %fieldset
   %legend= "Dependent ##{n+1}"
   %label 
-    Name 
-    %input{ name: "dependents[][name]", type: "text", value: depend.name }
+    First Name 
+    %input{ name: "dependents[][first_name]", type: "text", value: depend.first_name }
+  %label 
+    Last Name 
+    %input{ name: "dependents[][last_name]", type: "text", value: depend.last_name }
   %label 
     Social Security Number 
     %input{ name: "dependents[][ssn]", type: "text", value: depend.ssn }

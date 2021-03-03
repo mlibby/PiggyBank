@@ -56,8 +56,13 @@
       Is Blind?
       %input{ name: "blind", type: "checkbox", checked: @general.blind }
     %label
-      Campaign Fund?
+      Federal Campaign Fund?
       %input{ name: "campaign", type: "checkbox", checked: @general.campaign } 
+    %label
+      MN Campaign Fund
+      %select{ name: "mn_campaign" }
+        - PiggyBank::Tax::Data::General::MN_CAMPAIGN_OPTS.each do |k, v|
+          %option{ value: k, selected: k.to_s == @general.mn_campaign }= v
   %fieldset
     %legend Spouse
     %label
@@ -76,8 +81,13 @@
       Is Blind?
       %input{ name: "spouse_blind", type: "checkbox", checked: @general.spouse_blind } 
     %label
-      Campaign Fund?
+      Federal Campaign Fund?
       %input{ name: "spouse_campaign", type: "checkbox", checked: @general.spouse_campaign } 
+    %label
+      MN Campaign Fund
+      %select{ name: "spouse_mn_campaign" }
+        - PiggyBank::Tax::Data::General::MN_CAMPAIGN_OPTS.each do |k, v|
+          %option{ value: k, selected: k.to_s == @general.spouse_mn_campaign }= v
   - @general.dependents.each_with_index do |depend, n|
     = haml :"tax/data/general/dependent", locals: { depend: depend, n: n }
   .buttons
