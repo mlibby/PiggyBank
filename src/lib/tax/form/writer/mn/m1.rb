@@ -26,9 +26,6 @@ module PiggyBank::Tax::Form::Writer::MN
         "zipcode" => @adapter.zip,
         "Yourcode" => @adapter.mn_campaign,
         "Spousecode" => @adapter.spouse_mn_campaign,
-        "wages, salaries, tips" => @format.as_currency(@adapter.line_A),
-        "FAGI" => @format.as_currency(@adapter.line_D),
-        "m1line1" => @format.as_currency(@adapter.line_1)
       }
 
       unless @adapter.dependents[0].nil?
@@ -54,7 +51,11 @@ module PiggyBank::Tax::Form::Writer::MN
 
     def money_fields
       {
-        "m1line1" => @format.as_currency(_("12345.00"))
+        "wages, salaries, tips" => @format.as_currency(@adapter.line_A),
+        "FAGI" => @format.as_currency(@adapter.line_D),
+        "m1line1" => @format.as_currency(@adapter.line_1),
+        "m1line1" => @format.as_currency(@adapter.line_1),
+        "m1line20" => @format.as_currency(@adapter.line_20)
         }
     end
 
@@ -70,6 +71,7 @@ module PiggyBank::Tax::Form::Writer::MN
 
     def draw_fields
       set_field_values text_fields
+      set_field_values money_fields
       set_field_values button_fields 
     end
   end

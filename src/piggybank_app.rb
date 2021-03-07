@@ -14,7 +14,7 @@ module PiggyBank
       "TEST" => "sqlite:/",
       "PROD" => "sqlite://piggybank.sqlite",
       "DEMO" => ENV["DATABASE_URL"],
-      "DUMP" => "sqlite://#{ARGV[0]}"
+      "DUMP" => "sqlite://#{ARGV[0]}",
     }
 
     @@repo = PiggyBank::Repo.new db_connections[ENV["APP_ENV"] || "DEV"]

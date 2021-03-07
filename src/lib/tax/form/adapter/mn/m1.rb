@@ -5,6 +5,7 @@ module PiggyBank::Tax::Form::Adapter::MN
     def initialize
       super
       @us_1040 = PiggyBank::Tax::Form::Adapter::US::Form1040.new
+      @m1w = PiggyBank::Tax::Form::Adapter::MN::M1W.new
     end
 
     def dependents
@@ -29,6 +30,10 @@ module PiggyBank::Tax::Form::Adapter::MN
 
     def line_1
       @us_1040.line_11
+    end
+
+    def line_20
+      @m1w.line_4
     end
   end
 end
