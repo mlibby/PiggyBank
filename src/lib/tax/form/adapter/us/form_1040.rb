@@ -126,6 +126,8 @@ module PiggyBank::Tax::Form::Adapter::US
       line_11 - line_14
     end
 
+
+
     bracket = Struct.new(:max, :rate)
     TAX_BRACKETS = {
       single: [
@@ -225,8 +227,22 @@ module PiggyBank::Tax::Form::Adapter::US
     end
 
     def line_19
-      # TODO: update dependent info and build a worksheet
-      _d("0.0")
+      amount = _d("0.0")
+      @general.dependents.each do |depend|
+        amount += 2000 if depend.child_credit
+        amount += 500 if depend.other_credit
+      end
+      income = line_11
+      limit = married_joint? ? _d("400000") : _d("200000")
+      if income > limit
+        # FUTURE: actually calculate the limited credit
+      end
+      reduction = 0
+      if amount > reduction
+        return amount - reduction
+      else
+        return _d("0")
+      end
     end
 
     def line_20
