@@ -92,7 +92,7 @@ class PiggyBank::Tax::Data::General
   end
 
   def add_dependent
-    d = Dependent.new
+    d = PiggyBank::Tax::Data::Dependent.new
     @values[:dependents] ||= []
     @values[:dependents] << d
   end
@@ -114,7 +114,8 @@ class PiggyBank::Tax::Data::General
     if params.has_key? "dependents"
       params["dependents"].each do |dp|
         d = PiggyBank::Tax::Data::Dependent.new
-        d.name = dp["name"]
+        d.first_name = dp["first_name"]
+        d.last_name = dp["last_name"]
         d.ssn = dp["ssn"]
         d.relation = dp["relation"]
         d.child_credit = dp["child_credit"]
