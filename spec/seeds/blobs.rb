@@ -204,11 +204,11 @@ def seed_blobs
         ssn: '987-65-4321'
         ein: '00-0000012'
         employer: Flux Corporation
-        wages: '115000'
-        fed_wh: '23000'
-        soc_sec_wages: '115000'
+        wages: '89000'
+        fed_wh: '13000'
+        soc_sec_wages: '89000'
         soc_sec_wh: '7130'
-        medicare_wages: '115000'
+        medicare_wages: '89000'
         medicare_taxes: '1668'
         soc_sec_tips: ''
         allocated_tips: ''
@@ -229,12 +229,28 @@ def seed_blobs
         other: ''
         state: 'CA'
         state_ein: '00-0000057'
-        state_wages: '115000'
-        state_tax: '3200'
+        state_wages: '89000'
+        state_tax: '2200'
         local_wages: ''
         local_tax: ''
         locality: ''
     YAML
+
+    education_yaml = 
+      <<~YAML
+        ---
+        :student_name: Lorraine Baines-McFly
+        :student_ssn: '987-65-4321    '
+        :institution_name: Future College
+        :institution_address: 123 University Ave, Hill Valley, CA 90210
+        :institution_ein: 99-8765432
+        :lifetime_credit_expenses: '5678'
+        :received_1098: true
+        :box_7_checked: true
+        :hope_opportunity_claimed: false
+        :at_least_half_time: true
+        :postsecondary_completed: true
+      YAML
 
   PiggyBank::Blob.create name: "2020-tax-general",
                          yaml: general_yaml
@@ -244,4 +260,8 @@ def seed_blobs
 
   PiggyBank::Blob.create name: "2020-tax-deduct",
                          yaml: deduct_yaml
+
+  PiggyBank::Blob.create name: "2020-tax-education",
+                         yaml: education_yaml
+
 end

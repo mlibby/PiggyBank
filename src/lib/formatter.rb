@@ -1,7 +1,8 @@
 module PiggyBank
   class Formatter
-    def as_currency(value)
-      return "" if value.nil? || value == 0
+    def as_currency(value, show_zero = false)
+      return "" if !show_zero && (value.nil? || value == 0)
+      value ||= _d("0.0")
       negative = value < 0
       value = value.abs
       segments = []

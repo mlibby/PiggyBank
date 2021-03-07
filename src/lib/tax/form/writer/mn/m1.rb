@@ -54,7 +54,6 @@ module PiggyBank::Tax::Form::Writer::MN
         "wages, salaries, tips" => @format.as_currency(@adapter.line_A),
         "FAGI" => @format.as_currency(@adapter.line_D),
         "m1line1" => @format.as_currency(@adapter.line_1),
-        "m1line1" => @format.as_currency(@adapter.line_1),
         "m1line20" => @format.as_currency(@adapter.line_20)
         }
     end

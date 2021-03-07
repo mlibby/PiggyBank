@@ -79,7 +79,6 @@ class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer:
       "topmostSubform[0].Page2[0].f2_23[0]" => @format.as_currency(@adapter.line_34),
       "topmostSubform[0].Page2[0].f2_24[0]" => @format.as_currency(@adapter.line_35a),
       "topmostSubform[0].Page2[0].f2_28[0]" => @format.as_currency(@adapter.line_37),
-      "topmostSubform[0].Page2[0].f2_05[0]" => @format.as_currency(@adapter.line_19)
     }
   end
 

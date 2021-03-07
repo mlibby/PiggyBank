@@ -101,11 +101,16 @@ module PiggyBank
     end
 
     get "/tax/data/education" do
+      @education = PiggyBank::Tax::Data::Education.new
       haml_layout :"tax/data/education/index"
     end
 
     post "/tax/data/education" do
-      haml_layout :"tax/data/education/index"
+      @education = PiggyBank::Tax::Data::Education.new
+      @education.update params
+      @education.save
+      flash[:success] = "Education data saved."
+      redirect to "/tax/data"
     end
 
     get "/tax/forms" do

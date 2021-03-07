@@ -10,6 +10,7 @@ module PiggyBank::Tax::Form::Adapter
       @general = PiggyBank::Tax::Data::General.new
       @income = PiggyBank::Tax::Data::Income.new
       @deduct = PiggyBank::Tax::Data::Deduct.new
+      @education = PiggyBank::Tax::Data::Education.new
     end
 
     def names
