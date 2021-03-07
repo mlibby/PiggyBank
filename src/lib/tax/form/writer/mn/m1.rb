@@ -25,7 +25,10 @@ module PiggyBank::Tax::Form::Writer::MN
         "state" => @adapter.state,
         "zipcode" => @adapter.zip,
         "Yourcode" => @adapter.mn_campaign,
-        "Spousecode" => @adapter.spouse_mn_campaign
+        "Spousecode" => @adapter.spouse_mn_campaign,
+        "wages, salaries, tips" => @format.as_currency(@adapter.line_A),
+        "FAGI" => @format.as_currency(@adapter.line_D),
+        "m1line1" => @format.as_currency(@adapter.line_1)
       }
 
       unless @adapter.dependents[0].nil?

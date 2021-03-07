@@ -13,6 +13,7 @@ module PiggyBank::Tax::Form::Writer::MN
     def text_fields
       {
         "YourFirstNameandInitial" => @adapter.first_name,
+        "LastName" => @adapter.last_name,
         "YourSocialSecurityNumber" => @adapter.ssn,
       }
     end

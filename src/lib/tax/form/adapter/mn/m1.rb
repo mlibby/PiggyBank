@@ -2,6 +2,11 @@ require_relative "../base"
 
 module PiggyBank::Tax::Form::Adapter::MN
   class M1 < PiggyBank::Tax::Form::Adapter::Base
+    def initialize
+      super
+      @us_1040 = PiggyBank::Tax::Form::Adapter::US::Form1040.new
+    end
+
     def dependents
       @general.dependents
     end
@@ -13,5 +18,17 @@ module PiggyBank::Tax::Form::Adapter::MN
     def spouse_mn_campaign
       @general.spouse_mn_campaign
     end 
+
+    def line_A
+      @us_1040.line_1
+    end
+
+    def line_D
+      @us_1040.line_15
+    end
+
+    def line_1
+      @us_1040.line_11
+    end
   end
 end
