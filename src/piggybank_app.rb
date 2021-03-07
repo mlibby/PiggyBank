@@ -47,6 +47,12 @@ module PiggyBank
       haml view, layout: :layout
     end
 
-    run! if app_file == $0
+    if app_file == $0
+      configure do
+        set :bind, "0.0.0.0"
+        set :port, "1219"
+      end
+      run!
+    end
   end
 end

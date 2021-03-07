@@ -13,6 +13,7 @@ gem "sinatra"
 gem "sinatra-flash"
 gem "eventmachine", platform: "ruby"
 gem "thin"
+gem "win32-service"
 
 group :dev, :test, :prod do
   gem "sqlite3", platform: "ruby"
