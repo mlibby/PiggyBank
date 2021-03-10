@@ -62,6 +62,20 @@ class PiggyBank::Tax::Data::Income
     @values[:w2s].slice! index.to_i
   end
 
+  def f1099_ints
+    @values[:f1099_ints] || []
+  end
+
+  def add_f1099_int
+    w = PiggyBank::Tax::Data::Form1099.new
+    @values[:f1099_ints] ||= []
+    @values[:f1099_ints] << w
+  end
+
+  def rm_f1099_int(index)
+    @values[:f1099_ints].slice! index.to_i
+  end
+
   def update(params)
     FIELDS.each do |sym|
       @values[sym] = params[sym.to_s]
@@ -75,6 +89,17 @@ class PiggyBank::Tax::Data::Income
           w.send("#{f}=", pw[f])
         end
         @values[:w2s] << w
+      end
+    end
+
+    @values[:f1099_ints] = []
+    if params.has_key? "f1099_int"
+      params["f1099_int"].each do |pw|
+        w = PiggyBank::Tax::Data::Form1099.new
+        PiggyBank::Tax::Data::Form1099::FIELDS.each do |f|
+          w.send("#{f}=", pw[f])
+        end
+        @values[:f1099_ints] << w
       end
     end
 

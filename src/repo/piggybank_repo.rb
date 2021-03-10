@@ -24,6 +24,7 @@ module PiggyBank
       require_relative "models/tax/data/general"
       require_relative "models/tax/data/rental"
       require_relative "models/tax/data/w2"
+      require_relative "models/tax/data/f1099"
       require_relative "models/tax/data/income"
       require_relative "models/tax/data/deduct"
       require_relative "models/tax/data/education"

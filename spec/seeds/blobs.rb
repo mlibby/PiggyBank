@@ -234,6 +234,11 @@ def seed_blobs
         local_wages: ''
         local_tax: ''
         locality: ''
+      :f1099_ints:
+      - !ruby/object:PiggyBank::Tax::Data::Form1099
+        payer:
+        payer_id: 38-1798424
+        paid: '76.54'        
     YAML
 
     education_yaml = 
