@@ -7,6 +7,7 @@ module PiggyBank::Tax::Form::Adapter::US
       @sched1 = PiggyBank::Tax::Form::Adapter::US::Schedule1.new
       @sched3 = PiggyBank::Tax::Form::Adapter::US::Schedule3.new
       @scheda = PiggyBank::Tax::Form::Adapter::US::ScheduleA.new
+      @schedb = PiggyBank::Tax::Form::Adapter::US::ScheduleB.new
     end
 
     def dependents
@@ -58,7 +59,7 @@ module PiggyBank::Tax::Form::Adapter::US
     end
 
     def line_2b
-      _d("0.0")
+      @schedb.line_4
     end
 
     def line_3b
