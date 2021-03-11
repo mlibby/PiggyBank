@@ -15,6 +15,7 @@ module PiggyBank::Tax::Form::Writer::US
         "topmostSubform[0].Page1[0].f1_1[0]" => @adapter.names,
         "topmostSubform[0].Page1[0].f1_2[0]" => @adapter.ssn,
         "topmostSubform[0].Page1[0].f1_3[0]" => @adapter.line_1_payer_1,
+        "topmostSubform[0].Page1[0].f1_34[0]" => @adapter.line_5_payer_1,
       }
     end
 
@@ -23,6 +24,9 @@ module PiggyBank::Tax::Form::Writer::US
         "topmostSubform[0].Page1[0].f1_4[0]" => @format.as_currency(@adapter.line_1_amount_1),
         "topmostSubform[0].Page1[0].f1_31[0]" => @format.as_currency(@adapter.line_2),
         "topmostSubform[0].Page1[0].f1_33[0]" => @format.as_currency(@adapter.line_4),
+        "topmostSubform[0].Page1[0].f1_35[0]" => @format.as_currency(@adapter.line_5_amount_1),
+        "topmostSubform[0].Page1[0].f1_66[0]" => @format.as_currency(@adapter.line_6),
+
       }
     end
 

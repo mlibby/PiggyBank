@@ -20,4 +20,16 @@ class PiggyBank::Tax::Form::Adapter::US::ScheduleB < PiggyBank::Tax::Form::Adapt
   def line_4
     line_2 - line_3
   end
+
+  def line_5_payer_1
+    @income.f1099_divs[0]&.payer
+  end
+  
+  def line_5_amount_1
+    _d(@income.f1099_divs[0]&.ordinary_dividends)
+  end
+
+  def line_6
+    line_5_amount_1
+  end
 end

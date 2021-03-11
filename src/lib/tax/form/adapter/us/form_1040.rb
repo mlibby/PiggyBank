@@ -69,8 +69,12 @@ module PiggyBank::Tax::Form::Adapter::US
       @schedb.line_4
     end
 
+    def line_3a
+      @income.f1099_divs.sum { |d| _d(d.qualified_dividends) }
+    end
+
     def line_3b
-      _d("0.0")
+      @schedb.line_6
     end
 
     def line_4b
@@ -133,8 +137,6 @@ module PiggyBank::Tax::Form::Adapter::US
     def line_15
       line_11 - line_14
     end
-
-
 
     bracket = Struct.new(:max, :rate)
     TAX_BRACKETS = {
@@ -201,7 +203,7 @@ module PiggyBank::Tax::Form::Adapter::US
     end
 
     def get_tax_amount(income, filing_status)
-      # this algorithm was adapted from Open Tax Solver's TaxRateFunction 
+      # this algorithm was adapted from Open Tax Solver's TaxRateFunction
       # https://sourceforge.net/p/opentaxsolver/SrcCodeRepo/HEAD/tree/trunk/OTS_2020/src/taxsolve_US_1040_2020.c
       if income < _d("100000.0")
         spread = if income < _d("25.0")
@@ -299,8 +301,8 @@ module PiggyBank::Tax::Form::Adapter::US
     end
 
     def line_27
-    # FUTURE: implement EIC
-    _d("0.0")
+      # FUTURE: implement EIC
+      _d("0.0")
     end
 
     def line_28
