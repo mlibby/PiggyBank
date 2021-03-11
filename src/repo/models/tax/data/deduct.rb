@@ -1,3 +1,4 @@
+require "singleton"
 require "yaml"
 
 module PiggyBank; end
@@ -47,6 +48,8 @@ end
 
 
 class PiggyBank::Tax::Data::Deduct
+  include Singleton
+  
   FIELDS = [
     :real_estate_tax,
     :property_tax

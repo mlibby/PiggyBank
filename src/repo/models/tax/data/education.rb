@@ -1,3 +1,4 @@
+require "singleton"
 require "yaml"
 
 module PiggyBank; end
@@ -5,6 +6,8 @@ module PiggyBank::Tax; end
 module PiggyBank::Tax::Data; end
 
 class PiggyBank::Tax::Data::Education
+  include Singleton
+
   FIELDS = [
     :student_name,
     :student_ssn,

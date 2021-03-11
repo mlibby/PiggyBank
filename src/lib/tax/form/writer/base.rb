@@ -16,15 +16,27 @@ class PiggyBank::Tax::Form::Writer::Base
     @format = PiggyBank::Formatter.new
     open_template @template
     extract_fields
-  end 
-    
+  end
+
   def write_form
     draw_fields
     write_pdf
   end
 
   private
-  
+
+  def text_fields
+    {}
+  end
+
+  def money_fields
+    {}
+  end
+
+  def button_fields
+    {}
+  end
+
   def open_template(file)
     @doc = HexaPDF::Document.open file
   end
@@ -39,7 +51,6 @@ class PiggyBank::Tax::Form::Writer::Base
     end
   end
 
-
   def extract_fields
     form = @doc.acro_form
     @fields = []
@@ -50,5 +61,11 @@ class PiggyBank::Tax::Form::Writer::Base
     strio = StringIO.new
     @doc.write(strio, validate: false, incremental: false, update_fields: false, optimize: false)
     strio.string
+  end
+
+  def draw_fields
+    set_field_values button_fields
+    set_field_values text_fields
+    set_field_values money_fields
   end
 end

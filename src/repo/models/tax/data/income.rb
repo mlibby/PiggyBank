@@ -1,4 +1,5 @@
 require "bigdecimal"
+require "singleton"
 require "yaml"
 
 module PiggyBank; end
@@ -6,6 +7,8 @@ module PiggyBank::Tax; end
 module PiggyBank::Tax::Data; end
 
 class PiggyBank::Tax::Data::Income
+  include Singleton
+
   FIELDS = [
     :state_refund,
     :other_credits

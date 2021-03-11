@@ -17,12 +17,12 @@ module PiggyBank
     end
 
     get "/tax/data/general" do
-      @general = PiggyBank::Tax::Data::General.new
+      @general = PiggyBank::Tax::Data::General.instance
       general_form
     end
 
     post "/tax/data/general" do
-      @general = PiggyBank::Tax::Data::General.new
+      @general = PiggyBank::Tax::Data::General.instance
       @general.update params
 
       if params.has_key? "add_dep"
@@ -39,12 +39,12 @@ module PiggyBank
     end
 
     get "/tax/data/income" do
-      @income = PiggyBank::Tax::Data::Income.new
+      @income = PiggyBank::Tax::Data::Income.instance
       haml_layout :"tax/data/income/index"
     end
 
     post "/tax/data/income" do
-      @income = PiggyBank::Tax::Data::Income.new
+      @income = PiggyBank::Tax::Data::Income.instance
       @income.update params
 
       if params.has_key? "add_w2"
@@ -73,12 +73,12 @@ module PiggyBank
     end
 
     get "/tax/data/deduct" do
-      @deduct = PiggyBank::Tax::Data::Deduct.new
+      @deduct = PiggyBank::Tax::Data::Deduct.instance
       deduct_form
     end
 
     post "/tax/data/deduct" do
-      @deduct = PiggyBank::Tax::Data::Deduct.new
+      @deduct = PiggyBank::Tax::Data::Deduct.instance
       @deduct.update params
 
       if params.has_key? "add_1098"
@@ -107,12 +107,12 @@ module PiggyBank
     end
 
     get "/tax/data/education" do
-      @education = PiggyBank::Tax::Data::Education.new
+      @education = PiggyBank::Tax::Data::Education.instance
       haml_layout :"tax/data/education/index"
     end
 
     post "/tax/data/education" do
-      @education = PiggyBank::Tax::Data::Education.new
+      @education = PiggyBank::Tax::Data::Education.instance
       @education.update params
       @education.save
       flash[:success] = "Education data saved."

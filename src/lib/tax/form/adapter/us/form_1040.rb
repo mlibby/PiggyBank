@@ -1,11 +1,18 @@
+require "singleton"
 require_relative "../base.rb"
 
 module PiggyBank::Tax::Form::Adapter::US
   class Form1040 < PiggyBank::Tax::Form::Adapter::Base
+    include Singleton
+
     def initialize
       super
       @sched1 = PiggyBank::Tax::Form::Adapter::US::Schedule1.new
-      @sched3 = PiggyBank::Tax::Form::Adapter::US::Schedule3.new
+      us_8863 = PiggyBank::Tax::Form::Adapter::US::Form8863.instance
+      @sched3 = PiggyBank::Tax::Form::Adapter::US::Schedule3.instance
+      @sched3.us_8863 = us_8863
+      us_8863.us_1040 = self
+      us_8863.us_sched3 = @sched3
       @scheda = PiggyBank::Tax::Form::Adapter::US::ScheduleA.new
       @schedb = PiggyBank::Tax::Form::Adapter::US::ScheduleB.new
     end

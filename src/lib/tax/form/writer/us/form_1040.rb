@@ -10,7 +10,7 @@ class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer:
   def initialize
     @template = "src/lib/tax/form/pdf/2020/us/f1040.pdf"
     super
-    @adapter = PiggyBank::Tax::Form::Adapter::US::Form1040.new
+    @adapter = PiggyBank::Tax::Form::Adapter::US::Form1040.instance
   end
 
   private

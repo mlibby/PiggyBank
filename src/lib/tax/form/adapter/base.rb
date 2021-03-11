@@ -7,10 +7,10 @@ module PiggyBank::Tax::Form; end
 module PiggyBank::Tax::Form::Adapter
   class Base
     def initialize
-      @general = PiggyBank::Tax::Data::General.new
-      @income = PiggyBank::Tax::Data::Income.new
-      @deduct = PiggyBank::Tax::Data::Deduct.new
-      @education = PiggyBank::Tax::Data::Education.new
+      @general = PiggyBank::Tax::Data::General.instance
+      @income = PiggyBank::Tax::Data::Income.instance
+      @deduct = PiggyBank::Tax::Data::Deduct.instance
+      @education = PiggyBank::Tax::Data::Education.instance
     end
 
     def names

@@ -1,10 +1,13 @@
+require "singleton"
 require_relative "../base"
 
 class PiggyBank::Tax::Form::Adapter::US::Form8863 < PiggyBank::Tax::Form::Adapter::Base
+  include Singleton
+
+  attr_accessor :us_1040, :us_sched3
+
   def initialize
     super
-    @us_1040 = PiggyBank::Tax::Form::Adapter::US::Form1040.new
-    @us_sched3 = PiggyBank::Tax::Form::Adapter::US::Schedule3.new
     @ssn_parts = @general.ssn.split("-")
     @student_ssn_parts = @education.student_ssn.split("-")
   end
