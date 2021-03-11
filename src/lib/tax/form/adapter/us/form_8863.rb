@@ -77,22 +77,22 @@ class PiggyBank::Tax::Form::Adapter::US::Form8863 < PiggyBank::Tax::Form::Adapte
   end
 
   def ratio
-    (line_15 / line_16).round(3)
+    if line_15 >= line_16
+      return _d("1.000")
+    else
+      (line_15 / line_16).round(3)
+    end
   end
 
   def line_17_integer
     return "" unless line_15 > 0
-    if line_15 >= line_16
-      return "1"
-    else 
-      return ratio.floor.to_s
-    end
+    return ratio.floor.to_s
   end
 
   def line_17_fractional
     return "" unless line_15 > 0
     if line_15 >= line_16
-      return "000" 
+      return "000"
     else
       return (ratio.frac * 1000).to_i.to_s
     end
