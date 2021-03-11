@@ -2,13 +2,13 @@
   %legend= "Form 1099-INT ##{n+1}"
   %label
     Payer Name
-    %input{ name: "f1099_int[][payer]", type: "text", value: f1099.payer }
+    %input{ name: "f1099_int[][payer]", type: "text", value: f1099int.payer }
   %label
     Payer FIN
-    %input{ name: "f1099_int[][payer_id]", type: "text", value: f1099.payer_id }
+    %input{ name: "f1099_int[][payer_id]", type: "text", value: f1099int.payer_id }
   %label
     Interest Paid
-    %input{ name: "f1099_int[][paid]", type: "number", step: 0.01, min: 0, value: f1099.paid }
+    %input{ name: "f1099_int[][paid]", type: "number", step: 0.01, min: 0, value: f1099int.paid }
   %button.btn.danger{ formaction: "/tax/data/income?rm_f1099_int=#{n}" }
     %span.icon.icon-trash
-    %span.text Remove 1099
+    %span.text Remove 1099-INT

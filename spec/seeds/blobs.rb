@@ -235,11 +235,18 @@ def seed_blobs
         local_tax: ''
         locality: ''
       :f1099_ints:
-      - !ruby/object:PiggyBank::Tax::Data::Form1099
+      - !ruby/object:PiggyBank::Tax::Data::Form1099Int
         payer: Internal Revenue Service
         payer_id: 38-1798424
         paid: '76.54'        
-    YAML
+      :f1099_divs:
+      - !ruby/object:PiggyBank::Tax::Data::Form1099Div
+        payer: ACME Chemical
+        payer_id: 99-1233456
+        account_number: '12983476'
+        ordinary_dividends: '77.77'
+        qualified_dividends: '77.77'        
+      YAML
 
     education_yaml = 
       <<~YAML

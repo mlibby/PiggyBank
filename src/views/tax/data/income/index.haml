@@ -12,8 +12,10 @@
       %input{ name: "other_credits", type: "text", value: @income.other_credits }
   - @income.w2s.each_with_index do |w2, n|
     = haml :"tax/data/income/w2", locals: {w2: w2, n: n}
-  - @income.f1099_ints.each_with_index do |f1099, n|
-    = haml :"tax/data/income/f1099_int", locals: {f1099: f1099, n: n}
+  - @income.f1099_divs.each_with_index do |f1099div, n|
+    = haml :"tax/data/income/f1099_div", locals: {f1099div: f1099div, n: n}
+  - @income.f1099_ints.each_with_index do |f1099int, n|
+    = haml :"tax/data/income/f1099_int", locals: {f1099int: f1099int, n: n}
   - @income.rentals.each_with_index do |rental, n|
     = haml :"tax/data/income/rental", locals: {rental: rental, n: n}
   .buttons

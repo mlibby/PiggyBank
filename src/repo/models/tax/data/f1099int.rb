@@ -1,4 +1,4 @@
-class PiggyBank::Tax::Data::Form1099
+class PiggyBank::Tax::Data::Form1099Int
   FIELDS = [
     :payer, :payer_id, :paid
   ]

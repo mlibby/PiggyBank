@@ -30,7 +30,9 @@ class PiggyBank::Tax::Data::Income
     if @blob.yaml.nil?
       @values = {
         w2s: [],
-        rentals: []
+        rentals: [],
+        f1099ints: [],
+        f1099divs: [],
       }
     else
       @values = YAML.load(@blob.yaml)
@@ -79,6 +81,20 @@ class PiggyBank::Tax::Data::Income
     @values[:f1099_ints].slice! index.to_i
   end
 
+  def f1099_divs
+    @values[:f1099_divs] || []
+  end
+
+  def add_f1099_div
+    w = PiggyBank::Tax::Data::Form1099Div.new
+    @values[:f1099_divs] ||= []
+    @values[:f1099_divs] << w
+  end
+
+  def rm_f1099_div(index)
+    @values[:f1099_divs].slice! index.to_i
+  end
+
   def update(params)
     FIELDS.each do |sym|
       @values[sym] = params[sym.to_s]
@@ -98,11 +114,22 @@ class PiggyBank::Tax::Data::Income
     @values[:f1099_ints] = []
     if params.has_key? "f1099_int"
       params["f1099_int"].each do |pw|
-        w = PiggyBank::Tax::Data::Form1099.new
-        PiggyBank::Tax::Data::Form1099::FIELDS.each do |f|
+        w = PiggyBank::Tax::Data::Form1099Int.new
+        PiggyBank::Tax::Data::Form1099Int::FIELDS.each do |f|
           w.send("#{f}=", pw[f])
         end
         @values[:f1099_ints] << w
+      end
+    end
+
+    @values[:f1099_divs] = []
+    if params.has_key? "f1099_div"
+      params["f1099_div"].each do |pw|
+        w = PiggyBank::Tax::Data::Form1099Div.new
+        PiggyBank::Tax::Data::Form1099Div::FIELDS.each do |f|
+          w.send("#{f}=", pw[f])
+        end
+        @values[:f1099_divs] << w
       end
     end
 
