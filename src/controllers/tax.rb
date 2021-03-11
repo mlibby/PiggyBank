@@ -53,12 +53,18 @@ module PiggyBank
       elsif params.has_key? "rm_w2"
         @income.rm_w2 params["rm_w2"]
         income_form
+      elsif params.has_key? "add_f1099_div"
+        @income.add_f1099_div
+        income_form
+      elsif params.has_key? "rm_f1099_div"
+        @income.rm_f1099_div params["rm_f1099_div"]
+        income_form
       elsif params.has_key? "add_f1099_int"
         @income.add_f1099_int
         income_form
       elsif params.has_key? "rm_f1099_int"
         @income.rm_f1099_int params["rm_f1099_int"]
-        income_form0
+        income_form
       elsif params.has_key? "add_rental"
         @income.add_rental
         income_form
