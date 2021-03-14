@@ -6,7 +6,7 @@ module PiggyBank::Tax::Form::Writer::US
       @form_number = form_number.to_i
       @template = "src/lib/tax/form/pdf/2020/us/f8283.pdf"
       @format = PiggyBank::Formatter.new
-      @deduct = PiggyBank::Tax::Data::Deduct.new
+      @deduct = PiggyBank::Tax::Data::Deduct.instance
       super()
     end
 
