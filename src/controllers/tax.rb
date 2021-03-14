@@ -151,7 +151,10 @@ module PiggyBank
     get "/tax/form/us/form_8283/:form_number" do |fn|
       writer = PiggyBank::Tax::Form::Writer::US::Form8283.new fn
       pdf = writer.write_form
-      halt 200, { "Content-Type" => "application/pdf" }, pdf
+      halt 200, {
+             "Content-Type" => "application/pdf",
+             "Content-Disposition" => "inline; filename=\"us_8283_#{fn}.pdf\"",
+           }, pdf
     end
 
     forms = {
@@ -183,9 +186,9 @@ module PiggyBank
         get "/tax/form/#{group}/#{form}" do
           pdf = writer.new.write_form
           halt 200, {
-             "Content-Type" => "application/pdf",
-             "Content-Disposition" => "inline; filename=\"#{group}_#{form}.pdf\"" 
-             }, pdf
+                 "Content-Type" => "application/pdf",
+                 "Content-Disposition" => "inline; filename=\"#{group}_#{form}.pdf\"",
+               }, pdf
         end
       end
     end
