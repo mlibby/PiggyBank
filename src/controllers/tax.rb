@@ -4,6 +4,10 @@ module PiggyBank
       haml_layout :"tax/data/general/index"
     end
 
+    def hsa_form
+      haml_layout :"tax/data/hsa/index"
+    end
+
     def income_form
       haml_layout :"tax/data/income/index"
     end
@@ -36,6 +40,20 @@ module PiggyBank
         flash[:success] = "General tax data saved."
         redirect to "/tax/data"
       end
+    end
+
+    get "/tax/data/hsa" do
+      @hsa = PiggyBank::Tax::Data::HSA.instance
+      hsa_form
+    end
+
+    post "/tax/data/hsa" do
+      @hsa = PiggyBank::Tax::Data::HSA.instance
+      @hsa.update params
+
+      @hsa.save
+      flash[:success] = "HSA tax data saved."
+      redirect to "/tax/data"
     end
 
     get "/tax/data/income" do

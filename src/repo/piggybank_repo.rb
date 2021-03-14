@@ -29,6 +29,7 @@ module PiggyBank
       require_relative "models/tax/data/income"
       require_relative "models/tax/data/deduct"
       require_relative "models/tax/data/education"
+      require_relative "models/tax/data/hsa"
 
       if ENV["APP_ENV"] != "TEST"
         # :nocov:

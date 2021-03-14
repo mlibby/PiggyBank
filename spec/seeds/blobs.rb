@@ -246,23 +246,32 @@ def seed_blobs
         account_number: '12983476'
         ordinary_dividends: '77.77'
         qualified_dividends: '77.77'        
-      YAML
+    YAML
 
-    education_yaml = 
-      <<~YAML
-        ---
-        :student_name: Lorraine Baines-McFly
-        :student_ssn: '987-65-4321    '
-        :institution_name: Future College
-        :institution_address: 123 University Ave, Hill Valley, CA 90210
-        :institution_ein: 99-8765432
-        :lifetime_credit_expenses: '5678'
-        :received_1098: true
-        :box_7_checked: true
-        :hope_opportunity_claimed: false
-        :at_least_half_time: true
-        :postsecondary_completed: true
-      YAML
+  education_yaml =
+    <<~YAML
+      ---
+      :student_name: Lorraine Baines-McFly
+      :student_ssn: '987-65-4321    '
+      :institution_name: Future College
+      :institution_address: 123 University Ave, Hill Valley, CA 90210
+      :institution_ein: 99-8765432
+      :lifetime_credit_expenses: '5678'
+      :received_1098: true
+      :box_7_checked: true
+      :hope_opportunity_claimed: false
+      :at_least_half_time: true
+      :postsecondary_completed: true
+    YAML
+
+  hsa_yaml =
+    <<~YAML
+      ---
+      :covered_by_hdhp: family
+      :f5968sa_contributions: '7000'
+      :f1099sa_distributions: '3456.78'
+      :expenses_paid_by_hsa: '3456.78'
+    YAML
 
   PiggyBank::Blob.create name: "2020-tax-general",
                          yaml: general_yaml
@@ -276,4 +285,6 @@ def seed_blobs
   PiggyBank::Blob.create name: "2020-tax-education",
                          yaml: education_yaml
 
+  PiggyBank::Blob.create name: "2020-tax-hsa",
+                         yaml: hsa_yaml
 end
