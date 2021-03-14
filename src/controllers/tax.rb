@@ -153,7 +153,7 @@ module PiggyBank
       pdf = writer.write_form
       halt 200, {
              "Content-Type" => "application/pdf",
-             "Content-Disposition" => "inline; filename=\"us_8283_#{fn}.pdf\"",
+             "Content-Disposition" => "inline; filename=\"us_form_8283_#{fn}.pdf\"",
            }, pdf
     end
 
