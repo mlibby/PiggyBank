@@ -182,7 +182,10 @@ module PiggyBank
       forms[group].each_pair do |form, writer|
         get "/tax/form/#{group}/#{form}" do
           pdf = writer.new.write_form
-          halt 200, { "Content-Type" => "application/pdf" }, pdf
+          halt 200, {
+             "Content-Type" => "application/pdf",
+             "Content-Disposition" => "inline; filename=\"#{group}_#{form}.pdf\"" 
+             }, pdf
         end
       end
     end
