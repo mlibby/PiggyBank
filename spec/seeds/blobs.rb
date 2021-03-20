@@ -8,12 +8,14 @@ def seed_blobs
       :last_name: McFly
       :ssn: '123-45-6789'
       :birthday: '1955-07-04'
+      :occupation: Professor
       :blind: true
       :campaign: true
       :spouse_first_name: Lorraine
       :spouse_last_name: Baines-McFly
       :spouse_ssn: '987-65-4321'
       :spouse_birthday: '1956-05-04'
+      :spouse_occupation: Research Scientist
       :spouse_blind: false
       :spouse_campaign: false
       :street: 9303 Lyon Drive
@@ -26,6 +28,11 @@ def seed_blobs
       :post_code: ''
       :mn_campaign: "15"
       :spouse_mn_campaign: "16"
+      :bank_type: checking
+      :bank_routing: '012345678'
+      :bank_account: '9876543210123'
+      :contact_phone: 612-555-1212
+      :contact_email: lorraine@hillvalley.edu
       :dependents:
       - !ruby/object:PiggyBank::Tax::Data::Dependent
         first_name: Dave

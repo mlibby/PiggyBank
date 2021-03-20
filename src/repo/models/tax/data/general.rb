@@ -23,17 +23,19 @@ end
 
 class PiggyBank::Tax::Data::General
   include Singleton
-  
+
   FIELDS = [
     :filing_status,
     :first_name, :last_name, :ssn,
-    :birthday,
+    :birthday, :occupation,
     :spouse_first_name, :spouse_last_name, :spouse_ssn,
-    :spouse_birthday,
+    :spouse_birthday, :spouse_occupation,
     :street, :apt_no,
     :city, :state, :zip,
     :country, :province, :post_code,
-    :mn_campaign, :spouse_mn_campaign
+    :mn_campaign, :spouse_mn_campaign,
+    :bank_type, :bank_routing, :bank_account,
+    :contact_phone, :contact_email,
   ]
 
   BUTTONS = [
@@ -59,7 +61,7 @@ class PiggyBank::Tax::Data::General
     "15": "Green",
     "16": "Libertarian",
     "17": "Legal Marijuana",
-    "99": "General Fund"
+    "99": "General Fund",
   }
 
   def initialize
@@ -132,5 +134,4 @@ class PiggyBank::Tax::Data::General
     @blob.yaml = @values.to_yaml
     @blob.save
   end
-
 end

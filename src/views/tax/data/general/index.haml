@@ -88,6 +88,19 @@
       %select{ name: "spouse_mn_campaign" }
         - PiggyBank::Tax::Data::General::MN_CAMPAIGN_OPTS.each do |k, v|
           %option{ value: k, selected: k.to_s == @general.spouse_mn_campaign }= v
+  %fieldset
+    %legend Bank Account
+    %label
+      Account Type
+      %select{ name: "bank_type" }
+        %option{ value: "checking", selected: @general.bank_type == "checking"}= "Checking"
+        %option{ value: "savings", selected: @general.bank_type == "savings"}= "Savings"
+    %label
+      Routing Number
+      %input{ name: "bank_routing", type: "text", value: @general.bank_routing }
+    %label
+      Account Number
+      %input{ name: "bank_account", type: "text", value: @general.bank_account }
   - @general.dependents.each_with_index do |depend, n|
     = haml :"tax/data/general/dependent", locals: { depend: depend, n: n }
   .buttons

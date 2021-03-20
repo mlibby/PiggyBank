@@ -20,5 +20,9 @@ module PiggyBank
       ssn = ssn.tr "-", ""
       "#{ssn[0]} #{ssn[1]} #{ssn[2]}     #{ssn[3]} #{ssn[4]}     #{ssn[5]} #{ssn[6]} #{ssn[7]} #{ssn[8]}     "
     end
+
+    def as_1040_banking(number)
+      number.split.join(" ")
+    end
   end
 end

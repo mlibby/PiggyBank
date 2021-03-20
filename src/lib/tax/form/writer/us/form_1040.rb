@@ -42,6 +42,12 @@ class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer:
       "topmostSubform[0].Page1[0].Address[0].f1_13[0]" => @adapter.country,
       "topmostSubform[0].Page1[0].Address[0].f1_14[0]" => @adapter.province,
       "topmostSubform[0].Page1[0].Address[0].f1_15[0]" => @adapter.post_code,
+      "topmostSubform[0].Page2[0].RoutingNo[0].f2_25[0]" => @format.as_1040_banking(@adapter.line_35b),
+      "topmostSubform[0].Page2[0].AccountNo[0].f2_26[0]" => @format.as_1040_banking(@adapter.line_35d),
+      "topmostSubform[0].Page2[0].f2_36[0]" => @adapter.occupation,
+      "topmostSubform[0].Page2[0].f2_38[0]" => @adapter.spouse_occupation,
+      "topmostSubform[0].Page2[0].f2_40[0]" => @adapter.contact_phone,
+      "topmostSubform[0].Page2[0].f2_41[0]" => @adapter.contact_email,
     }
   end
 
@@ -129,14 +135,14 @@ class PiggyBank::Tax::Form::Writer::US::Form1040 < PiggyBank::Tax::Form::Writer:
       "topmostSubform[0].Page1[0].c1_03[0]" => @adapter.spouse_campaign?,
       "topmostSubform[0].Page1[0].c1_04[0]" => @adapter.virtual_currency?,
       "topmostSubform[0].Page1[0].c1_04[1]" => !@adapter.virtual_currency?,
-      # "topmostSubform[0].Page1[0].c1_05[0]" => @general.dependent,
-      # "topmostSubform[0].Page1[0].c1_06[0]" => @general.spouse_dependent,
-      # "topmostSubform[0].Page1[0].c1_07[0]" => @general.spouse_itemizes,
       "topmostSubform[0].Page1[0].c1_08[0]" => @adapter.born_before_19560102?,
       "topmostSubform[0].Page1[0].c1_09[0]" => @adapter.blind?,
       "topmostSubform[0].Page1[0].c1_10[0]" => @adapter.spouse_born_before_19560102?,
       "topmostSubform[0].Page1[0].c1_11[0]" => @adapter.spouse_blind?,
       "topmostSubform[0].Page1[0].Dependents_ReadOrder[0].c1_12[0]" => @adapter.more_than_four_deps?,
+      "topmostSubform[0].Page2[0].c2_05[0]" => @adapter.line_35c == "checking",
+      "topmostSubform[0].Page2[0].c2_05[1]" => @adapter.line_35d == "savings",
+
     }
   end
 

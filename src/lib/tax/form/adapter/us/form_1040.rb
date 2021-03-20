@@ -60,6 +60,22 @@ module PiggyBank::Tax::Form::Adapter::US
       @general.dependents.size > 4
     end
 
+    def occupation
+      @general.occupation
+    end
+
+    def spouse_occupation
+      @general.spouse_occupation
+    end
+
+    def contact_phone
+      @general.contact_phone
+    end
+
+    def contact_email
+      @general.contact_email
+    end
+
     # Total Wages
     def line_1
       @income.w2s.sum { |w| _d(w.wages) }
@@ -339,6 +355,18 @@ module PiggyBank::Tax::Form::Adapter::US
 
     def line_35a
       line_34
+    end
+
+    def line_35b
+      @general.bank_routing
+    end
+
+    def line_35c
+      @general.bank_type
+    end
+
+    def line_35d
+      @general.bank_account
     end
 
     def line_37
