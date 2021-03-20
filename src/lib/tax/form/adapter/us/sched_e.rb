@@ -1,6 +1,11 @@
+require "singleton"
 require_relative "../base"
 
 class PiggyBank::Tax::Form::Adapter::US::ScheduleE < PiggyBank::Tax::Form::Adapter::Base
+  include Singleton
+
+  attr_accessor :us_6198, :us_8582
+
   def line_1a_A
     @income.rentals[0]&.physical_address
   end
@@ -45,6 +50,10 @@ class PiggyBank::Tax::Form::Adapter::US::ScheduleE < PiggyBank::Tax::Form::Adapt
     [line_3A, line_4A].sum - line_20A
   end
 
+  def line_22A
+    @us_8582.line_16
+  end
+
   def line_23a
     [line_3A].sum
   end
@@ -54,11 +63,11 @@ class PiggyBank::Tax::Form::Adapter::US::ScheduleE < PiggyBank::Tax::Form::Adapt
   end
 
   def line_24
-    [line_21A].filter{|n| n > 0}.sum
+    [line_21A].filter { |n| n > 0 }.sum
   end
 
   def line_25
-    [line_21A].filter{|n| n < 0}.sum.abs
+    line_22A
   end
 
   def line_26

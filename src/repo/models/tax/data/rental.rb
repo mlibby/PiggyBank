@@ -1,5 +1,6 @@
 class PiggyBank::Tax::Data::Rental
   FIELDS = [
+    :description,
     :physical_address,
     :property_type,
     :fair_rental_days,
@@ -22,7 +23,7 @@ class PiggyBank::Tax::Data::Rental
     :utilities,
     :depreciation,
     :other_desc,
-    :other_amount
+    :other_amount,
   ]
 
   attr_accessor *FIELDS

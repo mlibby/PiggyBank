@@ -149,12 +149,13 @@ def seed_blobs
       :other_credits: '0.00'
       :rentals:
       - !ruby/object:PiggyBank::Tax::Data::Rental
+        description: Timeshare Rental
         physical_address: 3793 Oakhurst Street, Hilldale, CA 91732
         property_type: '3'
-        fair_rental_days: '365'
+        fair_rental_days: '0'
         personal_days: '0'
         qualified_joint_venture: 
-        rents_received: '1024'
+        rents_received: '0'
         royalties_received: ''
         advertising: ''
         auto: ''

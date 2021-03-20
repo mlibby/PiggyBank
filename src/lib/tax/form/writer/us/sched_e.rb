@@ -5,7 +5,13 @@ module PiggyBank::Tax::Form::Writer::US
     def initialize
       @template = "src/lib/tax/form/pdf/2020/us/f1040se.pdf"
       super
-      @adapter = PiggyBank::Tax::Form::Adapter::US::ScheduleE.new
+      us_6198 = PiggyBank::Tax::Form::Adapter::US::Form6198.instance
+      us_8582 = PiggyBank::Tax::Form::Adapter::US::Form8582.instance
+      @adapter = PiggyBank::Tax::Form::Adapter::US::ScheduleE.instance
+      @adapter.us_6198 = us_6198
+      @adapter.us_8582 = us_8582
+      us_6198.us_schede = @adapter
+      us_8582.us_schede = @adapter
     end
 
     private
@@ -31,11 +37,13 @@ module PiggyBank::Tax::Form::Writer::US
         "topmostSubform[0].Page1[0].Table_Expenses[0].Line20[0].f1_68[0]" => @format.as_currency(@adapter.line_20A),
         "topmostSubform[0].Page1[0].Table_Expenses[0].Line21[0].f1_71[0]" => @format.as_currency(@adapter.line_21A),
 
+        "topmostSubform[0].Page1[0].Table_Expenses[0].Line22[0].f1_74[0]" => @format.as_currency(@adapter.line_22A, true),
+
         "topmostSubform[0].Page1[0].f1_77[0]" => @format.as_currency(@adapter.line_23a),
         "topmostSubform[0].Page1[0].f1_81[0]" => @format.as_currency(@adapter.line_23e),
         "topmostSubform[0].Page1[0].f1_82[0]" => @format.as_currency(@adapter.line_24),
-        "topmostSubform[0].Page1[0].f1_83[0]" => @format.as_currency(@adapter.line_25),
-        "topmostSubform[0].Page1[0].f1_84[0]" => @format.as_currency(@adapter.line_26),
+        "topmostSubform[0].Page1[0].f1_83[0]" => @format.as_currency(@adapter.line_25, true),
+        "topmostSubform[0].Page1[0].f1_84[0]" => @format.as_currency(@adapter.line_26, true),
       }
     end
 
