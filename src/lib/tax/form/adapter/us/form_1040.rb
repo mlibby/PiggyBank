@@ -5,14 +5,11 @@ module PiggyBank::Tax::Form::Adapter::US
   class Form1040 < PiggyBank::Tax::Form::Adapter::Base
     include Singleton
 
+    attr_accessor :us_sched3
+
     def initialize
       super
       @sched1 = PiggyBank::Tax::Form::Adapter::US::Schedule1.new
-      us_8863 = PiggyBank::Tax::Form::Adapter::US::Form8863.instance
-      @sched3 = PiggyBank::Tax::Form::Adapter::US::Schedule3.instance
-      @sched3.us_8863 = us_8863
-      us_8863.us_1040 = self
-      us_8863.us_sched3 = @sched3
       @scheda = PiggyBank::Tax::Form::Adapter::US::ScheduleA.new
       @schedb = PiggyBank::Tax::Form::Adapter::US::ScheduleB.new
     end
@@ -272,7 +269,7 @@ module PiggyBank::Tax::Form::Adapter::US
     end
 
     def line_20
-      @sched3.line_7
+      @us_sched3.line_7
     end
 
     def line_21
@@ -337,7 +334,7 @@ module PiggyBank::Tax::Form::Adapter::US
     end
 
     def line_31
-      @sched3.line_13
+      @us_sched3.line_13
     end
 
     def line_32

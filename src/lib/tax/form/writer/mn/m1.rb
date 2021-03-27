@@ -5,7 +5,7 @@ module PiggyBank::Tax::Form::Writer::MN
     def initialize
       @template = "src/lib/tax/form/pdf/2020/mn/m1_20.pdf"
       super
-      @adapter = PiggyBank::Tax::Form::Adapter::MN::M1.new
+      @adapter = PiggyBank::Tax::Form::Adapter::MN::M1.instance
     end
 
     private
@@ -54,8 +54,8 @@ module PiggyBank::Tax::Form::Writer::MN
         "wages, salaries, tips" => @format.as_currency(@adapter.line_A),
         "FAGI" => @format.as_currency(@adapter.line_D),
         "m1line1" => @format.as_currency(@adapter.line_1),
-        "m1line20" => @format.as_currency(@adapter.line_20)
-        }
+        "m1line20" => @format.as_currency(@adapter.line_20),
+      }
     end
 
     def button_fields
@@ -71,7 +71,7 @@ module PiggyBank::Tax::Form::Writer::MN
     def draw_fields
       set_field_values text_fields
       set_field_values money_fields
-      set_field_values button_fields 
+      set_field_values button_fields
     end
   end
 end

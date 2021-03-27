@@ -1,11 +1,14 @@
+require "singleton"
 require_relative "../base"
 
 module PiggyBank::Tax::Form::Adapter::MN
   class M1 < PiggyBank::Tax::Form::Adapter::Base
+    include Singleton
+
+    attr_accessor :us_1040, :mn_m1w
+
     def initialize
       super
-      @us_1040 = PiggyBank::Tax::Form::Adapter::US::Form1040.new
-      @m1w = PiggyBank::Tax::Form::Adapter::MN::M1W.new
     end
 
     def dependents
@@ -18,7 +21,7 @@ module PiggyBank::Tax::Form::Adapter::MN
 
     def spouse_mn_campaign
       @general.spouse_mn_campaign
-    end 
+    end
 
     def line_A
       @us_1040.line_1
@@ -33,7 +36,7 @@ module PiggyBank::Tax::Form::Adapter::MN
     end
 
     def line_20
-      @m1w.line_4
+      @mn_m1w.line_4
     end
   end
 end

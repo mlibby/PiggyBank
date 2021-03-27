@@ -3,7 +3,7 @@ require_relative "../base"
 class PiggyBank::Tax::Form::Adapter::US::Schedule1 < PiggyBank::Tax::Form::Adapter::Base
   def initialize
     super
-    @schede = PiggyBank::Tax::Form::Adapter::US::ScheduleE.new
+    @schede = PiggyBank::Tax::Form::Adapter::US::ScheduleE.instance
   end
 
   def line_1

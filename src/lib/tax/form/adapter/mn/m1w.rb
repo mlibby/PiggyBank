@@ -1,7 +1,10 @@
+require "singleton"
 require_relative "../base"
 
 module PiggyBank::Tax::Form::Adapter::MN
   class M1W < PiggyBank::Tax::Form::Adapter::Base
+    include Singleton
+
     def line_1a1
       @income.w2s[0].ssn == @general.ssn ? "1" : "2"
     end

@@ -5,10 +5,7 @@ module PiggyBank::Tax::Form::Writer::US
     def initialize
       @template = "src/lib/tax/form/pdf/2020/us/f6198.pdf"
       super
-      us_schede = PiggyBank::Tax::Form::Adapter::US::ScheduleE.instance
       @adapter = PiggyBank::Tax::Form::Adapter::US::Form6198.instance
-      @adapter.us_schede = us_schede
-      us_schede.us_6198 = @adapter
     end
 
     private

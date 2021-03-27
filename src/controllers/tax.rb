@@ -144,11 +144,13 @@ module PiggyBank
     end
 
     get "/tax/forms" do
+      PiggyBank::Tax::Form::Adapter::Loader.load_adapters
       @us_8283_count = PiggyBank::Tax::Form::Adapter::US::Form8283.count
       haml_layout :"tax/form/index"
     end
 
     get "/tax/form/us/form_8283/:form_number" do |fn|
+      PiggyBank::Tax::Form::Adapter::Loader.load_adapters
       writer = PiggyBank::Tax::Form::Writer::US::Form8283.new fn
       pdf = writer.write_form
       halt 200, {
@@ -184,6 +186,7 @@ module PiggyBank
     forms.each_key do |group|
       forms[group].each_pair do |form, writer|
         get "/tax/form/#{group}/#{form}" do
+          PiggyBank::Tax::Form::Adapter::Loader.load_adapters
           pdf = writer.new.write_form
           halt 200, {
                  "Content-Type" => "application/pdf",

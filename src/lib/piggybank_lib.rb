@@ -1,5 +1,6 @@
 require_relative "amortization"
 require_relative "formatter"
+require_relative "tax/form/adapter/loader"
 require_relative "tax/form/adapter/mn/m1"
 require_relative "tax/form/adapter/mn/m1c"
 require_relative "tax/form/adapter/mn/m1m"

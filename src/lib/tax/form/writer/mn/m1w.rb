@@ -5,7 +5,7 @@ module PiggyBank::Tax::Form::Writer::MN
     def initialize
       @template = "src/lib/tax/form/pdf/2020/mn/m1w_20.pdf"
       super
-      @adapter = PiggyBank::Tax::Form::Adapter::MN::M1W.new
+      @adapter = PiggyBank::Tax::Form::Adapter::MN::M1W.instance
     end
 
     private
@@ -36,7 +36,7 @@ module PiggyBank::Tax::Form::Writer::MN
         "M1Wline1d3" => @format.as_currency(@adapter.line_1d3),
         "M1Wline1e3" => @format.as_currency(@adapter.line_1e3),
         "M1Wline1total" => @format.as_currency(@adapter.line_1),
-        "M1Wline4" => @format.as_currency(@adapter.line_4)
+        "M1Wline4" => @format.as_currency(@adapter.line_4),
       }
     end
 

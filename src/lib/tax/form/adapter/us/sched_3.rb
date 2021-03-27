@@ -6,6 +6,15 @@ class PiggyBank::Tax::Form::Adapter::US::Schedule3 < PiggyBank::Tax::Form::Adapt
 
   attr_accessor :us_8863
 
+  def self.load
+    sched3 = Schedule3.instance
+    us_1040 = Form1040.instance
+    us_8863 = Form8863.load
+    sched3.us_1040 ||= us_1040
+    sched3.us_8863 ||= us_8863
+    sched3
+  end
+
   def line_1
     _d("0.0")
   end
