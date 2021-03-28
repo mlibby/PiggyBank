@@ -28,6 +28,8 @@ module PiggyBank::Tax::Form::Writer::MN
         "Spousecode" => @adapter.spouse_mn_campaign,
         "Routingnumber" => @adapter.line_25_routing,
         "AccountNumber" => @adapter.line_25_account,
+        "Taxpayersdaytimephone" => @adapter.contact_phone,
+        "Youremailaddress" => @adapter.contact_email,
       }
 
       unless @adapter.dependents[0].nil?

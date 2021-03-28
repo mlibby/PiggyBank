@@ -58,7 +58,7 @@ module PiggyBank::Tax::Form::Adapter
     def address
       [@general.street, @general.apt_no].join ", "
     end
-    
+
     def street
       @general.street
     end
@@ -91,7 +91,7 @@ module PiggyBank::Tax::Form::Adapter
       @general.post_code
     end
 
-    def filing_status 
+    def filing_status
       @general.filing_status.to_sym
     end
 
@@ -113,6 +113,14 @@ module PiggyBank::Tax::Form::Adapter
 
     def qualified_widow?
       @general.filing_status == "widow"
+    end
+
+    def contact_phone
+      @general.contact_phone
+    end
+
+    def contact_email
+      @general.contact_email
     end
   end
 end

@@ -64,14 +64,6 @@ module PiggyBank::Tax::Form::Adapter::US
       @general.spouse_occupation
     end
 
-    def contact_phone
-      @general.contact_phone
-    end
-
-    def contact_email
-      @general.contact_email
-    end
-
     # Total Wages
     def line_1
       @income.w2s.sum { |w| _d(w.wages) }
