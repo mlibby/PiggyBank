@@ -51,7 +51,7 @@ module PiggyBank::Tax::Form::Adapter::MN
           if 79640 <= step_3 && step_3 < 104640
             step_5 = _d("79640")
             step_7 = _d("0.01")
-            step_9 = _9("500")
+            step_9 = _d("500")
           elsif 104640 <= step_3 && step_3 < 143350
             step_5 = _d("0")
             step_7 = _d("0")
