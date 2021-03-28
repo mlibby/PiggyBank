@@ -209,6 +209,30 @@ module PiggyBank::Tax::Form::Adapter::MN
       line_23 > line_19 ? line_23 - line_19 : _d("0")
     end
 
+    def line_25_type
+      if line_24 > 0
+        @general.bank_type
+      else
+        false
+      end
+    end
+
+    def line_25_routing
+      if line_24 > 0
+        @general.bank_routing
+      else
+        ""
+      end
+    end
+
+    def line_25_account
+      if line_24 > 0
+        @general.bank_account
+      else
+        ""
+      end
+    end
+
     def line_26
       line_19 > line_23 ? line_19 - line_23 : _d("0")
     end

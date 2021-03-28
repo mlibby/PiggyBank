@@ -26,6 +26,8 @@ module PiggyBank::Tax::Form::Writer::MN
         "zipcode" => @adapter.zip,
         "Yourcode" => @adapter.mn_campaign,
         "Spousecode" => @adapter.spouse_mn_campaign,
+        "Routingnumber" => @adapter.line_25_routing,
+        "AccountNumber" => @adapter.line_25_account,
       }
 
       unless @adapter.dependents[0].nil?
@@ -83,6 +85,8 @@ module PiggyBank::Tax::Form::Writer::MN
         "checkifmarriedfilingseparately" => @adapter.married_separately?,
         "checkifheadofhousehold" => @adapter.head_of_household?,
         "checkifqualifyingwidower" => @adapter.qualified_widow?,
+        "checkifchecking" => @adapter.line_25_type == "checking",
+        "checkifsavings" => @adapter.line_25_type == "savings",
       }
     end
 
