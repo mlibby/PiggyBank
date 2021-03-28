@@ -1,6 +1,9 @@
+require "singleton"
 require_relative "../base"
 
 class PiggyBank::Tax::Form::Adapter::US::ScheduleA < PiggyBank::Tax::Form::Adapter::Base
+  include Singleton
+
   def line_4
     _d
   end

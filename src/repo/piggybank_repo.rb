@@ -7,7 +7,7 @@ module PiggyBank
     attr_reader :accounts, :commodities
 
     def initialize(db_connection)
-      @db = Sequel::Model.db = Sequel.connect db_connection
+      @db = Sequel::Model.db = Sequel.connect(db_connection)
 
       Sequel.extension :migration
       Sequel::Migrator.run @db, "#{__dir__}/migrations"
@@ -38,7 +38,7 @@ module PiggyBank
         # :nocov:
       end
 
-      if ["DEMO"].include? ENV["APP_ENV"] 
+      if ["DEMO"].include? ENV["APP_ENV"]
         require_relative "../../spec/seeds/seed_db"
         seed_db
       end

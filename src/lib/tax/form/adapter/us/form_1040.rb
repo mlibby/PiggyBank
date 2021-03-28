@@ -5,12 +5,11 @@ module PiggyBank::Tax::Form::Adapter::US
   class Form1040 < PiggyBank::Tax::Form::Adapter::Base
     include Singleton
 
-    attr_accessor :us_sched3
+    attr_accessor :us_sched3, :us_scheda
 
     def initialize
       super
       @sched1 = PiggyBank::Tax::Form::Adapter::US::Schedule1.new
-      @scheda = PiggyBank::Tax::Form::Adapter::US::ScheduleA.new
       @schedb = PiggyBank::Tax::Form::Adapter::US::ScheduleB.new
     end
 
@@ -133,9 +132,9 @@ module PiggyBank::Tax::Form::Adapter::US
     # Standard or Itemized Deduction
     def line_12
       # use itemized even if less than standard
-      return @scheda.line_17 if @scheda.line_18
+      return @us_scheda.line_17 if @us_scheda.line_18
       standard = STANDARD_DEDUCTIONS[filing_status]
-      itemized = @scheda.line_17
+      itemized = @us_scheda.line_17
       standard >= itemized ? standard : itemized
     end
 

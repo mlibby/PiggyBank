@@ -19,7 +19,6 @@
           "FIXME"
       ]
   },
-  "rubyTestExplorer.rspecDirectory": "./spec",
   "todo-tree.tree.disableCompactFolders": false,
   "todo-tree.tree.showCountsInTree": true
 }
