@@ -165,6 +165,26 @@ module PiggyBank::Tax::Form::Adapter::MN
       get_tax_amount line_9, filing_status
     end
 
+    def line_11
+      _d "0"
+    end
+
+    def line_12
+      line_10 + line_11
+    end
+
+    def line_13
+      line_12
+    end
+
+    def line_14
+      _d "0"
+    end
+
+    def line_15
+      line_13 + line_14
+    end
+
     def line_20
       @mn_m1w.line_4
     end
