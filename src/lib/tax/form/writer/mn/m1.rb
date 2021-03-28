@@ -66,8 +66,13 @@ module PiggyBank::Tax::Form::Writer::MN
         "m1line13" => @format.as_currency(@adapter.line_13),
         "m1line14" => @format.as_currency(@adapter.line_14),
         "m1line15" => @format.as_currency(@adapter.line_15),
-        #"m1line16" => @format.as_currency(@adapter.line_16),
+        "m1line16" => @format.as_currency(@adapter.line_16),
+        "m1line17" => @format.as_currency(@adapter.line_17),
+        "m1line19" => @format.as_currency(@adapter.line_19),
         "m1line20" => @format.as_currency(@adapter.line_20),
+        "m1line23" => @format.as_currency(@adapter.line_23),
+        "m1line24" => @format.as_currency(@adapter.line_24),
+        "m1line26" => @format.as_currency(@adapter.line_26),
       }
     end
 

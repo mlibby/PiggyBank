@@ -5,7 +5,7 @@ module PiggyBank::Tax::Form::Adapter::MN
   class M1 < PiggyBank::Tax::Form::Adapter::Base
     include Singleton
 
-    attr_accessor :us_1040, :mn_m1sa, :mn_m1w
+    attr_accessor :us_1040, :mn_m1c, :mn_m1sa, :mn_m1w
 
     def initialize
       super
@@ -185,8 +185,32 @@ module PiggyBank::Tax::Form::Adapter::MN
       line_13 + line_14
     end
 
+    def line_16
+      @mn_m1c.line_17
+    end
+
+    def line_17
+      line_15 - line_16
+    end
+
+    def line_19
+      line_17
+    end
+
     def line_20
       @mn_m1w.line_4
+    end
+
+    def line_23
+      line_20
+    end
+
+    def line_24
+      line_23 > line_19 ? line_23 - line_19 : _d("0")
+    end
+
+    def line_26
+      line_19 > line_23 ? line_19 - line_23 : _d("0")
     end
   end
 end

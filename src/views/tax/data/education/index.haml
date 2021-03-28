@@ -45,7 +45,29 @@
     %label
       Qualified Expenses
       %input{ name: "lifetime_credit_expenses", type: "number", min: 0, value: @education.lifetime_credit_expenses }
-  .buttons
+  %fieldset
+    %legend 529 One
+    %label
+      Institution
+      %input{ name: "m1529_name_1", type: "text", value: @education.m1529_name_1 }
+    %label
+      Account
+      %input{ name: "m1529_account_1", type: "text", value: @education.m1529_account_1 }
+    %label
+      Amount
+      %input{ name: "m1529_amount_1", type: "number", min: 0, value: @education.m1529_amount_1 }
+  %fieldset
+    %legend 529 Two
+    %label
+      Institution
+      %input{ name: "m1529_name_2", type: "text", value: @education.m1529_name_2 }
+    %label
+      Account
+      %input{ name: "m1529_account_2", type: "text", value: @education.m1529_account_2 }
+    %label
+      Amount
+      %input{ name: "m1529_amount_2", type: "number", min: 0, value: @education.m1529_amount_2 }
+  .button
     %button.btn.primary{ formaction: "/tax/data/education" }
       %span.icon.icon-solid-check
       %span.text Save

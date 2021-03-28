@@ -15,6 +15,12 @@ class PiggyBank::Tax::Data::Education
     :institution_address,
     :institution_ein,
     :lifetime_credit_expenses,
+    :m1529_name_1,
+    :m1529_account_1,
+    :m1529_amount_1,
+    :m1529_name_2,
+    :m1529_account_2,
+    :m1529_amount_2,
   ]
 
   BUTTONS = [

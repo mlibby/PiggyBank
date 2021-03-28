@@ -95,7 +95,6 @@ module PiggyBank::Tax::Form::Adapter::MN
 
       credit_table.each do |row|
         row = row.map { |s| s.to_i }
-        p row
         if row[0] <= line_6 && line_6 < row[1]
           index = ((line_7.to_i - 40000) / 20000) + 2
           return row[index]

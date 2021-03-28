@@ -5,7 +5,7 @@ module PiggyBank::Tax::Form::Writer::MN
     def initialize
       @template = "src/lib/tax/form/pdf/2020/mn/m1c_20.pdf"
       super
-      @adapter = PiggyBank::Tax::Form::Adapter::MN::M1C.new
+      @adapter = PiggyBank::Tax::Form::Adapter::MN::M1C.instance
     end
 
     private
@@ -13,15 +13,17 @@ module PiggyBank::Tax::Form::Writer::MN
     def text_fields
       {
         "YourFirstNameandInitial" => @adapter.first_name,
+        "yourlastname" => @adapter.last_name,
         "YourSocialSecurityNumber" => @adapter.ssn,
       }
     end
 
     def money_fields
       {
- #  "form1[0].Page1[0].f1_03[0]" => @format.as_currency(@adapter.line_1),
-               # "form1[0].Page1[0].f1_14[0]" => @format.as_currency(@adapter.line_9),
-        }
+        "m1cline1" => @format.as_currency(@adapter.line_1),
+        "m1cline7" => @format.as_currency(@adapter.line_7),
+        "m1cline17" => @format.as_currency(@adapter.line_17),
+      }
     end
 
     def button_fields

@@ -25,10 +25,12 @@ module PiggyBank::Tax::Form::Adapter
       us_schede.us_8582 = us_8582
 
       mn_m1 = MN::M1.instance
+      mn_m1c = MN::M1C.instance
       mn_m1ma = MN::M1MA.instance
       mn_m1sa = MN::M1SA.instance
       mn_m1w = MN::M1W.instance
 
+      mn_m1.mn_m1c = mn_m1c
       mn_m1.mn_m1sa = mn_m1sa
       mn_m1.mn_m1w = mn_m1w
       mn_m1.us_1040 = us_1040

@@ -270,6 +270,12 @@ def seed_blobs
       :hope_opportunity_claimed: false
       :at_least_half_time: true
       :postsecondary_completed: true
+      :m1529_name_1: CA Saves
+      :m1529_account_1: '12345'
+      :m1529_amount_1: '999'
+      :m1529_name_2: CA Saves
+      :m1529_account_2: '23456'
+      :m1529_amount_2: '777'
     YAML
 
   hsa_yaml =

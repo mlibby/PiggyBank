@@ -13,15 +13,23 @@ module PiggyBank::Tax::Form::Writer::MN
     def text_fields
       {
         "yourfirstname" => @adapter.first_name,
+        "yourlastname" => @adapter.last_name,
         "socialsecuritynumber" => @adapter.ssn,
+        "Trustee" => @adapter.line_1_fi_1,
+        "Account Number" => @adapter.line_1_account_1,
+        "Trustee_2" => @adapter.line_1_fi_2,
+        "Account Number_2" => @adapter.line_1_account_2,
       }
     end
 
     def money_fields
       {
- #  "form1[0].Page1[0].f1_03[0]" => @format.as_currency(@adapter.line_1),
-               # "form1[0].Page1[0].f1_14[0]" => @format.as_currency(@adapter.line_9),
-        }
+        "Amount" => @format.as_currency(@adapter.line_1_amount_1),
+        "Amount_2" => @format.as_currency(@adapter.line_1_amount_2),
+        "M1529line1" => @format.as_currency(@adapter.line_1),
+        "M1529line3" => @format.as_currency(@adapter.line_3),
+        "M1529line5" => @format.as_currency(@adapter.line_5),
+      }
     end
 
     def button_fields
