@@ -1,23 +1,23 @@
 module PiggyBank
   class App < Sinatra::Base
     def general_form
-      haml_layout :"tax/data/general/index"
+      erb_layout :"tax/data/general/index"
     end
 
     def hsa_form
-      haml_layout :"tax/data/hsa/index"
+      erb_layout :"tax/data/hsa/index"
     end
 
     def income_form
-      haml_layout :"tax/data/income/index"
+      erb_layout :"tax/data/income/index"
     end
 
     def deduct_form
-      haml_layout :"tax/data/deduct/index"
+      erb_layout :"tax/data/deduct/index"
     end
 
     get "/tax/data" do
-      haml_layout :"tax/data/index"
+      erb_layout :"tax/data/index"
     end
 
     get "/tax/data/general" do
@@ -58,7 +58,7 @@ module PiggyBank
 
     get "/tax/data/income" do
       @income = PiggyBank::Tax::Data::Income.instance
-      haml_layout :"tax/data/income/index"
+      erb_layout :"tax/data/income/index"
     end
 
     post "/tax/data/income" do
@@ -132,7 +132,7 @@ module PiggyBank
 
     get "/tax/data/education" do
       @education = PiggyBank::Tax::Data::Education.instance
-      haml_layout :"tax/data/education/index"
+      erb_layout :"tax/data/education/index"
     end
 
     post "/tax/data/education" do
@@ -146,7 +146,7 @@ module PiggyBank
     get "/tax/forms" do
       PiggyBank::Tax::Form::Adapter::Loader.load_adapters
       @us_8283_count = PiggyBank::Tax::Form::Adapter::US::Form8283.count
-      haml_layout :"tax/form/index"
+      erb_layout :"tax/form/index"
     end
 
     get "/tax/form/us/form_8283/:form_number" do |fn|

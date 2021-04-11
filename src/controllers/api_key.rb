@@ -6,14 +6,14 @@ module PiggyBank
 
     def api_key_index
       @api_keys = PiggyBank::ApiKey.all
-      haml_layout :"api_key/index"
+      erb_layout :"api_key/index"
     end
 
     def api_key_new
       @method = "POST"
       @action = "/api_key"
       @header = "New API Key"
-      haml_layout :"api_key/edit"
+      erb_layout :"api_key/edit"
     end
 
     def api_key_create(params)
@@ -27,7 +27,7 @@ module PiggyBank
     end
 
     def api_key_view
-      haml_layout :"api_key/view"
+      erb_layout :"api_key/view"
     end
 
     def api_key_edit
@@ -35,23 +35,23 @@ module PiggyBank
       @method = "PUT"
       @header = "Edit API Key"
 
-      haml_layout :"api_key/edit"
+      erb_layout :"api_key/edit"
     end
 
     def api_key_update
-      haml :"api_key/view"
+      erb_layout :"api_key/view"
     end
 
     def api_key_diff(orig_api_key, new_api_key)
       @api_key = orig_api_key
       @new_api_key = new_api_key
-      haml :"api_key/diff"
+      erb_layout :"api_key/diff"
     end
 
     def api_key_confirm
       @action = "/api_key/#{@api_key.api_key_id}"
       @method = "DELETE"
-      haml_layout :"api_key/delete"
+      erb_layout :"api_key/delete"
     end
 
     def api_key_delete

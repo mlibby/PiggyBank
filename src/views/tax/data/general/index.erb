@@ -1,0 +1,22 @@
+<h1>General Information</h1>
+<%= styled_flash %>
+<form method="POST">
+  <input name="_token" type="hidden" value="<%= PiggyBank::App.token %>"></input>
+  <fieldset>
+    <legend>General Questions</legend>
+    <label>
+      Filing Status
+      <select name="filing_status">
+        <% PiggyBank::Tax::Data::General::FILING_STATUSES.each do |k, v| %>
+          <option selected="k.to_s == @general.filing_status" value="<%= k %>"></option>
+        <% end %>
+      </select>
+    </label>
+  </fieldset>
+</form>
+<%= v %>
+  <label>
+    Virtual Currency?
+    <input checked="<%= @general.virtual %>" name="virtual" type="checkbox"></input>
+  </label>
+<% end %>

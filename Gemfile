@@ -5,7 +5,6 @@ source "https://rubygems.org"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem "ofx", git: "https://github.com/mlibby/ofx.git"
-gem "haml"
 gem "hexapdf"
 gem "sequel"
 gem "sequel-seed"

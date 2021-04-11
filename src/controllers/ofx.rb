@@ -6,14 +6,14 @@ module PiggyBank
 
     def ofx_index
       @ofxs = PiggyBank::Ofx.all
-      haml_layout :"ofx/index"
+      erb_layout :"ofx/index"
     end
 
     def ofx_new
       @method = "POST"
       @action = "/ofx"
       @header = "New OFX Configuration"
-      haml_layout :"ofx/edit"
+      erb_layout :"ofx/edit"
     end
 
     def ofx_create(params)
@@ -25,7 +25,7 @@ module PiggyBank
     end
 
     def ofx_view
-      haml_layout :"ofx/view"
+      erb_layout :"ofx/view"
     end
 
     def ofx_edit
@@ -33,23 +33,23 @@ module PiggyBank
       @method = "PUT"
       @header = "Edit OFX Configuration"
 
-      haml_layout :"ofx/edit"
+      erb_layout :"ofx/edit"
     end
 
     def ofx_update
-      haml :"ofx/view"
+      erb_layout :"ofx/view"
     end
 
     def ofx_diff(orig_ofx, new_ofx)
       @ofx = orig_ofx
       @new_ofx = new_ofx
-      haml :"ofx/diff"
+      erb_layout :"ofx/diff"
     end
 
     def ofx_confirm
       @action = "/ofx/#{@ofx.ofx_id}"
       @method = "DELETE"
-      haml_layout :"ofx/delete"
+      erb_layout :"ofx/delete"
     end
 
     def ofx_delete

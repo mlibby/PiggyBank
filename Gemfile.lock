@@ -26,9 +26,6 @@ GEM
     ffi-win32-extensions (1.0.4)
       ffi
     geom2d (0.3.1)
-    haml (5.2.1)
-      temple (>= 0.8.0)
-      tilt
     hexapdf (0.14.2)
       cmdparse (~> 3.0, >= 3.0.3)
       geom2d (~> 0.3)
@@ -145,7 +142,6 @@ PLATFORMS
 DEPENDENCIES
   debase
   eventmachine
-  haml
   hexapdf
   ofx!
   pg

@@ -1,0 +1,17 @@
+<h1>
+  <%= "OFX Configuration '#{@ofx.account.name}'" %>
+</h1>
+<div class="links">
+  <a href="/ofxs">API Key Index</a>
+</div>
+<%= erb :"ofx/as_dl" %>
+<div class="buttons">
+  <a class="btn primary" href="/ofx/<%= @ofx.ofx_id %>?edit">
+    <span class="icon icon-pencil"></span>
+    <span class="text">Edit </span>
+  </a>
+  <a class="btn danger" href="/ofx/<%= @ofx.ofx_id %>?delete">
+    <span class="icon icon-trash"></span>
+    <span class="text">Delete</span>
+  </a>
+</div>

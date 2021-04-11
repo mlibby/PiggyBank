@@ -1,0 +1,16 @@
+<h1>HSA Information</h1>
+<%= styled_flash %>
+<form method="POST">
+  <input name="_token" type="hidden" value="<%= PiggyBank::App.token %>"></input>
+  <fieldset>
+    <legend>General Information</legend>
+    <label>
+      Coverage
+      <select name="covered_by_hdhp">
+        <% PiggyBank::Tax::Data::HSA::COVERAGE_TYPES.each do |k, v| %>
+          <option selected="k.to_s == @hsa.covered_by_hdhp" value="<%= k %>"></option>
+        <% end %>
+      </select>
+    </label>
+  </fieldset>
+</form>

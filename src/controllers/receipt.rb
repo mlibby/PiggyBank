@@ -1,7 +1,7 @@
 module PiggyBank
   class App < Sinatra::Base
     get "/receipts" do
-      haml_layout :"receipt/index"
+      erb_layout :"receipt/index"
     end
   end
 end

@@ -1,0 +1,32 @@
+<dl>
+  <dt>
+    Type
+  </dt>
+  <dd>
+    <%= @account.type_string %>
+  </dd>
+  <dt>
+    Name
+  </dt>
+  <dd>
+    <%= @account.name %>
+  </dd>
+  <dt>
+    Parent Account
+  </dt>
+  <dd>
+    <%= @account.parent ? @account.parent.name : "[nil]" %>
+  </dd>
+  <dt>
+    Commodity
+  </dt>
+  <dd>
+    <%= @account.commodity.name %>
+  </dd>
+  <dt>
+    Is Placeholder?
+  </dt>
+  <dd>
+    <%= @account.is_placeholder %>
+  </dd>
+</dl>

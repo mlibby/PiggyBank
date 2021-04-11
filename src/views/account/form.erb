@@ -1,0 +1,106 @@
+<form action="<%= @action %>" method="POST">
+  <input name="_method" type="hidden" value="<%= @method %>"></input>
+  <input name="_token" type="hidden" value="<%= PiggyBank::App.token %>"></input>
+  <input name="version" type="hidden" value="<%= @account.version %>"></input>
+  <label>
+    <% # FUTURE: choose type based on parent type %>
+    Account Type
+    <select name="type">
+      <option value="1">
+        Asset
+      </option>
+      <option value="2">
+        Equity
+      </option>
+      <option value="3">
+        Expense
+      </option>
+      <option value="4">
+        Income
+      </option>
+      <option value="5">
+        Liability
+      </option>
+      <option value="6">
+        Mortgage
+      </option>
+    </select>
+  </label>
+  <% if @account.parent %>
+    <label>
+      Parent Account
+      <select name="parent_id">
+        <% PiggyBank::Account.account_opts(@account.parent).each do |opt| %>
+          <option selected="<%= opt[:selected] %>" value="<%= opt[:value] %>">
+            <%= opt[:text] %>
+          </option>
+        <% end %>
+      </select>
+    </label>
+  <% end %>
+  <label>
+    Commodity
+    <select name="commodity_id">
+      <% PiggyBank::Commodity.commodity_opts(@account.commodity).each do |opt| %>
+        <option selected="<%= opt[:selected] %>" value="<%= opt[:value] %>">
+          <%= opt[:text] %>
+        </option>
+      <% end %>
+    </select>
+  </label>
+  <label>
+    Name
+    <input name="name" type="text" value="<%= @account.name %>"></input>
+  </label>
+  <div class="form-check">
+    <label>
+      <input checked="<%= @account.is_placeholder %>" name="is_placeholder" type="checkbox"></input>
+      Is Placeholder
+    </label>
+    <% # <div id='mortgage-details' class='account-details' style='display: none'> %>
+    <% #   <hr /> %>
+    <% #   <div class='form-row'> %>
+    <% #     <h4 class='col'>Mortgage Details</h4> %>
+    <% #   </div> %>
+    <% #   <div class='form-row'> %>
+    <% #     <div class='form-group col'> %>
+    <% #       <label for='mortgagePrincipal'>Principal</label> %>
+    <% #       <input id='mortgagePrincipal' class='form-control' type='number' value='${d.mortgagePrincipal}' /> %>
+    <% #     </div> %>
+    <% #     <div class='form-group col'> %>
+    <% #       <label for='mortgageRate'>Rate (% APR)</label> %>
+    <% #       <input id='mortgageRate' class='form-control' type='number' value='${d.mortgageRate}' /> %>
+    <% #     </div> %>
+    <% #   </div> %>
+    <% #   <div class='form-row'> %>
+    <% #     <div class='form-group col'> %>
+    <% #       <label for='mortgageStartDate'>Start Date</label> %>
+    <% #       <input id='mortgageStartDate' class='form-control' type='date' value='${d.mortgageStartDate}' /> %>
+    <% #     </div> %>
+    <% #     <div class='form-group col'> %>
+    <% #       <label for='mortgagePayments'>Payments</label> %>
+    <% #       <input id='mortgagePayments' class='form-control' type='text' value='${d.mortgagePayments}' /> %>
+    <% #     </div> %>
+    <% #     <div class='form-group col'> %>
+    <% #       <label for='mortgagePeriod'>Period</label> %>
+    <% #       <select id='mortgagePeriod' class='form-control'> %>
+    <% #         <option>Monthly</option> %>
+    <% #       </select> %>
+    <% #     </div> %>
+    <% #   </div> %>
+    <% # </div> %>
+  </div>
+  <div class="buttons">
+    <button class="btn primary">
+      <span class="icon icon-solid-check"></span>
+      <span class="text">Save</span>
+    </button>
+    <% # FUTURE: make this link do JS: history.back() %>
+    <a class="btn secondary" href="/accounts">
+      <span class="icon icon-close"></span>
+      <span class="text">Cancel</span>
+    </a>
+  </div>
+</form>
+<% # ZZZ: create Parent Account select menu %>
+<% # ZZZ: create Commodity select menu %>

@@ -1,0 +1,38 @@
+<h1>OFX Configurations</h1>
+<%= styled_flash %>
+<div>
+  <a href="/ofx">New OFX Configuration</a>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Active</th>
+      <th>Account</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @ofxs.each do |ofx| %>
+      <tr>
+        <td>
+          <%= ofx.active %>
+        </td>
+        <td>
+          <a href="/ofx/<%= ofx.ofx_id %>">
+            <%= ofx.account.name %>
+          </a>
+        </td>
+        <td>
+          <a class="btn primary" href="/ofx/<%= ofx.ofx_id %>?edit">
+            <span class="icon icon-pencil"></span>
+            <span class="sr-only">Edit </span>
+          </a>
+          <a class="btn danger" href="/ofx/<%= ofx.ofx_id %>?delete">
+            <span class="icon icon-trash"></span>
+            <span class="sr-only">Trash </span>
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,18 @@
+<h1>
+  <%= "Commodity #{@commodity.commodity_id}" %>
+</h1>
+<div class="links">
+  <a>(href="/commodities") Commodities List</a>
+</div>
+<%= erb :"commodity/as_dl" %>
+<div class="buttons">
+  <a class="btn primary" href="/commodity/<%= @commodity.commodity_id %>?edit">
+    <span class="icon icon-pencil"></span>
+    <span class="text">Edit </span>
+  </a>
+  <a class="btn danger" href="/commodity/<%= @commodity.commodity_id %>?delete">
+    <span class="icon icon-trash"></span>
+    <span class="text">Delete</span>
+  </a>
+</div>
+<% # ZZZ: add navigation links to this page %>

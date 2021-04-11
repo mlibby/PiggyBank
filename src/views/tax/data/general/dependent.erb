@@ -1,0 +1,33 @@
+<fieldset>
+  <legend>
+    <%= "Dependent ##{n+1}" %>
+  </legend>
+  <label>
+    First Name 
+    <input name="dependents[][first_name]" type="text" value="<%= depend.first_name %>"></input>
+  </label>
+  <label>
+    Last Name 
+    <input name="dependents[][last_name]" type="text" value="<%= depend.last_name %>"></input>
+  </label>
+  <label>
+    Social Security Number 
+    <input name="dependents[][ssn]" type="text" value="<%= depend.ssn %>"></input>
+  </label>
+  <label>
+    Relation
+    <input name="dependents[][relation]" type="text" value="<%= depend.relation %>"></input>
+  </label>
+  <label>
+    Child Tax Credit?
+    <input checked="<%= depend.child_credit %>" name="dependents[][child_credit]" type="checkbox"></input>
+  </label>
+  <label>
+    Credit for Other Dependents?
+    <input checked="<%= depend.other_credit %>" name="dependents[][other_credit]" type="checkbox"></input>
+  </label>
+  <button class="btn danger" formaction="/tax/data/general?rm_dep=<%= n %>">
+    <span class="icon icon-trash"></span>
+    <span class="text">Remove Dependent</span>
+  </button>
+</fieldset>

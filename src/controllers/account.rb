@@ -6,14 +6,14 @@ module PiggyBank
 
     def account_index
       @accounts = PiggyBank::Account.as_chart
-      haml_layout :"account/index"
+      erb_layout :"account/index"
     end
 
     def account_new
       @method = "POST"
       @action = "/account"
       @header = "New Account"
-      haml_layout :"account/edit"
+      erb_layout :"account/edit"
     end
 
     def account_create(params)
@@ -30,7 +30,7 @@ module PiggyBank
     end
 
     def account_view
-      haml_layout :"account/view"
+      erb_layout :"account/view"
     end
 
     def account_edit
@@ -38,24 +38,24 @@ module PiggyBank
       @method = "PUT"
       @header = "Edit Account"
 
-      haml_layout :"account/edit"
+      erb_layout :"account/edit"
     end
 
     def account_update
-      haml :"account/view"
+      erb_layout :"account/view"
     end
 
     def account_diff(orig_account, new_account)
       @account = orig_account
       @new_account = new_account
-      haml :"account/diff"
+      erb_layout :"account/diff"
     end
 
     def account_confirm
       @action = "/account/#{@account.account_id}"
       @method = "DELETE"
 
-      haml_layout :"account/delete"
+      erb_layout :"account/delete"
     end
 
     def account_delete

@@ -1,4 +1,3 @@
-require "haml"
 require "sinatra/base"
 require "sinatra/flash"
 require_relative "repo/piggybank_repo.rb"
@@ -43,8 +42,8 @@ module PiggyBank
     require_relative "./lib/piggybank_lib"
     require_relative "./controllers/piggybank_controllers"
 
-    def haml_layout(view)
-      haml view, layout: :layout
+    def erb_layout(view)
+      erb view, layout: :layout
     end
 
     if app_file == $0

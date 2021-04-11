@@ -1,0 +1,44 @@
+<form action="<%= @action %>" method="POST">
+  <input name="_method" type="hidden" value="<%= @method %>"></input>
+  <input name="_token" type="hidden" value="<%= PiggyBank::App.token %>"></input>
+  <input name="version" type="hidden" value="<%= @price.version %>"></input>
+  <label>
+    Name
+    <input name="quote_date" type="date" value="<%= @price.quote_date %>"></input>
+  </label>
+  <label>
+    Commodity
+    <select name="commodity_id">
+      <% PiggyBank::Commodity.commodity_opts(@price.commodity).each do |opt| %>
+        <option selected="<%= opt[:selected] %>" value="<%= opt[:value] %>">
+          <%= opt[:text] %>
+        </option>
+      <% end %>
+    </select>
+  </label>
+  <label>
+    Currency
+    <select name="currency_id">
+      <% PiggyBank::Commodity.commodity_opts(@price.currency).each do |opt| %>
+        <option selected="<%= opt[:selected] %>" value="<%= opt[:value] %>">
+          <%= opt[:text] %>
+        </option>
+      <% end %>
+    </select>
+  </label>
+  <label>
+    Value
+    <input name="value" type="number" value="<%= @price.value %>"></input>
+  </label>
+  <div class="buttons">
+    <button class="btn primary">
+      <span class="icon icon-solid-check"></span>
+      <span class="text">Save</span>
+    </button>
+    <% # FUTURE: make this link do JS: history.back() %>
+    <a class="btn secondary">(href='/accounts')
+      <span class="icon icon-close"></span>
+      <span class="text">Cancel</span>
+    </a>
+  </div>
+</form>

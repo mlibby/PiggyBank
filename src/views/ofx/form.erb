@@ -1,0 +1,58 @@
+<form action="<%= @action %>" class="ofx" method="POST">
+  <fieldset>
+    <input name="_method" type="hidden" value="<%= @method %>"></input>
+    <input name="_token" type="hidden" value="<%= PiggyBank::App.token %>"></input>
+    <input name="version" type="hidden" value="<%= @ofx.version %>"></input>
+    <label>
+      <input checked="<%= @ofx.active %>" name="active" type="checkbox"></input>
+      Active?
+    </label>
+    <label>
+      Account
+      <input name="account_id" type="text" value="<%= @ofx.account_id %>"></input>
+    </label>
+    <label>
+      URL
+      <input name="url" type="text" value="<%= @ofx.url %>"></input>
+    </label>
+    <label>
+      User
+      <input name="user" type="text" value="<%= @ofx.user %>"></input>
+    </label>
+    <label>
+      Password 
+      <input name="password" type="text" value="<%= @ofx.password %>"></input>
+    </label>
+    <label>
+      FID
+      <input name="fid" type="text" value="<%= @ofx.fid %>"></input>
+    </label>
+    <label>
+      FID Org
+      <input name="fid_org" type="text" value="<%= @ofx.fid_org %>"></input>
+    </label>
+    <label>
+      Bank ID
+      <input name="bank_id" type="text" value="<%= @ofx.bank_id %>"></input>
+    </label>
+    <label>
+      Bank Account ID
+      <input name="bank_account_id" type="text" value="<%= @ofx.bank_account_id %>"></input>
+    </label>
+    <label>
+      Account Type
+      <input name="account_type" type="text" value="<%= @ofx.account_type %>"></input>
+    </label>
+  </fieldset>
+  <div class="buttons">
+    <button class="btn primary">
+      <span class="icon icon-solid-check"></span>
+      <span class="text">Save</span>
+    </button>
+    <% # FUTURE: make this link do JS: history.back() %>
+    <a class="btn secondary" href="/ofxs">
+      <span class="icon icon-close"></span>
+      <span class="text">Cancel</span>
+    </a>
+  </div>
+</form>

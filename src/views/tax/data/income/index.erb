@@ -1,0 +1,56 @@
+<h1>Income Data</h1>
+<%= styled_flash %>
+<form method="POST">
+  <input name="_token" type="hidden" value="<%= PiggyBank::App.token %>"></input>
+  <fieldset>
+    <legend>Miscellaneous Income</legend>
+    <label>
+      State Tax Refund
+      <input name="state_refund" type="text" value="<%= @income.state_refund %>"></input>
+    </label>
+    <label>
+      Other Credits
+      <input name="other_credits" type="text" value="<%= @income.other_credits %>"></input>
+    </label>
+  </fieldset>
+  <% @income.w2s.each_with_index do |w2, n| %>
+    <%= erb :"tax/data/income/w2", locals: {w2: w2, n: n} %>
+  <% end %>
+  <% @income.f1099_divs.each_with_index do |f1099div, n| %>
+    <%= erb :"tax/data/income/f1099_div", locals: {f1099div: f1099div, n: n} %>
+  <% end %>
+  <% @income.f1099_ints.each_with_index do |f1099int, n| %>
+    <%= erb :"tax/data/income/f1099_int", locals: {f1099int: f1099int, n: n} %>
+  <% end %>
+  <% @income.rentals.each_with_index do |rental, n| %>
+    <%= erb :"tax/data/income/rental", locals: {rental: rental, n: n} %>
+  <% end %>
+  <div class="buttons">
+    <button class="btn primary" formaction="/tax/data/income?add_w2">
+      <span class="icon icon-plus"></span>
+      <span class="text">Add W2</span>
+    </button>
+    <button class="btn primary" formaction="/tax/data/income?add_f1099_div">
+      <span class="icon icon-plus"></span>
+      <span class="text">Add 1099-DIV</span>
+    </button>
+    <button class="btn primary" formaction="/tax/data/income?add_f1099_int">
+      <span class="icon icon-plus"></span>
+      <span class="text">Add 1099-INT</span>
+    </button>
+    <button class="btn primary" formaction="/tax/data/income?add_rental">
+      <span class="icon icon-plus"></span>
+      <span class="text">Add Rental</span>
+    </button>
+  </div>
+  <div class="buttons">
+    <button class="btn primary" formaction="/tax/data/income">
+      <span class="icon icon-solid-check"></span>
+      <span class="text">Save</span>
+    </button>
+    <a class="btn secondary" href="/tax/data">
+      <span class="icon icon-close"></span>
+      <span class="text">Cancel</span>
+    </a>
+  </div>
+</form>

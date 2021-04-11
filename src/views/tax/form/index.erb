@@ -1,0 +1,105 @@
+<h1>Tax Forms Available</h1>
+<%= styled_flash %>
+<h2>DO NOT USE THESE FORMS!</h2>
+<p>
+  These forms are here for informational and display
+  purposes only. The developer of this software is neither a
+  tax professional nor an accountant. While the forms
+  produced by this software may be correct for some
+  cases, there are many complexities in US tax law
+  that have not been accounted for.
+</p>
+<p>
+  The developer of this software is making it for his
+  personal use and is sharing it in the hopes that others
+  may find it useful to build upon. If you are a programmer,
+  please submit any patches you might have -- especially if 
+  you happen to work on states other than Minnesota.
+</p>
+<ul>
+  <li>
+    US Federal
+    <ul>
+      <li>
+        <a href="/tax/form/us/form_1040">Form 1040</a>
+        &mdash; Individual Income Tax
+      </li>
+      <li>
+        <a href="/tax/form/us/sched_1">Schedule 1</a>
+        &mdash; Additional Income
+      </li>
+      <li>
+        <a href="/tax/form/us/sched_3">Schedule 3</a>
+        &mdash; Additional Credits
+      </li>
+      <li>
+        <a href="/tax/form/us/sched_a">Schedule A</a>
+        &mdash; Itemized Deductions        
+      </li>
+      <li>
+        <a href="/tax/form/us/sched_b">Schedule B</a>
+        &mdash; Interest and Dividends        
+      </li>
+      <li>
+        <a href="/tax/form/us/sched_e">Schedule E</a>
+        &mdash; Supplemental Income
+      </li>
+      <li>
+        <a href="/tax/form/us/form_6198">Form 6198</a>
+        &mdash; At-Risk Limitations
+      </li>
+      <li>
+        Form 8283 &mdash; Noncash Charitable Contributions:
+        <% 1.upto(@us_8283_count) do |fn| %>
+          <a href="/tax/form/us/form_8283/<%= fn %>"><
+            <%= "Form ##{fn}" %>
+          </a>
+          <%= " " %>
+        <% end %>
+      </li>
+      <li>
+        <a href="/tax/form/us/form_8582">Form 8582</a>
+        &mdash; Passive Activity Loss Limitations
+      </li>
+      <li>
+        <a href="/tax/form/us/form_8863">Form 8863</a>
+        &mdash; Education Credits
+      </li>
+      <li>
+        <a href="/tax/form/us/form_8889">Form 8889</a>
+        &mdash; Health Savings Accounts
+      </li>
+    </ul>
+    Minnesota
+    <ul>
+      <li>
+        <a href="/tax/form/mn/m1">M1</a>
+        &mdash; Individual Income Tax
+      </li>
+      <li>
+        <a href="/tax/form/mn/m1c">M1C</a>
+        &mdash; Nonrefundable Credits
+      </li>
+      <li>
+        <a href="/tax/form/mn/m1m">M1M</a>
+        &mdash; Income Additions and Subtractions
+      </li>
+      <li>
+        <a href="/tax/form/mn/m1ma">M1MA</a>
+        &mdash; Marriage Credit
+      </li>
+      <li>
+        <a href="/tax/form/mn/m1sa">M1SA</a>
+        &mdash; Itemized Deductions
+      </li>
+      <li>
+        <a href="/tax/form/mn/m1w">M1W</a>
+        &mdash; Income Tax Withheld
+      </li>
+      <li>
+        <a href="/tax/form/mn/m1529">M1529</a>
+        &mdash; Education Savings Account
+      </li>
+    </ul>
+  </li>
+</ul>

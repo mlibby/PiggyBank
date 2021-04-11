@@ -1,0 +1,33 @@
+<fieldset>
+  <legend>
+    <%= "Non-Cash Donation ##{n+1}" %>
+  </legend>
+  <label>
+    Charity
+    <input name="noncash_donation[][charity]" type="text" value="<%= noncash_donation.charity %>"></input>
+  </label>
+  <label>
+    Address
+    <input name="noncash_donation[][address]" type="text" value="<%= noncash_donation.address %>"></input>
+  </label>
+  <label>
+    Description
+    <input name="noncash_donation[][description]" type="text" value="<%= noncash_donation.description %>"></input>
+  </label>
+  <label>
+    Date
+    <input name="noncash_donation[][date]" type="date" value="<%= noncash_donation.date %>"></input>
+  </label>
+  <label>
+    Amount
+    <input min="0" name="noncash_donation[][amount]" step="0.01" type="number" value="<%= noncash_donation.amount %>"></input>
+  </label>
+  <label>
+    Method
+    <input name="noncash_donation[][method]" type="text" value="<%= noncash_donation.method %>"></input>
+  </label>
+  <button class="btn danger" formaction="/tax/data/deduct?rm_ncd=<%= n %>">
+    <span class="icon icon-trash"></span>
+    <span class="text">Remove Donation</span>
+  </button>
+</fieldset>

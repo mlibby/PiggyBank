@@ -6,7 +6,7 @@ module PiggyBank
 
     def commodity_index
       @commodities = PiggyBank::Commodity.all
-      haml_layout :"commodity/index"
+      erb_layout :"commodity/index"
     end
 
     def commodity_new
@@ -16,7 +16,7 @@ module PiggyBank
       @action = "/commodity"
       @header = "New Commodity"
 
-      haml_layout :"commodity/edit"
+      erb_layout :"commodity/edit"
     end
 
     def commodity_create(params)
@@ -35,7 +35,7 @@ module PiggyBank
     end
 
     def commodity_view
-      haml_layout :"commodity/view"
+      erb_layout :"commodity/view"
     end
 
     def commodity_edit
@@ -43,24 +43,24 @@ module PiggyBank
       @method = "PUT"
       @header = "Edit Commodity"
 
-      haml_layout :"commodity/edit"
+      erb_layout :"commodity/edit"
     end
 
     def commodity_update
-      haml :"commodity/view"
+      erb_layout :"commodity/view"
     end
 
     def commodity_diff(orig_commodity, new_commodity)
       @commodity = orig_commodity
       @new_commodity = new_commodity
-      haml :"commodity/diff"
+      erb_layout :"commodity/diff"
     end
 
     def commodity_confirm
       @action = "/commodity/#{@commodity.commodity_id}"
       @method = "DELETE"
 
-      haml_layout :"commodity/delete"
+      erb_layout :"commodity/delete"
     end
 
     def commodity_delete

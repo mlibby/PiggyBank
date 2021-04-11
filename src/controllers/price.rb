@@ -6,14 +6,14 @@ module PiggyBank
 
     def price_index
       @prices = PiggyBank::Price.eager(:commodity, :currency)
-      haml_layout :"price/index"
+      erb_layout :"price/index"
     end
 
     def price_new
       @method = "POST"
       @action = "/price"
       @header = "New Price"
-      haml_layout :"price/edit"
+      erb_layout :"price/edit"
     end
 
     def price_create(params)
@@ -29,7 +29,7 @@ module PiggyBank
     end
 
     def price_view
-      haml_layout :"price/view"
+      erb_layout :"price/view"
     end
 
     def price_edit
@@ -37,23 +37,23 @@ module PiggyBank
       @method = "PUT"
       @header = "Edit Price"
 
-      haml_layout :"price/edit"
+      erb_layout :"price/edit"
     end
 
     def price_update
-      haml :"price/view"
+      erb_layout :"price/view"
     end
 
     def price_diff(orig_price, new_price)
       @price = orig_price
       @new_price = new_price
-      haml :"price/diff"
+      erb_layout :"price/diff"
     end
 
     def price_confirm
       @action = "/price/#{@price.price_id}"
       @method = "DELETE"
-      haml_layout :"price/delete"
+      erb_layout :"price/delete"
     end
 
     def price_delete

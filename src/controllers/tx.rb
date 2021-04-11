@@ -6,14 +6,14 @@ module PiggyBank
 
     def tx_index
       @txs = PiggyBank::Tx.all
-      haml_layout :"tx/index"
+      erb_layout :"tx/index"
     end
 
     def tx_new
       @method = "POST"
       @action = "/tx"
       @header = "New Transaction"
-      haml_layout :"tx/edit"
+      erb_layout :"tx/edit"
     end
 
     def tx_create(params)
@@ -43,7 +43,7 @@ module PiggyBank
     end
 
     def tx_view
-      haml_layout :"tx/view"
+      erb_layout :"tx/view"
     end
 
     def tx_edit
@@ -51,23 +51,23 @@ module PiggyBank
       @method = "PUT"
       @header = "Edit Transaction"
 
-      haml_layout :"tx/edit"
+      erb_layout :"tx/edit"
     end
 
     def tx_update
-      haml :"tx/view"
+      erb_layout :"tx/view"
     end
 
     def tx_diff(orig_tx, new_tx)
       @tx = orig_tx
       @new_tx = new_tx
-      haml :"tx/diff"
+      erb_layout :"tx/diff"
     end
 
     def tx_confirm
       @action = "/tx/#{@tx.tx_id}"
       @method = "DELETE"
-      haml_layout :"tx/delete"
+      erb_layout :"tx/delete"
     end
 
     def tx_delete

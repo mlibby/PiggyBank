@@ -4,7 +4,7 @@ module PiggyBank
     # FUTURE: plan budget feature
 
     get "/budget" do
-      haml_layout :"budget/index"
+      erb_layout :"budget/index"
     end
   end
 end

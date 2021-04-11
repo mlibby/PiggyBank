@@ -1,0 +1,19 @@
+<h1>Delete API Key?</h1>
+<%= styled_flash %>
+<form action="/api_key/<%= @api_key.api_key_id %>" method="POST">
+  <input name="_method" type="hidden" value="DELETE"></input>
+  <input name="_token" type="hidden" value="<%= PiggyBank::App.token %>"></input>
+  <input name="version" type="hidden" value="<%= @api_key.version %>"></input>
+  <%= erb :"api_key/as_dl" %>
+  <div class="buttons">
+    <button class="btn danger">
+      <span class="icon icon-trash"></span>
+      <span class="text">Delete</span>
+    </button>
+    <% # FUTURE: make this link do JS: history.back() %>
+    <a class="btn secondary" href="/api_keys">
+      <span class="icon icon-close"></span>
+      <span class="text">Cancel</span>
+    </a>
+  </div>
+</form>

@@ -1,0 +1,46 @@
+<h1>Prices</h1>
+<%= styled_flash %>
+<div>
+  <a href='/price'> New Price </a>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Commodity</th>
+      <th>Quote Date</th>
+      <th>Value</th>
+      <th>Currency</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @prices.each do |price| %>
+      <tr>
+        <td>
+          <a href="/commodity/<%= price.commodity.commodity_id %>">
+            <%= price.commodity.name  %>
+          </a>
+        </td>
+        <td>
+          <%= price.quote_date %>
+        </td>
+        <td>
+          <%= price.value_string  %>
+        </td>
+        <td>
+          <%= price.currency.name %>
+        </td>
+        <td>
+          <a class="btn primary" href="/price/<%= price.price_id %>?edit">
+            <span class="icon icon-pencil"></span>
+            <span class="sr-only">Edit </span>
+          </a>
+          <a class="btn danger" href="/price/<%= price.price_id %>?delete">
+            <span class="icon icon-trash"></span>
+            <span class="sr-only">Trash</span>
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

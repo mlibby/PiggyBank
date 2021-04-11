@@ -1,0 +1,58 @@
+<form action="<%= @action %>" class="tx" method="POST">
+  <fieldset>
+    <input name="_method" type="hidden" value="<%= @method %>"></input>
+    <input name="_token" type="hidden" value="<%= PiggyBank::App.token %>"></input>
+    <input name="version" type="hidden" value="<%= @tx.version %>"></input>
+    <label>
+      Date
+      <input name="post_date" type="date" value="<%= @tx.post_date %>"></input>
+    </label>
+    <label>
+      Number
+      <input name="number" type="text" value="<%= @tx.number %>"></input>
+    </label>
+    <label>
+      Description
+      <input name="description" type="text" value="<%= @tx.description %>"></input>
+    </label>
+  </fieldset>
+  <% @tx.splits.each do |split| %>
+    <fieldset>
+      <input name="splits[][split_id]" type="hidden" value="<%= split.split_id %>"></input>
+      <input name="splits[][version]" type="hidden" value="<%= split.version %>"></input>
+      <label>
+        Account
+        <select name="splits[][account_id]">
+          <% PiggyBank::Account.account_opts(split.account).each do |opt| %>
+            <option selected="<%= opt[:selected] %>" value="<%= opt[:value] %>">
+              <%= opt[:text] %>
+            </option>
+          <% end %>
+        </select>
+      </label>
+      <label>
+        Memo
+        <input name="splits[][memo]" type="text" value="<%= split.memo %>"></input>
+      </label>
+      <label>
+        Amount
+        <input name="splits[][amount]" type="number" value="<%= split.amount %>"></input>
+      </label>
+      <label>
+        Value
+        <input name="splits[][value]" type="number" value="<%= split.value %>"></input>
+      </label>
+    </fieldset>
+  <% end %>
+  <div class="buttons">
+    <button class="btn primary">
+      <span class="icon icon-solid-check"></span>
+      <span class="text">Save</span>
+    </button>
+    <% # FUTURE: make this link do JS: history.back() %>
+    <a class="btn secondary" href="/txs">
+      <span class="icon icon-close"></span>
+      <span class="text">Cancel</span>
+    </a>
+  </div>
+</form>

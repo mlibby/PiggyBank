@@ -1,0 +1,15 @@
+<h1>Transaction</h1>
+<div class="links">
+  <a href="/prices">Prices Index</a>
+</div>
+<%= erb :"tx/as_dl" %>
+<div class="buttons">
+  <a class="btn primary" href="/tx/<%= @tx.tx_id %>?edit">
+    <span class="icon icon-pencil"></span>
+    <span class="text">Edit </span>
+  </a>
+  <a class="btn danger" href="/tx/<%= @tx.tx_id %>?delete">
+    <span class="icon icon-trash"></span>
+    <span class="text">Delete</span>
+  </a>
+</div>
