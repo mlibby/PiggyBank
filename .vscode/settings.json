@@ -1,8 +1,4 @@
 {
-  "rubyTestExplorer.filePattern": [
-    "*_spec.rb"
-  ],
-  "rubyTestExplorer.testFramework": "rspec",
   "todo-tree.tree.showScanModeButton": false,
   "todo-tree.general.statusBar": "tags",
   "todo-tree.general.tags": [
@@ -20,5 +16,6 @@
       ]
   },
   "todo-tree.tree.disableCompactFolders": false,
-  "todo-tree.tree.showCountsInTree": true
+  "todo-tree.tree.showCountsInTree": true,
+  "python.pythonPath": "/usr/bin/python"
 }
