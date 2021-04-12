@@ -4,18 +4,20 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-
     {
-      "name": "Debug PiggyBank",
-      "type": "Ruby",
+      "name": "Python: Flask",
+      "type": "python",
       "request": "launch",
-      "env": {"APP_ENV": "DEV"},
-      "cwd": "${workspaceRoot}",
-      "program": "C:\\Ruby27-x64\\lib\\ruby\\gems\\2.7.0\\gems\\rack-2.2.3\\bin\\rackup",
+      "module": "flask",
+      "env": {
+        "FLASK_APP": "app/main.py",
+        "FLASK_ENV": "development"
+      },
       "args": [
-        "-p",
-        "4567"
-      ]
+        "run",
+        "--no-debugger"
+      ],
+      "jinja": true
     }
   ]
 }
