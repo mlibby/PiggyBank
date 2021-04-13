@@ -1,0 +1,29 @@
+h1 Commodities
+= styled_flash
+div
+  a(href='/commodity') New Commodity 
+table
+  thead
+    tr
+      th Name
+      th Description
+      th Type
+      th Ticker
+      th Fraction
+      th
+  tbody
+    - @commodities.each do |commodity|
+      tr
+        td
+          a{href="/commodity/#{commodity.commodity_id}")= commodity.name 
+        td= commodity.description
+        td= commodity.type_string 
+        td= commodity.ticker
+        td= commodity.fraction
+        td
+          a.btn.primary(href="/commodity/#{commodity.commodity_id}?edit")
+            span.icon.icon-pencil
+            span.sr-only Edit 
+          a.btn.danger(href="/commodity/#{commodity.commodity_id}?delete")
+            span.icon.icon-trash
+            span.sr-only Trash

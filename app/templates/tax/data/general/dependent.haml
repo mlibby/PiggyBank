@@ -1,0 +1,23 @@
+fieldset
+  legend= "Dependent ##{n+1}"
+  label 
+    First Name 
+    input(name="dependents[][first_name]' type="text' value=depend.first_name)
+  label 
+    Last Name 
+    input(name="dependents[][last_name]' type="text' value=depend.last_name)
+  label 
+    Social Security Number 
+    input(name="dependents[][ssn]' type="text' value=depend.ssn)
+  label
+    Relation
+    input(name="dependents[][relation]' type="text' value=depend.relation)
+  label
+    Child Tax Credit?
+    input(name="dependents[][child_credit]' type="checkbox' checked=depend.child_credit)
+  label 
+    Credit for Other Dependents?
+    input(name="dependents[][other_credit]' type="checkbox' checked=depend.other_credit)
+  button.btn.danger(formaction="/tax/data/general?rm_dep=#{n}")
+    span.icon.icon-trash
+    span.text Remove Dependent

@@ -1,0 +1,35 @@
+h1 Deductions 
+= styled_flash
+form(method="POST")
+  input(type="hidden' name="_token' value=PiggyBank::App.token)
+  fieldset
+    legend General Deductions
+    label
+      State/Local Real Estate Tax
+      input(name="real_estate_tax' type="text' value=@deduct.real_estate_tax)
+    label
+      State/Local Property Tax
+      input(name="property_tax' type="text' value=@deduct.property_tax)
+  - @deduct.form1098s.each_with_index do |form1098, n|
+    = haml :"tax/data/deduct/1098' locals={form1098=form1098, n=n}
+  - @deduct.cash_donations.each_with_index do |cash_donation, n|
+    = haml :"tax/data/deduct/cash' locals={cash_donation=cash_donation, n=n}
+  - @deduct.noncash_donations.each_with_index do |noncash_donation, n|
+    = haml :"tax/data/deduct/noncash' locals={noncash_donation=noncash_donation, n=n}
+  .buttons
+    button.btn.primary(formaction="/tax/data/deduct?add_1098")
+      span.icon.icon-plus
+      span.text Add 1098
+    button.btn.primary(formaction="/tax/data/deduct?add_cd")
+      span.icon.icon-plus
+      span.text Add Cash Donation
+    button.btn.primary(formaction="/tax/data/deduct?add_ncd")
+      span.icon.icon-plus
+      span.text Add Non-Cash Donation
+  .buttons
+    button.btn.primary(formaction="/tax/data/deduct")
+      span.icon.icon-solid-check
+      span.text Save
+    a.btn.secondary(href='/tax/data')
+      span.icon.icon-close
+      span.text Cancel

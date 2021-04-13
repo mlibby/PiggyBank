@@ -1,0 +1,12 @@
+h1 Transaction
+.links
+  a(href="/prices") Prices Index
+= haml :"tx/as_dl"
+.buttons
+  a.btn.primary(href="/tx/#{@tx.tx_id}?edit")
+    span.icon.icon-pencil
+    span.text Edit 
+  a.btn.danger(href="/tx/#{@tx.tx_id}?delete")
+    span.icon.icon-trash
+    span.text Delete
+

@@ -1,0 +1,22 @@
+dl
+  dt
+    Type
+  dd
+    = @commodity.type_string
+  dt 
+    Name
+  dd
+    = @commodity.name
+  dt
+    Description
+  dd
+    = @commodity.description 
+  dt
+    Ticker
+  dd
+    = @commodity.ticker
+  dt
+    Fraction
+  dd
+    -# FUTURE=make a fraction_string method
+    = @commodity.fraction

@@ -1,0 +1,21 @@
+dl
+  dt
+    Type
+  dd
+    = @account.type_string
+  dt 
+    Name
+  dd
+    = @account.name
+  dt
+    Parent Account
+  dd
+    = @account.parent ? @account.parent.name ="[nil]"
+  dt
+    Commodity
+  dd
+    = @account.commodity.name
+  dt
+    Is Placeholder?
+  dd
+    = @account.is_placeholder

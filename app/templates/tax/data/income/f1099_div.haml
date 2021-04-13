@@ -1,0 +1,20 @@
+fieldset
+  legend= "Form 1099-DIV ##{n+1}"
+  label
+    Payer Name
+    input(name="f1099_div[][payer]' type="text' value=f1099div.payer)
+  label
+    Payer TIN
+    input(name="f1099_div[][payer_id]' type="text' value=f1099div.payer_id)
+  label
+    Account Number
+    input(name="f1099_div[][account_number]' type="text' value=f1099div.account_number)
+  label
+    Ordinary Dividends
+    input(name="f1099_div[][ordinary_dividends]' type="number' step=0.01, min=0, value=f1099div.ordinary_dividends)
+  label
+    Qualified Dividends
+    input(name="f1099_div[][qualified_dividends]' type="number' step=0.01, min=0, value=f1099div.qualified_dividends)    
+  button.btn.danger(formaction="/tax/data/income?rm_f1099_div=#{n}")
+    span.icon.icon-trash
+    span.text Remove 1099-DIV
