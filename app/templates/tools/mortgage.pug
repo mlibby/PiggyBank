@@ -4,17 +4,17 @@ block content
   h1 Mortgage Amortization
   form
     label Loan Amount
-      input(name='loan-amount' type='number' value='0.00' step='0.01')/
+      input(name='principal' type='number' value='#{principal}' step='0.01')/
     label Interest Rate
-      input(name='rate' type='number' value='0.00' step='0.01')/
+      input(name='rate' type='number' value='#{rate}' step='0.01')/
     label # of Payments
-      input(name='number' type='number' value='0')/
+      input(name='number' type='number' value='#{number}')/
     label Payment Period
       select(name='period')
         option Monthly
     button Calculate
 
-  if payments  
+  if has_payments
     h2 Payment Amount #{payment_amount}
     table
       thead
@@ -32,16 +32,5 @@ block content
             td #{payment.interest}
             td #{payment.principal}
             td #{payment.balance}
-
-//- -#   calculate(e) {
-//- -#     e.preventDefault()
-//- -#     const principal = Number(this.$("#loan-amount").val()) * 100
-//- -#     const rate = Number(this.$("#interest-rate").val()) / 1200
-//- -#     const number = Number(this.$("#payments").val())
-//- -#     this.amortization = new Amortization(principal, rate, number)
-//- -#     const paymentAmount = this.commodity.toString(this.amortization.paymentAmount)
-//- -#     this.$("#payment-amount").text(paymentAmount)
-//- -#     this.renderScheduleRows()
-//- -#  )
 
 
