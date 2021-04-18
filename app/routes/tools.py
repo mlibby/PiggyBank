@@ -30,4 +30,4 @@ def amortization():
         context['payments'] = amortization.payments
         context['payment_amount'] = amortization.payment_amount
 
-    return render_template("tools/mortgage.pug", **context)
+    return render_template("tools/amortization.pug", **context)
