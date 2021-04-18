@@ -30,8 +30,8 @@ class Amortization:
             payment['principal'] = self.payment_amount - payment['interest']
             balance = payment['balance'] = balance - payment['principal']
 
-            next_interest = round(balance * self._rate, 2)
-            if next_interest + balance < self.payment_amount:
+            #next_interest = round(balance * self._rate, 2)
+            if payment_number == self.number:
                 payment['principal'] = payment['principal'] + balance
                 payment['total'] = \
                     payment['principal'] + payment['interest']

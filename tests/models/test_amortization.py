@@ -1,22 +1,25 @@
 from decimal import Decimal
-import unittest
+import pytest
 from app.models import Amortization
 
 
-def test_payment_amount():
-    amort = Amortization(Decimal('100000'), Decimal('6.00'), 360)
-    assert amort.payment_amount == Decimal('599.55')
+thirty_year = Amortization(Decimal('100000'), Decimal('6.00'), 360)
+fifteen_year = Amortization(Decimal('200000'), Decimal('3.25'), 180)
 
 
-def test_payment_schedule():
-    amort = Amortization(Decimal('100000'), Decimal('6.00'), 360)
-    assert len(amort.payments) == 360
+def test_amortization_payment_amount():
+    assert thirty_year.payment_amount == Decimal('599.55')
+    assert fifteen_year.payment_amount == Decimal('1405.34')
 
 
-def test_balloon_payment():
-    amort = Amortization(Decimal('100000'), Decimal('6.00'), 360)
-    assert amort.payments[359]['total'] == Decimal('600.00')
+def test_amortization_payment_schedule():
+    assert len(thirty_year.payments) == 360
+    assert len(fifteen_year.payments) == 180
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_amortization_final_payment():
+    # has a balloon payment
+    assert thirty_year.payments[359]['total'] == Decimal('600.00')
+
+    # has a slightly smaller payment
+    assert fifteen_year.payments[179]['total'] == Decimal('1404.95')

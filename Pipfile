@@ -7,5 +7,7 @@ name = "pypi"
 Flask = "*"
 gunicorn = "*"
 pypugjs = "*"
+pytest = "*"
+pytest-cov = "*"
 
 [dev-packages]
