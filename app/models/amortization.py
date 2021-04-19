@@ -1,3 +1,6 @@
+from functools import reduce
+
+
 class Amortization:
     def __init__(self, principal, rate, number):
         self.principal = principal
@@ -38,3 +41,6 @@ class Amortization:
                 balance = payment['balance'] = 0
             payments.append(payment)
         return payments
+
+    def total_interest(self):
+        return reduce(lambda acc, i: acc + i['interest'], self.payments, 0)

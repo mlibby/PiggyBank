@@ -20,6 +20,10 @@ def test_amortization_payment_schedule():
 def test_amortization_final_payment():
     # has a balloon payment
     assert thirty_year.payments[359]['total'] == Decimal('600.00')
-
     # has a slightly smaller payment
     assert fifteen_year.payments[179]['total'] == Decimal('1404.95')
+
+
+def test_amortization_total_interest():
+    assert thirty_year.total_interest() == Decimal('115838.45')
+    assert fifteen_year.total_interest() == Decimal('52960.81')
