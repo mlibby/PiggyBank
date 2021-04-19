@@ -9,5 +9,6 @@ gunicorn = "*"
 pypugjs = "*"
 pytest = "*"
 pytest-cov = "*"
+py-make = "*"
 
 [dev-packages]
