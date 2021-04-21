@@ -10,7 +10,7 @@ from .routes import (
     #    ofx,
     #    prices,
     #    reports
-    tools,
+    amortization,
 )
 
 app = Flask(__name__,
@@ -36,4 +36,4 @@ app.register_blueprint(home)
 # app.register_blueprint(ofx, url_prefix="/ofx")
 # app.register_blueprint(prices, url_prefix="/prices")
 # app.register_blueprint(reports, url_prefix="/reports")
-app.register_blueprint(tools, url_prefix='/tools')
+app.register_blueprint(amortization, url_prefix='/tools/amortization')
