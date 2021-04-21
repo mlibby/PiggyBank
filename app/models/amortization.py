@@ -29,6 +29,7 @@ class Amortization:
                 'number': payment_number,
                 'total': self.payment_amount,
                 'interest': round(balance * self._rate, 2),
+                'prepayment': None
             }
             payment['principal'] = self.payment_amount - payment['interest']
             balance = payment['balance'] = balance - payment['principal']
