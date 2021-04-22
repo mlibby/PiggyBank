@@ -28,6 +28,8 @@ def amortization_edit():
         'has_payments': True
     }
 
+    prepayments = get_prepayments(request.values)
+
     amortization = Amortization(
         context['principal'],
         context['rate'],
@@ -37,3 +39,9 @@ def amortization_edit():
     context['payment_amount'] = amortization.payment_amount
 
     return render_template("tools/amortization.pug", **context)
+
+
+def get_prepayments(values):
+    return {}
+    import pdb
+    pdb.set_trace()
