@@ -1,7 +1,9 @@
 from flask import Flask, render_template
 # from ..repo import Repo
-from .routes import (
-    home,
+from .routes import ping
+#from .routes import (
+    #home,
+    #ping,
     #    accounts,
     #    budget,
     #    commodities,
@@ -10,15 +12,15 @@ from .routes import (
     #    ofx,
     #    prices,
     #    reports
-    amortization,
-)
+    #    amortization,
+#)
 
 app = Flask(__name__,
-            static_url_path='',
+            static_url_path='/static',
             static_folder='static',
             template_folder='templates')
 
-app.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
+#app.jinja_env.add_extension('pypugjs.ext.jinja.PyPugJSExtension')
 app.url_map.strict_slashes = False
 
 # @home.before_app_first_request
@@ -26,8 +28,13 @@ app.url_map.strict_slashes = False
 #     repo = Repo()
 #     repo.update_db()
 
+app.register_blueprint(ping, url_prefix='/api')
 
-app.register_blueprint(home)
+@app.errorhandler(404)
+def handle_404(e):
+    return render_template('index.html')
+
+
 # app.register_blueprint(accounts, url_prefix="/accounts")
 # app.register_blueprint(budget, url_prefix="/budget")
 # app.register_blueprint(commodities, url_prefix="/commodities")
@@ -36,4 +43,4 @@ app.register_blueprint(home)
 # app.register_blueprint(ofx, url_prefix="/ofx")
 # app.register_blueprint(prices, url_prefix="/prices")
 # app.register_blueprint(reports, url_prefix="/reports")
-app.register_blueprint(amortization, url_prefix='/tools/amortization')
+#app.register_blueprint(amortization, url_prefix='/tools/amortization')
