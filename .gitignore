@@ -238,10 +238,15 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+#
+# Node/JS/Vue
+#
+
 .DS_Store
 node_modules
-/dist
-
+dist/
+server/static/
+server/templates/
 
 # local env files
 .env.local
