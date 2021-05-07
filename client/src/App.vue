@@ -19,10 +19,29 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+@font-face {
+  font-family: "Fira Mono";
+  src: local("Fira Mono"), url(./assets/fonts/FiraMono-Medium.ttf) format("truetype");
+}
+
+a,
+body,
+input,
+button,
+select,
+optgroup,
+textarea {
+  font-family: "Fira Mono" !important;
+  font-size: 1rem;
+  font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+#app {
   text-align: center;
   color: #2c3e50;
 }
