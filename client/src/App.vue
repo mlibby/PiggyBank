@@ -1,5 +1,7 @@
 <template>
 <div id="app">
+  <IcoMoon>
+  </IcoMoon>
   <NavBar>
   </NavBar>
   <router-view/>
@@ -7,11 +9,13 @@
 </template>
 
 <script>
+import IcoMoon from '@/components/IcoMoon.vue';
 import NavBar from '@/components/NavBar.vue';
 
 export default {
   name: 'App',
   components: {
+    IcoMoon,
     NavBar,
   },
 };
@@ -19,9 +23,24 @@ export default {
 </script>
 
 <style>
+:root {
+    --primary-color: #05a172;
+    --primary-accent: #03e4a0;
+    --secondary-color: #666666;
+    --danger-color: red;
+    --nav-bg: black;
+    --bg-color: white;
+    --bg-shaded: #e8e8e8;
+}
+
 @font-face {
-  font-family: "Fira Mono";
-  src: local("Fira Mono"), url(./assets/fonts/FiraMono-Medium.ttf) format("truetype");
+    font-family: "Fira Mono";
+    src: local("Fira Mono"), url(./assets/fonts/FiraMono-Medium.ttf) format("truetype");
+}
+
+body,
+nav {
+    min-width: 310px;
 }
 
 a,
@@ -31,31 +50,41 @@ button,
 select,
 optgroup,
 textarea {
-  font-family: "Fira Mono" !important;
-  font-size: 1rem;
-  font-weight: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
+    font-family: "Fira Mono" !important;
+    font-size: 1rem;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
-#app {
-  text-align: center;
-  color: #2c3e50;
+body,
+header {
+    margin: 0;
 }
 
-#nav {
-  padding: 30px;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0.25rem 0 0.5rem 0;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+main {
+    margin: 0;
+    padding: 0.5rem;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 </style>
