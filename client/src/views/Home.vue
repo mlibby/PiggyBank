@@ -1,18 +1,33 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<main>
+  <h1>Oink! Oink!</h1>
+  <p>
+    Welcome to PiggyBank.
+  </p>
+  <p>
+    This is a personal finance app. It is free software and the
+    source code is at
+    <a href='https://github.com/mlibby/PiggyBank'>GitHub</a>
+  </p>
+  <p>
+    PiggyBank is still in EARLY ALPHA development phase and is not
+    ready for end-users! The developer isn't even using it, except
+    to test it with test data.
+  </p>
+  <p>
+    Documentation of PiggyBank is available at
+    <a href='https://piggybank.live'>piggybank.live</a>
+  </p>
+  <p>
+    A proof-of-concept demo is available at
+    <a href='https://piggybanklive.herokuapp.com'>PiggyBank@Heroku</a>
+  </p>
+</main>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
-
 export default {
   name: 'Home',
-  components: {
-    HelloWorld,
-  },
+  title: 'Home',
 };
 </script>

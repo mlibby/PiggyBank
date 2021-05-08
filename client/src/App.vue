@@ -1,11 +1,11 @@
 <template>
-<div id="app">
+<body id='app'>
   <IcoMoon>
   </IcoMoon>
   <NavBar>
   </NavBar>
   <router-view/>
-</div>
+</body>
 </template>
 
 <script>
@@ -14,12 +14,12 @@ import NavBar from '@/components/NavBar.vue';
 
 export default {
   name: 'App',
+  title: 'PiggyBank',
   components: {
     IcoMoon,
     NavBar,
   },
 };
-
 </script>
 
 <style>
