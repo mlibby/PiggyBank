@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "build": "cd client && vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "cd client && vue-cli-service lint",
+    "test:unit": "cd client && vue-cli-service test:unit",
+    "watch": "cd client && vue-cli-service watch"
   },
   "dependencies": {
     "axios": "^0.21.1",
