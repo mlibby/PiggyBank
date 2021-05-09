@@ -7,7 +7,10 @@
     </router-link>
   </section>
   <section>
-    <router-link to='/about'>About</router-link>
+    <span class="label">Tools</span>
+    <div class="menu">
+      <router-link to='/tools/amortization'>Amortization</router-link>
+    </div>
   </section>
 </nav>
 </template>
