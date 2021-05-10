@@ -126,10 +126,8 @@ form input[type=number] {
 
 form input[type=number]::-webkit-inner-spin-button,
 form input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 form input[type=text]:focus,
@@ -179,11 +177,6 @@ form label {
   display: block;
   font-weight: bold;
 }
-
-/* form select, */
-/* form option { */
-/*   font: -moz-pull-down-menu; */
-/* } */
 
 form .required {
   color: red;
