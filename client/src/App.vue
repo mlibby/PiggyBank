@@ -66,10 +66,10 @@ header {
 }
 
 form label {
-  margin: 0 0 3px 0;
-  padding: 0px;
-  display: block;
-  font-weight: bold;
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
 }
 
 form input[type=text],
@@ -83,17 +83,27 @@ form input[type=url],
 form input[type=email],
 form textarea,
 form select {
-  display: block;
-  border: 1px solid #BEBEBE;
-  padding: 7px;
-  margin: 0.25rem 0;
-  outline: none;
-  max-width: 35rem;
-  width: 100%;
+    display: block;
+    border: 1px solid #BEBEBE;
+    padding: 7px;
+    margin: 0.25rem 0;
+    outline: none;
+    max-width: 35rem;
+    width: 100%;
 }
 
 form input[type=checkbox] {
-  width: 2rem;
+    width: 2rem;
+}
+
+form input[type=number] {
+    -moz-appearance: textfield;
+}
+
+form input[type=number]::-webkit-inner-spin-button,
+form input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 form input[type=text]:focus,
