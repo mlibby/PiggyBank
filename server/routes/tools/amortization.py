@@ -1,47 +1,15 @@
 from ...models import Amortization
-from flask import Blueprint, render_template, request
-from decimal import *
+from flask import Blueprint, jsonify, request
+from decimal import Decimal
 
-
-amortization = Blueprint("amortization", __name__, template_folder="templates")
-
-
-@amortization.route("/", methods=['GET'])
-def amortization_new():
-    context = {
-        'title': 'Amortization: PiggyBank',
-        'principal': 0,
-        'rate': 0.0,
-        'number': 1,
-        'has_payments': False
-    }
-    return render_template("tools/amortization.pug", **context)
+amortization = Blueprint("amortization", __name__)
 
 
 @amortization.route("/", methods=['POST'])
-def amortization_edit():
-    context = {
-        'title': 'Amortization: PiggyBank',
-        'principal': Decimal(request.values.get('principal')),
-        'rate': Decimal(request.values.get('rate')),
-        'number': int(request.values.get('number')),
-        'has_payments': True
-    }
+def amortization_post():
+    amount = Decimal('100000')
+    rate = Decimal('3.25')
+    payments = int('60')
+    amortization = Amortization(amount, rate, payments)
+    return jsonify(amortization.payments)
 
-    prepayments = get_prepayments(request.values)
-
-    amortization = Amortization(
-        context['principal'],
-        context['rate'],
-        context['number']
-    )
-    context['payments'] = amortization.payments
-    context['payment_amount'] = amortization.payment_amount
-
-    return render_template("tools/amortization.pug", **context)
-
-
-def get_prepayments(values):
-    return {}
-    import pdb
-    pdb.set_trace()
