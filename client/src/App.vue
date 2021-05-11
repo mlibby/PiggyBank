@@ -49,8 +49,9 @@ input,
 button,
 select,
 optgroup,
+option,
 textarea {
-    font-family: "Fira Mono" !important;
+    font-family: "Fira Mono";
     font-size: 1rem;
     font-weight: normal;
     -webkit-font-smoothing: antialiased;
@@ -65,11 +66,34 @@ header {
     margin: 0;
 }
 
-form label {
-    margin: 0 0 3px 0;
-    padding: 0px;
-    display: block;
+form fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px dashed grey;
+    margin-bottom: 0.5rem;
+}
+
+form fieldset .btn {
+    margin-top: 2rem;
+    margin-left: auto;
+}
+
+form fieldset label {
+    margin-top: 0.66rem;
+    margin-right: 2rem;
+    min-width: 17%;
+}
+
+form fieldset input,
+form fieldset select {
+    height: 2.25rem;
+}
+
+form fieldset legend {
     font-weight: bold;
+    font-size: 1.25rem;
+    margin-left: -0.33rem;
+    padding: 0 1rem;
 }
 
 form input[type=text],
@@ -139,45 +163,22 @@ form select:focus {
   border: 1px solid #88D5E9;
 }
 
-form fieldset {
-  display: flex;
-  flex-wrap: wrap;
-  border: 1px dashed grey;
-  margin-bottom: 0.5rem;
-}
-
-form fieldset .btn {
-  margin-top: 2rem;
-  margin-left: auto;
-}
-
-form fieldset label {
-  margin-top: 0.66rem;
-  margin-right: 2rem;
-  min-width: 17%;
-}
-
-form fieldset input,
-form fieldset select {
-  height: 2.25rem;
-}
-
-form fieldset legend {
-  font-weight: bold;
-  font-size: 1.25rem;
-  margin-left: -0.33rem;
-  padding: 0 1rem;
-}
-
-input[type=submit]:hover,
-input[type=button]:hover {
+form input[type=submit]:hover,
+form input[type=button]:hover {
   background: #4691A4;
   box-shadow: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
 }
 
-.required {
+form label {
+  margin: 0 0 3px 0;
+  padding: 0px;
+  display: block;
+  font-weight: bold;
+}
+
+form .required {
   color: red;
 }
 
