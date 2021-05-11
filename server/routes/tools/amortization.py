@@ -11,5 +11,5 @@ def amortization_post():
     rate = Decimal('3.25')
     payments = int('60')
     amortization = Amortization(amount, rate, payments)
-    return jsonify(amortization.payments)
+    return jsonify(amortization.payments_dict())
 

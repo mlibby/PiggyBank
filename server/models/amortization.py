@@ -1,11 +1,15 @@
+from collections import namedtuple
+from decimal import Decimal
 from functools import reduce
 
 
 class Amortization:
+    Payment = namedtuple('Payment', 'number principal interest prepay balance')
+    
     def __init__(self, principal, rate, number):
-        self.principal = principal
-        self.rate = rate
-        self.number = number
+        self.principal = Decimal(principal)
+        self.rate = Decimal(rate)
+        self.number = int(number)
 
         # inner rate is rate divided by months divided by 100
         self._rate = self.rate / 1200
@@ -25,23 +29,27 @@ class Amortization:
         payment_number = 0
         while balance > 0:
             payment_number += 1
-            payment = {
-                'number': payment_number,
-                'total': self.payment_amount,
-                'interest': round(balance * self._rate, 2),
-                'prepayment': None
-            }
-            payment['principal'] = self.payment_amount - payment['interest']
-            balance = payment['balance'] = balance - payment['principal']
+            interest = round(balance * self._rate, 2)
+            principal = self.payment_amount - interest
+            balance = balance - principal
 
-            #next_interest = round(balance * self._rate, 2)
             if payment_number == self.number:
-                payment['principal'] = payment['principal'] + balance
-                payment['total'] = \
-                    payment['principal'] + payment['interest']
-                balance = payment['balance'] = 0
+                principal = principal + balance
+                balance = 0
+
+            payment = Amortization.Payment(
+                number = payment_number,
+                principal = principal,
+                interest = interest,
+                prepay = Decimal("0.0"),
+                balance = balance
+            )
+
             payments.append(payment)
         return payments
 
+    def payments_dict(self):
+        return [payment._asdict() for payment in self.payments]
+    
     def total_interest(self):
-        return reduce(lambda acc, i: acc + i['interest'], self.payments, 0)
+        return reduce(lambda acc, p: acc + p.interest, self.payments, 0)
