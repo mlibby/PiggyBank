@@ -5,7 +5,7 @@ from decimal import Decimal
 amortization = Blueprint("amortization", __name__)
 
 
-@amortization.route("/", methods=['POST'])
+@amortization.post("/")
 def amortization_post():
     amount = Decimal('100000')
     rate = Decimal('3.25')
