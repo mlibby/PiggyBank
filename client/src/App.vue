@@ -29,6 +29,7 @@ export default {
     --secondary-color: #666666;
     --danger-color: red;
     --nav-bg: black;
+    --border: black;
     --bg-color: white;
     --bg-shaded: #e8e8e8;
 }
@@ -66,129 +67,100 @@ header {
     margin: 0;
 }
 
-form fieldset {
-    display: flex;
-    flex-wrap: wrap;
-    border: 1px dashed grey;
-    margin-bottom: 0.5rem;
+h1 {
+    margin: 0 0 0.5rem;
 }
 
-form fieldset .btn {
-    margin-top: 2rem;
-    margin-left: auto;
-}
-
-form fieldset label {
-    margin-top: 0.66rem;
-    margin-right: 2rem;
-    min-width: 17%;
-}
-
-form fieldset input,
-form fieldset select {
-    height: 2.25rem;
-}
-
-form fieldset legend {
-    font-weight: bold;
-    font-size: 1.25rem;
-    margin-left: -0.33rem;
-    padding: 0 1rem;
-}
-
-form input[type=text],
-form input[type=checkbox],
-form input[type=date],
-form input[type=datetime],
-form input[type=number],
-form input[type=search],
-form input[type=time],
-form input[type=url],
-form input[type=email],
-form textarea,
-form select {
-    display: block;
-    border: 1px solid #BEBEBE;
-    padding: 7px;
-    margin: 0.25rem 0;
-    outline: none;
-    max-width: 35rem;
-    width: 100%;
-}
-
-form input[type=checkbox] {
-    width: 2rem;
-}
-
-form input[type=number] {
-    -moz-appearance: textfield;
-}
-
-form input[type=number]::-webkit-inner-spin-button,
-form input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-form input[type=text]:focus,
-form input[type=checkbox]:focus,
-form input[type=date]:focus,
-form input[type=datetime]:focus,
-form input[type=number]:focus,
-form input[type=search]:focus,
-form input[type=time]:focus,
-form input[type=url]:focus,
-form input[type=email]:focus,
-form textarea:focus,
-form select:focus {
-  -moz-box-shadow: 0 0 8px #88D5E9;
-  -webkit-box-shadow: 0 0 8px #88D5E9;
-  box-shadow: 0 0 8px #88D5E9;
-  border: 1px solid #88D5E9;
-}
-
-form input[type=text]:focus,
-form input[type=date]:focus,
-form input[type=datetime]:focus,
-form input[type=number]:focus,
-form input[type=search]:focus,
-form input[type=time]:focus,
-form input[type=url]:focus,
-form input[type=email]:focus,
-form textarea:focus,
-form select:focus {
-  -moz-box-shadow: 0 0 8px #88D5E9;
-  -webkit-box-shadow: 0 0 8px #88D5E9;
-  box-shadow: 0 0 8px #88D5E9;
-  border: 1px solid #88D5E9;
-}
-
-form input[type=submit]:hover,
-form input[type=button]:hover {
-  background: #4691A4;
-  box-shadow: none;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-}
-
-form label {
-  margin: 0 0 3px 0;
-  padding: 0px;
-  display: block;
-  font-weight: bold;
-}
-
-form .required {
-  color: red;
-}
-
-h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    margin: 0.25rem 0 0.5rem 0;
+    margin: 1rem 0 0.5rem 0;
+}
+
+input[type=text],
+input[type=checkbox],
+input[type=date],
+input[type=datetime],
+input[type=number],
+input[type=search],
+input[type=time],
+input[type=url],
+input[type=email],
+textarea,
+select {
+    display: block;
+    border: 1px solid #BEBEBE;
+    padding: 7px;
+    margin: 0.25rem 0 1rem 0;
+    outline: none;
+    max-width: 35rem;
+    width: 100%;
+}
+
+input[type=checkbox] {
+    width: 2rem;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=datetime]:focus,
+input[type=number]:focus,
+input[type=search]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=email]:focus,
+textarea:focus,
+select:focus {
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+
+button,
+input[type=submit],
+input[type=button] {
+    background-color: var(--primary-color);
+    border-radius: 0.5rem;
+    border-width: 0;
+    color: var(--bg-color);
+    display: inline-block;
+    font-weight: bold;
+    height: 2.25rem;
+    line-height: 1rem;
+    margin: 0 0.66rem 0 0;
+    padding: 0.66rem 0.66rem;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+button:hover,
+input[type=submit]:hover,
+input[type=button]:hover {
+    background: #4691A4;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+label {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
 }
 
 main {
@@ -196,12 +168,54 @@ main {
     padding: 0.5rem;
 }
 
+.required {
+    color: red;
+}
+
 .sr-only {
-  position: absolute;
-  left: -10000px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: right;
+}
+
+td {
+    padding: 0.33rem 1.1rem 0.16rem 1rem;
+    border-bottom: 1px solid var(--primary-accent);
+}
+
+td input[type=text],
+td input[type=checkbox],
+td input[type=date],
+td input[type=datetime],
+td input[type=number],
+td input[type=search],
+td input[type=time],
+td input[type=url],
+td input[type=email],
+td textarea,
+td select {
+    margin: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+    text-align: right;
+}
+
+th {
+    padding: 0.33rem 1rem 0.16rem;
+    border-bottom: 1px solid var(--primary-color);
+    min-width: 5rem;
+}
+
+th:first-of-type {
+    min-width: 0;
 }
 </style>

@@ -23,6 +23,7 @@
     <button>Calculate</button>
   </form>
   <div>{{ msg }}</div>
+  <h2 v-if='payments'>Payment Schedule</h2>
   <table v-if='payments'>
     <tr>
       <th>Number</th>
@@ -37,7 +38,9 @@
       <td>{{ totalPayment(payment) }}</td>
       <td>{{ payment.principal }}</td>
       <td>{{ payment.interest }}</td>
-      <td>{{ payment.prepay }}</td>
+      <td>
+        <input type='number' step='0.01' :value='payment.prepay' />
+      </td>
       <td>{{ payment.balance }}</td>
     </tr>
   </table>
