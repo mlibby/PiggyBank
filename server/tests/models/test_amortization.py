@@ -1,6 +1,6 @@
 from decimal import Decimal
 import pytest
-from app.models import Amortization
+from server.models import Amortization
 
 
 thirty_year = Amortization(Decimal('100000'), Decimal('6.00'), 360)
@@ -19,9 +19,11 @@ def test_amortization_payment_schedule():
 
 def test_amortization_final_payment():
     # has a balloon payment
-    assert thirty_year.payments[359]['total'] == Decimal('600.00')
+    assert (thirty_year.payments[359].principal +
+        thirty_year.payments[359].interest) == Decimal('600.00')
     # has a slightly smaller payment
-    assert fifteen_year.payments[179]['total'] == Decimal('1404.95')
+    assert (fifteen_year.payments[179].principal +
+        fifteen_year.payments[179].interest) == Decimal('1404.95')
 
 
 def test_amortization_total_interest():

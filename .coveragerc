@@ -1,0 +1,8 @@
+[run]
+source = server
+
+[report]
+omit = */tests/*
+
+[html]
+directory = htmlcov

@@ -7,9 +7,10 @@ amortization = Blueprint("amortization", __name__)
 
 @amortization.post("/")
 def amortization_post():
-    amount = Decimal('100000')
-    rate = Decimal('3.25')
-    payments = int('60')
-    amortization = Amortization(amount, rate, payments)
-    return jsonify(amortization.payments_dict())
+    params = request.json
+    principal = Decimal(params['principal'])
+    rate = Decimal(params['rate'])
+    number = int(params['number'])
+    amortization = Amortization(principal, rate, number)
+    return jsonify([payment._asdict() for payment in amortization.payments])
 

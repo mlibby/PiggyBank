@@ -1,61 +1,66 @@
 <template>
 <main>
-  <h1>Loan Amortization Calculator</h1>
-  <form v-on:submit='calculate'>
-    <label>
-      Loan Amount
-      <input id='principal' type='number' step='0.01' />
-    </label>
-    <label>
-      Interest Rate
-      <input id='rate' type='number' step='0.01' />
-    </label>
-    <label>
-      Number of Payments
-      <input id='number' type='number' />
-    </label>
-    <label>
-      Payment Period
-      <select id='period'>
-        <option>Monthly</option>
-      </select>
-    </label>
-    <button>Calculate</button>
-  </form>
-  <div>{{ msg }}</div>
-  <h2 v-if='payments'>Payment Schedule</h2>
-  <table v-if='payments'>
-    <tr>
-      <th>Number</th>
-      <th>Payment</th>
-      <th>Principal</th>
-      <th>Interest</th>
-      <th>Prepay</th>
-      <th>Balance</th>
-      </tr>
-    <tr v-for='payment in payments'>
-      <td>{{ payment.number }}</td>
-      <td>{{ totalPayment(payment) }}</td>
-      <td>{{ payment.principal }}</td>
-      <td>{{ payment.interest }}</td>
-      <td>
-        <input type='number' step='0.01' :value='payment.prepay' />
-      </td>
-      <td>{{ payment.balance }}</td>
-    </tr>
-  </table>
+  <div>
+    <h1>Loan Amortization Calculator</h1>
+  </div>
+  <div class='columns'>
+    <section class='column column-1-4'>
+      <h2>Loan Details</h2>
+      <form v-on:submit='calculate'>
+        <label for='principal'>Loan Amount</label>
+        <input id='principal' type='number' step='0.01' :value='principal' />
+        <label for='rate'>Interest Rate</label>
+        <input id='rate' type='number' step='0.01' :value='rate' />
+        <label for='number'>Number of Payments</label>
+        <input id='number' type='number' :value='number' />
+        <label for='period'>Payment Period</label>
+        <select id='period'>
+          <option>Monthly</option>
+        </select>
+        <button>Calculate</button>
+      </form>
+      <div>{{ msg }}</div>
+    </section>
+    <section v-if='payments' class='column'>
+      <h2>Payment Schedule</h2>
+      <table>
+        <tr>
+          <th>Number</th>
+          <th>Payment</th>
+          <th>Principal</th>
+          <th>Interest</th>
+          <th>Prepay</th>
+          <th>Balance</th>
+        </tr>
+        <tr v-for='payment in payments'>
+          <td>{{ payment.number }}</td>
+          <td>{{ totalPayment(payment) }}</td>
+          <td>{{ payment.principal }}</td>
+          <td>{{ payment.interest }}</td>
+          <td>
+            <input type='number' step='0.01' :value='payment.prepay' />
+          </td>
+          <td>{{ payment.balance }}</td>
+        </tr>
+      </table>
+    </section>
+  </div>
 </main>
 </template>
 
 <script>
-  import axios from 'axios';
-  import { Decimal } from 'decimal.js';
-  
+import axios from 'axios';
+import { Decimal } from 'decimal.js';
+
 export default {
   name: 'Amortization',
   title: 'Amortization',
   data: function(){
     return {
+      principal: Decimal('225000.0'),
+      rate: Decimal('4.25'),
+      number: 360,
+      period: 12,
       payments: null,
       msg: '',
     };
@@ -64,8 +69,14 @@ export default {
     calculate(e) {
       e.preventDefault();
       this.msg = 'Calculating...';
+      const data = {
+        principal: this.principal,
+        rate: this.rate,
+        number: this.number,
+        period: this.period,
+      };
       axios
-        .post('/api/tools/amortization', {})
+        .post('/api/tools/amortization', data)
         .then((response) => {
           this.payments = response.data;
           this.msg = '';
@@ -81,3 +92,9 @@ export default {
   },
 };
 </script>
+
+<style>
+  table input[type=number] {
+  width: 7rem;
+}
+</style>

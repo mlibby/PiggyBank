@@ -67,6 +67,23 @@ header {
     margin: 0;
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 2rem;
+}
+
+.column-1-4 {
+    flex: 0.25;
+}
+
+.columns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 h1 {
     margin: 0 0 0.5rem;
 }
@@ -95,8 +112,7 @@ select {
     padding: 7px;
     margin: 0.25rem 0 1rem 0;
     outline: none;
-    max-width: 35rem;
-    width: 100%;
+    width: 15rem;
 }
 
 input[type=checkbox] {
@@ -165,11 +181,11 @@ label {
 
 main {
     margin: 0;
-    padding: 0.5rem;
+    padding: 1rem;
 }
 
 .required {
-    color: red;
+    color: var(--danger-color);
 }
 
 .sr-only {
@@ -184,6 +200,7 @@ main {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+    display: inline-block;
     text-align: right;
 }
 

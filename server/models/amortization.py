@@ -48,8 +48,5 @@ class Amortization:
             payments.append(payment)
         return payments
 
-    def payments_dict(self):
-        return [payment._asdict() for payment in self.payments]
-    
     def total_interest(self):
         return reduce(lambda acc, p: acc + p.interest, self.payments, 0)
