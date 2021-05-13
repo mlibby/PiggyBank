@@ -8,14 +8,14 @@
       <h2>Loan Details</h2>
       <form v-on:submit='calculate'>
         <label for='principal'>Loan Amount</label>
-        <input id='principal' type='number' step='0.01' :value='principal' />
+        <input id='principal' type='number' step='0.01' v-model='principal' />
         <label for='rate'>Interest Rate</label>
-        <input id='rate' type='number' step='0.01' :value='rate' />
+        <input id='rate' type='number' step='0.01' v-model='rate' />
         <label for='number'>Number of Payments</label>
-        <input id='number' type='number' :value='number' />
-        <label for='period'>Payment Period</label>
-        <select id='period'>
-          <option>Monthly</option>
+        <input id='number' type='number' v-model='number' />
+        <label for='periods'>Payment Period</label>
+        <select id='periods' v-model='periods'>
+          <option value='12'>Monthly</option>
         </select>
         <button>Calculate</button>
       </form>
@@ -38,7 +38,7 @@
           <td>{{ payment.principal }}</td>
           <td>{{ payment.interest }}</td>
           <td>
-            <input type='number' step='0.01' :value='payment.prepay' />
+            <input type='number' step='0.01' v-model='payment.prepay' />
           </td>
           <td>{{ payment.balance }}</td>
         </tr>
@@ -60,7 +60,7 @@ export default {
       principal: Decimal('225000.0'),
       rate: Decimal('4.25'),
       number: 360,
-      period: 12,
+      periods: 12,
       payments: null,
       msg: '',
     };
@@ -73,12 +73,13 @@ export default {
         principal: this.principal,
         rate: this.rate,
         number: this.number,
-        period: this.period,
+        periods: this.periods,
+        payments: null,
       };
       axios
         .post('/api/tools/amortization', data)
         .then((response) => {
-          this.payments = response.data;
+          this.payments = response.data.payments;
           this.msg = '';
         });
     },
