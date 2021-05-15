@@ -29,7 +29,34 @@ def test_amortization_total_interest():
     assert thirty_year.total_interest == Decimal('115838.45')
     assert fifteen_year.total_interest == Decimal('52960.81')
 
-def test_amortization_prepayments():
-    pass
-    #assert thirty_year.
+def test_amortization_prepay_amount():
+    thirty_year = Amortization(
+        principal = '100000',
+        rate = '6.00',
+        number = 360,
+        prepay_amount = '100'
+        )
+    assert thirty_year.number == 252
+    assert thirty_year.original_number == 360
+    assert thirty_year.payments[-1].principal == Decimal('249.24')
+    assert thirty_year.total_interest == Decimal('75938.04')
+    assert thirty_year.original_interest == Decimal('115838.45')
+
+def test_amortization_prepays():
+    fifteen_year = Amortization(
+        principal = '200000',
+        rate = '3.25',
+        number = 180,
+        prepays = {
+            2: '10000',
+            3: '5000',
+            4: '2000'
+            }
+        )
+    assert fifteen_year.number == 161
+    assert fifteen_year.original_number == 180
+    assert fifteen_year.payments[-1].principal == Decimal('1295.96')
+    assert fifteen_year.total_interest == Decimal('43153.87')
+    assert fifteen_year.original_interest == Decimal('52960.81')
+    
 
