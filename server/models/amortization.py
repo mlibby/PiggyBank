@@ -15,6 +15,7 @@ class Amortization:
         self._rate = self.rate / 1200
         self.payment_amount = self.calculate_payment_amount()
         self.payments = self.calculate_payments()
+        self.total_interest = self.calculate_total_interest()
 
     def calculate_payment_amount(self):
         pmt_rate = (1 + self._rate) ** self.number
@@ -48,5 +49,5 @@ class Amortization:
             payments.append(payment)
         return payments
 
-    def total_interest(self):
-        return reduce(lambda acc, p: acc + p.interest, self.payments, 0)
+    def calculate_total_interest(self):
+        return sum([p.interest for p in self.payments])

@@ -4,23 +4,32 @@
     <h1>Loan Amortization Calculator</h1>
   </div>
   <div class='columns'>
-    <section class='column column-1-4'>
-      <h2>Loan Details</h2>
-      <form v-on:submit='calculate'>
-        <label for='principal'>Loan Amount</label>
-        <input id='principal' type='number' step='0.01' v-model='principal' />
-        <label for='rate'>Interest Rate</label>
-        <input id='rate' type='number' step='0.01' v-model='rate' />
-        <label for='number'>Number of Payments</label>
-        <input id='number' type='number' v-model='number' />
-        <label for='periods'>Payment Period</label>
-        <select id='periods' v-model='periods'>
-          <option value='12'>Monthly</option>
-        </select>
-        <button>Calculate</button>
-      </form>
-      <div>{{ msg }}</div>
-    </section>
+    <div class='column column-1-4'>
+      <section>
+        <h2>Loan Details</h2>
+        <form v-on:submit='calculate'>
+          <label for='principal'>Loan Amount</label>
+          <input id='principal' type='number' step='0.01' v-model='principal' />
+          <label for='rate'>Interest Rate</label>
+          <input id='rate' type='number' step='0.01' v-model='rate' />
+          <label for='number'>Number of Payments</label>
+          <input id='number' type='number' v-model='number' />
+          <label for='periods'>Payment Period</label>
+          <select id='periods' v-model='periods'>
+            <option value='12'>Monthly</option>
+          </select>
+          <button>Calculate</button>
+        </form>
+        <div>{{ msg }}</div>
+      </section>
+      <section v-if='payments'>
+        <h2>Loan Summary</h2>
+        <dl>
+          <dt>Total Interest</dt>
+          <dd>{{ total_interest }}</dd>
+        </dl>
+      </section>
+    </div>
     <section v-if='payments' class='column'>
       <h2>Payment Schedule</h2>
       <table>
@@ -51,18 +60,20 @@
 <script>
 import axios from 'axios';
 import { Decimal } from 'decimal.js';
+import { formatCurrency } from '../../util.js';
 
 export default {
   name: 'Amortization',
   title: 'Amortization',
   data: function(){
     return {
+      msg: '',
+      number: 360,
+      payments: null,
+      periods: 12,
       principal: Decimal('225000.0'),
       rate: Decimal('4.25'),
-      number: 360,
-      periods: 12,
-      payments: null,
-      msg: '',
+      total_interest: formatCurrency(Decimal('0.00'))
     };
   },
   methods: {
@@ -80,6 +91,7 @@ export default {
         .post('/api/tools/amortization', data)
         .then((response) => {
           this.payments = response.data.payments;
+          this.total_interest = formatCurrency(response.data.total_interest);
           this.msg = '';
         });
     },
@@ -88,14 +100,23 @@ export default {
       const interest = new Decimal(payment.interest);
       const prepay = new Decimal(payment.prepay);
       const total = principal.plus(interest).plus(prepay);
-      return total.toFixed(2);
+      return formatCurrency(total.toFixed(2));
     },
   },
 };
 </script>
 
 <style>
-  table input[type=number] {
-  width: 7rem;
+  dd {
+  margin-left: 0;
+  margin-top: 0.33rem;
+  }
+  
+  dt {
+  font-weight: bold;
+  }
+  
+table input[type=number] {
+    width: 7rem;
 }
 </style>
