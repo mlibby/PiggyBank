@@ -18,7 +18,8 @@ def amortization_post():
         'rate': rate,
         'number': number,
         'periods': periods,
-        'payments': [payment._asdict() for payment in amortization.payments]
+        'payments': [payment._asdict() for payment in amortization.payments],
+        'total_interest': amortization.total_interest
         }
     return jsonify(data)
 

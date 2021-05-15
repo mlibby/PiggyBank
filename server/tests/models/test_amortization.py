@@ -26,9 +26,10 @@ def test_amortization_final_payment():
         fifteen_year.payments[179].interest) == Decimal('1404.95')
 
 def test_amortization_total_interest():
-    assert thirty_year.total_interest() == Decimal('115838.45')
-    assert fifteen_year.total_interest() == Decimal('52960.81')
+    assert thirty_year.total_interest == Decimal('115838.45')
+    assert fifteen_year.total_interest == Decimal('52960.81')
 
 def test_amortization_prepayments():
+    pass
     #assert thirty_year.
 
