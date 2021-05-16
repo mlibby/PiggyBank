@@ -9,14 +9,16 @@
         <h2>Loan Details</h2>
         <form v-on:submit='calculate'>
           <label for='principal'>Loan Amount</label>
-          <input id='principal' type='number' step='0.01' v-model='principal' />
+          <input id='principal' type='number' step='0.01' v-model='principal' required />
           <label for='rate'>Interest Rate</label>
-          <input id='rate' type='number' step='0.01' v-model='rate' />
+          <input id='rate' type='number' step='0.01' v-model='rate' required/>
           <label for='number'>Number of Payments</label>
-          <input id='number' type='number' v-model='number' />
+          <input id='number' type='number' v-model='number' required/>
           <label for='periods'>Payment Period</label>
           <select id='periods' v-model='periods'>
+            <option value='1'>Annually</option>
             <option value='12'>Monthly</option>
+            <option value='52'>Weekly</option>
           </select>
           <button>Calculate</button>
         </form>
@@ -44,12 +46,12 @@
         <tr v-for='payment in payments'>
           <td>{{ payment.number }}</td>
           <td>{{ totalPayment(payment) }}</td>
-          <td>{{ payment.principal }}</td>
-          <td>{{ payment.interest }}</td>
+          <td>{{ formatCurrency(payment.principal) }}</td>
+          <td>{{ formatCurrency(payment.interest) }}</td>
           <td>
             <input type='number' step='0.01' v-model='payment.prepay' />
           </td>
-          <td>{{ payment.balance }}</td>
+          <td>{{ formatCurrency(payment.balance) }}</td>
         </tr>
       </table>
     </section>
@@ -102,6 +104,9 @@ export default {
       const total = principal.plus(interest).plus(prepay);
       return formatCurrency(total.toFixed(2));
     },
+    formatCurrency(amount) {
+      return formatCurrency(amount);
+    }
   },
 };
 </script>
