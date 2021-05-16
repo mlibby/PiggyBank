@@ -48,9 +48,9 @@ def test_amortization_prepays():
         rate = '3.25',
         number = 180,
         prepays = {
-            2: '10000',
-            3: '5000',
-            4: '2000'
+            '2': '10000',
+            '3': '5000',
+            '4': '2000'
             }
         )
     assert fifteen_year.number == 161

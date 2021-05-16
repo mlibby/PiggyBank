@@ -11,7 +11,7 @@
           <label for='principal'>Loan Amount</label>
           <input id='principal' type='number' step='0.01' v-model='principal' required />
           <label for='rate'>Interest Rate</label>
-          <input id='rate' type='number' step='0.01' v-model='rate' required/>
+          <input id='rate' type='number' step='0.001' v-model='rate' required/>
           <label for='number'>Number of Payments</label>
           <input id='number' type='number' v-model='number' required/>
           <label for='periods'>Payment Period</label>
@@ -29,6 +29,8 @@
         <dl>
           <dt>Total Interest</dt>
           <dd>{{ total_interest }}</dd>
+          <dt>Interest Saved</dt>
+          <dd>{{ saved_interest }}</dd>
         </dl>
       </section>
     </div>
@@ -75,7 +77,9 @@ export default {
       periods: 12,
       principal: Decimal('225000.0'),
       rate: Decimal('4.25'),
-      total_interest: formatCurrency(Decimal('0.00'))
+      total_interest: formatCurrency(Decimal('0.00')),
+      saved_interest: null,
+      prepay_amount: Decimal('0.00')
     };
   },
   methods: {
@@ -88,12 +92,16 @@ export default {
         number: this.number,
         periods: this.periods,
         payments: null,
+        prepay_amount: this.prepay_amount,
+        prepays: this.gatherPrepays()
       };
       axios
         .post('/api/tools/amortization', data)
         .then((response) => {
           this.payments = response.data.payments;
           this.total_interest = formatCurrency(response.data.total_interest);
+          let saved_interest = response.data.original_interest - response.data.total_interest;
+          this.saved_interest = formatCurrency(saved_interest);
           this.msg = '';
         });
     },
@@ -106,7 +114,18 @@ export default {
     },
     formatCurrency(amount) {
       return formatCurrency(amount);
-    }
+    },
+    gatherPrepays() {
+      const prepays = {};
+      if(this.payments) {
+        this.payments.forEach((payment) => {
+          if(Number(payment.prepay) > 0) {
+            prepays[payment.number] = payment.prepay;
+          }
+        });
+      }
+      return prepays;
+    }   
   },
 };
 </script>

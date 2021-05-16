@@ -11,8 +11,8 @@ class Amortization:
                  rate=None,
                  number=None,
                  periods=12,
+                 prepay_amount=0,
                  prepays={},
-                 prepay_amount=0
                  ):
         self.principal = Decimal(principal)
         self.rate = Decimal(rate)
@@ -57,8 +57,9 @@ class Amortization:
                 balance = balance - self.prepay_amount
                 prepay = self.prepay_amount
 
-            if include_prepays and payment_number in self.prepays:
-                this_prepay = Decimal(self.prepays[payment_number])
+            numstr = str(payment_number)
+            if include_prepays and numstr in self.prepays:
+                this_prepay = Decimal(self.prepays[numstr])
                 balance = balance - this_prepay
                 prepay += this_prepay
 
@@ -74,7 +75,7 @@ class Amortization:
                 number = payment_number,
                 principal = principal,
                 interest = interest,
-                prepay = Decimal("0.0"),
+                prepay = prepay,
                 balance = balance
             )
 
