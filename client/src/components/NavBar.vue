@@ -23,31 +23,36 @@ export default {
 
 <style>
 nav {
-  line-height: 0.75rem;
-  margin: 0;
-  padding: 1rem;
-  background-color: var(--nav-bg);
+    line-height: 0.75rem;
+    margin: 0;
+    padding: 1rem;
+    background-color: var(--nav-bg);
 }
 
 nav a,
 nav .label {
-  color: var(--primary-color);
-  font-size: 1.25rem;
-  text-decoration: none;
-  vertical-align: middle;
+    color: var(--primary-color);
+    background-color: var(--nav-bg);
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-decoration: none;
+    vertical-align: middle;
 }
 
 nav a:hover,
 nav .label:hover {
-  color: var(--bg-color);
+    color: var(--bg-color);
+    background-color: var(--nav-bg);
 }
 
 nav .icon {
-  vertical-align: middle;
+    vertical-align: middle;
+    background-color: var(--nav-bg);
 }
 
 nav .label {
-  padding-top: 0.75rem;
+    padding-top: 0.75rem;
+    background-color: var(--nav-bg);
 }
 
 nav .label:hover {

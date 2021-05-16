@@ -25,13 +25,15 @@ export default {
 <style>
 :root {
     --primary-color: #05a172;
-    --primary-accent: #03e4a0;
-    --secondary-color: #666666;
+    --primary-accent: #55f1b2;
+    --secondary-color: #057132;
     --danger-color: red;
     --nav-bg: black;
     --border: black;
-    --bg-color: white;
-    --bg-shaded: #e8e8e8;
+    --bg-color: linen;
+    --bg-shaded: bisque;
+    --bg-secondary: #55f1b2;
+    /* --bg-secondary: mediumspringgreen; */
 }
 
 @font-face {
@@ -67,6 +69,8 @@ textarea {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
+    color: var(--fg-color);
+    background-color: var(--bg-color);
 }
 
 body,
@@ -146,10 +150,10 @@ input[type=url]:focus,
 input[type=email]:focus,
 textarea:focus,
 select:focus {
-    -moz-box-shadow: 0 0 8px #88D5E9;
-    -webkit-box-shadow: 0 0 8px #88D5E9;
-    box-shadow: 0 0 8px #88D5E9;
-    border: 1px solid #88D5E9;
+    -moz-box-shadow: 0 0 8px var(--bg-secondary);
+    -webkit-box-shadow: 0 0 8px var(--bg-secondary);
+    box-shadow: 0 0 8px var(--bg-secondary);
+    border: 1px solid var(--border);
 }
 
 button,
@@ -170,13 +174,16 @@ input[type=button] {
     vertical-align: middle;
 }
 
+button:focus,
 button:hover,
+input[type=submit]:focus,
 input[type=submit]:hover,
+input[type=button]:focus,
 input[type=button]:hover {
-    background: #4691A4;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
+    background: var(--secondary-color);
+    -moz-box-shadow: 0 0 8px var(--bg-secondary);
+    -webkit-box-shadow: 0 0 8px var(--bg-secondary);
+    box-shadow: 0 0 8px var(--bg-secondary);
 }
 
 label {
@@ -241,5 +248,9 @@ th {
 
 th:first-of-type {
     min-width: 0;
+}
+
+tr:nth-child(even) {
+    background-color: var(--bg-secondary);
 }
 </style>
