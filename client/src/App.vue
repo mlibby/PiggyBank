@@ -35,8 +35,8 @@ export default {
 }
 
 @font-face {
-    font-family: "Fira Mono";
-    src: url(./assets/fonts/FiraMono-Medium.ttf) format("truetype");
+    font-family: "JetBrainsMono";
+    src: url(./assets/fonts/JetBrainsMono-Regular.ttf) format("truetype");
 }
 
 body,
@@ -52,7 +52,14 @@ select,
 optgroup,
 option,
 textarea {
-    font-family: "Fira Mono";
+    font-family: 'JetBrainsMono',
+                 ui-monospace,
+                 'Cascadia Mono',
+                 'Segoe UI Mono',
+                 'Ubuntu Mono',
+                 'Roboto Mono',
+                 Menlo, Monaco, Consolas,
+                 monospace;
     font-size: 1rem;
     font-weight: normal;
     -webkit-font-smoothing: antialiased;
