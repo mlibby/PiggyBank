@@ -4,23 +4,23 @@ from functools import reduce
 
 
 class Amortization:
-    Payment = namedtuple('Payment', 'number principal interest prepay balance')
+    Payment = namedtuple('Payment', 'number principal interest extra balance')
     
     def __init__(self,
                  principal=None,
                  rate=None,
                  number=None,
                  periods=12,
-                 prepay_amount=0,
-                 prepays={},
+                 extra_amount=0,
+                 extras={},
                  ):
         self.principal = Decimal(principal)
         self.rate = Decimal(rate)
         self.number = int(number)
         self.original_number = int(number)
         self.periods = int(periods)
-        self.prepays = prepays
-        self.prepay_amount = Decimal(prepay_amount)
+        self.extras = extras
+        self.extra_amount = Decimal(extra_amount)
 
         self._rate = self.rate / periods / 100
         self.payment_amount = self.calculate_payment_amount()
@@ -30,7 +30,7 @@ class Amortization:
         self.original_interest = self.total_interest
         self.interest_saved = Decimal('0.00')
 
-        if self.prepay_amount > 0 or len(self.prepays) > 0:
+        if self.extra_amount > 0 or len(self.extras) > 0:
             self.payments = self.calculate_payments(True)
             self.number = len(self.payments)
             self.total_interest = self.calculate_total_interest()
@@ -42,7 +42,7 @@ class Amortization:
         # FUTURE: round using Commodity#fraction
         return round(pmt_numerator / pmt_denominator, 2)
 
-    def calculate_payments(self, include_prepays=False):
+    def calculate_payments(self, include_extras=False):
         balance = self.principal
         payments = []
         payment_number = 0
@@ -51,17 +51,17 @@ class Amortization:
             interest = round(balance * self._rate, 2)
             principal = self.payment_amount - interest
             balance = balance - principal
-            prepay = Decimal('0.00')
+            extra = Decimal('0.00')
             
-            if include_prepays and self.prepay_amount > 0:
-                balance = balance - self.prepay_amount
-                prepay = self.prepay_amount
+            if include_extras and self.extra_amount > 0:
+                balance = balance - self.extra_amount
+                extra = self.extra_amount
 
             numstr = str(payment_number)
-            if include_prepays and numstr in self.prepays:
-                this_prepay = Decimal(self.prepays[numstr])
-                balance = balance - this_prepay
-                prepay += this_prepay
+            if include_extras and numstr in self.extras:
+                this_extra = Decimal(self.extras[numstr])
+                balance = balance - this_extra
+                extra += this_extra
 
             if balance < 0:
                 principal += balance
@@ -75,7 +75,7 @@ class Amortization:
                 number = payment_number,
                 principal = principal,
                 interest = interest,
-                prepay = prepay,
+                extra = extra,
                 balance = balance
             )
 

@@ -34,7 +34,7 @@ def test_amortization_prepay_amount():
         principal = '100000',
         rate = '6.00',
         number = 360,
-        prepay_amount = '100'
+        extra_amount = '100'
         )
     assert thirty_year.number == 252
     assert thirty_year.original_number == 360
@@ -47,7 +47,7 @@ def test_amortization_prepays():
         principal = '200000',
         rate = '3.25',
         number = 180,
-        prepays = {
+        extras = {
             '2': '10000',
             '3': '5000',
             '4': '2000'

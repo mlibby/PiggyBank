@@ -12,16 +12,16 @@ def amortization_post():
     rate = Decimal(params['rate'])
     number = int(params['number'])
     periods = int(params['periods'])
-    prepay_amount = Decimal(params['prepay_amount'])
-    prepays = params['prepays']
+    extra_amount = Decimal(params['extra_amount'])
+    extras = params['extras']
 
     amortization = Amortization(
         principal,
         rate,
         number,
         periods,
-        prepay_amount,
-        prepays
+        extra_amount,
+        extras
     )
 
     data = {

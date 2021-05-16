@@ -7,8 +7,8 @@ def test_tools_amortization(client):
         'rate': '4.25',
         'number': '360',
         'periods': '12',
-        'prepay_amount': '0',
-        'prepays': {}
+        'extra_amount': '0',
+        'extras': {}
         }
     page = client.post('/api/tools/amortization', json=input)
     data = page.data.decode()

@@ -42,7 +42,7 @@
           <th>Payment</th>
           <th>Principal</th>
           <th>Interest</th>
-          <th>Prepay</th>
+          <th>Extra</th>
           <th>Balance</th>
         </tr>
         <tr v-for='payment in payments'>
@@ -51,7 +51,7 @@
           <td>{{ formatCurrency(payment.principal) }}</td>
           <td>{{ formatCurrency(payment.interest) }}</td>
           <td>
-            <input type='number' step='0.01' v-model='payment.prepay' />
+            <input type='number' step='0.01' v-model='payment.extra' />
           </td>
           <td>{{ formatCurrency(payment.balance) }}</td>
         </tr>
@@ -79,7 +79,7 @@ export default {
       rate: Decimal('4.25'),
       total_interest: formatCurrency(Decimal('0.00')),
       saved_interest: Decimal('0.00'),
-      prepay_amount: Decimal('0.00')
+      extra_amount: Decimal('0.00')
     };
   },
   methods: {
@@ -92,8 +92,8 @@ export default {
         number: this.number,
         periods: this.periods,
         payments: null,
-        prepay_amount: this.prepay_amount,
-        prepays: this.gatherPrepays()
+        extra_amount: this.extra_amount,
+        extras: this.gatherExtras()
       };
       axios
         .post('/api/tools/amortization', data)
@@ -108,23 +108,23 @@ export default {
     totalPayment(payment) {
       const principal = new Decimal(payment.principal);
       const interest = new Decimal(payment.interest);
-      const prepay = new Decimal(payment.prepay);
-      const total = principal.plus(interest).plus(prepay);
+      const extra = new Decimal(payment.extra);
+      const total = principal.plus(interest).plus(extra);
       return formatCurrency(total.toFixed(2));
     },
     formatCurrency(amount) {
       return formatCurrency(amount);
     },
-    gatherPrepays() {
-      const prepays = {};
+    gatherExtras() {
+      const extras = {};
       if(this.payments) {
         this.payments.forEach((payment) => {
-          if(Number(payment.prepay) > 0) {
-            prepays[payment.number] = payment.prepay;
+          if(Number(payment.extra) > 0) {
+            extras[payment.number] = payment.extra;
           }
         });
       }
-      return prepays;
+      return extras;
     }   
   },
 };
