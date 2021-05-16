@@ -31,6 +31,7 @@ export default {
     --nav-bg: black;
     --border: black;
     --bg-color: linen;
+    --bg-bright: ivory;
     --bg-shaded: bisque;
     --bg-secondary: #55f1b2;
     /* --bg-secondary: mediumspringgreen; */
@@ -118,11 +119,12 @@ input[type=url],
 input[type=email],
 textarea,
 select {
+    background-color: var(--bg-bright);
+    border: 1px solid var(--border);
     display: block;
-    border: 1px solid #BEBEBE;
-    padding: 7px;
     margin: 0.25rem 0 1rem 0;
     outline: none;
+    padding: 7px;
     width: 15rem;
 }
 
@@ -153,7 +155,6 @@ select:focus {
     -moz-box-shadow: 0 0 8px var(--bg-secondary);
     -webkit-box-shadow: 0 0 8px var(--bg-secondary);
     box-shadow: 0 0 8px var(--bg-secondary);
-    border: 1px solid var(--border);
 }
 
 button,
