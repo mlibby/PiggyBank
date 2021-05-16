@@ -5,7 +5,7 @@ from functools import reduce
 
 class Amortization:
     Payment = namedtuple('Payment', 'number principal interest extra balance')
-    
+
     def __init__(self,
                  principal=None,
                  rate=None,
@@ -34,7 +34,7 @@ class Amortization:
             self.payments = self.calculate_payments(True)
             self.number = len(self.payments)
             self.total_interest = self.calculate_total_interest()
-        
+
     def calculate_payment_amount(self):
         pmt_rate = (1 + self._rate) ** self.number
         pmt_numerator = self.principal * self._rate * pmt_rate
@@ -52,10 +52,9 @@ class Amortization:
             principal = self.payment_amount - interest
             balance = balance - principal
             extra = Decimal('0.00')
-            
+
             if include_extras and self.extra_amount > 0:
                 balance = balance - self.extra_amount
-                extra = self.extra_amount
 
             numstr = str(payment_number)
             if include_extras and numstr in self.extras:
@@ -66,17 +65,17 @@ class Amortization:
             if balance < 0:
                 principal += balance
                 balance = 0
-                
+
             if payment_number == self.number:
                 principal = principal + balance
                 balance = 0
 
             payment = Amortization.Payment(
-                number = payment_number,
-                principal = principal,
-                interest = interest,
-                extra = extra,
-                balance = balance
+                number=payment_number,
+                principal=principal,
+                interest=interest,
+                extra=extra,
+                balance=balance
             )
 
             payments.append(payment)

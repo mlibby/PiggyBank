@@ -2,6 +2,12 @@
 <main>
   <div>
     <h1>Loan Amortization Calculator</h1>
+    <p>
+      You may enter an "extra" principal payment that will be applied to
+      every payment. You may also enter lump sum extra principal payments
+      once you have generated the amortization table. You can apply both
+      kinds of extra principal payments.
+    </p>
   </div>
   <div class='columns'>
     <div class='column column-1-4'>
@@ -20,6 +26,8 @@
             <option value='12'>Monthly</option>
             <option value='52'>Weekly</option>
           </select>
+          <label for='extra-amount'>Extra Payment</label>
+          <input id='extra-amount' type='number' step='0.01' v-model='extra_amount' />
           <button>Calculate</button>
         </form>
         <div>{{ msg }}</div>
@@ -27,6 +35,8 @@
       <section v-if='payments'>
         <h2>Loan Summary</h2>
         <dl>
+          <dt>Payment Amount</dt>
+          <dd>{{ payment_amount }}</dd>
           <dt>Total Interest</dt>
           <dd>{{ total_interest }}</dd>
           <dt>Interest Saved</dt>
@@ -42,6 +52,7 @@
           <th>Payment</th>
           <th>Principal</th>
           <th>Interest</th>
+          <th v-if='extra_amount > 0'>Extra</th>
           <th>Extra</th>
           <th>Balance</th>
         </tr>
@@ -50,6 +61,9 @@
           <td>{{ totalPayment(payment) }}</td>
           <td>{{ formatCurrency(payment.principal) }}</td>
           <td>{{ formatCurrency(payment.interest) }}</td>
+          <td v-if='extra_amount > 0'>
+            {{ formatCurrency(extra_amount) }}
+          </td>
           <td>
             <input type='number' step='0.01' v-model='payment.extra' />
           </td>
@@ -91,6 +105,7 @@ export default {
         rate: this.rate,
         number: this.number,
         periods: this.periods,
+        payment_amount: null,
         payments: null,
         extra_amount: this.extra_amount,
         extras: this.gatherExtras()
@@ -98,9 +113,11 @@ export default {
       axios
         .post('/api/tools/amortization', data)
         .then((response) => {
-          this.payments = response.data.payments;
-          this.total_interest = formatCurrency(response.data.total_interest);
-          let saved_interest = response.data.original_interest - response.data.total_interest;
+          const data = response.data;
+          this.payment_amount = formatCurrency(data.payment_amount);
+          this.payments = data.payments;
+          this.total_interest = formatCurrency(data.total_interest);
+          let saved_interest = data.original_interest - data.total_interest;
           this.saved_interest = formatCurrency(saved_interest);
           this.msg = '';
         });
@@ -108,8 +125,9 @@ export default {
     totalPayment(payment) {
       const principal = new Decimal(payment.principal);
       const interest = new Decimal(payment.interest);
+      const extraAmount = new Decimal(this.extra_amount);
       const extra = new Decimal(payment.extra);
-      const total = principal.plus(interest).plus(extra);
+      const total = principal.plus(interest).plus(extra).plus(extraAmount);
       return formatCurrency(total.toFixed(2));
     },
     formatCurrency(amount) {
@@ -131,15 +149,17 @@ export default {
 </script>
 
 <style>
-  dd {
-  margin-left: 0;
-  margin-top: 0.33rem;
-  }
-  
-  dt {
-  font-weight: bold;
-  }
-  
+dd {
+    margin-left: 0;
+    margin-top: 0.33rem;
+    margin-bottom: 1rem;
+}
+
+dt {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
 table input[type=number] {
     width: 7rem;
 }
