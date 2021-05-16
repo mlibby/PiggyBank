@@ -36,7 +36,7 @@ export default {
 
 @font-face {
     font-family: "Fira Mono";
-    src: local("Fira Mono"), url(./assets/fonts/FiraMono-Medium.ttf) format("truetype");
+    src: url(./assets/fonts/FiraMono-Medium.ttf) format("truetype");
 }
 
 body,
