@@ -4,7 +4,8 @@ from functools import reduce
 
 
 class Amortization:
-    Payment = namedtuple('Payment', 'number principal interest extra balance')
+    Payment = namedtuple('Payment',
+                         'number total principal interest extra_amount extra_lump balance')
 
     def __init__(self,
                  principal=None,
@@ -12,14 +13,14 @@ class Amortization:
                  number=None,
                  periods=12,
                  extra_amount=0,
-                 extras={},
+                 extra_lumps=None,
                  ):
         self.principal = Decimal(principal)
         self.rate = Decimal(rate)
         self.number = int(number)
         self.original_number = int(number)
         self.periods = int(periods)
-        self.extras = extras
+        self.extra_lumps = extra_lumps or {}
         self.extra_amount = Decimal(extra_amount)
 
         self._rate = self.rate / periods / 100
@@ -30,7 +31,7 @@ class Amortization:
         self.original_interest = self.total_interest
         self.interest_saved = Decimal('0.00')
 
-        if self.extra_amount > 0 or len(self.extras) > 0:
+        if self.extra_amount > 0 or len(self.extra_lumps) > 0:
             self.payments = self.calculate_payments(True)
             self.number = len(self.payments)
             self.total_interest = self.calculate_total_interest()
@@ -51,16 +52,15 @@ class Amortization:
             interest = round(balance * self._rate, 2)
             principal = self.payment_amount - interest
             balance = balance - principal
-            extra = Decimal('0.00')
+            extra_lump = Decimal('0.00')
 
             if include_extras and self.extra_amount > 0:
                 balance = balance - self.extra_amount
 
             numstr = str(payment_number)
-            if include_extras and numstr in self.extras:
-                this_extra = Decimal(self.extras[numstr])
-                balance = balance - this_extra
-                extra += this_extra
+            if include_extras and numstr in self.extra_lumps:
+                extra_lump = Decimal(self.extra_lumps[numstr])
+                balance = balance - extra_lump
 
             if balance < 0:
                 principal += balance
@@ -72,9 +72,11 @@ class Amortization:
 
             payment = Amortization.Payment(
                 number=payment_number,
+                total=principal + interest + self.extra_amount + extra_lump,
                 principal=principal,
                 interest=interest,
-                extra=extra,
+                extra_amount=self.extra_amount,
+                extra_lump=extra_lump,
                 balance=balance
             )
 

@@ -52,20 +52,20 @@
           <th>Payment</th>
           <th>Principal</th>
           <th>Interest</th>
-          <th v-if='extra_amount > 0'>Extra</th>
+          <th v-if='show_extra'>Extra</th>
           <th>Extra</th>
           <th>Balance</th>
         </tr>
-        <tr v-for='payment in payments'>
+        <tr v-for='payment in payments' :key='payment.number'>
           <td>{{ payment.number }}</td>
-          <td>{{ totalPayment(payment) }}</td>
+          <td>{{ formatCurrency(payment.total) }}</td>
           <td>{{ formatCurrency(payment.principal) }}</td>
           <td>{{ formatCurrency(payment.interest) }}</td>
-          <td v-if='extra_amount > 0'>
-            {{ formatCurrency(extra_amount) }}
+          <td v-if='show_extra'>
+            {{ formatCurrency(payment.extra_amount) }}
           </td>
           <td>
-            <input type='number' step='0.01' v-model='payment.extra' />
+            <input type='number' step='0.01' v-model='payment.extra_lump' />
           </td>
           <td>{{ formatCurrency(payment.balance) }}</td>
         </tr>
@@ -93,7 +93,8 @@ export default {
       rate: Decimal('4.25'),
       total_interest: formatCurrency(Decimal('0.00')),
       saved_interest: Decimal('0.00'),
-      extra_amount: Decimal('0.00')
+      extra_amount: Decimal('0.00'),
+      show_extra: false
     };
   },
   methods: {
@@ -108,7 +109,7 @@ export default {
         payment_amount: null,
         payments: null,
         extra_amount: this.extra_amount,
-        extras: this.gatherExtras()
+        extra_lumps: this.getExtraLumps()
       };
       axios
         .post('/api/tools/amortization', data)
@@ -119,6 +120,7 @@ export default {
           this.total_interest = formatCurrency(data.total_interest);
           let saved_interest = data.original_interest - data.total_interest;
           this.saved_interest = formatCurrency(saved_interest);
+          this.show_extra = data.extra_amount > 0
           this.msg = '';
         });
     },
@@ -133,16 +135,16 @@ export default {
     formatCurrency(amount) {
       return formatCurrency(amount);
     },
-    gatherExtras() {
-      const extras = {};
+    getExtraLumps() {
+      const lumps = {};
       if(this.payments) {
         this.payments.forEach((payment) => {
-          if(Number(payment.extra) > 0) {
-            extras[payment.number] = payment.extra;
+          if(Number(payment.extra_lump) > 0) {
+            lumps[payment.number] = payment.extra_lump;
           }
         });
       }
-      return extras;
+      return lumps;
     }   
   },
 };

@@ -1,6 +1,7 @@
 import pytest
 from server.tests import client
 
+
 def test_tools_amortization(client):
     input = {
         'principal': '225000',
@@ -8,8 +9,8 @@ def test_tools_amortization(client):
         'number': '360',
         'periods': '12',
         'extra_amount': '0',
-        'extras': {}
-        }
+        'extra_lumps': {}
+    }
     page = client.post('/api/tools/amortization', json=input)
     data = page.data.decode()
     assert 'payments' in data

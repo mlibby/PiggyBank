@@ -13,7 +13,7 @@ def amortization_post():
     number = int(params['number'])
     periods = int(params['periods'])
     extra_amount = Decimal(params['extra_amount'])
-    extras = params['extras']
+    extra_lumps = params['extra_lumps']
 
     amortization = Amortization(
         principal,
@@ -21,10 +21,11 @@ def amortization_post():
         number,
         periods,
         extra_amount,
-        extras
+        extra_lumps
     )
 
     data = {
+        'extra_amount': amortization.extra_amount,
         'number': amortization.number,
         'original_interest': amortization.original_interest,
         'original_number': amortization.original_number,
