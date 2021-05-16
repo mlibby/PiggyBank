@@ -64,7 +64,7 @@
 <script>
 import axios from 'axios';
 import { Decimal } from 'decimal.js';
-import { formatCurrency } from '../../util.js';
+import formatCurrency from '../../util.js';
 
 export default {
   name: 'Amortization',
