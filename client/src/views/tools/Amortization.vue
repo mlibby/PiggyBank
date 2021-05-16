@@ -64,7 +64,7 @@
 <script>
 import axios from 'axios';
 import { Decimal } from 'decimal.js';
-import formatCurrency from '../../util.js';
+import { formatCurrency } from '../../util.js';
 
 export default {
   name: 'Amortization',
@@ -78,7 +78,7 @@ export default {
       principal: Decimal('225000.0'),
       rate: Decimal('4.25'),
       total_interest: formatCurrency(Decimal('0.00')),
-      saved_interest: null,
+      saved_interest: Decimal('0.00'),
       prepay_amount: Decimal('0.00')
     };
   },
