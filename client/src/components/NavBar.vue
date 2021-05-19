@@ -7,7 +7,7 @@
     </router-link>
   </section>
   <section>
-    <span class="label">Tools</span>
+    <button class="label">Tools</button>
     <div class="menu">
       <router-link to='/tools/amortization'>Amortization</router-link>
     </div>
@@ -31,16 +31,20 @@ nav {
 
 nav a,
 nav .label {
-    color: var(--primary-color);
     background-color: var(--nav-bg);
+    border: 0;
+    color: var(--primary-color);
     font-size: 1.25rem;
     font-weight: bold;
     text-decoration: none;
     vertical-align: middle;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
-nav a:hover,
-nav .label:hover {
+nav a:focus,
+nav .label:focus {
     color: var(--bg-color);
     background-color: var(--nav-bg);
 }
@@ -55,36 +59,40 @@ nav .label {
     background-color: var(--nav-bg);
 }
 
+nav .label:focus,
 nav .label:hover {
-  cursor: pointer;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    background-color: var(--nav-bg);
+    box-shadow: none;
+    color: var(--bg-color);
+    cursor: pointer;
 }
 
 nav section {
-  padding-right: 1rem;
-  display: inline-block;
-  flex-direction: column;
-  transition-duration: 0.5s;
+    padding-right: 1rem;
+    display: inline-block;
+    flex-direction: column;
+    transition-duration: 0.5s;
 }
 
 nav section:last-child {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 nav section .menu {
-  background-color: var(--nav-bg);
-  flex-direction: column;
-  transition: all 0.5s ease;
-  margin-left: -1rem;
-  margin-top: 1.33rem;
-  opacity: 0;
-  padding: 1rem;
-  position: absolute;
-  z-index: -1;
+    background-color: var(--nav-bg);
+    flex-direction: column;
+    transition: all 0.5s ease;
+    margin-left: -1rem;
+    margin-top: 0.66rem;
+    opacity: 0;
+    padding: 1rem;
+    position: absolute;
+    z-index: -1;
 }
 
-nav section:focus-within .menu,
-nav section:hover .menu,
-nav section .menu:hover {
+nav section:focus-within .menu {
   visibility: visible;
   opacity: 1;
   display: block;

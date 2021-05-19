@@ -24,4 +24,8 @@ const router = new VueRouter({
   routes,
 });
 
+router.afterEach((to, from) => {
+  document.activeElement.blur();
+});
+
 export default router;
