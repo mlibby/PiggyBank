@@ -28,7 +28,7 @@
           </select>
           <label for='extra-amount'>Extra Payment</label>
           <input id='extra-amount' type='number' step='0.01' v-model='extra_amount' />
-          <button>Calculate</button>
+          <spinner-button :onClick='calculate'>Calculate</spinner-button>
         </form>
         <div>{{ msg }}</div>
       </section>
@@ -79,49 +79,51 @@
 import axios from 'axios';
 import { Decimal } from 'decimal.js';
 import { formatCurrency } from '../../util.js';
+import SpinnerButton from '@/components/SpinnerButton.vue';
 
 export default {
-  name: 'Amortization',
-  title: 'Amortization',
-  data: function(){
-    return {
-      msg: '',
-      number: 360,
-      payments: null,
-      periods: 12,
-      principal: Decimal('225000.0'),
-      rate: Decimal('4.25'),
-      total_interest: formatCurrency(Decimal('0.00')),
-      saved_interest: Decimal('0.00'),
-      extra_amount: Decimal('0.00'),
-      show_extra: false
-    };
-  },
-  methods: {
-    calculate(e) {
-      e.preventDefault();
-      this.msg = 'Calculating...';
-      const data = {
-        principal: this.principal,
-        rate: this.rate,
-        number: this.number,
-        periods: this.periods,
-        payment_amount: null,
-        payments: null,
-        extra_amount: this.extra_amount,
-        extra_lumps: this.getExtraLumps()
-      };
-      axios
-        .post('/api/tools/amortization', data)
-        .then((response) => {
-          const data = response.data;
-          this.payment_amount = formatCurrency(data.payment_amount);
-          this.payments = data.payments;
-          this.total_interest = formatCurrency(data.total_interest);
+    name: 'Amortization',
+    title: 'Amortization',
+    components: {
+        SpinnerButton,
+    },
+    data: function(){
+        return {
+            msg: '',
+            number: 360,
+            payments: null,
+            periods: 12,
+            principal: Decimal('225000.0'),
+            rate: Decimal('4.25'),
+            total_interest: formatCurrency(Decimal('0.00')),
+            saved_interest: Decimal('0.00'),
+            extra_amount: Decimal('0.00'),
+            show_extra: false
+        };
+    },
+    methods: {
+        calculate(next) {
+            const data = {
+                principal: this.principal,
+                rate: this.rate,
+                number: this.number,
+                periods: this.periods,
+                payment_amount: null,
+                payments: null,
+                extra_amount: this.extra_amount,
+                extra_lumps: this.getExtraLumps()
+            };
+            axios
+                .post('/api/tools/amortization', data)
+                .then((response) => {
+                    const data = response.data;
+                    this.payment_amount = formatCurrency(data.payment_amount);
+                    this.payments = data.payments;
+                    this.total_interest = formatCurrency(data.total_interest);
           let saved_interest = data.original_interest - data.total_interest;
           this.saved_interest = formatCurrency(saved_interest);
           this.show_extra = data.extra_amount > 0
-          this.msg = '';
+            next();
         });
     },
     totalPayment(payment) {

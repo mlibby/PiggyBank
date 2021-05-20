@@ -1,14 +1,13 @@
 function getTitle(vm) {
   const { title } = vm.$options;
-  let returnTitle;
+  let thisTitle;
   if (title) {
-    returnTitle = typeof title === 'function'
+    return typeof title === 'function'
       ? title.call(vm)
-      : title;
+      : `${ title } : PiggyBank`;
   } else {
-    returnTitle = 'PiggyBank';
+    return 'PiggyBank';
   }
-  return returnTitle;
 }
 
 export default {
