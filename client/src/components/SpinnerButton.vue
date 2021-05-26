@@ -1,8 +1,8 @@
 <template>
     <button
-        v-on:click="buttonClick"
         :style="{ width: buttonWidth + 'px' }"
         ref="thisButton"
+        v-on:click="buttonClick"
     >
         <span :style="{ display: textDisplay }">
             <slot>[button]</slot>

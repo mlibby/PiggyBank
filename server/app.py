@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask, render_template
+from flask import Blueprint, Flask, render_template, send_from_directory
 from .util.json import PiggyBankJSONEncoder
 from .routes.tools.amortization import amortization
 
@@ -31,6 +31,4 @@ s2 = Blueprint(
 )
 app.register_blueprint(s2)
 
-app.register_blueprint(
-    amortization, url_prefix="/api/tools/amortization"
-)
+app.register_blueprint(amortization, url_prefix="/api/tools/amortization")
