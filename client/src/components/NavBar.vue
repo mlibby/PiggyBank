@@ -1,23 +1,25 @@
 <template>
-<nav role='navigation'>
-  <section>
-    <router-link to='/'>
-      <span class='icon icon-pig'></span>
-      <span class='sr-only'>Home</span>
-    </router-link>
-  </section>
-  <section>
-    <button class="label">Tools</button>
-    <div class="menu">
-      <router-link to='/tools/amortization'>Amortization</router-link>
-    </div>
-  </section>
-</nav>
+    <nav role="navigation">
+        <section>
+            <router-link to="/">
+                <span class="icon icon-pig"></span>
+                <span class="sr-only">Home</span>
+            </router-link>
+        </section>
+        <section>
+            <button class="label">Tools</button>
+            <div class="menu">
+                <router-link to="/tools/amortization"
+                    >Amortization</router-link
+                >
+            </div>
+        </section>
+    </nav>
 </template>
 
 <script>
 export default {
-  name: 'NavBar',
+    name: "NavBar",
 };
 </script>
 
@@ -93,19 +95,19 @@ nav section .menu {
 }
 
 nav section:focus-within .menu {
-  visibility: visible;
-  opacity: 1;
-  display: block;
-  z-index: 1;
+    visibility: visible;
+    opacity: 1;
+    display: block;
+    z-index: 1;
 }
 
 nav section .menu a {
-  display: block;
-  margin-bottom: 0.5rem;
-  line-height: 1.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    line-height: 1.5rem;
 }
 
 nav .icon {
-  font-size: 1.8em;
+    font-size: 1.8em;
 }
 </style>

@@ -5,10 +5,12 @@ name = "pypi"
 
 [packages]
 Flask = ">=2.0"
+flask-migrate = "*"
+flask-sqlalchemy = "*"
 gunicorn = "*"
 pytest = "*"
 pytest-cov = "*"
 python-dotenv = "*"
 
 [dev-packages]
-autopep8 = "*"
+black = "==21.5b1"

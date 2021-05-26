@@ -4,17 +4,20 @@ from functools import reduce
 
 
 class Amortization:
-    Payment = namedtuple('Payment',
-                         'number total principal interest extra_amount extra_lump balance')
+    Payment = namedtuple(
+        "Payment",
+        "number total principal interest extra_amount extra_lump balance",
+    )
 
-    def __init__(self,
-                 principal=None,
-                 rate=None,
-                 number=None,
-                 periods=12,
-                 extra_amount=0,
-                 extra_lumps=None,
-                 ):
+    def __init__(
+        self,
+        principal=None,
+        rate=None,
+        number=None,
+        periods=12,
+        extra_amount=0,
+        extra_lumps=None,
+    ):
         self.principal = Decimal(principal)
         self.rate = Decimal(rate)
         self.number = int(number)
@@ -29,7 +32,7 @@ class Amortization:
         self.original_payments = self.payments
         self.total_interest = self.calculate_total_interest()
         self.original_interest = self.total_interest
-        self.interest_saved = Decimal('0.00')
+        self.interest_saved = Decimal("0.00")
 
         if self.extra_amount > 0 or len(self.extra_lumps) > 0:
             self.payments = self.calculate_payments(True)
@@ -52,7 +55,7 @@ class Amortization:
             interest = round(balance * self._rate, 2)
             principal = self.payment_amount - interest
             balance = balance - principal
-            extra_lump = Decimal('0.00')
+            extra_lump = Decimal("0.00")
 
             if include_extras and self.extra_amount > 0:
                 balance = balance - self.extra_amount
@@ -72,12 +75,15 @@ class Amortization:
 
             payment = Amortization.Payment(
                 number=payment_number,
-                total=principal + interest + self.extra_amount + extra_lump,
+                total=principal
+                + interest
+                + self.extra_amount
+                + extra_lump,
                 principal=principal,
                 interest=interest,
                 extra_amount=self.extra_amount,
                 extra_lump=extra_lump,
-                balance=balance
+                balance=balance,
             )
 
             payments.append(payment)

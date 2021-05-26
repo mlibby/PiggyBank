@@ -1,24 +1,22 @@
 <template>
-<body id='app'>
-  <IcoMoon>
-  </IcoMoon>
-  <NavBar>
-  </NavBar>
-  <router-view/>
-</body>
+    <body id="app">
+        <IcoMoon> </IcoMoon>
+        <NavBar> </NavBar>
+        <router-view />
+    </body>
 </template>
 
 <script>
-import IcoMoon from '@/components/IcoMoon.vue';
-import NavBar from '@/components/NavBar.vue';
+import IcoMoon from "@/components/IcoMoon.vue";
+import NavBar from "@/components/NavBar.vue";
 
 export default {
-  name: 'App',
-  title: 'PiggyBank',
-  components: {
-    IcoMoon,
-    NavBar,
-  },
+    name: "App",
+    title: "PiggyBank",
+    components: {
+        IcoMoon,
+        NavBar,
+    },
 };
 </script>
 
@@ -39,7 +37,8 @@ export default {
 
 @font-face {
     font-family: "JetBrainsMono";
-    src: url(./assets/fonts/JetBrainsMono-Regular.ttf) format("truetype");
+    src: url(./assets/fonts/JetBrainsMono-Regular.ttf)
+        format("truetype");
 }
 
 body,
@@ -55,14 +54,9 @@ select,
 optgroup,
 option,
 textarea {
-    font-family: 'JetBrainsMono',
-                 ui-monospace,
-                 'Cascadia Mono',
-                 'Segoe UI Mono',
-                 'Ubuntu Mono',
-                 'Roboto Mono',
-                 Menlo, Monaco, Consolas,
-                 monospace;
+    font-family: "JetBrainsMono", ui-monospace, "Cascadia Mono",
+        "Segoe UI Mono", "Ubuntu Mono", "Roboto Mono", Menlo,
+        Monaco, Consolas, monospace;
     font-size: 1rem;
     font-weight: normal;
     -webkit-font-smoothing: antialiased;
@@ -108,15 +102,15 @@ h6 {
     margin: 1rem 0 0.5rem 0;
 }
 
-input[type=text],
-input[type=checkbox],
-input[type=date],
-input[type=datetime],
-input[type=number],
-input[type=search],
-input[type=time],
-input[type=url],
-input[type=email],
+input[type="text"],
+input[type="checkbox"],
+input[type="date"],
+input[type="datetime"],
+input[type="number"],
+input[type="search"],
+input[type="time"],
+input[type="url"],
+input[type="email"],
 textarea,
 select {
     background-color: var(--bg-bright);
@@ -128,28 +122,28 @@ select {
     width: 15rem;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
     width: 2rem;
 }
 
-input[type=number] {
+input[type="number"] {
     -moz-appearance: textfield;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-input[type=text]:focus,
-input[type=date]:focus,
-input[type=datetime]:focus,
-input[type=number]:focus,
-input[type=search]:focus,
-input[type=time]:focus,
-input[type=url]:focus,
-input[type=email]:focus,
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="datetime"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="time"]:focus,
+input[type="url"]:focus,
+input[type="email"]:focus,
 textarea:focus,
 select:focus {
     -moz-box-shadow: 0 0 8px var(--bg-secondary);
@@ -158,8 +152,8 @@ select:focus {
 }
 
 button,
-input[type=submit],
-input[type=button] {
+input[type="submit"],
+input[type="button"] {
     background-color: var(--primary-color);
     border-radius: 0.5rem;
     border-width: 0;
@@ -176,8 +170,8 @@ input[type=button] {
 }
 
 button:hover,
-input[type=submit]:hover,
-input[type=button]:hover {
+input[type="submit"]:hover,
+input[type="button"]:hover {
     -moz-box-shadow: 0 0 8px var(--border);
     -webkit-box-shadow: 0 0 8px var(--border);
     box-shadow: 0 0 8px var(--border);
@@ -220,15 +214,15 @@ td {
     border-bottom: 1px solid var(--primary-accent);
 }
 
-td input[type=text],
-td input[type=checkbox],
-td input[type=date],
-td input[type=datetime],
-td input[type=number],
-td input[type=search],
-td input[type=time],
-td input[type=url],
-td input[type=email],
+td input[type="text"],
+td input[type="checkbox"],
+td input[type="date"],
+td input[type="datetime"],
+td input[type="number"],
+td input[type="search"],
+td input[type="time"],
+td input[type="url"],
+td input[type="email"],
 td textarea,
 td select {
     margin: 0;
