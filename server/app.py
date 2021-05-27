@@ -1,6 +1,13 @@
-from flask import Blueprint, Flask, render_template, send_from_directory
-from .util.json import PiggyBankJSONEncoder
-from .routes.tools.amortization import amortization
+from flask import (
+    Blueprint,
+    Flask,
+    render_template,
+    send_from_directory,
+)
+from flask_migrate import Migrate
+from server.models import db
+from server.routes.tools.amortization import amortization
+from server.util.json import PiggyBankJSONEncoder
 
 app = Flask(
     __name__,
@@ -11,6 +18,10 @@ app = Flask(
 
 app.url_map.strict_slashes = False
 app.json_encoder = PiggyBankJSONEncoder
+app.config.from_object("server.config.Config")
+
+db.init_app(app)
+migrate = Migrate(app, db)
 
 
 @app.errorhandler(404)
