@@ -37,8 +37,7 @@ export default {
 
 @font-face {
     font-family: "JetBrainsMono";
-    src: url(./assets/fonts/JetBrainsMono-Regular.ttf)
-        format("truetype");
+    src: url(./assets/fonts/JetBrainsMono-Regular.ttf) format("truetype");
 }
 
 body,
@@ -54,9 +53,8 @@ select,
 optgroup,
 option,
 textarea {
-    font-family: "JetBrainsMono", ui-monospace, "Cascadia Mono",
-        "Segoe UI Mono", "Ubuntu Mono", "Roboto Mono", Menlo,
-        Monaco, Consolas, monospace;
+    font-family: "JetBrainsMono", ui-monospace, "Cascadia Mono", "Segoe UI Mono",
+        "Ubuntu Mono", "Roboto Mono", Menlo, Monaco, Consolas, monospace;
     font-size: 1rem;
     font-weight: normal;
     -webkit-font-smoothing: antialiased;
@@ -88,6 +86,14 @@ header {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+div.error {
+    background-color: var(--bg-bright);
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
+    font-size: 1.25rem;
+    padding: 1rem;
 }
 
 h1 {
@@ -151,6 +157,7 @@ select:focus {
     box-shadow: 0 0 8px var(--bg-secondary);
 }
 
+a.btn,
 button,
 input[type="submit"],
 input[type="button"] {
@@ -169,6 +176,7 @@ input[type="button"] {
     vertical-align: middle;
 }
 
+a.btn:hover,
 button:hover,
 input[type="submit"]:hover,
 input[type="button"]:hover {

@@ -6,6 +6,7 @@ from flask import (
 )
 from flask_migrate import Migrate
 from server.models import db
+from server.routes.account import account
 from server.routes.tools.amortization import amortization
 from server.util.json import PiggyBankJSONEncoder
 
@@ -42,4 +43,5 @@ s2 = Blueprint(
 )
 app.register_blueprint(s2)
 
+app.register_blueprint(account, url_prefix="/api/account")
 app.register_blueprint(amortization, url_prefix="/api/tools/amortization")

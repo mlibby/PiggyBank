@@ -1,17 +1,25 @@
 <template>
     <nav role="navigation">
-        <section>
+        <section class="icon">
             <router-link to="/">
                 <span class="icon icon-pig"></span>
                 <span class="sr-only">Home</span>
             </router-link>
         </section>
         <section>
+            <button class="label">Accounts</button>
+            <div class="menu">
+                <router-link to="/accounts">
+                    Accounts
+                </router-link>
+            </div>
+        </section>
+        <section>
             <button class="label">Tools</button>
             <div class="menu">
-                <router-link to="/tools/amortization"
-                    >Amortization</router-link
-                >
+                <router-link to="/tools/amortization">
+                    Amortization
+                </router-link>
             </div>
         </section>
     </nav>
@@ -57,7 +65,6 @@ nav .icon {
 }
 
 nav .label {
-    padding-top: 0.75rem;
     background-color: var(--nav-bg);
 }
 
@@ -72,10 +79,13 @@ nav .label:hover {
 }
 
 nav section {
-    padding-right: 1rem;
     display: inline-block;
     flex-direction: column;
     transition-duration: 0.5s;
+}
+
+nav section.icon {
+    padding-right: 1rem;
 }
 
 nav section:last-child {
@@ -86,10 +96,9 @@ nav section .menu {
     background-color: var(--nav-bg);
     flex-direction: column;
     transition: all 0.5s ease;
-    margin-left: -1rem;
-    margin-top: 0.66rem;
+    margin: 0.25rem 0rem;
     opacity: 0;
-    padding: 1rem;
+    padding: 0.5rem;
     position: absolute;
     z-index: -1;
 }
