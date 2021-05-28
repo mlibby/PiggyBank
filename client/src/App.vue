@@ -176,13 +176,14 @@ input[type="button"] {
     vertical-align: middle;
 }
 
+a.btn:focus,
 a.btn:hover,
 button:hover,
 input[type="submit"]:hover,
 input[type="button"]:hover {
-    -moz-box-shadow: 0 0 8px var(--border);
-    -webkit-box-shadow: 0 0 8px var(--border);
-    box-shadow: 0 0 8px var(--border);
+    -moz-box-shadow: 2px 2px 8px var(--border);
+    -webkit-box-shadow: 2px 2px 8px var(--border);
+    box-shadow: 2px 2px 8px var(--border);
 }
 
 label {
