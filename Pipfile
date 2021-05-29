@@ -8,7 +8,9 @@ Flask = ">=2.0"
 flask-migrate = "*"
 flask-sqlalchemy = "*"
 gunicorn = "*"
+psycopg2 = "*"
 python-dotenv = "*"
+
 
 [dev-packages]
 black = "==21.5b1"
