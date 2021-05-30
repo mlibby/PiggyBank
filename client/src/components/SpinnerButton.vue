@@ -7,10 +7,7 @@
         <span :style="{ display: textDisplay }">
             <slot>[button]</slot>
         </span>
-        <img
-            src="../assets/spin.svg"
-            :style="{ display: imgDisplay }"
-        />
+        <img src="../assets/spin.svg" :style="{ display: imgDisplay }" />
     </button>
 </template>
 
@@ -27,12 +24,14 @@ export default {
         return {
             buttonWidth: "auto",
             imgDisplay: "none",
-            innerFunction: function () {},
             text: "[anonymous button]",
             textDisplay: "inline",
         };
     },
     methods: {
+        // Yes, this manages the display styles "by hand" rather than
+        // using Vue directives like v-if. I think I was having
+        // trouble with the built-ins. Maybe they'd work now?
         buttonClick: function (event) {
             event.preventDefault();
             const button = this.$refs.thisButton;

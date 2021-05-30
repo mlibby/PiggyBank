@@ -23,18 +23,9 @@
             to delete an account.
         </p>
 
-        <div v-if="loading">
-            <img src="../../assets/spin_primary.svg" />
-        </div>
-        <div v-if="error" class="error">
-            <span class="icon icon-warning">
-                <span class="sr-only"> Error: </span>
-            </span>
-            {{ error }}
-        </div>
-
-        <account-tree v-if="accounts" v-bind:accounts="accounts"> </account-tree>
-
+        <spinner-div ref="accountTreeSpinner" :onLoad="fetchAccounts">
+            <account-tree v-if="accounts" v-bind:accounts="accounts"> </account-tree>
+        </spinner-div>
         <p>
             <em>Assets</em>, <em>Liabilities</em>, <em>Income</em>, <em>Expense</em>,
             and <em>Equity</em> are required accounts and may not be edited or deleted.
@@ -44,36 +35,31 @@
 
 <script>
 import axios from "axios";
-import AccountTree from "@/components/account/AccountTree.vue";
+import AccountTree from "@/components/account/tree.vue";
+import SpinnerDiv from "../../components/SpinnerDiv.vue";
 
 export default {
     name: "AccountIndex",
     title: "Accounts",
-    components: { AccountTree },
+    components: { AccountTree, SpinnerDiv },
     data() {
         return {
-            loading: true,
             accounts: null,
-            error: null,
         };
     },
-    created() {
-        this.fetchAccounts();
+    mounted() {
+        this.$refs.accountTreeSpinner.load();
     },
     methods: {
-        fetchAccounts() {
+        fetchAccounts(next, error) {
             axios
                 .get("/api/account")
                 .then((response) => {
-                    this.loading = false;
                     this.accounts = response.data;
+                    next();
                 })
-                .catch((error) => {
-                    this.loading = false;
-                    this.error =
-                        error.response && error.response.data
-                            ? error.response.data
-                            : error.message;
+                .catch((e) => {
+                    error(e);
                 });
         },
     },
