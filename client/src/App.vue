@@ -23,16 +23,18 @@ export default {
 <style>
 :root {
     --primary-color: #05a172;
-    --primary-accent: #55f1b2;
-    --secondary-color: #057132;
-    --danger-color: red;
-    --nav-bg: black;
-    --border: black;
+    --primary-accent: #34bd94;
+    --secondary-color: #093566;
+    --secondary-accent: #3f7abc;
+    --danger-color: #9c3802;
+    --danger-accent: #ff8746;
+    --warn-color: #9c5f02;
+    --warn-accent: #ffb646;
+    --nav-bg: #001912;
+    --border: #001912;
     --bg-color: linen;
-    --bg-bright: ivory;
-    --bg-shaded: bisque;
-    --bg-secondary: #55f1b2;
-    /* --bg-secondary: mediumspringgreen; */
+    --bg-accent: ivory;
+    --bg-secondary: #75e7c5;
 }
 
 @font-face {
@@ -123,7 +125,7 @@ input[type="url"],
 input[type="email"],
 textarea,
 select {
-    background-color: var(--bg-bright);
+    background-color: var(--bg-accent);
     border: 1px solid var(--border);
     display: block;
     margin: 0.25rem 0 1rem 0;

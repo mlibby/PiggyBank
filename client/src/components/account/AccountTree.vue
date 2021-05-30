@@ -4,20 +4,20 @@
             <router-link
                 class="name"
                 v-bind:class="{ placeholder: account.is_placeholder }"
-                to="/account?action=view&id=1"
+                :to="{ name: 'view_account', params: { id: account.id } }"
             >
                 {{ account.name }}
             </router-link>
             <router-link
                 v-if="account.parent_id"
-                class="btn primary"
+                class="btn secondary"
                 :to="{ name: 'edit_account', params: { id: account.id } }"
             >
                 <span class="icon icon-pencil"></span>
                 <span class="sr-only">Edit Account</span>
             </router-link>
             <router-link
-                class="btn secondary"
+                class="btn primary"
                 :to="{ name: 'new_account', params: { id: account.id } }"
             >
                 <span class="icon icon-plus"></span>

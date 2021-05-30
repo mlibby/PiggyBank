@@ -3,7 +3,7 @@ import Account from "../views/account.vue";
 import AccountView from "../views/account/view.vue";
 import AccountNew from "../views/account/new.vue";
 import AccountEdit from "../views/account/edit.vue";
-import AccountDelete from "../views/account/delete.vue"
+import AccountDelete from "../views/account/delete.vue";
 
 const accountRoutes = [
     {
@@ -11,24 +11,31 @@ const accountRoutes = [
         component: AccountIndex,
     },
     {
-        path: "/account/view/:id",
-        component: AccountView,
+        path: "/account/:id",
+        component: Account,
+        children: [
+            {
+                name: "view_account",
+                path: "",
+                component: AccountView,
+            },
+            {
+                name: "new_account",
+                path: "new",
+                component: AccountNew,
+            },
+            {
+                name: "edit_account",
+                path: "edit",
+                component: AccountEdit,
+            },
+            {
+                name: "delete_account",
+                path: "delete",
+                component: AccountDelete,
+            },
+        ],
     },
-    {
-        name: "new_account",
-        path: "/account/new/:id",
-        component: AccountNew,
-    },
-    {
-        name: "edit_account",
-        path: "/account/edit/:id",
-        component: AccountEdit,
-    },
-    {
-        name: "delete_account",
-        path: "/account/delete/:id",
-        component: AccountDelete,
-    },
-]
-        
+];
+
 export default accountRoutes;
