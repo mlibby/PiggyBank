@@ -6,12 +6,9 @@
         <input id="account-name" type="text" v-model="account.name" />
         <label for="account-type">Account Type</label>
         <select id="account-type" v-model="account.account_type">
-            <option>ASSET</option>
-            <option>EQUITY</option>
-            <option>EXPENSE</option>
-            <option>INCOME</option>
-            <option>LIABILITY</option>
-            <option>MORTGAGE</option>
+            <option v-for="accountType in accountTypes">
+                {{ accountType }}
+            </option>
         </select>
         <label class="checkbox">
             <input
@@ -23,8 +20,13 @@
         </label>
         <label for="account-parent">Parent Account</label>
         <select id="account-parent" v-model="account.parent_id">
-          <option value="1">Equity</option>
-          <option value="2">Liabilities</option>
+            <option
+                v-for="account in accounts"
+                v-bind:value="account.id"
+                :key="account.id"
+            >
+                {{ account.full_name }}
+            </option>
         </select>
     </form>
 </template>
@@ -32,7 +34,7 @@
 <script>
 export default {
     name: "AccountForm",
-    props: ["account"],
+    props: ["account", "accounts", "account-types"],
 };
 </script>
 

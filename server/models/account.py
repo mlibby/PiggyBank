@@ -27,7 +27,17 @@ class Account(db.Model):
     name = db.Column(db.String(256), nullable=False)
     parent_id = db.Column(db.Integer, db.ForeignKey("account.id"))
 
-    subaccounts = db.relationship("Account", foreign_keys=[parent_id])
+    subaccounts = db.relationship(
+        "Account",
+        back_populates="parent",
+    )
+
+    parent = db.relationship(
+        "Account",
+        back_populates="subaccounts",
+        foreign_keys=[parent_id],
+        remote_side=[id],
+    )
 
     @classmethod
     def get_account_tree(cls):
@@ -41,16 +51,26 @@ class Account(db.Model):
         for account in accounts:
             account_dict = dict(account)
             if len(account.subaccounts) > 0:
-                account_dict['subaccounts'] = cls.get_subaccounts(account.id)
+                account_dict["subaccounts"] = cls.get_subaccounts(account.id)
             account_list.append(account_dict)
         return account_list
-    
+
+    @property
+    def full_name(self):
+        full_name = self.name
+        parent = self.parent
+        while parent:
+            full_name = f"{parent.name}::{full_name}"
+            parent = parent.parent
+        return full_name
+
     # one_to_many :subaccounts, class: self, key: :parent_id
     # many_to_one :parent, class: self
     # many_to_one :commodity, class: PiggyBank::Commodity
 
     def __iter__(self):
         column_names = [column.name for column in self.__table__.columns]
+        column_names.append("full_name")
         for column in column_names:
             yield column, getattr(self, column)
 

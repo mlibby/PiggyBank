@@ -232,11 +232,14 @@ label {
 
 label.checkbox {
     display: inline-block;
+    margin-left: 0;
+    padding-left: 0;
 }
 
 label.checkbox input {
-    margin-left: -0.5rem;
+    margin: 0.5rem -0.5rem 1.5rem;
     display: inline-block;
+    height: 1rem;
 }
 
 main {

@@ -53,7 +53,7 @@ export default {
     methods: {
         fetchAccounts(next, error) {
             axios
-                .get("/api/account")
+                .get("/api/account/tree")
                 .then((response) => {
                     this.accounts = response.data;
                     next();
