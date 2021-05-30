@@ -5,12 +5,12 @@
         </div>
         <div v-else>
             <slot></slot>
-        </div>
-        <div v-if="error" class="error">
-            <span class="icon icon-warning">
-                <span class="sr-only"> Error: </span>
-            </span>
-            {{ error }}
+            <div v-if="errorMessage" class="error">
+                <span class="icon icon-warning">
+                    <span class="sr-only"> Error: </span>
+                </span>
+                {{ errorMessage }}
+            </div>
         </div>
     </div>
 </template>
@@ -21,7 +21,7 @@ export default {
     data() {
         return {
             loading: true,
-            error: null,
+            errorMessage: null,
         };
     },
     props: {
@@ -33,16 +33,18 @@ export default {
     methods: {
         load: function () {
             const next = () => {
-                button.disabled = false;
-                this.textDisplay = "inline";
-                this.imgDisplay = "none";
+                this.loading = false;
             };
             const error = (e) => {
                 this.loading = false;
-                this.error =
-                    error.response && error.response.data
-                        ? error.response.data
-                        : error.message;
+                this.errorMessage = e.message;
+                if (
+                    e.response &&
+                    e.response.data &&
+                    !e.response.data.startswith("<!DOCTYPE")
+                ) {
+                    this.errorMessage = e.response.data;
+                }
             };
             this.onLoad(next, error);
         },

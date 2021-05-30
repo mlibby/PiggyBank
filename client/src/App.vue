@@ -34,7 +34,10 @@ export default {
     --border: #001912;
     --bg-color: linen;
     --bg-accent: ivory;
-    --bg-secondary: #75e7c5;
+    --bg-primary: #75e7c5;
+    --bg-secondary: #7eb0e7;
+    --bg-danger: #ffad81;
+    --bg-warn: #ffcd81;
 }
 
 @font-face {
@@ -95,7 +98,7 @@ header {
 }
 
 div.error {
-    background-color: var(--bg-bright);
+    background-color: var(--bg-danger);
     border: 1px solid var(--danger-color);
     color: var(--danger-color);
     font-size: 1.25rem;
@@ -206,11 +209,34 @@ input[type="button"]:hover {
     box-shadow: 2px 2px 8px var(--border);
 }
 
+input[type="text"][disabled],
+input[type="date"][disabled],
+input[type="datetime"][disabled],
+input[type="number"][disabled],
+input[type="search"][disabled],
+input[type="time"][disabled],
+input[type="url"][disabled],
+input[type="email"][disabled],
+textarea[disabled],
+select[disabled] {
+    border: 0;
+    background-color: var(--bg-primary);
+}
+
 label {
     margin: 0 0 3px 0;
     padding: 0px;
     display: block;
     font-weight: bold;
+}
+
+label.checkbox {
+    display: inline-block;
+}
+
+label.checkbox input {
+    margin-left: -0.5rem;
+    display: inline-block;
 }
 
 main {
@@ -271,6 +297,6 @@ th:first-of-type {
 }
 
 tr:nth-child(even) {
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-primary);
 }
 </style>

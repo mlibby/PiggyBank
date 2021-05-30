@@ -1,42 +1,41 @@
 <template>
     <main>
         <h1>Edit Account</h1>
-        <account-form v-bind:account="account"></account-form>
+        <spinner-div ref="accountFormDiv" :onLoad="fetchAccount">
+            <account-form v-bind:account="account"></account-form>
+        </spinner-div>
     </main>
 </template>
 
 <script>
 import axios from "axios";
 import AccountForm from "@/components/account/form.vue";
+import SpinnerDiv from "../../components/SpinnerDiv.vue";
 
 export default {
     name: "AccountEdit",
     title: "Edit Account",
-    components: { AccountForm },
+    components: { AccountForm, SpinnerDiv },
     data() {
         return {
             loading: true,
-            accounts: null,
+            account: null,
             error: null,
         };
     },
-    created() {
-        this.fetchAccounts();
+    mounted() {
+        this.$refs.accountFormDiv.load();
     },
     methods: {
-        fetchAccounts() {
+        fetchAccount(next, error) {
             axios
-                .get("/api/account")
+                .get("/api/account/" + this.$route.params.id)
                 .then((response) => {
-                    this.loading = false;
-                    this.accounts = response.data;
+                    this.account = response.data;
+                    next();
                 })
-                .catch((error) => {
-                    this.loading = false;
-                    this.error =
-                        error.response && error.response.data
-                            ? error.response.data
-                            : error.message;
+                .catch((e) => {
+                    error(e);
                 });
         },
     },

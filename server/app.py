@@ -2,6 +2,7 @@ from flask import (
     Blueprint,
     Flask,
     render_template,
+    request,
     send_from_directory,
 )
 from flask_migrate import Migrate
@@ -27,7 +28,14 @@ migrate = Migrate(app, db)
 
 @app.errorhandler(404)
 def handle_404(e):
-    return render_template("index.html")
+    if (
+        request.path.startswith("/api")
+        or request.path.startswith("/static")
+        or request.path.startswith("/s2")
+    ):
+        return e
+    else:
+        return render_template("index.html")
 
 
 @app.get("/favicon.ico")

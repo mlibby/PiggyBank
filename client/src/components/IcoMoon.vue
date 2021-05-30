@@ -3,7 +3,7 @@
 <style>
 @font-face {
     font-family: "icomoon";
-    src: url("/s2/fonts/icomoon.ttf") format("truetype");
+    src: url("../assets/fonts/icomoon.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
