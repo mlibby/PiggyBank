@@ -24,7 +24,7 @@
         </p>
 
         <div v-if="loading">
-            <img src="../assets/spin_primary.svg" />
+            <img src="../../assets/spin_primary.svg" />
         </div>
         <div v-if="error" class="error">
             <span class="icon icon-warning">

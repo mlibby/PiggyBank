@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import AccountIndex from "../views/AccountIndex.vue"
+import accountRoutes from "./accounts.js";
 import Amortization from "../views/tools/Amortization.vue";
 
 Vue.use(VueRouter);
@@ -9,20 +9,15 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: "/",
-        name: "Home",
         component: Home,
     },
     {
-        path: "/accounts",
-        name: "AccountIndex",
-        component: AccountIndex,
-    },
-    {
         path: "/tools/amortization",
-        name: "Amortization",
         component: Amortization,
     },
 ];
+
+routes.push(...accountRoutes);
 
 const router = new VueRouter({
     mode: "history",

@@ -66,6 +66,10 @@ textarea {
     background-color: var(--bg-color);
 }
 
+a {
+    display: inline-block;
+}
+
 body,
 header {
     margin: 0;
@@ -174,6 +178,20 @@ input[type="button"] {
     text-align: center;
     text-decoration: none;
     vertical-align: middle;
+}
+
+a.btn.danger,
+button.danger,
+input[type="submit"].danger,
+input[type="button"].danger {
+    background-color: var(--danger-color);
+}
+
+a.btn.secondary,
+button.secondary,
+input[type="submit"].secondary,
+input[type="button"].secondary {
+    background-color: var(--secondary-color);
 }
 
 a.btn:focus,

@@ -1,33 +1,36 @@
 <template>
     <ul class="accounts">
         <li class="account" v-for="account in accounts" :key="account.id">
-            <a
+            <router-link
                 class="name"
                 v-bind:class="{ placeholder: account.is_placeholder }"
-                v-bind:href="viewLink(account)"
+                to="/account?action=view&id=1"
             >
-                {{ account.name }}</a
-            >
-            <a
-                v-if="account.parent"
+                {{ account.name }}
+            </router-link>
+            <router-link
+                v-if="account.parent_id"
                 class="btn primary"
-                v-bind:href="editLink(account)"
+                :to="{ name: 'edit_account', params: { id: account.id } }"
             >
                 <span class="icon icon-pencil"></span>
                 <span class="sr-only">Edit Account</span>
-            </a>
-            <a class="btn secondary" v-bind:href="newSubaccountLink(account)">
+            </router-link>
+            <router-link
+                class="btn secondary"
+                :to="{ name: 'new_account', params: { id: account.id } }"
+            >
                 <span class="icon icon-plus"></span>
                 <span class="sr-only">Add Subaccount</span>
-            </a>
-            <a
-                v-if="account.parent"
+            </router-link>
+            <router-link
+                v-if="account.parent_id"
                 class="btn danger"
-                v-bind:href="deleteLink(account)"
+                :to="{ name: 'delete_account', params: { id: account.id } }"
             >
                 <span class="icon icon-trash"></span>
                 <span class="sr-only">Trash - if account.has_subaccounts?</span>
-            </a>
+            </router-link>
             <account-tree
                 v-if="account.subaccounts"
                 v-bind:accounts="account.subaccounts"
@@ -41,28 +44,10 @@
 export default {
     name: "AccountTree",
     props: ["accounts"],
-    methods: {
-        viewLink(account) {
-            return "/account/" + account.id;
-        },
-        editLink(account) {
-            return "/account/" + account.id + "?edit";
-        },
-        newSubaccountLink(account) {
-            return "/account/?new&parent_id=" + account.id;
-        },
-        deleteLink(account_id) {
-            return "/account/" + account.id + "?delete";
-        },
-    },
 };
 </script>
 
 <style scoped>
-a.btn {
-    margin-left: 1rem;
-}
-
 li {
     margin-bottom: 0.66rem;
     list-style: none;
@@ -70,6 +55,7 @@ li {
 
 .name {
     font-size: 1.33rem;
+    margin-right: 0.66rem;
 }
 
 .placeholder {

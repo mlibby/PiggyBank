@@ -5,7 +5,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, ".env"))
 
 db_url = os.environ.get("DATABASE_URL")
-if db_url.startswith("postgres://"):
+if db_url is not None and db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
     os.environ["DATABASE_URL"] = db_url
 
