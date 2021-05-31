@@ -1,14 +1,14 @@
 <template>
-    <main>
+    <div class="account-edit">
         <h1>Edit Account</h1>
-        <spinner-div ref="accountFormDiv" :onLoad="loadAccount">
+        <spinner-div ref="accountFormDiv" :onLoad="onLoad">
             <account-form
                 v-bind:account="account"
                 v-bind:accounts="accounts"
                 v-bind:account-types="accountTypes"
             ></account-form>
         </spinner-div>
-    </main>
+    </div>
 </template>
 
 <script>
@@ -19,9 +19,9 @@ export default {
     name: "AccountEdit",
     title: "Edit Account",
     components: { AccountForm, SpinnerDiv },
-    props: ["account", "accounts", "accountTypes"],
+    props: ["account", "accounts", "accountTypes", "onLoad"],
     methods: {
-        loadAccount(next, error) {
+        load(next, error) {
             this.$refs.accountFormDiv.load(next, error);
         },
     },

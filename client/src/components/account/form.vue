@@ -28,6 +28,8 @@
                 {{ account.full_name }}
             </option>
         </select>
+        <input type="submit" class="btn primary" value="Save Account" />
+        <router-link to="/accounts">Cancel</router-link>
     </form>
 </template>
 

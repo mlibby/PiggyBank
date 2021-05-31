@@ -1,13 +1,23 @@
 <template>
-    <router-view
-        ref="accountView"
-        v-bind:account="account"
-        v-bind:accounts="accounts"
-        v-bind:account-types="accountTypes"
-    ></router-view>
+    <main>
+        <router-view
+            ref="accountView"
+            v-bind:account="account"
+            v-bind:accounts="accounts"
+            v-bind:account-types="accountTypes"
+            v-bind:onLoad="fetchAccount"
+        ></router-view>
+    </main>
 </template>
 
 <script>
+//
+// This view hosts the view, new, edit, and delete nested views as
+// <router-view>. This main view handles fetching account data from
+// the API for both account details, and for populating drop-downs in
+// the nested views. That way the nested views don't have to duplicate
+// the API logic.
+//
 import axios from "axios";
 
 export default {
