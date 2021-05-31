@@ -33,6 +33,21 @@ def account_get(account_id):
     return jsonify(dict(account))
 
 
+@account.put("/")
+def account_put():
+    account = Account(
+        name=request.json["name"],
+        account_type=request.json["account_type"],
+        is_placeholder=request.json["is_placeholder"],
+        commodity_id=request.json["commodity_id"],
+        parent_id=request.json["parent_id"],
+    )
+    db.session.add(account)
+    db.session.commit()
+
+    return jsonify(dict(account))
+
+
 @account.post("/<int:account_id>")
 def account_post(account_id):
     account = Account.query.get_or_404(account_id)
@@ -44,5 +59,5 @@ def account_post(account_id):
     account.parent_id = request.json["parent_id"]
 
     db.session.commit()
-    
+
     return jsonify(dict(account))

@@ -74,6 +74,7 @@ textarea {
 a {
     display: inline-block;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 body,

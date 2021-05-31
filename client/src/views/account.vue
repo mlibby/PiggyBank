@@ -47,7 +47,23 @@ export default {
                 error(e);
             });
 
-            this.account = accountReponse.data;
+
+            this.accountTypes = accountTypesResponse.data;
+            this.commodities = commoditiesResponse.data;
+
+            if (this.$route.path.match("new$")) {
+                this.account = {
+                    id: null,
+                    parent_id: this.$route.params["id"],
+                    is_placeholder: false,
+                    // TODO: add a "default" indicator to Commodity
+                    commodity_id: this.commodities[0].id,
+                    account_type: null,
+                };
+            } else {
+                this.account = accountReponse.data;
+            }
+
             this.accounts = accountsResponse.data;
             this.accounts.sort((first, second) => {
                 return first.full_name.localeCompare(second.full_name);
@@ -55,8 +71,6 @@ export default {
             this.accounts = this.accounts.filter(
                 (account) => account.id != this.account.id
             );
-            this.accountTypes = accountTypesResponse.data;
-            this.commodities = commoditiesResponse.data;
 
             next();
         },
