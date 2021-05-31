@@ -1,9 +1,9 @@
-import AccountIndex from "../views/account/index.vue";
-import Account from "../views/account.vue";
-import AccountView from "../views/account/view.vue";
-import AccountNew from "../views/account/new.vue";
-import AccountEdit from "../views/account/edit.vue";
-import AccountDelete from "../views/account/delete.vue";
+import AccountIndex from "../views/Account/Index.vue";
+import Account from "../views/Account.vue";
+import AccountView from "../views/Account/View.vue";
+import AccountNew from "../views/Account/New.vue";
+import AccountEdit from "../views/Account/Edit.vue";
+import AccountDelete from "../views/Account/Delete.vue";
 
 const accountRoutes = [
     {

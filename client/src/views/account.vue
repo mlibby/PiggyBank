@@ -5,6 +5,7 @@
             v-bind:account="account"
             v-bind:accounts="accounts"
             v-bind:account-types="accountTypes"
+            v-bind:commodities="commodities"
             v-bind:onLoad="fetchAccount"
         ></router-view>
     </main>
@@ -27,6 +28,7 @@ export default {
             account: null,
             accounts: [],
             accountTypes: [],
+            commodities: [],
         };
     },
     mounted() {
@@ -34,25 +36,30 @@ export default {
     },
     methods: {
         async fetchAccount(next, error) {
-            const [accountsResponse, accountTypesResponse, accountReponse] =
-                await Promise.all([
-                    axios.get("/api/account/"),
-                    axios.get("/api/account/types"),
-                    axios.get("/api/account/" + this.$route.params.id),
-                ]).catch((e) => {
-                    error(e);
-                });
+            const [
+                accountsResponse,
+                accountTypesResponse,
+                accountReponse,
+                commoditiesResponse,
+            ] = await Promise.all([
+                axios.get("/api/account/"),
+                axios.get("/api/account/types"),
+                axios.get("/api/account/" + this.$route.params.id),
+                axios.get("/api/commodity/"),
+            ]).catch((e) => {
+                error(e);
+            });
 
             this.account = accountReponse.data;
             this.accounts = accountsResponse.data;
             this.accounts.sort((first, second) => {
                 return first.full_name.localeCompare(second.full_name);
             });
-            const thisAccountIndex = this.accounts.findIndex((account) => {
-                account.id == this.account.id;
-            });
-            this.accounts.splice(thisAccountIndex, 1);
+            this.accounts = this.accounts.filter(
+                (account) => account.id != this.account.id
+            );
             this.accountTypes = accountTypesResponse.data;
+            this.commodities = commoditiesResponse.data;
 
             next();
         },

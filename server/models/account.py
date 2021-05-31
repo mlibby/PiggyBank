@@ -22,10 +22,12 @@ class Account(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     account_type = db.Column(db.Enum(AccountType), nullable=False)
-    commodity_id = db.Column(db.Integer, nullable=False)
+    commodity_id = db.Column(db.Integer,db.ForeignKey("commodity.id"), nullable=False)
     is_placeholder = db.Column(db.Boolean, nullable=False)
     name = db.Column(db.String(256), nullable=False)
     parent_id = db.Column(db.Integer, db.ForeignKey("account.id"))
+
+    commodity = db.relationship("Commodity", foreign_keys=[commodity_id])
 
     subaccounts = db.relationship(
         "Account",
@@ -63,10 +65,6 @@ class Account(db.Model):
             full_name = f"{parent.name}::{full_name}"
             parent = parent.parent
         return full_name
-
-    # one_to_many :subaccounts, class: self, key: :parent_id
-    # many_to_one :parent, class: self
-    # many_to_one :commodity, class: PiggyBank::Commodity
 
     def __iter__(self):
         column_names = [column.name for column in self.__table__.columns]

@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import accountRoutes from "./accounts.js";
-import Amortization from "../views/tools/Amortization.vue";
+import Amortization from "../views/Tools/Amortization.vue";
 
 Vue.use(VueRouter);
 

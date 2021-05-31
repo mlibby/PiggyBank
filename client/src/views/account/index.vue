@@ -35,7 +35,7 @@
 
 <script>
 import axios from "axios";
-import AccountTree from "@/components/account/tree.vue";
+import AccountTree from "@/components/Account/Tree.vue";
 import SpinnerDiv from "../../components/SpinnerDiv.vue";
 
 export default {
