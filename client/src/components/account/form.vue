@@ -1,11 +1,20 @@
 <template>
-    <form v-on:submit.prevent="saveAccount">
+    <form v-on:submit.prevent="onSubmit">
         <label for="account-id">Account ID</label>
         <input id="account-id" type="text" v-bind:value="account.id" disabled />
         <label for="account-name">Account Name</label>
-        <input id="account-name" type="text" v-model="account.name" />
+        <input
+            id="account-name"
+            type="text"
+            v-model="account.name"
+            v-bind:disabled="readonly"
+        />
         <label for="account-type">Account Type</label>
-        <select id="account-type" v-model="account.account_type">
+        <select
+            id="account-type"
+            v-model="account.account_type"
+            v-bind:disabled="readonly"
+        >
             <option v-for="accountType in accountTypes">
                 {{ accountType }}
             </option>
@@ -15,11 +24,16 @@
                 id="account-is-placeholder"
                 type="checkbox"
                 v-model="account.is_placeholder"
+                v-bind:disabled="readonly"
             />
             Placeholder?
         </label>
         <label for="account-commodity">Commodity</label>
-        <select id="account-commodity" v-model="account.commodity_id">
+        <select
+            id="account-commodity"
+            v-model="account.commodity_id"
+            v-bind:disabled="readonly"
+        >
             <option
                 v-for="commodity in commodities"
                 v-bind:value="account.commodity_id"
@@ -29,7 +43,11 @@
             </option>
         </select>
         <label for="account-parent">Parent Account</label>
-        <select id="account-parent" v-model="account.parent_id">
+        <select
+            id="account-parent"
+            v-model="account.parent_id"
+            v-bind:disabled="readonly"
+        >
             <option
                 v-for="account in accounts"
                 v-bind:value="account.id"
@@ -38,30 +56,27 @@
                 {{ account.full_name }}
             </option>
         </select>
-        <input type="submit" class="btn primary" value="Save Account" />
-        <router-link to="/accounts">Cancel</router-link>
+        <div v-if="readonly">
+            <input type="submit" class="btn primary" value="Edit Account" />
+            <router-link to="/accounts">Back to Accounts</router-link>
+        </div>
+        <div v-else>
+            <input type="submit" class="btn primary" value="Save Account" />
+            <router-link to="/accounts">Cancel</router-link>
+        </div>
     </form>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
     name: "AccountForm",
-    props: ["account", "accounts", "account-types", "commodities"],
-    methods: {
-        saveAccount() {
-            const data = {
-                name: this.account.name,
-                account_type: this.account.account_type,
-                is_placeholder: this.account.is_placeholder,
-                commodity_id: this.account.commodity_id,
-                parent_id: this.account.parent_id,
-            };
-            axios.post("/api/account/" + this.account.id, data).then(() => {
-                window.alert("account saved");
-            });
-        },
+    props: {
+        account: { type: Object },
+        accounts: { type: Array },
+        accountTypes: { type: Array },
+        commodities: { type: Array },
+        onSubmit: {type: Function },
+        readonly: { type: Boolean, default: false },
     },
 };
 </script>

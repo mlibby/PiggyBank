@@ -15,22 +15,22 @@ const accountRoutes = [
         component: Account,
         children: [
             {
-                name: "view_account",
+                name: "viewAccount",
                 path: "",
                 component: AccountView,
             },
             {
-                name: "new_account",
+                name: "newAccount",
                 path: "new",
                 component: AccountNew,
             },
             {
-                name: "edit_account",
+                name: "editAccount",
                 path: "edit",
                 component: AccountEdit,
             },
             {
-                name: "delete_account",
+                name: "deleteAccount",
                 path: "delete",
                 component: AccountDelete,
             },
