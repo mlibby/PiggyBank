@@ -23,11 +23,11 @@ export default {
     title: "Edit Account",
     components: { AccountForm, SpinnerDiv },
     props: ["account", "accounts", "accountTypes", "commodities", "onLoad"],
+    mounted() {
+        this.$refs.accountFormDiv.load();
+    },
     methods: {
-        load(next, error) {
-            this.$refs.accountFormDiv.load(next, error);
-        },
-        saveAccount() {
+        saveAccount(next) {
             const data = {
                 name: this.account.name,
                 account_type: this.account.account_type,
@@ -36,7 +36,8 @@ export default {
                 parent_id: this.account.parent_id,
             };
             axios.post("/api/account/" + this.account.id, data).then(() => {
-                window.alert("account saved");
+                next();
+                this.$router.go(-1);
             });
         },
     },

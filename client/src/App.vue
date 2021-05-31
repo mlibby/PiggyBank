@@ -73,6 +73,7 @@ textarea {
 
 a {
     display: inline-block;
+    text-decoration: underline;
 }
 
 body,

@@ -57,25 +57,32 @@
             </option>
         </select>
         <div v-if="readonly">
-            <input type="submit" class="btn primary" value="Edit Account" />
-            <router-link to="/accounts">Back to Accounts</router-link>
+            <input
+                v-if="account.parent_id"
+                type="submit"
+                class="btn primary"
+                value="Edit Account"
+            />
+            <router-link to="/accounts">Go to Accounts</router-link>
         </div>
         <div v-else>
-            <input type="submit" class="btn primary" value="Save Account" />
-            <router-link to="/accounts">Cancel</router-link>
+            <spinner-button :onClick="onSubmit"> Save Account </spinner-button>
+            <a @click="$router.go(-1)">Cancel</a>
         </div>
     </form>
 </template>
 
 <script>
+import SpinnerButton from "../SpinnerButton.vue";
 export default {
+    components: { SpinnerButton },
     name: "AccountForm",
     props: {
         account: { type: Object },
         accounts: { type: Array },
         accountTypes: { type: Array },
         commodities: { type: Array },
-        onSubmit: {type: Function },
+        onSubmit: { type: Function },
         readonly: { type: Boolean, default: false },
     },
 };

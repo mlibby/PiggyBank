@@ -23,15 +23,15 @@ export default {
     title: "New Account",
     components: { AccountForm, SpinnerDiv },
     props: ["account", "accounts", "accountTypes", "commodities", "onLoad"],
+    mounted() {
+        this.$refs.accountFormDiv.load();
+    },
     methods: {
         editAccount() {
             this.$router.push({
                 name: "editAccount",
                 params: { id: this.account.id },
             });
-        },
-        load(next, error) {
-            this.$refs.accountFormDiv.load(next, error);
         },
     },
 };

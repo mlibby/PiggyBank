@@ -31,9 +31,6 @@ export default {
             commodities: [],
         };
     },
-    mounted() {
-        this.$refs.accountView.load();
-    },
     methods: {
         async fetchAccount(next, error) {
             const [
