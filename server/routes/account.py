@@ -51,13 +51,17 @@ def account_put():
 @account.post("/<int:account_id>")
 def account_post(account_id):
     account = Account.query.get_or_404(account_id)
-
     account.name = request.json["name"]
     account.account_type = request.json["account_type"]
     account.is_placeholder = request.json["is_placeholder"]
     account.commodity_id = request.json["commodity_id"]
     account.parent_id = request.json["parent_id"]
-
     db.session.commit()
-
     return jsonify(dict(account))
+
+@account.delete("/<int:account_id>")
+def account_delete(account_id):
+    account = Account.query.get_or_404(account_id)
+    db.session.delete(account)
+    db.session.commit()
+    return f"Account {account_id} deleted."

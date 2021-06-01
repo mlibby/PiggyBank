@@ -65,8 +65,8 @@
             />
             <router-link to="/accounts">Go to Accounts</router-link>
         </div>
-        <div v-else>
-            <spinner-button :onClick="onSubmit"> Save Account </spinner-button>
+        <div class="spinner" v-else>
+            <spinner-button :onClick="onSubmit"><slot></slot></spinner-button>
             <a @click="$router.go(-1)">Cancel</a>
         </div>
     </form>
@@ -88,4 +88,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+div.spinner {
+    margin-bottom: 1.33rem;
+}
+</style>

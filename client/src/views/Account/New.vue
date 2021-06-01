@@ -8,8 +8,16 @@
                 v-bind:account-types="accountTypes"
                 v-bind:commodities="commodities"
                 :onSubmit="saveAccount"
-            ></account-form>
+            >
+                Create Account
+            </account-form>
         </spinner-div>
+        <div v-if="errorMessage" class="error">
+            <span class="icon icon-warning">
+                <span class="sr-only"> Error: </span>
+            </span>
+            {{ errorMessage }}
+        </div>
     </div>
 </template>
 
@@ -23,6 +31,11 @@ export default {
     title: "New Account",
     components: { AccountForm, SpinnerDiv },
     props: ["account", "accounts", "accountTypes", "commodities", "onLoad"],
+    data() {
+        return {
+            errorMessage: null,
+        };
+    },
     mounted() {
         this.$refs.accountFormDiv.load();
     },
@@ -35,10 +48,15 @@ export default {
                 commodity_id: this.account.commodity_id,
                 parent_id: this.account.parent_id,
             };
-            axios.put("/api/account/", data).then(() => {
-                next();
-                this.$router.go(-1);
-            });
+            axios
+                .put("/api/account/", data)
+                .then(() => {
+                    next();
+                    this.$router.go(-1);
+                })
+                .catch((error) => {
+                    this.errorMessage = error.message;
+                });
         },
     },
 };
