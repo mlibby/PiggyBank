@@ -75,10 +75,7 @@ class Amortization:
 
             payment = Amortization.Payment(
                 number=payment_number,
-                total=principal
-                + interest
-                + self.extra_amount
-                + extra_lump,
+                total=principal + interest + self.extra_amount + extra_lump,
                 principal=principal,
                 interest=interest,
                 extra_amount=self.extra_amount,

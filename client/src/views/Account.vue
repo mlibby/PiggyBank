@@ -47,7 +47,6 @@ export default {
                 error(e);
             });
 
-
             this.accountTypes = accountTypesResponse.data;
             this.commodities = commoditiesResponse.data;
 

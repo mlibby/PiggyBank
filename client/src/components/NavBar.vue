@@ -9,17 +9,13 @@
         <section>
             <button class="label">Accounts</button>
             <div class="menu">
-                <router-link to="/accounts">
-                    Accounts
-                </router-link>
+                <router-link to="/accounts"> Accounts </router-link>
             </div>
         </section>
         <section>
             <button class="label">Tools</button>
             <div class="menu">
-                <router-link to="/tools/amortization">
-                    Amortization
-                </router-link>
+                <router-link to="/tools/amortization"> Amortization </router-link>
             </div>
         </section>
     </nav>

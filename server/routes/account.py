@@ -59,6 +59,7 @@ def account_post(account_id):
     db.session.commit()
     return jsonify(dict(account))
 
+
 @account.delete("/<int:account_id>")
 def account_delete(account_id):
     account = Account.query.get_or_404(account_id)

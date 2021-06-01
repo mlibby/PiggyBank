@@ -30,9 +30,7 @@ def amortization_post():
         "original_interest": amortization.original_interest,
         "original_number": amortization.original_number,
         "payment_amount": amortization.payment_amount,
-        "payments": [
-            payment._asdict() for payment in amortization.payments
-        ],
+        "payments": [payment._asdict() for payment in amortization.payments],
         "periods": periods,
         "principal": principal,
         "rate": rate,

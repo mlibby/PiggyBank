@@ -9,6 +9,7 @@ if db_url is not None and db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
     os.environ["DATABASE_URL"] = db_url
 
+
 class Config(object):
     SQLALCHEMY_DATABASE_URI = (
         os.environ.get("DATABASE_URL")

@@ -22,7 +22,7 @@ class Account(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     account_type = db.Column(db.Enum(AccountType), nullable=False)
-    commodity_id = db.Column(db.Integer,db.ForeignKey("commodity.id"), nullable=False)
+    commodity_id = db.Column(db.Integer, db.ForeignKey("commodity.id"), nullable=False)
     is_placeholder = db.Column(db.Boolean, nullable=False)
     name = db.Column(db.String(256), nullable=False)
     parent_id = db.Column(db.Integer, db.ForeignKey("account.id"))

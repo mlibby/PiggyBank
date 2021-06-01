@@ -3,12 +3,8 @@ import pytest
 from server.models import Amortization
 
 
-thirty_year = Amortization(
-    Decimal("100000"), Decimal("6.00"), 360
-)
-fifteen_year = Amortization(
-    Decimal("200000"), Decimal("3.25"), 180
-)
+thirty_year = Amortization(Decimal("100000"), Decimal("6.00"), 360)
+fifteen_year = Amortization(Decimal("200000"), Decimal("3.25"), 180)
 
 
 def test_amortization_payment_amount():
@@ -24,13 +20,11 @@ def test_amortization_payment_schedule():
 def test_amortization_final_payment():
     # has a balloon payment
     assert (
-        thirty_year.payments[359].principal
-        + thirty_year.payments[359].interest
+        thirty_year.payments[359].principal + thirty_year.payments[359].interest
     ) == Decimal("600.00")
     # has a slightly smaller payment
     assert (
-        fifteen_year.payments[179].principal
-        + fifteen_year.payments[179].interest
+        fifteen_year.payments[179].principal + fifteen_year.payments[179].interest
     ) == Decimal("1404.95")
 
 
@@ -62,8 +56,6 @@ def test_amortization_prepays():
     )
     assert fifteen_year.number == 161
     assert fifteen_year.original_number == 180
-    assert fifteen_year.payments[-1].principal == Decimal(
-        "1295.96"
-    )
+    assert fifteen_year.payments[-1].principal == Decimal("1295.96")
     assert fifteen_year.total_interest == Decimal("43153.87")
     assert fifteen_year.original_interest == Decimal("52960.81")
