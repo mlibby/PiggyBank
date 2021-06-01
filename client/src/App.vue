@@ -2,6 +2,7 @@
     <body id="app">
         <IcoMoon> </IcoMoon>
         <NavBar> </NavBar>
+        <flash-message></flash-message>
         <router-view />
     </body>
 </template>
@@ -22,6 +23,7 @@ export default {
 
 <style>
 :root {
+    --primary-text: #001912;
     --primary-color: #05a172;
     --primary-accent: #34bd94;
     --secondary-color: #093566;
@@ -67,7 +69,7 @@ textarea {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    color: var(--fg-color);
+    color: var(--primary-text);
     background-color: var(--bg-color);
 }
 
@@ -105,6 +107,51 @@ div.error {
     color: var(--danger-color);
     font-size: 1.25rem;
     padding: 1rem;
+}
+
+.flash__close-button {
+    border-radius: 0 0.5rem 0 0;
+    float: right;
+    margin: -1rem;
+    padding: 0.25rem;
+    font-size: 2rem;
+    border: 0;
+    color: var(--bg-color);
+    background-color: var(--primary-text);
+    line-height: 0;
+}
+
+.flash__message {
+    background-color: var(--bg-accent);
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    display: block;
+    margin: 1.33rem 1rem 0 1rem;
+    padding: 1rem;
+    height: 2rem;
+}
+
+.flash__message::before {
+    display: block;
+    float: left;
+    font-family: "icomoon";
+    font-size: 2rem;
+}
+
+.flash__message.deleted::before {
+    content: "\e632";
+    color: var(--primary-color);
+}
+
+.flash__message.saved::before {
+    content: "\e61a";
+    color: var(--primary-color);
+}
+
+.flash__message-content {
+    float: left;
+    margin-left: 1rem;
+    width: 75%;
 }
 
 h1 {

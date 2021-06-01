@@ -52,6 +52,7 @@ export default {
                 .put("/api/account/", data)
                 .then(() => {
                     next();
+                    this.flash(`Account '${this.account.name}' saved.`, "saved");
                     this.$router.go(-1);
                 })
                 .catch((error) => {

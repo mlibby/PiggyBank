@@ -44,6 +44,7 @@ export default {
                 .delete("/api/account/" + this.account.id)
                 .then(() => {
                     next();
+                    this.flash(`Account '${this.account.name}' deleted.`, "deleted");
                     this.$router.go(-1);
                 })
                 .catch((error) => {
