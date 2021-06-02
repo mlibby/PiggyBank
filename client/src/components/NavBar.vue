@@ -7,13 +7,13 @@
             </router-link>
         </section>
         <section>
-            <button class="label">Accounts</button>
+            <button tabindex="-1" class="label">Accounts</button>
             <div class="menu">
-                <router-link to="/accounts"> Accounts </router-link>
+                <router-link to="/accounts"> Chart of Accounts </router-link>
             </div>
         </section>
         <section>
-            <button class="label">Tools</button>
+            <button tabindex="-1" class="label">Tools</button>
             <div class="menu">
                 <router-link to="/tools/amortization"> Amortization </router-link>
             </div>
@@ -32,14 +32,13 @@ nav {
     line-height: 0.75rem;
     margin: 0;
     padding: 1rem;
-    background-color: var(--nav-bg);
+    color: var(--bg-primary);
+    background-color: var(--primary-color);
 }
 
 nav a,
 nav .label {
-    background-color: var(--nav-bg);
     border: 0;
-    color: var(--primary-color);
     font-size: 1.25rem;
     font-weight: bold;
     text-decoration: none;
@@ -49,28 +48,19 @@ nav .label {
     box-shadow: none;
 }
 
-nav a:focus,
-nav .label:focus {
-    color: var(--bg-color);
-    background-color: var(--nav-bg);
-}
-
 nav .icon {
     vertical-align: middle;
-    background-color: var(--nav-bg);
-}
-
-nav .label {
-    background-color: var(--nav-bg);
+    font-size: 1.8em;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
 }
 
 nav .label:focus,
+nav .label:focus-visible,
 nav .label:hover {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
-    background-color: var(--nav-bg);
     box-shadow: none;
-    color: var(--bg-color);
     cursor: pointer;
 }
 
@@ -89,14 +79,18 @@ nav section:last-child {
 }
 
 nav section .menu {
-    background-color: var(--nav-bg);
+    background-color: var(--primary-color);
+    color: var(--bg-primary);
     flex-direction: column;
-    transition: all 0.5s ease;
     margin: 0.25rem 0rem;
     opacity: 0;
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem 0.25rem 0.5rem;
     position: absolute;
+    transition: all 0.5s ease;
     z-index: -1;
+    -moz-box-shadow: 0 0 8px var(--border);
+    -webkit-box-shadow: 0 0 8px var(--border);
+    box-shadow: 0 0 8px var(--border);
 }
 
 nav section:focus-within .menu {
@@ -107,12 +101,10 @@ nav section:focus-within .menu {
 }
 
 nav section .menu a {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
     display: block;
     margin-bottom: 0.5rem;
     line-height: 1.5rem;
-}
-
-nav .icon {
-    font-size: 1.8em;
 }
 </style>

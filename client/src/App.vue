@@ -32,7 +32,6 @@ export default {
     --danger-accent: #ff8746;
     --warn-color: #9c5f02;
     --warn-accent: #ffb646;
-    --nav-bg: #001912;
     --border: #001912;
     --bg-color: linen;
     --bg-accent: ivory;
@@ -238,14 +237,14 @@ a.btn.danger,
 button.danger,
 input[type="submit"].danger,
 input[type="button"].danger {
-    background-color: var(--danger-color);
+    background-color: var(--danger-accent);
 }
 
 a.btn.secondary,
 button.secondary,
 input[type="submit"].secondary,
 input[type="button"].secondary {
-    background-color: var(--secondary-color);
+    background-color: var(--secondary-accent);
 }
 
 a.btn:focus,
