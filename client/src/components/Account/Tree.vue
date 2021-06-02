@@ -50,7 +50,7 @@ export default {
 <style scoped>
 li {
     margin-bottom: 0.66rem;
-    list-style: none;
+    margin-left: 1rem;
 }
 
 .name {
@@ -63,6 +63,14 @@ li {
 }
 
 ul {
+    list-style: none;
+    list-style-position: outside;
     margin-top: 0.66rem;
+    padding-left: 0;
+}
+
+ul li::before {
+    content: "\200B";
+    margin-right: 0.5rem;
 }
 </style>
