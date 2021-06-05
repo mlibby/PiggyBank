@@ -5,35 +5,37 @@ from flask import (
     jsonify,
     request,
 )
+from flask_login import login_required
+
 
 account = Blueprint("account", __name__)
 
-
 @account.get("/")
+@login_required
 def accounts_get():
     accounts = [dict(account) for account in Account.query.all()]
     return jsonify(accounts)
 
-
 @account.get("/tree")
+@login_required
 def account_tree_get():
     account_tree = Account.get_account_tree()
     return jsonify(account_tree)
 
-
 @account.get("/types")
+@login_required
 def account_types_get():
     account_types = list(AccountType)
     return jsonify(account_types)
 
-
 @account.get("/<int:account_id>")
+@login_required
 def account_get(account_id):
     account = Account.query.get_or_404(account_id)
     return jsonify(dict(account))
 
-
 @account.put("/")
+@login_required
 def account_put():
     account = Account(
         name=request.json["name"],
@@ -47,8 +49,8 @@ def account_put():
 
     return jsonify(dict(account))
 
-
 @account.post("/<int:account_id>")
+@login_required
 def account_post(account_id):
     account = Account.query.get_or_404(account_id)
     account.name = request.json["name"]
@@ -59,8 +61,8 @@ def account_post(account_id):
     db.session.commit()
     return jsonify(dict(account))
 
-
 @account.delete("/<int:account_id>")
+@login_required
 def account_delete(account_id):
     account = Account.query.get_or_404(account_id)
     db.session.delete(account)

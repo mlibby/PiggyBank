@@ -16,3 +16,4 @@ class Config(object):
         or f"sqlite:///{ os.path.join(basedir, 'PiggyBank.sqlite') }"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = os.environ.get("SECRET_KEY")

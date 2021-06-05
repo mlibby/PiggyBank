@@ -5,11 +5,14 @@ from flask import (
     request,
     send_from_directory,
 )
+from flask_login import LoginManager
 from flask_migrate import Migrate
 from server.models import db
+from server.models import User
 from server.routes.account import account
 from server.routes.commodity import commodity
 from server.routes.tools.amortization import amortization
+from server.routes.auth import auth
 from server.util.json import PiggyBankJSONEncoder
 
 app = Flask(
@@ -26,6 +29,12 @@ app.config.from_object("server.config.Config")
 db.init_app(app)
 migrate = Migrate(app, db)
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @app.errorhandler(404)
 def handle_404(e):
@@ -53,5 +62,6 @@ s2 = Blueprint(
 app.register_blueprint(s2)
 
 app.register_blueprint(account, url_prefix="/api/account")
-app.register_blueprint(amortization, url_prefix="/api/tools/amortization")
+app.register_blueprint(auth, url_prefix="/api/auth")
 app.register_blueprint(commodity, url_prefix="/api/commodity")
+app.register_blueprint(amortization, url_prefix="/api/tools/amortization")
