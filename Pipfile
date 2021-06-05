@@ -10,7 +10,7 @@ flask-sqlalchemy = "*"
 gunicorn = "*"
 psycopg2 = "*"
 python-dotenv = "*"
-
+flask-login = "*"
 
 [dev-packages]
 black = "==21.5b1"
