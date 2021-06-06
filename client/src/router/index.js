@@ -1,8 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import accountRoutes from "./accounts.js";
+import SignIn from "@/views/SignIn.vue";
 import Amortization from "../views/Tools/Amortization.vue";
+import accountRoutes from "./accounts.js";
 
 Vue.use(VueRouter);
 
@@ -10,6 +11,10 @@ const routes = [
     {
         path: "/",
         component: Home,
+    },
+    {
+        path: "/sign-in",
+        component: SignIn,
     },
     {
         path: "/tools/amortization",

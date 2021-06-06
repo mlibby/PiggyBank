@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import axios from "axios";
+import $axios from "@/axios.js";
 import AccountTree from "@/components/Account/Tree.vue";
-import SpinnerDiv from "../../components/SpinnerDiv.vue";
+import SpinnerDiv from "@/components/SpinnerDiv.vue";
 
 export default {
     name: "AccountIndex",
@@ -52,7 +52,7 @@ export default {
     },
     methods: {
         fetchAccounts(next, error) {
-            axios
+            $axios
                 .get("/api/account/tree")
                 .then((response) => {
                     this.accounts = response.data;
