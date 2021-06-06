@@ -19,7 +19,6 @@ export default {
         NavBar,
     },
 };
-
 </script>
 
 <style>
@@ -166,15 +165,16 @@ h6 {
     margin: 1rem 0 0.5rem 0;
 }
 
-input[type="text"],
 input[type="checkbox"],
 input[type="date"],
 input[type="datetime"],
+input[type="email"],
 input[type="number"],
+input[type="password"],
 input[type="search"],
+input[type="text"],
 input[type="time"],
 input[type="url"],
-input[type="email"],
 textarea,
 select {
     background-color: var(--bg-accent);
@@ -200,16 +200,17 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-input[type="text"]:focus,
 input[type="date"]:focus,
 input[type="datetime"]:focus,
+input[type="email"]:focus,
 input[type="number"]:focus,
+input[type="password"]:focus,
 input[type="search"]:focus,
+input[type="text"]:focus,
 input[type="time"]:focus,
 input[type="url"]:focus,
-input[type="email"]:focus,
-textarea:focus,
-select:focus {
+select:focus,
+textarea:focus {
     -moz-box-shadow: 0 0 8px var(--bg-secondary);
     -webkit-box-shadow: 0 0 8px var(--bg-secondary);
     box-shadow: 0 0 8px var(--bg-secondary);
@@ -217,8 +218,8 @@ select:focus {
 
 a.btn,
 button,
-input[type="submit"],
-input[type="button"] {
+input[type="button"],
+input[type="submit"] {
     background-color: var(--primary-color);
     border-radius: 0.5rem;
     border-width: 0;
@@ -236,36 +237,37 @@ input[type="button"] {
 
 a.btn.danger,
 button.danger,
-input[type="submit"].danger,
-input[type="button"].danger {
+input[type="button"].danger,
+input[type="submit"].danger {
     background-color: var(--danger-accent);
 }
 
 a.btn.secondary,
 button.secondary,
-input[type="submit"].secondary,
-input[type="button"].secondary {
+input[type="button"].secondary,
+input[type="submit"].secondary {
     background-color: var(--secondary-accent);
 }
 
 a.btn:focus,
 a.btn:hover,
 button:hover,
-input[type="submit"]:hover,
-input[type="button"]:hover {
+input[type="button"]:hover,
+input[type="submit"]:hover {
     -moz-box-shadow: 2px 2px 8px var(--border);
     -webkit-box-shadow: 2px 2px 8px var(--border);
     box-shadow: 2px 2px 8px var(--border);
 }
 
-input[type="text"][disabled],
 input[type="date"][disabled],
 input[type="datetime"][disabled],
+input[type="email"][disabled],
 input[type="number"][disabled],
+input[type="password"][disabled],
 input[type="search"][disabled],
+input[type="text"][disabled],
 input[type="time"][disabled],
 input[type="url"][disabled],
-input[type="email"][disabled],
 textarea[disabled],
 select[disabled] {
     border: 0;
@@ -321,17 +323,18 @@ td {
     border-bottom: 1px solid var(--primary-accent);
 }
 
-td input[type="text"],
 td input[type="checkbox"],
 td input[type="date"],
 td input[type="datetime"],
+td input[type="email"],
 td input[type="number"],
+td input[type="password"],
 td input[type="search"],
+td input[type="text"],
 td input[type="time"],
 td input[type="url"],
-td input[type="email"],
-td textarea,
-td select {
+td select,
+td textarea {
     margin: 0;
     padding-bottom: 0;
     padding-top: 0;

@@ -8,8 +8,9 @@ $axios.interceptors.response.use(
     },
     function (error) {
         if (error.response.status === 401) {
-            const path = "/sign-in?then=" + error.config.url;
-            router.push(path);
+            const currentPath = window.location.pathname;
+            const signInPath = "/sign-in?then=" + currentPath;
+            router.push(signInPath);
         } else {
             return Promise.reject(error);
         }

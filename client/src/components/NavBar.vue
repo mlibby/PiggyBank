@@ -18,6 +18,9 @@
                 <router-link to="/tools/amortization"> Amortization </router-link>
             </div>
         </section>
+        <section class="right">
+            <router-link to="/sign-out">Sign Out</router-link>
+        </section>
     </nav>
 </template>
 
@@ -106,5 +109,15 @@ nav section .menu a {
     display: block;
     margin-bottom: 0.5rem;
     line-height: 1.5rem;
+}
+
+nav section.right {
+    float: right;
+    line-height: 2.33rem;
+}
+
+nav section.right a {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
 }
 </style>

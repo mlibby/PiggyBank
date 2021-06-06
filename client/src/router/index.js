@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import SignIn from "@/views/SignIn.vue";
-import Amortization from "../views/Tools/Amortization.vue";
-import accountRoutes from "./accounts.js";
+import Home from "@/views/Home.vue";
+import Amortization from "@/views/Tools/Amortization.vue";
+import accountRoutes from "@/router/accounts.js";
+import authRoutes from "@/router/auth.js";
 
 Vue.use(VueRouter);
 
@@ -13,16 +13,13 @@ const routes = [
         component: Home,
     },
     {
-        path: "/sign-in",
-        component: SignIn,
-    },
-    {
         path: "/tools/amortization",
         component: Amortization,
     },
 ];
 
 routes.push(...accountRoutes);
+routes.push(...authRoutes);
 
 const router = new VueRouter({
     mode: "history",

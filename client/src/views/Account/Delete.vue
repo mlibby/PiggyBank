@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import $axios from "@/axios.js";
 import AccountForm from "@/components/Account/Form.vue";
 import SpinnerDiv from "../../components/SpinnerDiv.vue";
 
@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         deleteAccount(next) {
-            axios
+            $axios
                 .delete("/api/account/" + this.account.id)
                 .then(() => {
                     next();

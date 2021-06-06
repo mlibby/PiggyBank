@@ -13,7 +13,7 @@
             <div class="column column-1-4">
                 <section>
                     <h2>Loan Details</h2>
-                    <form v-on:submit="calculate">
+                    <form v-on:submit.prevent>
                         <label for="principal">Loan Amount</label>
                         <input
                             id="principal"
@@ -45,7 +45,9 @@
                             step="0.01"
                             v-model="extra_amount"
                         />
-                        <spinner-button :onClick="calculate">Calculate</spinner-button>
+                        <spinner-button :onClick.prevent="calculate"
+                            >Calculate</spinner-button
+                        >
                     </form>
                     <div>{{ msg }}</div>
                 </section>
@@ -105,9 +107,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import { Decimal } from "decimal.js";
-import { formatCurrency } from "../../util.js";
+import $axios from "@/axios.js";
+import { formatCurrency } from "@/util.js";
 import SpinnerButton from "@/components/SpinnerButton.vue";
 
 export default {
@@ -142,16 +144,21 @@ export default {
                 extra_amount: this.extra_amount,
                 extra_lumps: this.getExtraLumps(),
             };
-            axios.post("/api/tools/amortization", data).then((response) => {
-                const data = response.data;
-                this.payment_amount = formatCurrency(data.payment_amount);
-                this.payments = data.payments;
-                this.total_interest = formatCurrency(data.total_interest);
-                let saved_interest = data.original_interest - data.total_interest;
-                this.saved_interest = formatCurrency(saved_interest);
-                this.show_extra = data.extra_amount > 0;
-                next();
-            });
+            $axios
+                .post("/api/tools/amortization", data)
+                .then((response) => {
+                    const data = response.data;
+                    this.payment_amount = formatCurrency(data.payment_amount);
+                    this.payments = data.payments;
+                    this.total_interest = formatCurrency(data.total_interest);
+                    let saved_interest = data.original_interest - data.total_interest;
+                    this.saved_interest = formatCurrency(saved_interest);
+                    this.show_extra = data.extra_amount > 0;
+                    next();
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
         },
         totalPayment(payment) {
             const principal = new Decimal(payment.principal);
