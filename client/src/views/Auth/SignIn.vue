@@ -43,7 +43,11 @@ export default {
             $axios
                 .post("/api/auth/sign-in", data)
                 .then(() => {
-                    const redirect = this.$route.query.then;
+                    let redirect = "/";
+                    if (this.$route.query.then) {
+                        redirect = this.$route.query.then;
+                    }
+                    this.$root.signedIn = true;
                     this.$router.push(redirect);
                 })
                 .catch((error) => {

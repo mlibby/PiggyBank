@@ -25,6 +25,7 @@ export default {
     methods: {
         signUserOut(next) {
             $axios.post("/api/auth/sign-out").then(() => {
+                this.$root.signedIn = false;
                 next();
             });
         },

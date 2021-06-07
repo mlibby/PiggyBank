@@ -1,13 +1,14 @@
 <template>
     <body id="app">
         <IcoMoon> </IcoMoon>
-        <NavBar> </NavBar>
+        <NavBar v-bind:signedIn="$root.signedIn"> </NavBar>
         <flash-message></flash-message>
         <router-view />
     </body>
 </template>
 
 <script>
+import $axios from "@/axios.js";
 import IcoMoon from "@/components/IcoMoon.vue";
 import NavBar from "@/components/NavBar.vue";
 
@@ -17,6 +18,16 @@ export default {
     components: {
         IcoMoon,
         NavBar,
+    },
+    created() {
+        $axios
+            .get("/api/auth/logged-in")
+            .then((result) => {
+                this.$root.signedIn = result.data;
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
     },
 };
 </script>

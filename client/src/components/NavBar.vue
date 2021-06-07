@@ -19,7 +19,8 @@
             </div>
         </section>
         <section class="right">
-            <router-link to="/sign-out">Sign Out</router-link>
+            <router-link v-if="signedIn" to="/sign-out">Sign Out</router-link>
+            <router-link v-else to="/sign-in">Sign In</router-link>
         </section>
     </nav>
 </template>
@@ -27,6 +28,7 @@
 <script>
 export default {
     name: "NavBar",
+    props: ["signedIn"],
 };
 </script>
 

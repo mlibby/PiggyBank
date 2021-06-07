@@ -17,6 +17,10 @@ Vue.use(VueFlashMessage, {
 const vueInstance = new Vue({
     router,
     render: (h) => h(App),
+    data: {
+        signedIn: false,
+    },
+
 }).$mount("#app");
 
 

@@ -5,10 +5,19 @@ from flask import (
     jsonify,
     request,
 )
-from flask_login import login_user, logout_user
+from flask_login import (
+    current_user,
+    login_user,
+    logout_user,
+)
 
 
 auth = Blueprint("auth", __name__)
+
+
+@auth.get("/logged-in")
+def logged_in():
+    return str(current_user.is_authenticated).lower()
 
 
 @auth.post("/sign-in")
@@ -22,6 +31,7 @@ def sign_in():
         return "signed in"
     else:
         return ("Username and password do not match", 401)
+
 
 @auth.post("/sign-out")
 def sign_out():
