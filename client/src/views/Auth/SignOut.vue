@@ -5,7 +5,7 @@
             <p>You have been signed out.</p>
             <p>
                 To sign in again, visit
-                <router-link to="/auth/sign-in">the sign in page</router-link>
+                <router-link to="/sign-in">the sign in page</router-link>
             </p>
         </spinner-div>
     </main>
