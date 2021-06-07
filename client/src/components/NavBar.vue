@@ -79,6 +79,10 @@ nav section.icon {
     padding-right: 1rem;
 }
 
+nav section.icon a {
+    background-color: var(--primary-color);
+}
+
 nav section:last-child {
     margin-left: auto;
 }
