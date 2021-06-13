@@ -1,3 +1,4 @@
+import axios from "axios";
 import Vue from "vue";
 import VueFlashMessage from "vue-flash-message";
 
@@ -18,9 +19,7 @@ const vueInstance = new Vue({
     router,
     render: (h) => h(App),
     data: {
+        axios: axios.create(),
         signedIn: false,
     },
-
 }).$mount("#app");
-
-

@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import $axios from "@/axios.js";
 import IcoMoon from "@/components/IcoMoon.vue";
 import NavBar from "@/components/NavBar.vue";
 
@@ -20,7 +19,22 @@ export default {
         NavBar,
     },
     created() {
-        $axios
+        this.$root.axios.interceptors.response.use(
+            function (response) {
+                return response;
+            },
+            (error) => {
+                if (error.response.status === 401) {
+                    const currentPath = window.location.pathname;
+                    const signInPath = "/sign-in?then=" + currentPath;
+                    this.$router.push(signInPath);
+                } else {
+                    return Promise.reject(error);
+                }
+            }
+        );
+
+        this.$root.axios
             .get("/api/auth/logged-in")
             .then((result) => {
                 this.$root.signedIn = result.data;

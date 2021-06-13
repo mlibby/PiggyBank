@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import $axios from "@/axios.js";
+  import axios from "axios";
+//import $axios from "@/axios.js";
 import SpinnerButton from "@/components/SpinnerButton.vue";
 
 export default {
@@ -40,7 +41,7 @@ export default {
                 password: this.password,
             };
 
-            $axios
+            axios
                 .post("/api/auth/sign-in", data)
                 .then(() => {
                     let redirect = "/";

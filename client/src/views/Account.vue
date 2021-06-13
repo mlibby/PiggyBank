@@ -19,7 +19,8 @@
 // the nested views. That way the nested views don't have to duplicate
 // the API logic.
 //
-import $axios from "@/axios.js";
+//import axios from "axios";
+//import $axios from "@/axios.js";
 
 export default {
     name: "Account",
@@ -39,10 +40,10 @@ export default {
                 accountReponse,
                 commoditiesResponse,
             ] = await Promise.all([
-                $axios.get("/api/account/"),
-                $axios.get("/api/account/types"),
-                $axios.get("/api/account/" + this.$route.params.id),
-                $axios.get("/api/commodity/"),
+                this.$root.axios.get("/api/account/"),
+                this.$root.axios.get("/api/account/types"),
+                this.$root.axios.get("/api/account/" + this.$route.params.id),
+                this.$root.axios.get("/api/commodity/"),
             ]).catch((e) => {
                 error(e);
             });

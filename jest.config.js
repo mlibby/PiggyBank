@@ -1,9 +1,6 @@
 module.exports = {
     collectCoverage: true,
-    collectCoverageFrom: [
-        "client/src/**/*.{js,vue}",
-        "!client/src/main.js"
-    ],
+    collectCoverageFrom: ["client/src/**/*.{js,vue}", "!client/src/main.js"],
     coverageDirectory: "coverage-vue",
     coverageReporters: ["html", "lcov"],
 
