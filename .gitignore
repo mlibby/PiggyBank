@@ -113,6 +113,7 @@ build/
 celerybeat-schedule
 celerybeat.pid
 cover/
+coverage-*/
 coverage.xml
 cython_debug/
 db.sqlite3
