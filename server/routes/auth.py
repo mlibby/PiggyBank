@@ -25,8 +25,8 @@ def sign_in():
     username = request.json["username"]
     password = request.json["password"]
 
-    user = User.query.filter_by(username=username).first_or_404()
-    if user.check_password(password):
+    user = User.query.filter_by(username=username).first()
+    if user and user.check_password(password):
         login_user(user)
         return "signed in"
     else:
