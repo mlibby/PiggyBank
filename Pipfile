@@ -14,5 +14,6 @@ flask-login = "*"
 
 [dev-packages]
 black = "==21.5b1"
+pyreadline3 = "*"
 pytest = "*"
 pytest-cov = "*"

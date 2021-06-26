@@ -1,6 +1,7 @@
-import pytest
-from server.models import Account
+#import pytest
+#from server.models import Account
+#from server.tests import client
 
 
-def test_account_get():
-    pass
+#def test_account_get(client):
+#    pass
