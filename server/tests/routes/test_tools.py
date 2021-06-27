@@ -1,9 +1,9 @@
 import unittest
-from server.tests import client
+from server.tests import test_client
 
 class TestToolsAmortization(unittest.TestCase):
     def setUp(self):
-        self.client = client()
+        self.client = test_client()
     
     def test_tools_amortization(self):
         input = {

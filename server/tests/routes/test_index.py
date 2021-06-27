@@ -1,10 +1,10 @@
 import unittest
-from server.tests import client
+from server.tests import test_client
 
 
 class TestIndex(unittest.TestCase):
     def setUp(self):
-        self.client = client()
+        self.client = test_client()
 
     def test_default_page(self):
         page = self.client.get("/")
