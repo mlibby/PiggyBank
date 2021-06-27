@@ -12,7 +12,12 @@ class TestAccount(unittest.TestCase):
     def tearDown(self):
         finalize(self.app_context, self.db)
 
-    def test_account_get(client):
+    def test_account_get(self):
         account = Account.query.filter_by(name="Assets").first()
         assert account is not None
         assert account.account_type == AccountType.ASSET
+        assert account.__repr__() == f"<Account {account.id}:'Assets'>"
+
+    def test_account_tree(self):
+        accounts = Account.get_account_tree()
+        assert len(accounts) == 5

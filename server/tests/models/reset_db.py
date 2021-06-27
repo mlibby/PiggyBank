@@ -26,6 +26,17 @@ def add_accounts(db):
         db.session.add(account)
     db.session.commit()
 
+    equity = Account.query.filter_by(name="Equity").first()
+    open_bal = Account(
+        name="Opening Balance",
+        account_type=AccountType.EQUITY,
+        is_placeholder=False,
+        commodity_id=usd.id,
+        parent_id=equity.id,
+    )
+    db.session.add(open_bal)
+    db.session.commit()
+
 def add_commodities(db):
     from server.models import Commodity, CommodityType
     usd = Commodity(
