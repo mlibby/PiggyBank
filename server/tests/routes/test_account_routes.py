@@ -19,13 +19,16 @@ class TestAccountRoutes(unittest.TestCase):
         assert page.content_type == "application/json"
 
     def test_account_put(self):
-        page = self.client.put("/api/account")
+        data = dict(name="test")
+        page = self.client.put("/api/account", data=data)
         assert page.content_type == "application/json"
 
     def test_account_post(self):
-        page = self.client.post("/api/account/1")
+        data = dict(name="test")
+        page = self.client.post("/api/account/1", data=data)
         assert page.content_type == "application/json"
 
     def test_account_delete(self):
-        page = self.client.delete("/api/account/1")
+        data = dict(name="test")
+        page = self.client.delete("/api/account/1", data=data)
         assert page.content_type == "application/json"
