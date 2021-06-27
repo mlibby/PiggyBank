@@ -1,7 +1,7 @@
 import unittest
 from server.tests import test_client
 
-class TestToolsAmortization(unittest.TestCase):
+class TestToolsRoutes(unittest.TestCase):
     def setUp(self):
         self.client = test_client()
     

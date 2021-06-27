@@ -17,6 +17,7 @@ class DevelopmentConfig(Config):
 
 
 class TestConfig(Config):
+    LOGIN_DISABLED = True
     SQLALCHEMY_DATABASE_URI = "sqlite://"
 
 

@@ -1,14 +1,25 @@
+from server.models import (
+    Account,
+    AccountType,
+    commodity,
+    Commodity,
+)
+
+
 def reset_db(db):
     db.drop_all()
     db.create_all()
 
-    add_commodities(db)
-    add_accounts(db)
+    usd_id = add_commodities(db)
+    add_accounts(db, usd_id)
 
 
-def add_accounts(db):
-    from server.models import Account, AccountType, Commodity
-    usd = Commodity.query.filter_by(name="USD").first()
+def add_accounts(db, usd_id):
+    add_base_accounts(db, usd_id)
+    add_equity_subaccounts(db, usd_id)
+
+
+def add_base_accounts(db, usd_id):
     base_accounts = [
         ("Assets", AccountType.ASSET),
         ("Liabilities", AccountType.LIABILITY),
@@ -21,24 +32,28 @@ def add_accounts(db):
             name=name,
             account_type=account_type,
             is_placeholder=True,
-            commodity_id=usd.id,
+            commodity_id=usd_id,
         )
         db.session.add(account)
     db.session.commit()
 
+
+def add_equity_subaccounts(db, usd_id):
     equity = Account.query.filter_by(name="Equity").first()
     open_bal = Account(
         name="Opening Balance",
         account_type=AccountType.EQUITY,
         is_placeholder=False,
-        commodity_id=usd.id,
+        commodity_id=usd_id,
         parent_id=equity.id,
     )
     db.session.add(open_bal)
     db.session.commit()
 
+
 def add_commodities(db):
     from server.models import Commodity, CommodityType
+
     usd = Commodity(
         commodity_type=CommodityType.CURRENCY,
         description="US Dollar",
@@ -48,3 +63,5 @@ def add_commodities(db):
     )
     db.session.add(usd)
     db.session.commit()
+
+    return usd.id
