@@ -108,8 +108,6 @@
 
 <script>
 import { Decimal } from "decimal.js";
-import axios from "axios";
-//import $axios from "@/axios.js";
 import { formatCurrency } from "@/util.js";
 import SpinnerButton from "@/components/SpinnerButton.vue";
 
@@ -145,7 +143,7 @@ export default {
                 extra_amount: this.extra_amount,
                 extra_lumps: this.getExtraLumps(),
             };
-            axios
+            this.$root.axios
                 .post("/api/tools/amortization", data)
                 .then((response) => {
                     const data = response.data;

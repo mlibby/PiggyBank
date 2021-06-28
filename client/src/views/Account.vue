@@ -19,8 +19,6 @@
 // the nested views. That way the nested views don't have to duplicate
 // the API logic.
 //
-//import axios from "axios";
-//import $axios from "@/axios.js";
 
 export default {
     name: "Account",

@@ -1,4 +1,3 @@
-from ..models import User
 from flask import (
     Blueprint,
     abort,
@@ -10,6 +9,8 @@ from flask_login import (
     login_user,
     logout_user,
 )
+from server.csrf import csrf
+from server.models import User
 
 
 auth = Blueprint("auth", __name__)
@@ -37,3 +38,5 @@ def sign_in():
 def sign_out():
     logout_user()
     return "signed out"
+
+

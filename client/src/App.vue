@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import Cookies from "js-cookie";
 import IcoMoon from "@/components/IcoMoon.vue";
 import NavBar from "@/components/NavBar.vue";
 
@@ -19,11 +20,24 @@ export default {
         NavBar,
     },
     created() {
+        this.$root.axios.interceptors.request.use(
+            function(config) {
+                var token = Cookies.get("_csrf_token");
+                config.headers.delete["X-CSRFTOKEN"] = token;
+                config.headers.post["X-CSRFTOKEN"] = token;
+                config.headers.put["X-CSRFTOKEN"] = token;
+                return config;
+            },
+            function(error) {
+                return Promise.reject(error);
+            },
+        );
+        
         this.$root.axios.interceptors.response.use(
-            function (response) {
+            function(response) {
                 return response;
             },
-            (error) => {
+            function(error) {
                 if (error.response.status === 401) {
                     const currentPath = window.location.pathname;
                     const signInPath = "/sign-in?then=" + currentPath;

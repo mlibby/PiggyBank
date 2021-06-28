@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "decimal.js": "^10.2.1",
+    "js-cookie": "^2.2.1",
     "vue": "^2.6.11",
     "vue-flash-message": "^0.7.2",
     "vue-router": "^3.2.0"

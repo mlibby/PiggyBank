@@ -12,8 +12,6 @@
 </template>
 
 <script>
-  import axios from "axios";
-//import $axios from "@/axios.js";
 import SpinnerDiv from "@/components/SpinnerDiv.vue";
 
 export default {
@@ -25,7 +23,7 @@ export default {
     },
     methods: {
         signUserOut(next) {
-            axios.post("/api/auth/sign-out").then(() => {
+            this.$root.axios.post("/api/auth/sign-out").then(() => {
                 this.$root.signedIn = false;
                 next();
             });

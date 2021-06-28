@@ -8,6 +8,7 @@ from flask import (
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from config import config
+from server.csrf import csrf
 from server.login_manager import login_manager
 from server.models import db
 from server.routes.account import account
@@ -30,7 +31,9 @@ def create_app(config_name):
 
     db.init_app(app)
     migrate = Migrate(app, db)
+
     login_manager.init_app(app)
+    csrf.init_app(app)
 
     register_blueprints(app)
     set_404_handler(app)

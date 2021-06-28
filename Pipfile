@@ -11,6 +11,8 @@ gunicorn = "*"
 psycopg2 = "*"
 python-dotenv = "*"
 flask-login = "*"
+flask-seasurf = "*"
+flask-talisman = "*"
 
 [dev-packages]
 black = "==21.5b1"

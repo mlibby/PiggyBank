@@ -22,8 +22,6 @@
 </template>
 
 <script>
-  import axios from "axios";
-//import $axios from "@/axios.js";
 import AccountForm from "@/components/Account/Form.vue";
 import SpinnerDiv from "../../components/SpinnerDiv.vue";
 
@@ -49,7 +47,7 @@ export default {
                 commodity_id: this.account.commodity_id,
                 parent_id: this.account.parent_id,
             };
-            axios
+            this.$root.axios
                 .put("/api/account/", data)
                 .then(() => {
                     next();
