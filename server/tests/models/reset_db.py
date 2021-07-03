@@ -12,6 +12,7 @@ def reset_db(db):
 
     usd_id = add_commodities(db)
     add_accounts(db, usd_id)
+    # add_user(db)
 
 
 def add_accounts(db, usd_id):
@@ -65,3 +66,13 @@ def add_commodities(db):
     db.session.commit()
 
     return usd.id
+
+
+def add_user(db):
+    from server.models import User
+
+    u = User(username="foobar")
+    u.set_password("foobar")
+
+    db.session.add(u)
+    db.session.commit()
