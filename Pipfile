@@ -4,15 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Flask = ">=2.0"
-flask-login = "*"
-flask-migrate = "*"
-flask-seasurf = "*"
-flask-sqlalchemy = "*"
-flask-talisman = "*"
-gunicorn = "*"
-psycopg2 = "*"
-python-dotenv = "*"
+django = "*"
 
 [dev-packages]
 black = "==21.5b1"

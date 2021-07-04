@@ -12,7 +12,7 @@ def reset_db(db):
 
     usd_id = add_commodities(db)
     add_accounts(db, usd_id)
-    # add_user(db)
+    add_user(db)
 
 
 def add_accounts(db, usd_id):
@@ -71,6 +71,7 @@ def add_commodities(db):
 def add_user(db):
     from server.models import User
 
+    breakpoint()
     u = User(username="foobar")
     u.set_password("foobar")
 
