@@ -1,9 +1,0 @@
-[run]
-branch=True
-omit=
-    server/app.py
-    server/login_manager.py
-    */tests/*
-
-[html]
-directory=coverage-flask
