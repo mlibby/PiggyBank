@@ -28,7 +28,7 @@ namespace PiggyBank
             {
                 if (args[1] == "gnucash-db")
                 {
-                    var command = new Command(
+                    //var command = new Command();
                 }
             }
         }
