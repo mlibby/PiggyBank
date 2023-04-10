@@ -5,10 +5,6 @@ namespace PiggyBank.Models
 
     public partial class PiggyBankContext : DbContext, IPiggyBankContext
     {
-        public PiggyBankContext()
-        {
-        }
-
         public PiggyBankContext(DbContextOptions<PiggyBankContext> options)
             : base(options)
         {

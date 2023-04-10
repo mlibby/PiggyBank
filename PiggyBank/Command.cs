@@ -1,4 +1,5 @@
 ﻿using PiggyBank.Models;
+using System.Linq;
 
 namespace PiggyBank
 {
@@ -12,8 +13,22 @@ namespace PiggyBank
 
         public void Configure(string key, string value)
         {
-            //var setting = Context.Configurations.
+            var config = Context.Configurations.SingleOrDefault(x => x.Key == key);
+            if (config is object)
+            {
+                config.Value = value;
+            }
+            else
+            {
+                config = new Configuration
+                {
+                    Key = key,
+                    Value = value
+                };
+                Context.Configurations.Add(config);
+            }
 
+            Context.SaveChanges();
         }
     }
 }
