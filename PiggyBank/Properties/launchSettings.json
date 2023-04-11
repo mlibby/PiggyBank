@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "PiggyBank": {
-      "commandName": "Project",
-      "commandLineArgs": "config gnucash-db X:\\Financial\\GnuCash\\Libby2021.gnucash"
-    }
-  }
-}
