@@ -1,5 +1,3 @@
-using PiggyBank;
-
 namespace PiggyBankTest
 {
     [TestClass]
@@ -9,9 +7,9 @@ namespace PiggyBankTest
         public void TestConfigureNewKey()
         {
             var data = new List<Configuration>().AsQueryable();
+            var mockConfigurations = MockFactory.MockDbSet<Configuration>(data);
 
             var mockContext = new Mock<IPiggyBankContext>();
-            var mockConfigurations = MockDbSet<Configuration>(data);
             mockContext.Setup(c => c.Configurations).Returns(mockConfigurations.Object);
 
             var command = new Command(mockContext.Object);
@@ -21,14 +19,26 @@ namespace PiggyBankTest
             mockContext.Verify(m => m.SaveChanges(), Times.Once);
         }
 
-        private static Mock<DbSet<T>> MockDbSet<T>(IQueryable data) where T : class
+        [TestMethod]
+        public void TestConfigureModifyKey()
         {
-            var mock = new Mock<DbSet<T>>();
-            mock.As<IQueryable<T>>().Setup(m => m.Provider).Returns(data.Provider);
-            mock.As<IQueryable<T>>().Setup(m => m.Expression).Returns(data.Expression);
-            mock.As<IQueryable<T>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mock.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns((IEnumerator<T>)data.GetEnumerator());
-            return mock;
+            var configuration = new Configuration
+            {
+                Key = "test-key",
+                Value = "test-value"
+            };
+
+            var data = new List<Configuration>() { configuration }.AsQueryable();
+            var mockConfigurations = MockFactory.MockDbSet<Configuration>(data);
+
+            var mockContext = new Mock<IPiggyBankContext>();
+            mockContext.Setup(c => c.Configurations).Returns(mockConfigurations.Object);
+
+            var command = new Command(mockContext.Object);
+            command.Configure("test-key", "new-value");
+
+            Assert.AreEqual("new-value", configuration.Value);
+            mockContext.Verify(m => m.SaveChanges(), Times.Once);
         }
     }
 }
