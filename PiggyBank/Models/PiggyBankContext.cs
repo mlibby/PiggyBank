@@ -5,12 +5,22 @@ namespace PiggyBank.Models
 
     public partial class PiggyBankContext : DbContext, IPiggyBankContext
     {
-        public PiggyBankContext(DbContextOptions<PiggyBankContext> options)
-            : base(options)
+        private string _connectionString = "";
+
+        public PiggyBankContext(string connectionString)
         {
+            _connectionString = connectionString;
         }
 
+        public PiggyBankContext(DbContextOptions<PiggyBankContext> options) : base(options) { }
+
         public virtual DbSet<Configuration> Configurations { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_connectionString);
+        }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PiggyBank.Models;
 using System;
+using System.IO;
 
 namespace PiggyBank
 {
@@ -28,9 +29,25 @@ namespace PiggyBank
             {
                 if (args[1] == "gnucash-db")
                 {
-                    //var command = new Command();
+
+                    var connectionString = GetConnectionString();
+                    if (!string.IsNullOrEmpty(connectionString))
+                    {
+                        var context = new PiggyBankContext(connectionString);
+                        var command = new Command(context);
+                        command.Configure("gnucash-db", args[2]);
+                    }
                 }
             }
+        }
+
+        static private string GetConnectionString()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            var configuration = builder.Build();
+            return configuration.GetConnectionString("PiggyBankContext")!;
         }
 
         static IHostBuilder CreateHostBuilder(string[] args)
