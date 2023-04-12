@@ -1,11 +1,9 @@
-﻿using PiggyBank.Models;
-using System.Linq;
-
-namespace PiggyBank
+﻿namespace PiggyBank
 {
     public class Command
     {
-        private IPiggyBankContext Context { get; }
+        public IPiggyBankContext Context { get; }
+
         public Command(IPiggyBankContext context)
         {
             Context = context;
@@ -29,6 +27,14 @@ namespace PiggyBank
             }
 
             Context.SaveChanges();
+        }
+
+        public void ImportGnuCashAccounts(IGnuCashContext gnuCashContext)
+        {
+            foreach (var account in gnuCashContext.Accounts)
+            {
+                Console.WriteLine(account.Name);
+            }
         }
     }
 }
