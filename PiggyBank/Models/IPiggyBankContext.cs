@@ -1,9 +1,9 @@
-﻿namespace PiggyBank.Models
-{
-    public interface IPiggyBankContext
-    {
-        Microsoft.EntityFrameworkCore.DbSet<Configuration> Configurations { get; set; }
+﻿namespace PiggyBank.Models;
 
-        int SaveChanges();
-    }
+public interface IPiggyBankContext
+{
+    DbSet<Account> Accounts { get; set; }
+    DbSet<Configuration> Configurations { get; set; }
+
+    int SaveChanges();
 }

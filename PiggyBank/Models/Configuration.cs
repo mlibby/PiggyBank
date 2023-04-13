@@ -1,11 +1,14 @@
-﻿namespace PiggyBank.Models
+﻿namespace PiggyBank.Models;
+
+public partial class Configuration
 {
-    public partial class Configuration
-    {
-        public int Id { get; set; }
+    public const string GnuCashDbKey = "gnucash-db";
 
-        public string Key { get; set; } = null!;
+    public static List<string> ConfigurationNames = new List<string> { GnuCashDbKey };
 
-        public string Value { get; set; } = null!;
-    }
+    public int Id { get; set; }
+
+    public string Key { get; set; } = null!;
+
+    public string Value { get; set; } = null!;
 }

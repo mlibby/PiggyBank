@@ -1,6 +1,5 @@
-﻿namespace PiggyBank
+﻿namespace PiggyBank;
+
+public class FileSystem : IFileSystem
 {
-    public class FileSystem : IFileSystem
-    {
-    }
 }

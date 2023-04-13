@@ -1,6 +1,5 @@
-﻿namespace PiggyBank
+﻿namespace PiggyBank;
+
+public interface IFileSystem
 {
-    public interface IFileSystem
-    {
-    }
 }

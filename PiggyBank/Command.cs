@@ -1,40 +1,39 @@
-﻿namespace PiggyBank
+﻿namespace PiggyBank;
+
+public class Command : ICommand
 {
-    public class Command
+    public IPiggyBankContext Context { get; }
+
+    public Command(IPiggyBankContext context)
     {
-        public IPiggyBankContext Context { get; }
+        Context = context;
+    }
 
-        public Command(IPiggyBankContext context)
+    public void Configure(string key, string value)
+    {
+        var config = Context.Configurations.SingleOrDefault(x => x.Key == key);
+        if (config is object)
         {
-            Context = context;
+            config.Value = value;
+        }
+        else
+        {
+            config = new Configuration
+            {
+                Key = key,
+                Value = value
+            };
+            Context.Configurations.Add(config);
         }
 
-        public void Configure(string key, string value)
-        {
-            var config = Context.Configurations.SingleOrDefault(x => x.Key == key);
-            if (config is object)
-            {
-                config.Value = value;
-            }
-            else
-            {
-                config = new Configuration
-                {
-                    Key = key,
-                    Value = value
-                };
-                Context.Configurations.Add(config);
-            }
+        Context.SaveChanges();
+    }
 
-            Context.SaveChanges();
-        }
-
-        public void ImportGnuCashAccounts(IGnuCashContext gnuCashContext)
+    public void ImportGnuCashAccounts(IGnuCashContext gnuCashContext)
+    {
+        foreach (var account in gnuCashContext.Accounts)
         {
-            foreach (var account in gnuCashContext.Accounts)
-            {
-                Console.WriteLine(account.Name);
-            }
+            System.Console.WriteLine(account.Name);
         }
     }
 }

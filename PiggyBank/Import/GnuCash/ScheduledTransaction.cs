@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PiggyBank.Import.GnuCash;
+﻿namespace PiggyBank.Import.GnuCash;
 
 public partial class ScheduledTransaction
 {
