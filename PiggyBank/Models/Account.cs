@@ -6,7 +6,11 @@ public class Account
 {
     public enum Type
     {
-
+        Asset,
+        Equity,
+        Expense,
+        Income,
+        Liability,
     }
 
     public int Id { get; set; }
