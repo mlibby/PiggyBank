@@ -51,7 +51,7 @@ public class CommandLine
 
         if (args[0] == _Config)
         {
-            if (!Configuration.ConfigurationNames.Contains(args[1]))
+            if (!Configuration.ConfigurationKeys.Contains(args[1]))
             {
                 Console.WriteLine($"Invalid configuration {args[1]}");
                 return;

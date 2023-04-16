@@ -1,0 +1,1 @@
+Scaffold-DbContext -Connection 'Server=.\\SQLEXPRESS;Database=PiggyBank;Trusted_Connection=True;TrustServerCertificate=True;' Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsTemp

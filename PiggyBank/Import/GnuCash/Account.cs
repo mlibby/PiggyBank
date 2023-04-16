@@ -2,20 +2,20 @@
 
 public partial class Account
 {
-    private static Dictionary<string, Models.Account.Type> GnuCashToPiggyBank = new Dictionary<string, Models.Account.Type>
+    private static Dictionary<string, Models.Account.AccountType> GnuCashToPiggyBank = new Dictionary<string, Models.Account.AccountType>
     {
-        { "ASSET", Models.Account.Type.Asset },
-        { "BANK", Models.Account.Type.Asset },
-        { "CASH", Models.Account.Type.Asset },
-        { "CREDIT", Models.Account.Type.Liability },
-        { "EQUITY", Models.Account.Type.Equity },
-        { "EXPENSE", Models.Account.Type.Expense },
-        { "INCOME", Models.Account.Type.Income },
-        { "LIABILITY", Models.Account.Type.Liability },
-        { "MUTUAL", Models.Account.Type.Asset },
-        { "PAYABLE", Models.Account.Type.Liability },
-        { "RECEIVABLE", Models.Account.Type.Asset },
-        { "STOCK", Models.Account.Type.Asset },
+        { "ASSET", Models.Account.AccountType.Asset },
+        { "BANK", Models.Account.AccountType.Asset },
+        { "CASH", Models.Account.AccountType.Asset },
+        { "CREDIT", Models.Account.AccountType.Liability },
+        { "EQUITY", Models.Account.AccountType.Equity },
+        { "EXPENSE", Models.Account.AccountType.Expense },
+        { "INCOME", Models.Account.AccountType.Income },
+        { "LIABILITY", Models.Account.AccountType.Liability },
+        { "MUTUAL", Models.Account.AccountType.Asset },
+        { "PAYABLE", Models.Account.AccountType.Liability },
+        { "RECEIVABLE", Models.Account.AccountType.Asset },
+        { "STOCK", Models.Account.AccountType.Asset },
     };
 
     public string Guid { get; set; } = null!;
@@ -40,7 +40,7 @@ public partial class Account
 
     public long? Placeholder { get; set; }
 
-    public Models.Account.Type PiggyBankAccountType
+    public Models.Account.AccountType PiggyBankAccountType
     {
         get
         {
