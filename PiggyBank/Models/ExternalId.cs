@@ -8,7 +8,7 @@ public partial class ExternalId
 
     public string ExternalIdString { get; set; } = null!;
 
-    public SourceType Type { get; set; }
+    public IdType Type { get; set; }
 
-    public int Source { get; set; }
+    public SourceType Source { get; set; }
 }

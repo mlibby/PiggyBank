@@ -6,6 +6,8 @@ public partial class Account
 
     public string Name { get; set; } = null!;
 
+    public string Description { get; set; } = null!;
+
     public int? ParentId { get; set; }
 
     public AccountType Type { get; set; }
@@ -17,4 +19,6 @@ public partial class Account
     public virtual ICollection<Account> Children { get; } = new List<Account>();
 
     public virtual Account? Parent { get; set; }
+
+    public bool IsPlaceholder { get; set; } = false;
 }

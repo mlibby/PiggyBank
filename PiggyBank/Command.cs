@@ -31,9 +31,13 @@ public class Command : ICommand
 
     public void ImportGnuCashAccounts(IGnuCashContext gnuCashContext)
     {
-        foreach (var account in gnuCashContext.Accounts)
-        {
-            System.Console.WriteLine(account.Name);
-        }
+        var importer = new Import.GnuCash.Importer(gnuCashContext, Context);
+        importer.ImportGnuCashAccounts();
+    }
+
+    public void ImportGnuCashCommodities(IGnuCashContext gnuCashContext)
+    {
+        var gnuCashImporter = new Import.GnuCash.Importer(gnuCashContext, Context);
+        gnuCashImporter.ImportGnuCashCommodities();
     }
 }

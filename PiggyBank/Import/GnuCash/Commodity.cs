@@ -2,15 +2,22 @@
 
 public partial class Commodity
 {
+    public static readonly Dictionary<string, Models.Commodity.CommodityType> TypeMap = new Dictionary<string, Models.Commodity.CommodityType>()
+    {
+        {"CURRENCY", Models.Commodity.CommodityType.Currency },
+        {"FUND", Models.Commodity.CommodityType.Stock },
+        {"NYSE", Models.Commodity.CommodityType.Stock },
+    };
+
     public string Guid { get; set; } = null!;
 
     public string Namespace { get; set; } = null!;
 
     public string Mnemonic { get; set; } = null!;
 
-    public string? Fullname { get; set; }
+    public string Fullname { get; set; } = null!;
 
-    public string? Cusip { get; set; }
+    public string Cusip { get; set; } = null!;
 
     public long Fraction { get; set; }
 

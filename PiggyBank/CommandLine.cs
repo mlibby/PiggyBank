@@ -3,6 +3,7 @@
 public class CommandLine
 {
     private const string _Accounts = "accounts";
+    private const string _Commodities = "commodities";
     private const string _Config = "config";
     private const string _Import = "import";
     private const string _GnuCash = "gnucash";
@@ -35,9 +36,16 @@ public class CommandLine
         {
             if (args[1] == _GnuCash)
             {
+                var gnuCashContext = GetGnuCashContext(Command.Context);
+
+                if (args[2] == _Commodities)
+                {
+                    Command.ImportGnuCashCommodities(gnuCashContext);
+                    return;
+                }
+
                 if (args[2] == _Accounts)
                 {
-                    var gnuCashContext = GetGnuCashContext(Command.Context);
                     Command.ImportGnuCashAccounts(gnuCashContext);
                     return;
                 }

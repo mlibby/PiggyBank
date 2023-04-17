@@ -16,7 +16,10 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK_Accounts");
+
             entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.Type).HasConversion(
                 v => v.ToString(),
                 v => (Account.AccountType)Enum.Parse(typeof(Account.AccountType), v));
@@ -33,8 +36,10 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
 
         modelBuilder.Entity<Commodity>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.HasKey(e => e.Id).HasName("PK_Commodities");
+
             entity.Property(e => e.Cusip).HasMaxLength(255);
+            entity.Property(e => e.Mnemonic).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.Symbol).HasMaxLength(16);
             entity.Property(e => e.Type).HasConversion(
@@ -63,6 +68,9 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
                 .HasMaxLength(255)
                 .HasColumnName("ExternalId");
             entity.Property(e => e.Type).HasConversion(
+                v => v.ToString(),
+                v => (ExternalId.IdType)Enum.Parse(typeof(ExternalId.IdType), v));
+            entity.Property(e => e.Source).HasConversion(
                 v => v.ToString(),
                 v => (ExternalId.SourceType)Enum.Parse(typeof(ExternalId.SourceType), v));
         });

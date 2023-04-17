@@ -6,4 +6,5 @@ public interface ICommand
 
     void Configure(string key, string value);
     void ImportGnuCashAccounts(IGnuCashContext gnuCashContext);
+    void ImportGnuCashCommodities(IGnuCashContext gnuCashContext);
 }
