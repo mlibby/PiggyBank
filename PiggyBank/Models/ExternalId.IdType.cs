@@ -5,7 +5,8 @@
         public enum IdType
         {
             Account,
-            Commodity
+            Commodity,
+            Transaction
         };
     }
 }

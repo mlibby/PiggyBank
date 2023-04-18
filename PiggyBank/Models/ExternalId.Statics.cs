@@ -30,5 +30,13 @@
                 e.Type == ExternalId.IdType.Commodity &&
                 e.ExternalIdString == externalId);
         }
+
+        public static ExternalId? GetTransactionId(IPiggyBankContext context, string externalId, ExternalId.SourceType sourceType)
+        {
+            return context.ExternalIds.SingleOrDefault(e =>
+                e.Source == sourceType &&
+                e.Type == ExternalId.IdType.Transaction &&
+                e.ExternalIdString == externalId);
+        }
     }
 }

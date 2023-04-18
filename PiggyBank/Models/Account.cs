@@ -21,4 +21,6 @@ public partial class Account
     public virtual Account? Parent { get; set; }
 
     public bool IsPlaceholder { get; set; } = false;
+
+    public virtual ICollection<Split> Splits { get; } = new List<Split>();
 }

@@ -25,4 +25,6 @@ public partial class Split
     public long QuantityDenomination { get; set; }
 
     public string? LotGuid { get; set; }
+
+    public virtual Transaction Transaction { get; set; } = null!;
 }

@@ -13,4 +13,6 @@ public partial class Transaction
     public string? EnterDate { get; set; }
 
     public string? Description { get; set; }
+
+    public virtual ICollection<Split> Splits { get; } = new List<Split>();
 }

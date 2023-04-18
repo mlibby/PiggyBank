@@ -12,6 +12,10 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
 
     public virtual DbSet<ExternalId> ExternalIds { get; set; } = null!;
 
+    public virtual DbSet<Split> Splits { get; set; } = null!;
+
+    public virtual DbSet<Transaction> Transactions { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
@@ -73,6 +77,31 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
             entity.Property(e => e.Source).HasConversion(
                 v => v.ToString(),
                 v => (ExternalId.SourceType)Enum.Parse(typeof(ExternalId.SourceType), v));
+        });
+
+        modelBuilder.Entity<Split>(entity =>
+        {
+            entity.Property(e => e.Action).HasMaxLength(2048);
+            entity.Property(e => e.Memo).HasMaxLength(2048);
+            entity.Property(e => e.Quantity).HasColumnType("decimal(28, 9)");
+            entity.Property(e => e.Value).HasColumnType("decimal(28, 9)");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.Splits)
+                .HasForeignKey(d => d.AccountId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Splits_Accounts");
+
+            entity.HasOne(d => d.Transaction).WithMany(p => p.Splits)
+                .HasForeignKey(d => d.TransactionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Splits_Transactions");
+        });
+
+        modelBuilder.Entity<Transaction>(entity =>
+        {
+            entity.Property(e => e.Description).HasMaxLength(2048);
+            entity.Property(e => e.EnterDate).HasColumnType("datetime");
+            entity.Property(e => e.PostDate).HasColumnType("datetime");
         });
 
         OnModelCreatingPartial(modelBuilder);

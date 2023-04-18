@@ -755,6 +755,9 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
             entity.Property(e => e.ValueNumber)
                 .HasColumnType("bigint")
                 .HasColumnName("value_num");
+
+            entity.HasOne(d => d.Transaction).WithMany(p => p.Splits)
+                .HasForeignKey(d => d.TransactionGuid);
         });
 
         modelBuilder.Entity<Transaction>(entity =>

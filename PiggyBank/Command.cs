@@ -29,15 +29,21 @@ public class Command : ICommand
         Context.SaveChanges();
     }
 
-    public void ImportGnuCashAccounts(IGnuCashContext gnuCashContext)
+    public void ImportAccounts(IGnuCashContext gnuCashContext)
     {
         var importer = new Import.GnuCash.Importer(gnuCashContext, Context);
-        importer.ImportGnuCashAccounts();
+        importer.ImportAccounts();
     }
 
-    public void ImportGnuCashCommodities(IGnuCashContext gnuCashContext)
+    public void ImportCommodities(IGnuCashContext gnuCashContext)
     {
-        var gnuCashImporter = new Import.GnuCash.Importer(gnuCashContext, Context);
-        gnuCashImporter.ImportGnuCashCommodities();
+        var importer = new Import.GnuCash.Importer(gnuCashContext, Context);
+        importer.ImportCommodities();
+    }
+
+    public void ImportTransactions(IGnuCashContext gnuCashContext)
+    {
+        var importer = new Import.GnuCash.Importer(gnuCashContext, Context);
+        importer.ImportTransactions();
     }
 }

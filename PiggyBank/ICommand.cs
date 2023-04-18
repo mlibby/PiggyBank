@@ -5,6 +5,7 @@ public interface ICommand
     IPiggyBankContext Context { get; }
 
     void Configure(string key, string value);
-    void ImportGnuCashAccounts(IGnuCashContext gnuCashContext);
-    void ImportGnuCashCommodities(IGnuCashContext gnuCashContext);
+    void ImportAccounts(IGnuCashContext gnuCashContext);
+    void ImportCommodities(IGnuCashContext gnuCashContext);
+    void ImportTransactions(IGnuCashContext gnuCashContext);
 }
