@@ -1,18 +1,16 @@
 ﻿namespace PiggyBank.Models;
 
-public partial class Account
+public partial class Account : ModelBase
 {
-    public int Id { get; set; }
-
     public string Name { get; set; } = null!;
 
     public string Description { get; set; } = null!;
 
-    public int? ParentId { get; set; }
+    public Guid? ParentId { get; set; }
 
     public AccountType Type { get; set; }
 
-    public int CommodityId { get; set; }
+    public Guid CommodityId { get; set; }
 
     public virtual Commodity Commodity { get; set; } = null!;
 

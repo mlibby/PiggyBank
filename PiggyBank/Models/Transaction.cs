@@ -1,16 +1,14 @@
 ﻿namespace PiggyBank.Models;
 
-public partial class Transaction
+public partial class Transaction : ModelBase
 {
-    public int Id { get; set; }
-
     public DateTime PostDate { get; set; }
 
     public DateTime EnterDate { get; set; }
 
     public string Description { get; set; } = null!;
 
-    public int CommodityId { get; set; }
+    public Guid CommodityId { get; set; }
 
     public virtual Commodity Commodity { get; set; } = null!;
 

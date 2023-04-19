@@ -20,10 +20,11 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_Accounts");
+            entity.HasKey(e => e.Id).IsClustered(false);
 
-            entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.Type).HasConversion(
                 v => v.ToString(),
                 v => (Account.AccountType)Enum.Parse(typeof(Account.AccountType), v));
@@ -40,8 +41,9 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
 
         modelBuilder.Entity<Commodity>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_Commodities");
+            entity.HasKey(e => e.Id).IsClustered(false);
 
+            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Cusip).HasMaxLength(255);
             entity.Property(e => e.Mnemonic).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(255);
@@ -53,7 +55,7 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
 
         modelBuilder.Entity<Configuration>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK_Configuration");
+            entity.HasKey(e => e.Id).IsClustered(false);
 
             entity.Property(e => e.Id);
             entity.Property(e => e.Key)
@@ -68,6 +70,7 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
         {
             entity.HasIndex(e => new { e.LocalId, e.Source, e.Type }, "UX_LocalIDSourceType").IsUnique();
 
+            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.ExternalIdString)
                 .HasMaxLength(255)
                 .HasColumnName("ExternalId");
@@ -81,6 +84,9 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
 
         modelBuilder.Entity<Split>(entity =>
         {
+            entity.HasKey(e => e.Id).IsClustered(false);
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Action).HasMaxLength(2048);
             entity.Property(e => e.Memo).HasMaxLength(2048);
             entity.Property(e => e.Quantity).HasColumnType("decimal(28, 9)");
@@ -99,9 +105,17 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
 
         modelBuilder.Entity<Transaction>(entity =>
         {
+            entity.HasKey(e => e.Id).IsClustered(false);
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Description).HasMaxLength(2048);
             entity.Property(e => e.EnterDate).HasColumnType("datetime");
             entity.Property(e => e.PostDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Commodity).WithMany()
+                .HasForeignKey(d => d.CommodityId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Transactions_Commodities");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -1,12 +1,10 @@
 ﻿namespace PiggyBank.Models;
 
-public partial class Split
+public partial class Split : ModelBase
 {
-    public int Id { get; set; }
+    public Guid TransactionId { get; set; }
 
-    public int TransactionId { get; set; }
-
-    public int AccountId { get; set; }
+    public Guid AccountId { get; set; }
 
     public string Memo { get; set; } = null!;
 

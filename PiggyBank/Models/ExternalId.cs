@@ -1,10 +1,8 @@
 ﻿namespace PiggyBank.Models;
 
-public partial class ExternalId
+public partial class ExternalId : ModelBase
 {
-    public int Id { get; set; }
-
-    public int LocalId { get; set; }
+    public Guid LocalId { get; set; }
 
     public string ExternalIdString { get; set; } = null!;
 

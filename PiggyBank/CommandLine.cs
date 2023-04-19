@@ -42,6 +42,7 @@ public class CommandLine
                 if (args[2] == _Transactions)
                 {
                     Command.ImportTransactions(gnuCashContext);
+                    return;
                 }
 
                 if (args[2] == _Commodities)
@@ -57,6 +58,7 @@ public class CommandLine
                 }
 
                 Console.WriteLine($"{args[2]} is not a valid GnuCash import");
+                return;
             }
 
             Console.WriteLine($"{args[1]} is not a valid import target");

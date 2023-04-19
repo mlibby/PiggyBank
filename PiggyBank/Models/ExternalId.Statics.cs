@@ -2,7 +2,7 @@
 {
     public partial class ExternalId
     {
-        public static void UpdateExternalId(IPiggyBankContext context, string externalId, int localId, ExternalId.IdType idType, ExternalId.SourceType sourceType)
+        public static void UpdateExternalId(IPiggyBankContext context, string externalId, Guid localId, ExternalId.IdType idType, ExternalId.SourceType sourceType)
         {
             var externalIdModel = new Models.ExternalId()
             {

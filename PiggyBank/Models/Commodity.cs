@@ -1,9 +1,7 @@
 ﻿namespace PiggyBank.Models;
 
-public partial class Commodity
+public partial class Commodity : ModelBase
 {
-    public int Id { get; set; }
-
     public string Name { get; set; } = null!;
 
     public string? Symbol { get; set; }
