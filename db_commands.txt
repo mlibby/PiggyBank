@@ -1,1 +1,3 @@
 Scaffold-DbContext -Connection 'Server=.\\SQLEXPRESS;Database=PiggyBank;Trusted_Connection=True;TrustServerCertificate=True;' Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsTemp
+Add-Migration -c PiggyBankContext InitialCreate -verbose
+Update-Database -Context PiggyBankContext -Connection 'Server=.\SQLEXPRESS;Database=PiggyBank;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true;' --verbose
