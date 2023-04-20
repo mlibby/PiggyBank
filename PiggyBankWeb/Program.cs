@@ -55,5 +55,21 @@ namespace PiggyBankWeb
 
             app.Run();
         }
+
+        static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args).ConfigureServices(services =>
+            {
+                services.AddDbContext<PiggyBankContext>(options =>
+                {
+                    IConfigurationRoot configuration = new ConfigurationBuilder()
+                        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                        .AddJsonFile("appsettings.json")
+                        .Build();
+                    var connectionString = configuration.GetConnectionString("PiggyBankContext");
+                    options.UseSqlServer(connectionString: connectionString);
+                });
+            });
+        }
     }
 }

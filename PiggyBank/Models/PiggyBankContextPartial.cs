@@ -1,4 +1,6 @@
-﻿namespace PiggyBank.Models;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace PiggyBank.Models;
 
 public partial class PiggyBankContext : DbContext, IPiggyBankContext
 {
@@ -11,6 +13,15 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(_connectionString);
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+        var configuration = builder.Build();
+        var connectionString = configuration.GetConnectionString("PiggyBankContext")!;
+
+        //var connectionString = string.IsNullOrWhiteSpace(_connectionString) ?
+        //    ConfigurationManager.ConnectionStrings["PiggyBankContext"].ToString() :
+        //    _connectionString;
+        optionsBuilder.UseSqlServer(connectionString);
     }
 }
