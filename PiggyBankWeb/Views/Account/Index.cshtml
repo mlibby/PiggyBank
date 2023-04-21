@@ -1,0 +1,14 @@
+﻿@model List<PiggyBank.Models.Account>
+@{
+    ViewData["Title"] = "Accounts";
+}
+
+<div class="text-center">
+    <h1>Accounts</h1>
+    @{
+        foreach(PiggyBank.Models.Account account in @Model)
+        {
+            <p>@account.Name</p>
+        }
+    }
+</div>
