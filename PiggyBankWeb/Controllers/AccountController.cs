@@ -14,7 +14,9 @@
         public IActionResult Index()
         {
             var accounts = _context.Accounts.ToList();
-            return View(accounts);
+            //var accountViewModels = accounts.Select(a => new AccountViewModel(a)).ToList();
+            var rootAccounts = accounts.Where(a => a.ParentId is null).OrderBy(a => a.Name).ToList();
+            return View(rootAccounts);
         }
     }
 }
