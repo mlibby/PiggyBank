@@ -1,5 +1,6 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/mlibby/PiggyBank)
 ![license: AGPL-3.0](https://img.shields.io/github/license/mlibby/PiggyBank)
+[![License](https://img.shields.io/badge/Licence-AGPL-3.0-blue.svg)](./LICENSE)
 
 # Welcome to PiggyBank
 
