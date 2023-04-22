@@ -19,9 +19,6 @@ public partial class PiggyBankContext : DbContext, IPiggyBankContext
         var configuration = builder.Build();
         var connectionString = configuration.GetConnectionString("PiggyBankContext")!;
 
-        //var connectionString = string.IsNullOrWhiteSpace(_connectionString) ?
-        //    ConfigurationManager.ConnectionStrings["PiggyBankContext"].ToString() :
-        //    _connectionString;
         optionsBuilder.UseSqlServer(connectionString);
     }
 }
