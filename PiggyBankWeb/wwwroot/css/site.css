@@ -175,6 +175,7 @@ label {
                 border-width: 0 0 2px 2px;
             }
 
+    /* using <summary> and <details> and styles from https://iamkate.com/code/tree-views/ */
     .tree summary {
         display: block;
         cursor: pointer;
