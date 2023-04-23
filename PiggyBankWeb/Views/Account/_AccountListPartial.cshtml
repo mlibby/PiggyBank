@@ -5,7 +5,7 @@
     {
         @if (account.Children.Count > 0)
         {
-            <li>
+            <li class="@(account.IsHidden ? "hidden-account": "")">
                 <details>
                     <summary>@account.Name</summary>
                     <ul>
@@ -16,7 +16,7 @@
         }
         else
         {
-            <li class="bullet">@account.Name</li>
+            <li class=" @(account.IsHidden ? "hidden-account" : "")">@account.Name</li>
         }
     }
 }

@@ -24,7 +24,7 @@ public class Importer
             }
 
             Models.Account? account = PiggyBankContext.Accounts.SingleOrDefault(a => a.Id == Guid.Parse(gcAccount.Guid));
-            if (account is object)
+            if (account is object && !account.IsLocked)
             {
                 UpdateAccount(gcAccount, account!);
                 PiggyBankContext.SaveChanges();
@@ -120,6 +120,7 @@ public class Importer
         account.Description = gcAccount.Description!;
         account.CommodityId = Guid.Parse(gcAccount.CommodityGuid!);
         account.IsPlaceholder = gcAccount.Placeholder > 0;
+        account.IsHidden = gcAccount.Hidden > 0;
     }
 
     private void UpdateTransaction(Import.GnuCash.Transaction gcTransaction, Models.Transaction transaction)

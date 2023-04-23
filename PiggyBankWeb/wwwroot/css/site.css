@@ -95,6 +95,10 @@ nav {
         padding-left: calc(2 * var(--spacing) - var(--radius) - 2px);
     }
 
+        .tree li.hidden-account {
+            display: none;
+        }
+
     .tree ul {
         margin-left: calc(var(--radius) - var(--spacing));
         padding-left: 0;
