@@ -1,0 +1,12 @@
+﻿@model List<AccountBalance>
+@{
+    ViewData["Title"] = "Income/Expense Report";
+}
+
+<h1>Income/Expense Report</h1>
+@{
+    <ul class="tree">
+        <partial name="_ExpenseListPartial.cshtml" model="@Model" />
+    </ul>
+}
+

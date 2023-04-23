@@ -18,6 +18,10 @@ public partial class Account : ModelBase
 
     public virtual Account? Parent { get; set; }
 
+    public bool IsHidden { get; set; } = false;
+
+    public bool IsLocked { get; set; } = false;
+
     public bool IsPlaceholder { get; set; } = false;
 
     public virtual ICollection<Split> Splits { get; } = new List<Split>();

@@ -2,43 +2,43 @@
 
 public interface IGnuCashContext
 {
-    DbSet<Account> Accounts { get; set; }
+    DbSet<GncAccount> Accounts { get; set; }
 
-    DbSet<BillTerm> BillTerms { get; set; }
+    DbSet<GncBillTerm> BillTerms { get; set; }
 
-    DbSet<Book> Books { get; set; }
+    DbSet<GncBook> Books { get; set; }
 
-    DbSet<Budget> Budgets { get; set; }
+    DbSet<GncBudget> Budgets { get; set; }
 
-    DbSet<BudgetAmount> BudgetAmounts { get; set; }
+    DbSet<GncBudgetAmount> BudgetAmounts { get; set; }
 
-    DbSet<Commodity> Commodities { get; set; }
+    DbSet<GncCommodity> Commodities { get; set; }
 
-    DbSet<Customer> Customers { get; set; }
+    DbSet<GncCustomer> Customers { get; set; }
 
-    DbSet<Employee> Employees { get; set; }
+    DbSet<GncEmployee> Employees { get; set; }
 
-    DbSet<Entry> Entries { get; set; }
+    DbSet<GncEntry> Entries { get; set; }
 
-    DbSet<Invoice> Invoices { get; set; }
+    DbSet<GncInvoice> Invoices { get; set; }
 
-    DbSet<Job> Jobs { get; set; }
+    DbSet<GncJob> Jobs { get; set; }
 
-    DbSet<Lot> Lots { get; set; }
+    DbSet<GncLot> Lots { get; set; }
 
-    DbSet<Order> Orders { get; set; }
+    DbSet<GncOrder> Orders { get; set; }
 
-    DbSet<Price> Prices { get; set; }
+    DbSet<GncPrice> Prices { get; set; }
 
-    DbSet<Recurrence> Recurrences { get; set; }
+    DbSet<GncRecurrence> Recurrences { get; set; }
 
-    DbSet<ScheduledTransaction> ScheduledTransactions { get; set; }
+    DbSet<GncScheduledTransaction> ScheduledTransactions { get; set; }
 
-    DbSet<Slot> Slots { get; set; }
+    DbSet<GncSlot> Slots { get; set; }
 
-    DbSet<Split> Splits { get; set; }
+    DbSet<GncSplit> Splits { get; set; }
 
-    DbSet<Transaction> Transactions { get; set; }
+    DbSet<GncTransaction> Transactions { get; set; }
 
-    DbSet<Vendor> Vendors { get; set; }
+    DbSet<GncVendor> Vendors { get; set; }
 }

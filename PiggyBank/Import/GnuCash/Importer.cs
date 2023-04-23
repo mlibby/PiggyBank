@@ -13,70 +13,73 @@ public class Importer
 
     public void ImportAccounts()
     {
-        var accounts = new List<Import.GnuCash.Account>();
+        var accounts = new List<GncAccount>();
         var rootAccount = GnuCashContext.Accounts.Single(a => a.AccountType == "ROOT" && a.Name == "Root Account");
         var gnuCashAccounts = GetGnuCashAccounts(rootAccount.Guid, accounts);
-        foreach (var gcAccount in gnuCashAccounts)
+        foreach (var gncAccount in gnuCashAccounts)
         {
-            if (gcAccount.ParentGuid == rootAccount.Guid)
+            if (gncAccount.ParentGuid == rootAccount.Guid)
             {
-                gcAccount.ParentGuid = null;
+                gncAccount.ParentGuid = null;
             }
 
-            Models.Account? account = PiggyBankContext.Accounts.SingleOrDefault(a => a.Id == Guid.Parse(gcAccount.Guid));
-            if (account is object)
+            Account? account = PiggyBankContext.Accounts.SingleOrDefault(a => a.Id == Guid.Parse(gncAccount.Guid));
+            if (account is object && !account.IsLocked)
             {
-                UpdateAccount(gcAccount, account!);
+                UpdateAccount(gncAccount, account!);
                 PiggyBankContext.SaveChanges();
                 continue;
             }
 
-            account = new Models.Account();
+            account = new Account();
             PiggyBankContext.Accounts.Add(account);
-            UpdateAccount(gcAccount, account!);
+            UpdateAccount(gncAccount, account!);
             PiggyBankContext.SaveChanges();
         }
     }
 
     public void ImportCommodities()
     {
-        foreach (var gcCommodity in GnuCashContext.Commodities)
+        foreach (var gncCommodity in GnuCashContext.Commodities)
         {
-            if (gcCommodity.Namespace == "template") continue;
+            if (gncCommodity.Namespace == "template") continue;
 
-            var symbol = GnuCashContext.Slots.SingleOrDefault(s => s.ObjGuid == gcCommodity.Guid && s.Name == "user_symbol");
+            var symbol = GnuCashContext.Slots.SingleOrDefault(s => s.ObjGuid == gncCommodity.Guid && s.Name == "user_symbol");
 
-            Guid guid = Guid.Parse(gcCommodity.Guid);
-            Models.Commodity? commodity = PiggyBankContext.Commodities.SingleOrDefault(c => c.Id == guid);
+            Guid guid = Guid.Parse(gncCommodity.Guid);
+            Commodity? commodity = PiggyBankContext.Commodities.SingleOrDefault(c => c.Id == guid);
             if (commodity is object)
             {
-                UpdateCommodity(gcCommodity, commodity!, symbol);
+                UpdateCommodity(gncCommodity, commodity!, symbol);
                 PiggyBankContext.SaveChanges();
                 continue;
             }
 
-            commodity = new Models.Commodity();
+            commodity = new Commodity();
             PiggyBankContext.Commodities.Add(commodity);
-            UpdateCommodity(gcCommodity, commodity!, symbol);
+            UpdateCommodity(gncCommodity, commodity!, symbol);
             PiggyBankContext.SaveChanges();
         }
     }
 
     public void ImportTransactions()
     {
-        foreach (var gcTransaction in GnuCashContext.Transactions.Include(t => t.Splits))
+        foreach (var gncTransaction in GnuCashContext.Transactions.Include(t => t.Splits))
         {
-            Models.Transaction? transaction = PiggyBankContext.Transactions.Include(t => t.Splits).SingleOrDefault(t => t.Id == Guid.Parse(gcTransaction.Guid));
+            Transaction? transaction = PiggyBankContext.Transactions
+                .Include(t => t.Splits)
+                .SingleOrDefault(t => t.Id == Guid.Parse(gncTransaction.Guid));
+
             if (transaction is object)
             {
-                UpdateTransaction(gcTransaction, transaction!);
+                UpdateTransaction(gncTransaction, transaction!);
                 PiggyBankContext.SaveChanges();
                 continue;
             }
 
-            transaction = new Models.Transaction();
+            transaction = new Transaction();
             PiggyBankContext.Transactions.Add(transaction);
-            UpdateTransaction(gcTransaction, transaction);
+            UpdateTransaction(gncTransaction, transaction);
             PiggyBankContext.SaveChanges();
         }
     }
@@ -89,7 +92,7 @@ public class Importer
     /// <param name="parentGuid"></param>
     /// <param name="accounts"></param>
     /// <returns></returns>
-    private List<Import.GnuCash.Account> GetGnuCashAccounts(string parentGuid, List<Import.GnuCash.Account> accounts)
+    private List<GncAccount> GetGnuCashAccounts(string parentGuid, List<GncAccount> accounts)
     {
         var childAccounts = GnuCashContext.Accounts.Where(a => a.ParentGuid == parentGuid).ToList();
         accounts.AddRange(childAccounts);
@@ -101,49 +104,51 @@ public class Importer
         return accounts;
     }
 
-    private void UpdateCommodity(Import.GnuCash.Commodity gcCommodity, Models.Commodity commodity, Import.GnuCash.Slot? symbol)
+    private void UpdateCommodity(GncCommodity gncCommodity, Commodity commodity, GncSlot? symbol)
     {
-        commodity.Id = Guid.Parse(gcCommodity.Guid);
-        commodity.Cusip = gcCommodity.Cusip;
-        commodity.Mnemonic = gcCommodity.Mnemonic;
-        commodity.Name = gcCommodity.Fullname;
-        commodity.Precision = gcCommodity.Fraction.ToString().Length - 1;
+        commodity.Id = Guid.Parse(gncCommodity.Guid);
+        commodity.Cusip = gncCommodity.Cusip;
+        commodity.Mnemonic = gncCommodity.Mnemonic;
+        commodity.Name = gncCommodity.Fullname;
+        commodity.Precision = gncCommodity.Fraction.ToString().Length - 1;
         commodity.Symbol = symbol?.StringVal;
-        commodity.Type = Import.GnuCash.Commodity.TypeMap[gcCommodity.Namespace];
+        commodity.Type = Import.GnuCash.GncCommodity.TypeMap[gncCommodity.Namespace];
     }
 
-    private void UpdateAccount(Import.GnuCash.Account gcAccount, Models.Account account)
+    private void UpdateAccount(GncAccount gncAccount, Account account)
     {
-        account.Id = Guid.Parse(gcAccount.Guid);
-        account.Name = gcAccount.Name;
-        account.ParentId = gcAccount.ParentGuid is object ? Guid.Parse(gcAccount.ParentGuid!) : null;
-        account.Description = gcAccount.Description!;
-        account.CommodityId = Guid.Parse(gcAccount.CommodityGuid!);
-        account.IsPlaceholder = gcAccount.Placeholder > 0;
+        account.Id = Guid.Parse(gncAccount.Guid);
+        account.Name = gncAccount.Name;
+        account.ParentId = gncAccount.ParentGuid is object ? Guid.Parse(gncAccount.ParentGuid!) : null;
+        account.Description = gncAccount.Description!;
+        account.CommodityId = Guid.Parse(gncAccount.CommodityGuid!);
+        account.Type = gncAccount.PiggyBankAccountType;
+        account.IsPlaceholder = gncAccount.Placeholder > 0;
+        account.IsHidden = gncAccount.Hidden > 0;
     }
 
-    private void UpdateTransaction(Import.GnuCash.Transaction gcTransaction, Models.Transaction transaction)
+    private void UpdateTransaction(GncTransaction gncTransaction, Transaction transaction)
     {
-        transaction.Id = Guid.Parse(gcTransaction.Guid);
-        transaction.Description = gcTransaction.Description ?? "";
-        transaction.EnterDate = ConvertDate(gcTransaction.EnterDate);
-        transaction.PostDate = ConvertDate(gcTransaction.PostDate);
-        transaction.CommodityId = Guid.Parse(gcTransaction.CurrencyGuid);
+        transaction.Id = Guid.Parse(gncTransaction.Guid);
+        transaction.Description = gncTransaction.Description ?? "";
+        transaction.EnterDate = ConvertDate(gncTransaction.EnterDate);
+        transaction.PostDate = ConvertDate(gncTransaction.PostDate);
+        transaction.CommodityId = Guid.Parse(gncTransaction.CurrencyGuid);
 
         var originalSplitGuids = transaction.Splits.Select(s => s.Id).ToList();
-        foreach (var gcSplit in gcTransaction.Splits)
+        foreach (var gncSplit in gncTransaction.Splits)
         {
-            Models.Split? split = transaction.Splits.SingleOrDefault(s => s.Id == Guid.Parse(gcSplit.Guid));
+            Split? split = transaction.Splits.SingleOrDefault(s => s.Id == Guid.Parse(gncSplit.Guid));
             if (split is object)
             {
                 originalSplitGuids.Remove(split.Id);
-                UpdateSplit(gcSplit, split);
+                UpdateSplit(gncSplit, split);
                 continue;
             }
 
-            split = new Models.Split();
+            split = new Split();
             transaction.Splits.Add(split);
-            UpdateSplit(gcSplit, split);
+            UpdateSplit(gncSplit, split);
         }
 
         foreach (var guid in originalSplitGuids)
@@ -153,14 +158,14 @@ public class Importer
         }
     }
 
-    private void UpdateSplit(Import.GnuCash.Split gcSplit, Models.Split split)
+    private void UpdateSplit(GncSplit gncSplit, Split split)
     {
-        split.Id = Guid.Parse(gcSplit.Guid);
-        split.AccountId = Guid.Parse(gcSplit.AccountGuid);
-        split.Memo = gcSplit.Memo;
-        split.Action = gcSplit.Action;
-        split.Value = new Decimal(gcSplit.ValueNumber) / new Decimal(gcSplit.ValueDenomination);
-        split.Quantity = new Decimal(gcSplit.QuantityNumber) / new Decimal(gcSplit.QuantityDenomination);
+        split.Id = Guid.Parse(gncSplit.Guid);
+        split.AccountId = Guid.Parse(gncSplit.AccountGuid);
+        split.Memo = gncSplit.Memo;
+        split.Action = gncSplit.Action;
+        split.Value = new Decimal(gncSplit.ValueNumber) / new Decimal(gncSplit.ValueDenomination);
+        split.Quantity = new Decimal(gncSplit.QuantityNumber) / new Decimal(gncSplit.QuantityDenomination);
     }
 
     private DateTime ConvertDate(string? dateString)

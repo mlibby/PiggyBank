@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Import.GnuCash;
 
-public partial class Split
+public partial class GncSplit
 {
     public string Guid { get; set; } = null!;
 
@@ -26,5 +26,5 @@ public partial class Split
 
     public string? LotGuid { get; set; }
 
-    public virtual Transaction Transaction { get; set; } = null!;
+    public virtual GncTransaction Transaction { get; set; } = null!;
 }
