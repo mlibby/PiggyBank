@@ -3,12 +3,10 @@
     ViewData["Title"] = "Accounts";
 }
 
-<div class="text-center">
-    <h1>Accounts</h1>
-    @{
-        foreach(var account in @Model)
-        {
-            <p>@account.Name</p>
-        }
-    }
-</div>
+<h1>Accounts</h1>
+@{
+    <ul class="tree">
+     <partial name="_AccountListPartial.cshtml" model="@Model" />
+    </ul>
+}
+

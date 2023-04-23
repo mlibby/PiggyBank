@@ -1,0 +1,22 @@
+﻿@model ICollection<PiggyBank.Models.Account>
+
+@{
+    foreach (var account in @Model)
+    {
+        @if (account.Children.Count > 0)
+        {
+            <li>
+                <details>
+                    <summary>@account.Name</summary>
+                    <ul>
+                        <partial name="_AccountListPartial" model="account.Children" />
+                    </ul>
+                </details>
+            </li>
+        }
+        else
+        {
+            <li class="bullet">@account.Name</li>
+        }
+    }
+}
