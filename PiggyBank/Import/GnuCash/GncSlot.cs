@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Import.GnuCash;
 
-public partial class Slot
+public partial class GncSlot
 {
     public long Id { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Import.GnuCash;
 
-public partial class ScheduledTransaction
+public partial class GncScheduledTransaction
 {
     public string Guid { get; set; } = null!;
 

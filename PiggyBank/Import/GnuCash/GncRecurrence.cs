@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Import.GnuCash;
 
-public partial class Recurrence
+public partial class GncRecurrence
 {
     public long Id { get; set; }
 

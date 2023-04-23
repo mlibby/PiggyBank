@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Import.GnuCash;
 
-public partial class Transaction
+public partial class GncTransaction
 {
     public string Guid { get; set; } = null!;
 
@@ -14,5 +14,5 @@ public partial class Transaction
 
     public string? Description { get; set; }
 
-    public virtual ICollection<Split> Splits { get; } = new List<Split>();
+    public virtual ICollection<GncSplit> Splits { get; } = new List<GncSplit>();
 }

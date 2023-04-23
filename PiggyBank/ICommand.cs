@@ -1,4 +1,6 @@
-﻿namespace PiggyBank;
+﻿global using PiggyBank.Import.GnuCash;
+
+namespace PiggyBank;
 
 public interface ICommand
 {

@@ -11,45 +11,45 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
 
     public GnuCashContext(DbContextOptions<GnuCashContext> options) : base(options) { }
 
-    public virtual DbSet<Account> Accounts { get; set; }
+    public virtual DbSet<GncAccount> Accounts { get; set; }
 
-    public virtual DbSet<BillTerm> BillTerms { get; set; }
+    public virtual DbSet<GncBillTerm> BillTerms { get; set; }
 
-    public virtual DbSet<Book> Books { get; set; }
+    public virtual DbSet<GncBook> Books { get; set; }
 
-    public virtual DbSet<Budget> Budgets { get; set; }
+    public virtual DbSet<GncBudget> Budgets { get; set; }
 
-    public virtual DbSet<BudgetAmount> BudgetAmounts { get; set; }
+    public virtual DbSet<GncBudgetAmount> BudgetAmounts { get; set; }
 
-    public virtual DbSet<Commodity> Commodities { get; set; }
+    public virtual DbSet<GncCommodity> Commodities { get; set; }
 
-    public virtual DbSet<Customer> Customers { get; set; }
+    public virtual DbSet<GncCustomer> Customers { get; set; }
 
-    public virtual DbSet<Employee> Employees { get; set; }
+    public virtual DbSet<GncEmployee> Employees { get; set; }
 
-    public virtual DbSet<Entry> Entries { get; set; }
+    public virtual DbSet<GncEntry> Entries { get; set; }
 
-    public virtual DbSet<Invoice> Invoices { get; set; }
+    public virtual DbSet<GncInvoice> Invoices { get; set; }
 
-    public virtual DbSet<Job> Jobs { get; set; }
+    public virtual DbSet<GncJob> Jobs { get; set; }
 
-    public virtual DbSet<Lot> Lots { get; set; }
+    public virtual DbSet<GncLot> Lots { get; set; }
 
-    public virtual DbSet<Order> Orders { get; set; }
+    public virtual DbSet<GncOrder> Orders { get; set; }
 
-    public virtual DbSet<Price> Prices { get; set; }
+    public virtual DbSet<GncPrice> Prices { get; set; }
 
-    public virtual DbSet<Recurrence> Recurrences { get; set; }
+    public virtual DbSet<GncRecurrence> Recurrences { get; set; }
 
-    public virtual DbSet<ScheduledTransaction> ScheduledTransactions { get; set; }
+    public virtual DbSet<GncScheduledTransaction> ScheduledTransactions { get; set; }
 
-    public virtual DbSet<Slot> Slots { get; set; }
+    public virtual DbSet<GncSlot> Slots { get; set; }
 
-    public virtual DbSet<Split> Splits { get; set; }
+    public virtual DbSet<GncSplit> Splits { get; set; }
 
-    public virtual DbSet<Transaction> Transactions { get; set; }
+    public virtual DbSet<GncTransaction> Transactions { get; set; }
 
-    public virtual DbSet<Vendor> Vendors { get; set; }
+    public virtual DbSet<GncVendor> Vendors { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -58,7 +58,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Account>(entity =>
+        modelBuilder.Entity<GncAccount>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -91,7 +91,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
             entity.Property(e => e.Placeholder).HasColumnName("placeholder");
         });
 
-        modelBuilder.Entity<BillTerm>(entity =>
+        modelBuilder.Entity<GncBillTerm>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -125,7 +125,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("type");
         });
 
-        modelBuilder.Entity<Book>(entity =>
+        modelBuilder.Entity<GncBook>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -142,7 +142,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("root_template_guid");
         });
 
-        modelBuilder.Entity<Budget>(entity =>
+        modelBuilder.Entity<GncBudget>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -160,7 +160,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
             entity.Property(e => e.NumPeriods).HasColumnName("num_periods");
         });
 
-        modelBuilder.Entity<BudgetAmount>(entity =>
+        modelBuilder.Entity<GncBudgetAmount>(entity =>
         {
             entity.ToTable("budget_amounts");
 
@@ -180,7 +180,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
             entity.Property(e => e.PeriodNum).HasColumnName("period_num");
         });
 
-        modelBuilder.Entity<Commodity>(entity =>
+        modelBuilder.Entity<GncCommodity>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -211,7 +211,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("quote_tz");
         });
 
-        modelBuilder.Entity<Customer>(entity =>
+        modelBuilder.Entity<GncCustomer>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -303,7 +303,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("terms");
         });
 
-        modelBuilder.Entity<Employee>(entity =>
+        modelBuilder.Entity<GncEmployee>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -369,7 +369,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("workday_num");
         });
 
-        modelBuilder.Entity<Entry>(entity =>
+        modelBuilder.Entity<GncEntry>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -456,7 +456,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("quantity_num");
         });
 
-        modelBuilder.Entity<Invoice>(entity =>
+        modelBuilder.Entity<GncInvoice>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -512,7 +512,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("terms");
         });
 
-        modelBuilder.Entity<Job>(entity =>
+        modelBuilder.Entity<GncJob>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -537,7 +537,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("reference");
         });
 
-        modelBuilder.Entity<Lot>(entity =>
+        modelBuilder.Entity<GncLot>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -552,7 +552,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
             entity.Property(e => e.IsClosed).HasColumnName("is_closed");
         });
 
-        modelBuilder.Entity<Order>(entity =>
+        modelBuilder.Entity<GncOrder>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -583,7 +583,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("reference");
         });
 
-        modelBuilder.Entity<Price>(entity =>
+        modelBuilder.Entity<GncPrice>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -615,7 +615,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("value_num");
         });
 
-        modelBuilder.Entity<Recurrence>(entity =>
+        modelBuilder.Entity<GncRecurrence>(entity =>
         {
             entity.ToTable("recurrences");
 
@@ -635,7 +635,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("recurrence_weekend_adjust");
         });
 
-        modelBuilder.Entity<ScheduledTransaction>(entity =>
+        modelBuilder.Entity<GncScheduledTransaction>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -669,7 +669,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("template_act_guid");
         });
 
-        modelBuilder.Entity<Slot>(entity =>
+        modelBuilder.Entity<GncSlot>(entity =>
         {
             entity.ToTable("slots");
 
@@ -709,7 +709,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("timespec_val");
         });
 
-        modelBuilder.Entity<Split>(entity =>
+        modelBuilder.Entity<GncSplit>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -760,7 +760,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasForeignKey(d => d.TransactionGuid);
         });
 
-        modelBuilder.Entity<Transaction>(entity =>
+        modelBuilder.Entity<GncTransaction>(entity =>
         {
             entity.HasKey(e => e.Guid);
 
@@ -788,7 +788,7 @@ public partial class GnuCashContext : DbContext, IGnuCashContext
                 .HasColumnName("post_date");
         });
 
-        modelBuilder.Entity<Vendor>(entity =>
+        modelBuilder.Entity<GncVendor>(entity =>
         {
             entity.HasKey(e => e.Guid);
 

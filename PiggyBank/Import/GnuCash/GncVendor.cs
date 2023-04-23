@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Import.GnuCash;
 
-public partial class Vendor
+public partial class GncVendor
 {
     public string Guid { get; set; } = null!;
 

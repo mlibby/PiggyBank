@@ -1,4 +1,4 @@
-﻿@model ICollection<Account>
+﻿@model ICollection<AccountBalance>
 
 @{
     foreach (var account in @Model)
@@ -7,16 +7,16 @@
         {
             <li class="@(account.IsHidden ? "hidden-account": "")">
                 <details>
-                    <summary>@account.Name</summary>
+                    <summary>@account.Name : @account.BalanceDisplay</summary>
                     <ul>
-                        <partial name="_AccountListPartial" model="account.Children" />
+                        <partial name="_ExpenseListPartial" model="account.Children" />
                     </ul>
                 </details>
             </li>
         }
         else
         {
-            <li class=" @(account.IsHidden ? "hidden-account" : "")">@account.Name</li>
+            <li class=" @(account.IsHidden ? "hidden-account" : "")">@account.Name : @account.BalanceDisplay</li>
         }
     }
 }

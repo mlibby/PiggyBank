@@ -1,12 +1,12 @@
 ﻿namespace PiggyBank.Import.GnuCash;
 
-public partial class Commodity
+public partial class GncCommodity
 {
-    public static readonly Dictionary<string, Models.Commodity.CommodityType> TypeMap = new Dictionary<string, Models.Commodity.CommodityType>()
+    public static readonly Dictionary<string, Commodity.CommodityType> TypeMap = new Dictionary<string, Commodity.CommodityType>()
     {
-        {"CURRENCY", Models.Commodity.CommodityType.Currency },
-        {"FUND", Models.Commodity.CommodityType.Stock },
-        {"NYSE", Models.Commodity.CommodityType.Stock },
+        {"CURRENCY", Commodity.CommodityType.Currency },
+        {"FUND", Commodity.CommodityType.Stock },
+        {"NYSE", Commodity.CommodityType.Stock },
     };
 
     public string Guid { get; set; } = null!;
