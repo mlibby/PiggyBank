@@ -24,10 +24,15 @@
                 .Where(a => incomeExpense.Contains(a.Type))
                 .ToList();
 
-            var accountUtility = new AccountUtility(_context);
-            var accountBalances = accountUtility.GetAccountBalances(accounts, startDate, DateTime.UtcNow);
+            var date = DateTime.UtcNow;
+            var balances = new AccountBalances(accounts, new DateTime(date.Year, 1, 1), date);
 
-            return View(accountBalances);
+            var viewModel = new BalancesViewModel(
+                accounts.Where(a => a.ParentId == null).ToList(),
+                balances
+                );
+
+            return View(viewModel);
         }
     }
 }

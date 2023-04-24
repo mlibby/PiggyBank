@@ -1,22 +1,28 @@
-﻿@model ICollection<AccountBalance>
+﻿@model BalancesViewModel
 
 @{
-    foreach (var account in @Model)
+    foreach (var account in @Model.Accounts)
     {
-        @if (account.Children.Count > 0)
+        var balance = Model.Balances[account.Id];
+
+        if (account.Children.Count > 0)
         {
+            var childBalances = new BalancesViewModel(account.Children, Model.Balances);
+
             <li class="@(account.IsHidden ? "hidden-account": "")">
                 <details>
-                    <summary>@account.Name : @account.BalanceDisplay</summary>
+                    <summary>@account.Name : @account.Commodity.DisplayAmount(balance)</summary>
                     <ul>
-                        <partial name="_ExpenseListPartial" model="account.Children" />
+                        <partial name="_ExpenseListPartial" model="childBalances" />
                     </ul>
                 </details>
             </li>
         }
         else
         {
-            <li class=" @(account.IsHidden ? "hidden-account" : "")">@account.Name : @account.BalanceDisplay</li>
+            <li class=" @(account.IsHidden ? "hidden-account" : "")">
+                @account.Name : @account.Commodity.DisplayAmount(balance)
+            </li>
         }
     }
 }
