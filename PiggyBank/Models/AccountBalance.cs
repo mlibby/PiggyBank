@@ -18,7 +18,7 @@ public partial class AccountBalance : Account
                 balance = 0.0m - balance;
             }
 
-            return string.Format("{0}{1:F2}", Commodity.Symbol, balance);
+            return string.Format("{0}{1:N2}", Commodity.Symbol, balance);
         }
     }
 }
