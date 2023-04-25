@@ -4,6 +4,9 @@
 }
 
 <h1>Accounts</h1>
+<div>
+    <a href="@Url.Action("Validate", "Account")">Validate Accounts</a>
+</div>
 @{
     <ul class="tree">
      <partial name="_AccountListPartial.cshtml" model="@Model" />

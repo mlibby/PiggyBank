@@ -17,5 +17,12 @@
             var rootAccounts = accounts.Where(a => a.ParentId is null).OrderBy(a => a.Name).ToList();
             return View(rootAccounts);
         }
+
+        public IActionResult Validate()
+        {
+            var accounts = _context.Accounts.ToList();
+            var warnings = Account.Validate(accounts);
+            return View(warnings);
+        }
     }
 }
