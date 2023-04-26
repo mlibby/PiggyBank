@@ -1,7 +1,7 @@
 ﻿@model BalancesViewModel
 
 @{
-    foreach (var account in @Model.Accounts)
+    foreach (var account in @Model.Accounts.OrderBy(a => a.Name))
     {
         var balance = Model.Balances[account.Id];
 

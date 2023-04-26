@@ -1,7 +1,7 @@
 ﻿@model ICollection<Account>
 
 @{
-    foreach (var account in @Model)
+    foreach (var account in @Model.OrderBy(a => a.Name))
     {
         @if (account.Children.Count > 0)
         {
