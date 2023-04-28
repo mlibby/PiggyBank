@@ -14,7 +14,8 @@ namespace PiggyBank.Models
             var connectionString = configuration.GetConnectionString("PiggyBankContext")!;
 
             var optionsBuilder = new DbContextOptionsBuilder<PiggyBankContext>();
-            optionsBuilder.UseSqlServer(connectionString);
+            //optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlite(connectionString);
             return new PiggyBankContext(optionsBuilder.Options);
         }
     }

@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PiggyBankWeb.Data;
-using System;
 
 namespace PiggyBankWeb
 {
@@ -15,12 +13,25 @@ namespace PiggyBankWeb
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("PiggyBankContext") ?? throw new InvalidOperationException("Connection string 'PiggyBankContext' not found.");
+            var dbContextToUse = builder.Configuration.GetValue("dbProvider", "Sqlite");
+
+            //if (dbContextToUse == "SqlServer")
+            //{
+            //    var connectionString = builder.Configuration.GetConnectionString("PiggyBankSqlServerContext") ?? throw new InvalidOperationException("Connection string 'PiggyBankSqlServerContext' not found.");
+            //    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            //        options.UseSqlServer(connectionString));
+            //    builder.Services.AddDbContext<PiggyBankContext>(options =>
+            //        options.UseSqlServer(connectionString));
+            //}
+            //else
+            //{
+            var connectionString = builder.Configuration.GetConnectionString("PiggyBankContext") ?? throw new InvalidOperationException("Connection string 'PiggyBankSqliteContext' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlite(connectionString));
             builder.Services.AddDbContext<PiggyBankContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlite(connectionString));
+            //}
+
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -67,7 +78,7 @@ namespace PiggyBankWeb
                         .AddJsonFile("appsettings.json")
                         .Build();
                     var connectionString = configuration.GetConnectionString("PiggyBankContext");
-                    options.UseSqlServer(connectionString: connectionString);
+                    options.UseSqlite(connectionString);
                 });
             });
         }

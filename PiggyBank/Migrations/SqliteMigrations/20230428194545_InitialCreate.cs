@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PiggyBank.Migrations
+namespace PiggyBank.Migrations.SqliteMigrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -14,43 +15,41 @@ namespace PiggyBank.Migrations
                 name: "Commodities",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Symbol = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cusip = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Precision = table.Column<int>(type: "int", nullable: false),
-                    Mnemonic = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Symbol = table.Column<string>(type: "TEXT", maxLength: 16, nullable: true),
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    Cusip = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Precision = table.Column<int>(type: "INTEGER", nullable: false),
+                    Mnemonic = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Commodities", x => x.Id)
-                        .Annotation("SqlServer:Clustered", false);
+                    table.PrimaryKey("PK_Commodities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Configurations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "uniqueidentifier", nullable: false),
-                    Key = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false),
-                    Value = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Key = table.Column<string>(type: "TEXT", unicode: false, maxLength: 255, nullable: false),
+                    Value = table.Column<string>(type: "TEXT", unicode: false, maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Configurations", x => x.Id)
-                        .Annotation("SqlServer:Clustered", false);
+                    table.PrimaryKey("PK_Configurations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ExternalIds",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LocalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ExternalId = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Source = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    LocalId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ExternalId = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    Source = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,18 +60,19 @@ namespace PiggyBank.Migrations
                 name: "Accounts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CommodityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsPlaceholder = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    ParentId = table.Column<Guid>(type: "TEXT", nullable: true),
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    CommodityId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    IsHidden = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsLocked = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsPlaceholder = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accounts", x => x.Id)
-                        .Annotation("SqlServer:Clustered", false);
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Accounts_Accounts",
                         column: x => x.ParentId,
@@ -89,16 +89,15 @@ namespace PiggyBank.Migrations
                 name: "Transactions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     PostDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     EnterDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
-                    CommodityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Description = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
+                    CommodityId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transactions", x => x.Id)
-                        .Annotation("SqlServer:Clustered", false);
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Transactions_Commodities",
                         column: x => x.CommodityId,
@@ -110,18 +109,17 @@ namespace PiggyBank.Migrations
                 name: "Splits",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TransactionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Memo = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
-                    Action = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false),
-                    Value = table.Column<decimal>(type: "decimal(28,9)", nullable: false),
-                    Quantity = table.Column<decimal>(type: "decimal(28,9)", nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    TransactionId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    AccountId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Memo = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
+                    Action = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
+                    Value = table.Column<decimal>(type: "decimal(28, 9)", nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(28, 9)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Splits", x => x.Id)
-                        .Annotation("SqlServer:Clustered", false);
+                    table.PrimaryKey("PK_Splits", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Splits_Accounts",
                         column: x => x.AccountId,

@@ -2,10 +2,10 @@
 {
     public class CommodityController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<CommodityController> _logger;
         private readonly IPiggyBankContext _context;
 
-        public CommodityController(ILogger<HomeController> logger, PiggyBankContext context)
+        public CommodityController(ILogger<CommodityController> logger, PiggyBankContext context)
         {
             _context = context;
             _logger = logger;

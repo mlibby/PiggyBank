@@ -1,24 +1,26 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace PiggyBank.Models;
-
-public partial class PiggyBankContext : DbContext, IPiggyBankContext
+namespace PiggyBank.Models
 {
-    private string _connectionString = "";
-
-    public PiggyBankContext(string connectionString)
+    public partial class PiggyBankContext
     {
-        _connectionString = connectionString;
-    }
+        private string _connectionString = "";
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(System.IO.Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-        var configuration = builder.Build();
-        var connectionString = configuration.GetConnectionString("PiggyBankContext")!;
+        //public PiggyBankContext(string connectionString)
+        //{
+        //    _connectionString = connectionString;
+        //}
 
-        optionsBuilder.UseSqlServer(connectionString);
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            var configuration = builder.Build();
+            var connectionString = configuration.GetConnectionString("PiggyBankContext")!;
+
+            optionsBuilder.UseSqlite(connectionString);
+        }
+
     }
 }
