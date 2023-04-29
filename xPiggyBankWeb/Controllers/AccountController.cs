@@ -11,16 +11,16 @@
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var accounts = _context.Accounts.ToList();
-            var rootAccounts = accounts.Where(a => a.ParentId is null).OrderBy(a => a.Name).ToList();
+            var accounts = await _context.Accounts.ToListAsync();
+            var rootAccounts = accounts.Where(a => a.ParentId is null).OrderBy(a => a.Name);
             return View(rootAccounts);
         }
 
-        public IActionResult Validate()
+        public async Task<IActionResult> Validate()
         {
-            var accounts = _context.Accounts.ToList();
+            var accounts = await _context.Accounts.ToListAsync();
             var warnings = Account.Validate(accounts);
             return View(warnings);
         }
