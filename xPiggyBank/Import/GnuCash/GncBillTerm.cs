@@ -1,4 +1,4 @@
-﻿namespace PiggyBank.Import.GnuCash;
+﻿namespace PiggyBank.Data.Import.GnuCash;
 
 public partial class GncBillTerm
 {

@@ -1,4 +1,4 @@
-﻿global using PiggyBank.Import.GnuCash;
+﻿using PiggyBank.Data.Import.GnuCash;
 
 namespace PiggyBank;
 
@@ -33,19 +33,19 @@ public class Command : ICommand
 
     public void ImportAccounts(IGnuCashContext gnuCashContext)
     {
-        var importer = new Import.GnuCash.Importer(gnuCashContext, Context);
+        var importer = new Data.Import.GnuCash.Importer(gnuCashContext, Context);
         importer.ImportAccounts();
     }
 
     public void ImportCommodities(IGnuCashContext gnuCashContext)
     {
-        var importer = new Import.GnuCash.Importer(gnuCashContext, Context);
+        var importer = new Data.Import.GnuCash.Importer(gnuCashContext, Context);
         importer.ImportCommodities();
     }
 
     public void ImportTransactions(IGnuCashContext gnuCashContext)
     {
-        var importer = new Import.GnuCash.Importer(gnuCashContext, Context);
+        var importer = new Data.Import.GnuCash.Importer(gnuCashContext, Context);
         importer.ImportTransactions();
     }
 }

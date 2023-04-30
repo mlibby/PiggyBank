@@ -1,4 +1,4 @@
-﻿global using PiggyBank.Import.GnuCash;
+﻿using PiggyBank.Data.Import.GnuCash;
 
 namespace PiggyBank;
 
