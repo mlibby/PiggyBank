@@ -1,4 +1,6 @@
-﻿namespace PiggyBank.Data.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PiggyBank.Data.Models;
 
 public partial class Account
 {
