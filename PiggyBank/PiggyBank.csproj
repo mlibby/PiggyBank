@@ -9,12 +9,41 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\FiraMono-Medium.eot" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\FiraMono-Medium.ttf" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\FiraMono-Medium.woff" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\FiraMono-Medium.woff2" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon.eot" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon.ttf" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon.woff" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\demo-files\demo.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\demo-files\demo.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\demo.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\fonts\icomoon.eot" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\fonts\icomoon.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\fonts\icomoon.ttf" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\fonts\icomoon.woff" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\Read Me.txt" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\selection.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\style.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\icomoon.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0-preview.2.23153.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0-preview.2.23153.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0-preview.2.23153.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-preview.2.23128.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\css\site.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
