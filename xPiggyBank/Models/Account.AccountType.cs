@@ -1,13 +1,14 @@
-﻿namespace PiggyBank.Data.Models;
-
-public partial class Account
+﻿namespace PiggyBank.Models
 {
-    public enum AccountType
+    public partial class Account
     {
-        Asset,
-        Equity,
-        Expense,
-        Income,
-        Liability,
+        public enum AccountType
+        {
+            Asset,
+            Equity,
+            Expense,
+            Income,
+            Liability,
+        }
     }
 }
