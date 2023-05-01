@@ -21,7 +21,7 @@ public class Program
         builder.Services.AddServerSideBlazor();
 
         builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-        builder.Services.AddScoped<ICommodityService, CommodityService>();
+        builder.Services.AddScoped<CommodityService, CommodityService>();
 
         var app = builder.Build();
 

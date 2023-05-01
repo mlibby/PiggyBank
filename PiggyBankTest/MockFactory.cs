@@ -2,13 +2,13 @@
 {
     internal static class MockFactory
     {
-        public static Mock<IPiggyBankContext> MockPiggyBankContext(Mock<DbSet<Configuration>>? mockConfigurations = null)
+        public static Mock<IPiggyBankContext> MockPiggyBankContext(Mock<DbSet<Commodity>>? mockCommodities = null)
         {
             var mockContext = new Mock<IPiggyBankContext>();
 
-            if (mockConfigurations is object)
+            if (mockCommodities is object)
             {
-                mockContext.Setup(c => c.Configurations).Returns(mockConfigurations.Object);
+                mockContext.Setup(c => c.Commodities).Returns(mockCommodities.Object);
             }
 
             return mockContext;

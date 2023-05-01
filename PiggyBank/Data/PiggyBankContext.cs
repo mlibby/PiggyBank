@@ -2,7 +2,7 @@
 
 namespace PiggyBank.Data
 {
-    public class PiggyBankContext : IdentityDbContext, IPiggyBankContext
+    public class PiggyBankContext : IdentityDbContext
     {
         public PiggyBankContext(DbContextOptions<PiggyBankContext> options)
             : base(options)

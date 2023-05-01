@@ -2,7 +2,7 @@
 
 namespace PiggyBank.Data.Import.GnuCash;
 
-public partial class GnuCashContext : DbContext, IGnuCashContext
+public partial class GnuCashContext : DbContext
 {
     private string _connectionString = "";
 

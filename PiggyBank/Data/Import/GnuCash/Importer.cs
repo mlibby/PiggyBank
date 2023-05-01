@@ -4,10 +4,10 @@ namespace PiggyBank.Data.Import.GnuCash;
 
 public class Importer
 {
-    private IGnuCashContext GnuCashContext { get; }
-    private IPiggyBankContext PiggyBankContext { get; }
+    private GnuCashContext GnuCashContext { get; }
+    private PiggyBankContext PiggyBankContext { get; }
 
-    public Importer(IGnuCashContext context, IPiggyBankContext piggyBankContext)
+    public Importer(GnuCashContext context, PiggyBankContext piggyBankContext)
     {
         GnuCashContext = context;
         PiggyBankContext = piggyBankContext;
