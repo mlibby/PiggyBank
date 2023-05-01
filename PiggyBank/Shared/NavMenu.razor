@@ -1,33 +1,39 @@
-﻿<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/" title="Home">
-            <span class="icon icon-pig"></span>
-            <span class="visually-hidden">Home</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="icon icon-menu"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="navbar-nav">
-                <div id="navManage" class="nav-item dropdown">
-                    <a href="#" id="manageDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Manage
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="#manageDropdown">
-                        <a class="dropdown-item" href="/account">Accounts</a>
-                        <a class="dropdown-item" href="/commodities">Commodities</a>
-                    </div>
-                </div>
-                <a id="navBudget" class="nav-item nav-link" href="/budget">Budget</a>
-                <div id="navReports" class="nav-item dropdown">
-                    <a href="#" id="reportsDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Reports
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="#reportsDropdown">
-                        <a class="dropdown-item" href="/report/expense">Income/Expense</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+﻿<nav aria-label="Main Navigation">
+    <ul>
+        <li>
+            <a class="logo" href="/" title="Home">
+                <span class="icon icon-pig"></span>
+                <span class="sr-only">Home</span>
+            </a>
+        </li>
+        <li class="dropdown">
+            <button type="button" class="title" aria-expanded="false" aria-controls="manage-menu">
+                Manage
+            </button>
+            <ul id="manage-menu" class="menu">
+                <li>
+                    <a href="/account">Accounts</a>
+                </li>
+                <li>
+                    <a href="/commodities">Commodities</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="/budget">Budget</a>
+        </li>
+        <li class="dropdown">
+            <button type="button" class="title" aria-expanded="false" aria-controls="reports-menu">
+                Reports
+            </button>
+            <ul id="reports-menu" class="menu">
+                <li>
+                    <a href="/reports/balance-sheet">Balance Sheet</a>
+                </li>
+                <li>
+                    <a href="/reports/income-statement">Income Statement</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </nav>

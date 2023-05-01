@@ -1,0 +1,97 @@
+﻿.dropdown {
+    position: relative;
+}
+
+    .dropdown:hover .menu,
+    .dropdown:focus-within .menu {
+        opacity: 1;
+        transform: rotateX(0) translateX(-50%);
+        visibility: visible;
+    }
+
+    .dropdown .menu {
+        position: absolute;
+        background: var(--background-highlight);
+        border-radius: 0.125rem;
+        padding: 0.5rem 0;
+        min-width: 15ch;
+        width: auto;
+        transform: rotateX(-90deg) translateX(-50%);
+        transform-origin: top center;
+        opacity: 0.3;
+        transition: 280ms all ease-out;
+        visibility: hidden;
+    }
+
+        .dropdown .menu a {
+            display: block;
+            padding: 0.5rem;
+        }
+
+    .dropdown .title {
+        display: inline-flex;
+        align-items: center;
+    }
+
+        .dropdown .title:after {
+            content: "";
+            border: 0.35rem solid transparent;
+            border-top-color: var(--green);
+            margin-left: 0.25rem;
+            transform: translateY(0.15rem);
+        }
+
+nav {
+    font-size: 1.25rem;
+    background: var(--background-accent);
+    padding: 0 0.5rem;
+    display: grid;
+    place-items: start;
+    margin: 0;
+}
+
+    nav > ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-auto-flow: column;
+    }
+
+    nav ul li {
+        list-style: none;
+        padding: 0;
+    }
+
+        nav ul li a,
+        nav ul li .title {
+            text-align: left;
+            display: inline-block;
+            color: var(--link-color);
+            line-height: 2rem;
+        }
+
+        nav ul li a,
+        nav ul li .title {
+            padding: 0.5rem 1rem;
+        }
+
+/*        nav ul li > a:focus,
+        nav ul li > .title:focus {
+            outline: none;
+        }*/
+
+
+.logo {
+    font-size: 1.75em;
+    vertical-align: middle;
+    color: var(--green);
+    text-decoration: none;
+}
+
+.title {
+    background-color: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 1.25rem;
+}

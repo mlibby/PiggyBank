@@ -5,9 +5,28 @@
     font-style: normal;
 }
 
-a.btn-icon {
-    border: 0px;
-    margin-top: -5px;
+:root {
+    --background-accent: #d0d0d0;
+    --background-color: #e8e8e8;
+    --background-highlight: #ffffff;
+    --color: #080808;
+    --green: #378b6d;
+    --link-color: #0000ff;
+}
+
+@media(prefers-color-scheme: dark) {
+    :root {
+        --background-accent: #202020;
+        --background-color: #181818;
+        --background-highlight: #000000;
+        --color: #d0d0d0;
+        --green: #42a884;
+        --link-color: #8080ff;
+    }
+}
+
+a, a:visited {
+    color: var(--link-color);
 }
 
 body, input, button, select, optgroup, textarea {
@@ -15,21 +34,12 @@ body, input, button, select, optgroup, textarea {
 }
 
 body {
-    margin-top: 68px;
-    padding-left: 1rem;
+    background: var(--background-color);
+    color: var(--color);
+    padding: 0;
+    margin: 0;
 }
 
-/*.btn .label {
-    display: inline-block;
-    vertical-align: top;
-    line-height: 1.2;
-}
-
-.btn-icon {
-    padding-top: 0.5em;
-    padding-bottom: 0.15em;
-}
-*/
 .btn-secondary {
     background-color: #879096;
     border-color: #879096;
@@ -50,38 +60,33 @@ body {
         border-color: #42a884;
     }
 
-h1, .h1 {
+h1, h2, h3, h4, h5, h6 {
+    padding: 0;
+    margin: 0;
+}
+
+h1 {
     font-size: 2rem;
 }
 
-h2, .h2 {
+h2 {
     font-size: 1.75rem;
 }
 
-h3, .h3 {
+h3 {
     font-size: 1.5rem;
 }
 
-h4, .h4 {
+h4 {
     font-size: 1.25rem;
 }
 
-h5, .h5 {
+h5 {
     font-size: 1.1rem;
 }
 
-h6, .h6 {
+h6 {
     font-size: 1rem;
-}
-
-nav {
-    padding-left: 1rem;
-}
-
-.navbar-brand .icon {
-    font-size: 1.8em;
-    vertical-align: middle;
-    color: #05a172;
 }
 
 .tree {
@@ -190,3 +195,15 @@ ul.tree {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
