@@ -5,6 +5,7 @@ namespace PiggyBank.Data.Services
         private IPiggyBankContext _context;
 
         public CommodityService(IPiggyBankContext context) => _context = context;
+        public CommodityService(PiggyBankContext context) => _context = context;
 
         public async Task<IEnumerable<Commodity>> GetCommoditiesAsync()
         {

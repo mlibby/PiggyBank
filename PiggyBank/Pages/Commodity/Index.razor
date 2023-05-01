@@ -5,7 +5,40 @@
 
 <h1>Commodities</h1>
 
-
+@if (_commodities is object)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Mnemonic</th>
+                <th>Cusip</th>
+                <th>Symbol</th>
+                <th>Precision</th>
+                <th>Locked</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var commodity in _commodities)
+            {
+            <tr>
+                <td>@commodity.Name</td>
+                <td>@commodity.Type</td>
+                <td>@commodity.Mnemonic</td>
+                <td>@commodity.Cusip</td>
+                <td>@commodity.Symbol</td>
+                <td>@commodity.Precision</td>
+                <td>@commodity.IsLocked</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Loading...</p>
+}
 
 @code {
     private IEnumerable<Commodity>? _commodities;

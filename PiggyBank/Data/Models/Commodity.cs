@@ -13,4 +13,6 @@ public partial class Commodity : ModelBase
     public int Precision { get; set; }
 
     public string Mnemonic { get; set; } = null!;
+
+    public bool IsLocked { get; set; }
 }
