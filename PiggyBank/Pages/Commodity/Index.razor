@@ -1,0 +1,17 @@
+﻿@page "/commodities"
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using PiggyBank.Data.Models
+@inject ICommodityService CommodityService
+
+<h1>Commodities</h1>
+
+
+
+@code {
+    private IEnumerable<Commodity>? _commodities;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _commodities = await CommodityService.GetCommoditiesAsync();
+    }
+}

@@ -19,7 +19,9 @@ public class Program
             .AddEntityFrameworkStores<PiggyBankContext>();
         builder.Services.AddRazorPages();
         builder.Services.AddServerSideBlazor();
+
         builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+        builder.Services.AddScoped<ICommodityService, CommodityService>();
 
         var app = builder.Build();
 
