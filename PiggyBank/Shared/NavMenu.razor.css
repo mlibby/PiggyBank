@@ -29,10 +29,9 @@
             padding: 0.5rem;
         }
 
-        .dropdown .menu a:hover {
-            background: var(--background-accent);
-/*            outline: dashed;
-*/        }
+            .dropdown .menu a:hover {
+                background: var(--background-accent);
+            }
 
     .dropdown .title {
         display: inline-flex;

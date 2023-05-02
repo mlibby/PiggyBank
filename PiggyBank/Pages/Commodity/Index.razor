@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using PiggyBank.Data.Models
 @inject CommodityService CommodityService
+@inject ImportService ImportService
 
 <h1>Commodities</h1>
 
@@ -63,7 +64,7 @@ else
     protected async Task Import()
     {
         _importing = true;
-
+        await ImportService.ImportCommodities();
         _commodities = await CommodityService.GetCommoditiesAsync();
         _importing = false;
     }

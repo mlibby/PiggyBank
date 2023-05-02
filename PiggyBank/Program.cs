@@ -26,6 +26,7 @@ public class Program
 
         builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
         builder.Services.AddScoped<CommodityService, CommodityService>();
+        builder.Services.AddScoped<ImportService, ImportService>();
 
         var app = builder.Build();
 

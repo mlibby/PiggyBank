@@ -4,13 +4,6 @@ namespace PiggyBank.Data.Import.GnuCash;
 
 public partial class GnuCashContext : DbContext
 {
-    private string _connectionString = "";
-
-    public GnuCashContext(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
-
     public GnuCashContext(DbContextOptions<GnuCashContext> options) : base(options) { }
 
     public virtual DbSet<GncAccount> Accounts { get; set; }
@@ -52,11 +45,6 @@ public partial class GnuCashContext : DbContext
     public virtual DbSet<GncTransaction> Transactions { get; set; }
 
     public virtual DbSet<GncVendor> Vendors { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlite(_connectionString);
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

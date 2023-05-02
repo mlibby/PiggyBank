@@ -26,6 +26,7 @@ namespace PiggyBank.Data.Services
                 Guid guid = Guid.Parse(gncCommodity.Guid);
                 Commodity? commodity = await _piggyBankContext
                     .Commodities.SingleOrDefaultAsync(c => c.Id == guid);
+
                 if (commodity is object)
                 {
                     UpdateCommodity(gncCommodity, commodity!, symbol);
