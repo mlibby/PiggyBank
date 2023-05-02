@@ -10,23 +10,29 @@
     }
 
     .dropdown .menu {
-        position: absolute;
         background: var(--background-highlight);
         border-radius: 0.125rem;
-        padding: 0.5rem 0;
-        min-width: 15ch;
-        width: auto;
+        left: 7.75rem;
+        min-width: 15rem;
+        opacity: 0.3;
+        padding: 0.5rem;
+        position: absolute;
         transform: rotateX(-90deg) translateX(-50%);
         transform-origin: top center;
-        opacity: 0.3;
         transition: 280ms all ease-out;
         visibility: hidden;
+        width: auto;
     }
 
         .dropdown .menu a {
             display: block;
             padding: 0.5rem;
         }
+
+        .dropdown .menu a:hover {
+            background: var(--background-accent);
+/*            outline: dashed;
+*/        }
 
     .dropdown .title {
         display: inline-flex;

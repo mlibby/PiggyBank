@@ -5,6 +5,17 @@
 
 <h1>Commodities</h1>
 
+<p>
+@if (_importing)
+{
+    @:Importing commodities from GnuCash...
+}
+else
+{
+    <button @onclick="Import">Import from GnuCash</button>
+}
+</p>
+
 @if (_commodities is object)
 {
     <table>
@@ -22,15 +33,15 @@
         <tbody>
             @foreach (var commodity in _commodities)
             {
-            <tr>
-                <td>@commodity.Name</td>
-                <td>@commodity.Type</td>
-                <td>@commodity.Mnemonic</td>
-                <td>@commodity.Cusip</td>
-                <td>@commodity.Symbol</td>
-                <td>@commodity.Precision</td>
-                <td>@commodity.IsLocked</td>
-            </tr>
+                <tr>
+                    <td>@commodity.Name</td>
+                    <td>@commodity.Type</td>
+                    <td>@commodity.Mnemonic</td>
+                    <td>@commodity.Cusip</td>
+                    <td>@commodity.Symbol</td>
+                    <td>@commodity.Precision</td>
+                    <td>@commodity.IsLocked</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -41,10 +52,19 @@ else
 }
 
 @code {
+    private bool _importing;
     private IEnumerable<Commodity>? _commodities;
 
     protected override async Task OnInitializedAsync()
     {
         _commodities = await CommodityService.GetCommoditiesAsync();
+    }
+
+    protected async Task Import()
+    {
+        _importing = true;
+
+        _commodities = await CommodityService.GetCommoditiesAsync();
+        _importing = false;
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using PiggyBank.Areas.Identity;
+using PiggyBank.Data.Import.GnuCash;
 
 namespace PiggyBank;
 
@@ -11,9 +12,12 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        var piggyBankConnection = builder.Configuration.GetConnectionString("PiggyBankConnection") ?? throw new InvalidOperationException("Connection string 'PiggyBankConnection' not found.");
         builder.Services.AddDbContext<PiggyBankContext>(options =>
-            options.UseSqlite(connectionString));
+            options.UseSqlite(piggyBankConnection));
+        var gnuCashConnection = builder.Configuration.GetConnectionString("GnuCashConnection") ?? throw new InvalidOperationException("Connection string 'GnuCashConnection' not found.");
+        builder.Services.AddDbContext<GnuCashContext>(options =>
+            options.UseSqlite(gnuCashConnection));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
         builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<PiggyBankContext>();
