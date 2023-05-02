@@ -353,3 +353,5 @@ MigrationBackup/
 # Sqlite DBs
 *.db
 *.sqlite
+
+appsettings.json

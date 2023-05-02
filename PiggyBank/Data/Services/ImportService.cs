@@ -14,61 +14,117 @@ namespace PiggyBank.Data.Services
             _piggyBankContext = piggyBankContext;
         }
 
-        public async Task<int> ImportAccountsAsync()
+        public Task<int> ImportAccountsAsync(Progress<int> processed, Progress<int> count)
         {
-            var accounts = new List<GncAccount>();
-            var rootAccount = await _gnuCashContext.Accounts.SingleAsync(a => a.AccountType == "ROOT" && a.Name == "Root Account");
-            var gnuCashAccounts = await GetGnuCashAccounts(rootAccount.Guid, accounts);
-            foreach (var gncAccount in gnuCashAccounts)
+            return Task.Run<int>(async () =>
             {
-                if (gncAccount.ParentGuid == rootAccount.Guid)
-                {
-                    gncAccount.ParentGuid = null;
-                }
+                var accounts = new List<GncAccount>();
+                var rootAccount = await _gnuCashContext.Accounts
+                    .SingleAsync(a => a.AccountType == "ROOT" && a.Name == "Root Account");
 
-                Account? account = await _piggyBankContext.Accounts.SingleOrDefaultAsync(a => a.Id == Guid.Parse(gncAccount.Guid));
-                if (account is object && !account.IsLocked)
+                var gnuCashAccounts = await GetGnuCashAccounts(rootAccount.Guid, accounts);
+                foreach (var gncAccount in gnuCashAccounts)
                 {
+                    if (gncAccount.ParentGuid == rootAccount.Guid)
+                    {
+                        gncAccount.ParentGuid = null;
+                    }
+
+                    Account? account = await _piggyBankContext.Accounts
+                        .SingleOrDefaultAsync(a => a.Id == Guid.Parse(gncAccount.Guid));
+
+                    if (account is object && !account.IsLocked)
+                    {
+                        UpdateAccount(gncAccount, account!);
+                        await _piggyBankContext.SaveChangesAsync();
+                        continue;
+                    }
+
+                    account = new Account();
+                    _piggyBankContext.Accounts.Add(account);
                     UpdateAccount(gncAccount, account!);
                     await _piggyBankContext.SaveChangesAsync();
-                    continue;
                 }
 
-                account = new Account();
-                _piggyBankContext.Accounts.Add(account);
-                UpdateAccount(gncAccount, account!);
-                await _piggyBankContext.SaveChangesAsync();
-            }
-
-            return gnuCashAccounts.Count;
+                return gnuCashAccounts.Count;
+            });
         }
 
 
-        public async Task ImportCommoditiesAsync()
+        public Task<int> ImportCommoditiesAsync()
         {
-            foreach (var gncCommodity in await _gnuCashContext.Commodities.ToListAsync())
+            return Task.Run<int>(async () =>
             {
-                if (gncCommodity.Namespace == "template") continue;
-
-                var symbol = await _gnuCashContext.Slots
-                    .SingleOrDefaultAsync(s => s.ObjGuid == gncCommodity.Guid && s.Name == "user_symbol");
-
-                Guid guid = Guid.Parse(gncCommodity.Guid);
-                Commodity? commodity = await _piggyBankContext
-                    .Commodities.SingleOrDefaultAsync(c => c.Id == guid);
-
-                if (commodity is object)
+                var gncCommodities = await _gnuCashContext.Commodities.ToListAsync();
+                foreach (var gncCommodity in gncCommodities)
                 {
+                    if (gncCommodity.Namespace == "template") continue;
+
+                    var symbol = await _gnuCashContext.Slots
+                        .SingleOrDefaultAsync(s => s.ObjGuid == gncCommodity.Guid && s.Name == "user_symbol");
+
+                    Guid guid = Guid.Parse(gncCommodity.Guid);
+                    Commodity? commodity = await _piggyBankContext
+                        .Commodities.SingleOrDefaultAsync(c => c.Id == guid);
+
+                    if (commodity is object)
+                    {
+                        UpdateCommodity(gncCommodity, commodity!, symbol);
+                        await _piggyBankContext.SaveChangesAsync();
+                        continue;
+                    }
+
+                    commodity = new Commodity();
+                    _piggyBankContext.Commodities.Add(commodity);
                     UpdateCommodity(gncCommodity, commodity!, symbol);
                     await _piggyBankContext.SaveChangesAsync();
-                    continue;
                 }
 
-                commodity = new Commodity();
-                _piggyBankContext.Commodities.Add(commodity);
-                UpdateCommodity(gncCommodity, commodity!, symbol);
-                await _piggyBankContext.SaveChangesAsync();
+                return gncCommodities.Count;
+            });
+        }
+
+        public Task<int> ImportTransactions(IProgress<int> processed, IProgress<int> count)
+        {
+            return Task.Run<int>(async () =>
+            {
+                var gncTransactions = await _gnuCashContext.Transactions.Include(t => t.Splits).ToListAsync();
+                count.Report(gncTransactions.Count);
+                var processedCount = 0;
+                foreach (var gncTransaction in gncTransactions)
+                {
+                    Transaction? transaction = await _piggyBankContext.Transactions
+                        .Include(t => t.Splits)
+                        .SingleOrDefaultAsync(t => t.Id == Guid.Parse(gncTransaction.Guid));
+
+                    if (transaction is object)
+                    {
+                        UpdateTransaction(gncTransaction, transaction!);
+                        await _piggyBankContext.SaveChangesAsync();
+                        continue;
+                    }
+
+                    transaction = new Transaction();
+                    _piggyBankContext.Transactions.Add(transaction);
+                    UpdateTransaction(gncTransaction, transaction);
+                    await _piggyBankContext.SaveChangesAsync();
+
+                    processedCount++;
+                    processed.Report(processedCount);
+                }
+
+                return gncTransactions.Count;
+            });
+        }
+
+        private DateTime ConvertDate(string? dateString)
+        {
+            if (string.IsNullOrWhiteSpace(dateString))
+            {
+                return DateTime.UtcNow;
             }
+
+            return DateTime.Parse(dateString);
         }
 
         /// <summary>
@@ -79,16 +135,22 @@ namespace PiggyBank.Data.Services
         /// <param name="parentGuid"></param>
         /// <param name="accounts"></param>
         /// <returns></returns>
-        private async Task<List<GncAccount>> GetGnuCashAccounts(string parentGuid, List<GncAccount> accounts)
+        private Task<List<GncAccount>> GetGnuCashAccounts(string parentGuid, List<GncAccount> accounts)
         {
-            var childAccounts = await _gnuCashContext.Accounts.Where(a => a.ParentGuid == parentGuid).ToListAsync();
-            accounts.AddRange(childAccounts);
-            foreach (var childAccount in childAccounts)
+            return Task.Run<List<GncAccount>>(async () =>
             {
-                await GetGnuCashAccounts(childAccount.Guid, accounts);
-            }
+                var childAccounts = await _gnuCashContext.Accounts
+                .Where(a => a.ParentGuid == parentGuid)
+                .ToListAsync();
 
-            return accounts;
+                accounts.AddRange(childAccounts);
+                foreach (var childAccount in childAccounts)
+                {
+                    await GetGnuCashAccounts(childAccount.Guid, accounts);
+                }
+
+                return accounts;
+            });
         }
 
         private void UpdateAccount(GncAccount gncAccount, Account account)
@@ -112,6 +174,52 @@ namespace PiggyBank.Data.Services
             commodity.Precision = gncCommodity.Fraction.ToString().Length - 1;
             commodity.Symbol = symbol?.StringVal;
             commodity.Type = GncCommodity.TypeMap[gncCommodity.Namespace];
+        }
+
+        private void UpdateSplit(GncSplit gncSplit, Split split)
+        {
+            split.Id = Guid.Parse(gncSplit.Guid);
+            split.AccountId = Guid.Parse(gncSplit.AccountGuid);
+            split.Memo = gncSplit.Memo;
+            split.Action = gncSplit.Action;
+            split.Value = new Decimal(gncSplit.ValueNumber) / new Decimal(gncSplit.ValueDenomination);
+            split.Quantity = new Decimal(gncSplit.QuantityNumber) / new Decimal(gncSplit.QuantityDenomination);
+        }
+
+        private void UpdateTransaction(GncTransaction gncTransaction, Transaction transaction)
+        {
+            transaction.Id = Guid.Parse(gncTransaction.Guid);
+            transaction.Description = gncTransaction.Description ?? "";
+            transaction.EnterDate = ConvertDate(gncTransaction.EnterDate);
+            transaction.PostDate = ConvertDate(gncTransaction.PostDate);
+            transaction.CommodityId = Guid.Parse(gncTransaction.CurrencyGuid);
+
+            var originalSplitGuids = transaction.Splits
+                .Select(s => s.Id)
+                .ToList();
+
+            foreach (var gncSplit in gncTransaction.Splits)
+            {
+                Split? split = transaction.Splits
+                    .SingleOrDefault(s => s.Id == Guid.Parse(gncSplit.Guid));
+
+                if (split is object)
+                {
+                    originalSplitGuids.Remove(split.Id);
+                    UpdateSplit(gncSplit, split);
+                    continue;
+                }
+
+                split = new Split();
+                transaction.Splits.Add(split);
+                UpdateSplit(gncSplit, split);
+            }
+
+            foreach (var guid in originalSplitGuids)
+            {
+                var split = transaction.Splits.Single(s => s.Id == guid);
+                transaction.Splits.Remove(split);
+            }
         }
     }
 }

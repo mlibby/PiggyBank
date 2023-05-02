@@ -52,6 +52,8 @@ else
 
 @code {
     private bool _importing;
+    private int _recordCount = 0;
+    private int _recordsProcessed = 0;
     private IEnumerable<Account>? _accounts;
 
     protected override async Task OnInitializedAsync()
@@ -62,7 +64,9 @@ else
     protected async Task Import()
     {
         _importing = true;
-        await ImportService.ImportAccountsAsync();
+        var count = new Progress<int>(value => { _recordCount = value; });
+        var processed = new Progress<int>(value => { _recordsProcessed = value; });
+        await ImportService.ImportAccountsAsync(processed, count);
         _accounts = await AccountService.GetAccountsAsync();
         _importing = false;
     }

@@ -1,0 +1,74 @@
+﻿@page "/transactions"
+@using PiggyBank.Data.Models
+@inject TransactionService TransactionService
+@inject ImportService ImportService
+
+<h1>Transactions</h1>
+
+<p>
+    @if (_importing)
+    {
+        @:Importing transactions from GnuCash...(@_recordsProcessed / @_recordCount)
+    }
+    else
+    {
+        <button disabled=@_importing @onclick="ImportClicked">Import from GnuCash</button>
+    }
+</p>
+
+@if (_transactions is object)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in _transactions)
+            {
+                <tr>
+                    <td>@transaction.PostDate</td>
+                    <td>@transaction.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private bool _importing;
+    private int _recordCount = 0;
+    private int _recordsProcessed = 0;
+    private IEnumerable<Transaction>? _transactions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _transactions = await TransactionService.GetTransactionsAsync();
+    }
+
+    async Task ImportClicked()
+    {
+        _importing = true;
+        var count = new Progress<int>(value =>
+        {
+            _recordCount = value;
+            base.StateHasChanged();
+        });
+
+        var processed = new Progress<int>(value =>
+        {
+            _recordsProcessed = value;
+            base.StateHasChanged();
+        });
+
+        await ImportService.ImportTransactions(processed, count);
+        _transactions = await TransactionService.GetTransactionsAsync();
+        _importing = false;
+    }
+}

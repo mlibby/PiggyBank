@@ -12,15 +12,20 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        var piggyBankConnection = builder.Configuration.GetConnectionString("PiggyBankConnection") ?? throw new InvalidOperationException("Connection string 'PiggyBankConnection' not found.");
+        var piggyBankConnection = builder.Configuration.GetConnectionString("PiggyBankConnection") ??
+            throw new InvalidOperationException("Connection string 'PiggyBankConnection' not found.");
         builder.Services.AddDbContext<PiggyBankContext>(options =>
             options.UseSqlite(piggyBankConnection));
-        var gnuCashConnection = builder.Configuration.GetConnectionString("GnuCashConnection") ?? throw new InvalidOperationException("Connection string 'GnuCashConnection' not found.");
+
+        var gnuCashConnection = builder.Configuration.GetConnectionString("GnuCashConnection") ??
+            throw new InvalidOperationException("Connection string 'GnuCashConnection' not found.");
         builder.Services.AddDbContext<GnuCashContext>(options =>
             options.UseSqlite(gnuCashConnection));
+
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
         builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<PiggyBankContext>();
+
         builder.Services.AddRazorPages();
         builder.Services.AddServerSideBlazor();
 
@@ -28,6 +33,7 @@ public class Program
         builder.Services.AddScoped<AccountService, AccountService>();
         builder.Services.AddScoped<CommodityService, CommodityService>();
         builder.Services.AddScoped<ImportService, ImportService>();
+        builder.Services.AddScoped<TransactionService, TransactionService>();
 
         var app = builder.Build();
 
