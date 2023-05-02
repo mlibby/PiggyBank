@@ -1,0 +1,69 @@
+﻿@page "/accounts"
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using PiggyBank.Data.Models
+@inject AccountService AccountService
+@inject ImportService ImportService
+
+<h1>Accounts</h1>
+
+<p>
+@if (_importing)
+{
+    @:Importing accounts from GnuCash...
+}
+else
+{
+    <button @onclick="Import">Import from GnuCash</button>
+}
+</p>
+
+@if (_accounts is object)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Commodity</th>
+                <th>Description</th>
+                <th>Hidden</th>
+                <th>Locked</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var account in _accounts)
+            {
+                <tr>
+                    <td>@account.Name</td>
+                    <td>@account.Type</td>
+                    <td>@account.Commodity.Mnemonic</td>
+                    <td>@account.Description</td>
+                    <td>@account.IsHidden</td>
+                    <td>@account.IsLocked</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private bool _importing;
+    private IEnumerable<Account>? _accounts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _accounts = await AccountService.GetAccountsAsync();
+    }
+
+    protected async Task Import()
+    {
+        _importing = true;
+        await ImportService.ImportAccountsAsync();
+        _accounts = await AccountService.GetAccountsAsync();
+        _importing = false;
+    }
+}

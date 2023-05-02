@@ -25,6 +25,7 @@ public class Program
         builder.Services.AddServerSideBlazor();
 
         builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+        builder.Services.AddScoped<AccountService, AccountService>();
         builder.Services.AddScoped<CommodityService, CommodityService>();
         builder.Services.AddScoped<ImportService, ImportService>();
 

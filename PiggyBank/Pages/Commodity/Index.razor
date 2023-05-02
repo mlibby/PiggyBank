@@ -64,7 +64,7 @@ else
     protected async Task Import()
     {
         _importing = true;
-        await ImportService.ImportCommodities();
+        await ImportService.ImportCommoditiesAsync();
         _commodities = await CommodityService.GetCommoditiesAsync();
         _importing = false;
     }
