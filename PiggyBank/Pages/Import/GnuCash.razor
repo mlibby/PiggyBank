@@ -1,0 +1,91 @@
+﻿@page "/import/gnucash"
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using PiggyBank.Data.Models
+@inject ImportService ImportService
+
+<h1>Import from GnuCash</h1>
+<p>
+    @if (_importing)
+    {
+        @:Importing from GnuCash...
+    }
+    else
+    {
+        <button @onclick="Import">Import data from GnuCash</button>
+    }
+</p>
+
+<ul>
+    @if (_commodityCount > 0)
+    {
+        <li>Commodities (@_commodityProcessed / @_commodityCount)</li>
+    }
+    else
+    {
+        <li>Commodities (pending)</li>
+    }
+
+    @if (_accountCount > 0)
+    {
+        <li>Accounts (@_accountProcessed / @_accountCount)</li>
+    }
+    else
+    {
+        <li>Accounts (pending)</li>
+    }
+
+    @if (_transactionCount > 0)
+    {
+        <li>Transactions (@_transactionProcessed / @_transactionCount)</li>
+    }
+    else
+    {
+        <li>Transactions (pending)</li>
+    }
+
+    @if (_complete)
+    {
+        <li>Finished!</li>
+    }
+</ul>
+
+@code {
+    private bool _complete;
+    private bool _importing;
+    private int _commodityCount;
+    private int _commodityProcessed;
+    private int _accountCount;
+    private int _accountProcessed;
+    private int _transactionCount;
+    private int _transactionProcessed;
+    private IEnumerable<Commodity>? _commodities;
+
+    protected async Task Import()
+    {
+        if (_importing) return;
+
+        _importing = true;
+
+        _complete = false;
+        _commodityCount = 0;
+        _commodityProcessed = 0;
+        _accountCount = 0;
+        _accountProcessed = 0;
+        _transactionCount = 0;
+        _transactionProcessed = 0;
+
+        var count = new Progress<int>(value => { _commodityCount = value; StateHasChanged(); });
+        var processed = new Progress<int>(value => { _commodityProcessed = value; StateHasChanged(); });
+        await ImportService.ImportCommodities(count, processed);
+
+        count = new Progress<int>(value => { _accountCount = value; StateHasChanged(); });
+        processed = new Progress<int>(value => { _accountProcessed = value; StateHasChanged(); });
+        await ImportService.ImportAccounts(processed, count);
+
+        count = new Progress<int>(value => { _transactionCount = value; StateHasChanged(); });
+        processed = new Progress<int>(value => { _transactionProcessed = value; StateHasChanged(); });
+        await ImportService.ImportTransactions(processed, count);
+
+        _importing = false;
+    }
+}

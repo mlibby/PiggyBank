@@ -7,17 +7,21 @@
 <h1>Commodities</h1>
 
 <p>
-@if (_importing)
-{
-    @:Importing commodities from GnuCash...
-}
-else
-{
-    <button @onclick="Import">Import from GnuCash</button>
-}
+    @if (_importing)
+    {
+        @:Importing commodities from GnuCash (@_recordsProcessed / @_recordCount)
+    }
+    else
+    {
+        <button @onclick="Import">Import from GnuCash</button>
+    }
 </p>
 
-@if (_commodities is object)
+@if (_importing)
+{
+    <p>Table will update after import completes.</p>
+}
+else if (_commodities is object)
 {
     <table>
         <thead>
@@ -54,6 +58,8 @@ else
 
 @code {
     private bool _importing;
+    private int _recordCount = 0;
+    private int _recordsProcessed = 0;
     private IEnumerable<Commodity>? _commodities;
 
     protected override async Task OnInitializedAsync()
@@ -64,7 +70,11 @@ else
     protected async Task Import()
     {
         _importing = true;
-        await ImportService.ImportCommoditiesAsync();
+
+        var count = new Progress<int>(value => { _recordCount = value; base.StateHasChanged(); });
+        var processed = new Progress<int>(value => { _recordsProcessed = value; base.StateHasChanged(); });
+        await ImportService.ImportCommodities(count, processed);
+
         _commodities = await CommodityService.GetCommoditiesAsync();
         _importing = false;
     }

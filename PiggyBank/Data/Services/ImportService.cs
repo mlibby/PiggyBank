@@ -14,7 +14,7 @@ namespace PiggyBank.Data.Services
             _piggyBankContext = piggyBankContext;
         }
 
-        public Task<int> ImportAccountsAsync(Progress<int> processed, Progress<int> count)
+        public Task<int> ImportAccounts(IProgress<int> processed, IProgress<int> count)
         {
             return Task.Run<int>(async () =>
             {
@@ -23,6 +23,9 @@ namespace PiggyBank.Data.Services
                     .SingleAsync(a => a.AccountType == "ROOT" && a.Name == "Root Account");
 
                 var gnuCashAccounts = await GetGnuCashAccounts(rootAccount.Guid, accounts);
+                count.Report(gnuCashAccounts.Count);
+
+                var processedCount = 0;
                 foreach (var gncAccount in gnuCashAccounts)
                 {
                     if (gncAccount.ParentGuid == rootAccount.Guid)
@@ -44,6 +47,9 @@ namespace PiggyBank.Data.Services
                     _piggyBankContext.Accounts.Add(account);
                     UpdateAccount(gncAccount, account!);
                     await _piggyBankContext.SaveChangesAsync();
+
+                    processedCount++;
+                    processed.Report(processedCount);
                 }
 
                 return gnuCashAccounts.Count;
@@ -51,11 +57,14 @@ namespace PiggyBank.Data.Services
         }
 
 
-        public Task<int> ImportCommoditiesAsync()
+        public Task<int> ImportCommodities(IProgress<int> processed, IProgress<int> count)
         {
             return Task.Run<int>(async () =>
             {
                 var gncCommodities = await _gnuCashContext.Commodities.ToListAsync();
+                count.Report(gncCommodities.Count);
+
+                var processedCount = 0;
                 foreach (var gncCommodity in gncCommodities)
                 {
                     if (gncCommodity.Namespace == "template") continue;
@@ -78,6 +87,9 @@ namespace PiggyBank.Data.Services
                     _piggyBankContext.Commodities.Add(commodity);
                     UpdateCommodity(gncCommodity, commodity!, symbol);
                     await _piggyBankContext.SaveChangesAsync();
+
+                    processedCount++;
+                    processed.Report(processedCount);
                 }
 
                 return gncCommodities.Count;
@@ -90,6 +102,7 @@ namespace PiggyBank.Data.Services
             {
                 var gncTransactions = await _gnuCashContext.Transactions.Include(t => t.Splits).ToListAsync();
                 count.Report(gncTransactions.Count);
+
                 var processedCount = 0;
                 foreach (var gncTransaction in gncTransactions)
                 {

@@ -7,17 +7,21 @@
 <h1>Accounts</h1>
 
 <p>
-@if (_importing)
-{
-    @:Importing accounts from GnuCash...
-}
-else
-{
-    <button @onclick="Import">Import from GnuCash</button>
-}
+    @if (_importing)
+    {
+        @:Importing accounts from GnuCash (@_recordsProcessed / @_recordCount)
+    }
+    else
+    {
+        <button @onclick="Import">Import from GnuCash</button>
+    }
 </p>
 
-@if (_accounts is object)
+@if (_importing)
+{
+    <p>Table will update after import completes.</p>
+}
+else if (_accounts is object)
 {
     <table>
         <thead>
@@ -64,9 +68,11 @@ else
     protected async Task Import()
     {
         _importing = true;
-        var count = new Progress<int>(value => { _recordCount = value; });
-        var processed = new Progress<int>(value => { _recordsProcessed = value; });
-        await ImportService.ImportAccountsAsync(processed, count);
+
+        var count = new Progress<int>(value => { _recordCount = value; base.StateHasChanged(); });
+        var processed = new Progress<int>(value => { _recordsProcessed = value; base.StateHasChanged(); });
+        await ImportService.ImportAccounts(processed, count);
+
         _accounts = await AccountService.GetAccountsAsync();
         _importing = false;
     }
