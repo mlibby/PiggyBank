@@ -71,7 +71,7 @@ else
 
         var count = new Progress<int>(value => { _recordCount = value; base.StateHasChanged(); });
         var processed = new Progress<int>(value => { _recordsProcessed = value; base.StateHasChanged(); });
-        await ImportService.ImportAccounts(processed, count);
+        await ImportService.ImportAccounts(processed, count, new CancellationToken());
 
         _accounts = await AccountService.GetAccountsAsync();
         _importing = false;

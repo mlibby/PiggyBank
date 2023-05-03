@@ -15,12 +15,12 @@ public class Program
         var piggyBankConnection = builder.Configuration.GetConnectionString("PiggyBankConnection") ??
             throw new InvalidOperationException("Connection string 'PiggyBankConnection' not found.");
         builder.Services.AddDbContext<PiggyBankContext>(options =>
-            options.UseSqlite(piggyBankConnection));
+            options.UseSqlite(piggyBankConnection), ServiceLifetime.Transient);
 
         var gnuCashConnection = builder.Configuration.GetConnectionString("GnuCashConnection") ??
             throw new InvalidOperationException("Connection string 'GnuCashConnection' not found.");
         builder.Services.AddDbContext<GnuCashContext>(options =>
-            options.UseSqlite(gnuCashConnection));
+            options.UseSqlite(gnuCashConnection), ServiceLifetime.Transient);
 
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
         builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -30,9 +30,11 @@ public class Program
         builder.Services.AddServerSideBlazor();
 
         builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+
         builder.Services.AddScoped<AccountService, AccountService>();
         builder.Services.AddScoped<CommodityService, CommodityService>();
         builder.Services.AddScoped<ImportService, ImportService>();
+        builder.Services.AddScoped<NotificationService, NotificationService>();
         builder.Services.AddScoped<TransactionService, TransactionService>();
 
         var app = builder.Build();

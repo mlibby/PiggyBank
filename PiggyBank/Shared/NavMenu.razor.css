@@ -1,4 +1,10 @@
-﻿.dropdown {
+﻿/* 
+    Many thanks to Stephanie Eckles for this article:
+    https://moderncss.dev/css-only-accessible-dropdown-navigation-menu/ 
+    Her techniques formed the foundation of the code for this component
+*/
+
+.dropdown {
     position: relative;
 }
 

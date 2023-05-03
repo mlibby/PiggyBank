@@ -1,0 +1,30 @@
+﻿@implements IDisposable
+@inject NotificationService NotificationService
+
+@if (NotificationService.Messages.Count > 0)
+{
+    <div>
+    @foreach (var message in NotificationService.Messages)
+    {
+        <NotificationMessage />
+    }
+    </div>
+}
+
+@code
+{
+    void Update(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs args)
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        NotificationService.Messages.CollectionChanged -= Update;
+    }
+
+    protected override void OnInitialized()
+    {
+        NotificationService.Messages.CollectionChanged += Update;
+    }
+}

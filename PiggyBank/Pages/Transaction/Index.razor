@@ -70,7 +70,7 @@ else
             _recordsProcessed = value;
             base.StateHasChanged();
         });
-        await ImportService.ImportTransactions(processed, count);
+        await ImportService.ImportTransactions(processed, count, CancellationToken.None);
 
         _transactions = await TransactionService.GetTransactionsAsync();
         _importing = false;

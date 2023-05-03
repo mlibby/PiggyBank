@@ -1,7 +1,10 @@
 ﻿@page "/import/gnucash"
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using PiggyBank.Data.Models
+@implements IDisposable
+@inject ILogger<GnuCash> logger
 @inject ImportService ImportService
+@inject NotificationService MessageService
 
 <h1>Import from GnuCash</h1>
 <p>
@@ -18,7 +21,7 @@
 <ul>
     @if (_commodityCount > 0)
     {
-        <li>Commodities (@_commodityProcessed / @_commodityCount)</li>
+        <li>Commodities ( @_commodityProcessed / @_commodityCount )</li>
     }
     else
     {
@@ -27,7 +30,7 @@
 
     @if (_accountCount > 0)
     {
-        <li>Accounts (@_accountProcessed / @_accountCount)</li>
+        <li>Accounts ( @_accountProcessed / @_accountCount )</li>
     }
     else
     {
@@ -36,7 +39,7 @@
 
     @if (_transactionCount > 0)
     {
-        <li>Transactions (@_transactionProcessed / @_transactionCount)</li>
+        <li>Transactions ( @_transactionProcessed / @_transactionCount )</li>
     }
     else
     {
@@ -50,15 +53,19 @@
 </ul>
 
 @code {
+    private CancellationToken _importCancellationToken;
+    private CancellationTokenSource? _importCancellationTokenSource;
     private bool _complete;
     private bool _importing;
     private int _commodityCount;
     private int _commodityProcessed;
+    private Task? _commodityImportTask;
     private int _accountCount;
     private int _accountProcessed;
+    private Task? _accountImportTask;
     private int _transactionCount;
     private int _transactionProcessed;
-    private IEnumerable<Commodity>? _commodities;
+    private Task? _transactionImportTask;
 
     protected async Task Import()
     {
@@ -74,18 +81,35 @@
         _transactionCount = 0;
         _transactionProcessed = 0;
 
+        _importCancellationTokenSource = new CancellationTokenSource();
+        _importCancellationToken = _importCancellationTokenSource.Token;
+
         var count = new Progress<int>(value => { _commodityCount = value; StateHasChanged(); });
         var processed = new Progress<int>(value => { _commodityProcessed = value; StateHasChanged(); });
-        await ImportService.ImportCommodities(processed, count);
+        _commodityImportTask = ImportService.ImportCommodities(processed, count, _importCancellationToken);
+        await _commodityImportTask;
 
         count = new Progress<int>(value => { _accountCount = value; StateHasChanged(); });
         processed = new Progress<int>(value => { _accountProcessed = value; StateHasChanged(); });
-        await ImportService.ImportAccounts(processed, count);
+        _accountImportTask = ImportService.ImportAccounts(processed, count, _importCancellationToken);
+        await _accountImportTask;
 
         count = new Progress<int>(value => { _transactionCount = value; StateHasChanged(); });
         processed = new Progress<int>(value => { _transactionProcessed = value; StateHasChanged(); });
-        await ImportService.ImportTransactions(processed, count);
+        _transactionImportTask = ImportService.ImportTransactions(processed, count, _importCancellationToken);
+        await _transactionImportTask;
 
         _importing = false;
+        _complete = true;
+    }
+
+    public void Dispose()
+    {
+        if (_importCancellationTokenSource is object && _importing)
+        {
+            logger.LogInformation("Cancelling GnuCash imports");
+            _importCancellationTokenSource.Cancel();
+            MessageService.Notify("GnuCash imports cancelled");
+        }
     }
 }
