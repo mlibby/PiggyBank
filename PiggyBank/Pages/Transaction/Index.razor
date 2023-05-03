@@ -60,8 +60,16 @@ else
     {
         _importing = true;
 
-        var count = new Progress<int>(value => { _recordCount = value; base.StateHasChanged(); });
-        var processed = new Progress<int>(value => { _recordsProcessed = value; base.StateHasChanged(); });
+        var count = new Progress<int>(value =>
+        {
+            _recordCount = value;
+            base.StateHasChanged();
+        });
+        var processed = new Progress<int>(value =>
+        {
+            _recordsProcessed = value;
+            base.StateHasChanged();
+        });
         await ImportService.ImportTransactions(processed, count);
 
         _transactions = await TransactionService.GetTransactionsAsync();

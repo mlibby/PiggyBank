@@ -76,7 +76,7 @@
 
         var count = new Progress<int>(value => { _commodityCount = value; StateHasChanged(); });
         var processed = new Progress<int>(value => { _commodityProcessed = value; StateHasChanged(); });
-        await ImportService.ImportCommodities(count, processed);
+        await ImportService.ImportCommodities(processed, count);
 
         count = new Progress<int>(value => { _accountCount = value; StateHasChanged(); });
         processed = new Progress<int>(value => { _accountProcessed = value; StateHasChanged(); });

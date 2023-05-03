@@ -36,17 +36,17 @@ namespace PiggyBank.Data.Services
                     Account? account = await _piggyBankContext.Accounts
                         .SingleOrDefaultAsync(a => a.Id == Guid.Parse(gncAccount.Guid));
 
-                    if (account is object && !account.IsLocked)
+                    if (account is not object)
+                    {
+                        account = new Account();
+                        _piggyBankContext.Accounts.Add(account);
+                    }
+
+                    if (!account.IsLocked)
                     {
                         UpdateAccount(gncAccount, account!);
                         await _piggyBankContext.SaveChangesAsync();
-                        continue;
                     }
-
-                    account = new Account();
-                    _piggyBankContext.Accounts.Add(account);
-                    UpdateAccount(gncAccount, account!);
-                    await _piggyBankContext.SaveChangesAsync();
 
                     processedCount++;
                     processed.Report(processedCount);
@@ -61,14 +61,14 @@ namespace PiggyBank.Data.Services
         {
             return Task.Run<int>(async () =>
             {
-                var gncCommodities = await _gnuCashContext.Commodities.ToListAsync();
+                var gncCommodities = await _gnuCashContext.Commodities
+                    .Where(c => c.Namespace != "template")
+                    .ToListAsync();
                 count.Report(gncCommodities.Count);
 
                 var processedCount = 0;
                 foreach (var gncCommodity in gncCommodities)
                 {
-                    if (gncCommodity.Namespace == "template") continue;
-
                     var symbol = await _gnuCashContext.Slots
                         .SingleOrDefaultAsync(s => s.ObjGuid == gncCommodity.Guid && s.Name == "user_symbol");
 
@@ -76,17 +76,17 @@ namespace PiggyBank.Data.Services
                     Commodity? commodity = await _piggyBankContext
                         .Commodities.SingleOrDefaultAsync(c => c.Id == guid);
 
-                    if (commodity is object)
+                    if (commodity is not object)
+                    {
+                        commodity = new Commodity();
+                        _piggyBankContext.Commodities.Add(commodity);
+                    }
+
+                    if (!commodity.IsLocked)
                     {
                         UpdateCommodity(gncCommodity, commodity!, symbol);
                         await _piggyBankContext.SaveChangesAsync();
-                        continue;
                     }
-
-                    commodity = new Commodity();
-                    _piggyBankContext.Commodities.Add(commodity);
-                    UpdateCommodity(gncCommodity, commodity!, symbol);
-                    await _piggyBankContext.SaveChangesAsync();
 
                     processedCount++;
                     processed.Report(processedCount);
@@ -110,16 +110,13 @@ namespace PiggyBank.Data.Services
                         .Include(t => t.Splits)
                         .SingleOrDefaultAsync(t => t.Id == Guid.Parse(gncTransaction.Guid));
 
-                    if (transaction is object)
+                    if (transaction is not object)
                     {
-                        UpdateTransaction(gncTransaction, transaction!);
-                        await _piggyBankContext.SaveChangesAsync();
-                        continue;
+                        transaction = new Transaction();
+                        _piggyBankContext.Transactions.Add(transaction);
                     }
 
-                    transaction = new Transaction();
-                    _piggyBankContext.Transactions.Add(transaction);
-                    UpdateTransaction(gncTransaction, transaction);
+                    UpdateTransaction(gncTransaction, transaction!);
                     await _piggyBankContext.SaveChangesAsync();
 
                     processedCount++;
