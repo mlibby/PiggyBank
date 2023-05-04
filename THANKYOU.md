@@ -9,7 +9,9 @@ For being an inspiration and a solid personal finance tool for years
 ## Web Tech
 
 Kate Rose Morley: https://iamkate.com/code/tree-views/
+
 Stephanie Eckles: https://moderncss.dev/css-only-accessible-dropdown-navigation-menu/
+
 RadZen: https://github.com/radzenhq/radzen-blazor
 
 ## Open Source Authors
