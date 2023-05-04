@@ -109,7 +109,7 @@
         {
             logger.LogInformation("Cancelling GnuCash imports");
             _importCancellationTokenSource.Cancel();
-            MessageService.Notify("GnuCash imports cancelled");
+            MessageService.NotifyWarning("GnuCash imports cancelled");
         }
     }
 }

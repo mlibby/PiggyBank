@@ -6,7 +6,7 @@
     <div>
     @foreach (var message in NotificationService.Messages)
     {
-        <NotificationMessage />
+        <NotificationMessageDisplay Message=@message />
     }
     </div>
 }

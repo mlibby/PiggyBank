@@ -1,0 +1,23 @@
+﻿@inject NotificationService NotificationService
+
+@if (@Message is object)
+{
+    <div>
+        <span class="message">@Message.Message</span>
+        <button click="@Close()"><span class="icon-close"></span></button>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public NotificationMessage? Message { get; set; }
+
+    public async Task Close()
+    {
+        if (Message is object)
+        {
+            NotificationService.Messages.Remove(Message);
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+}
