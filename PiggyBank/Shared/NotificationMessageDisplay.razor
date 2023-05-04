@@ -1,10 +1,15 @@
 ﻿@inject NotificationService NotificationService
 
-@if (@Message is object)
+@if (Message is object)
 {
-    <div>
-        <span class="message">@Message.Message</span>
-        <button click="@Close()"><span class="icon-close"></span></button>
+    <div class="message @(MessageClass())">
+        <span class="icon @(IconClass())"></span>
+        <span class="sr-only">@(Message.Severity)</span>
+        <span class="text">@Message.Message</span>
+        <button class="close-button" @onclick="Close">
+            <span class="icon-close"></span>
+            <span class="sr-only">Close</span>
+        </button>
     </div>
 }
 
@@ -12,12 +17,30 @@
     [Parameter]
     public NotificationMessage? Message { get; set; }
 
-    public async Task Close()
+    public void Close()
     {
         if (Message is object)
         {
             NotificationService.Messages.Remove(Message);
+            Message = null;
         }
-        await InvokeAsync(StateHasChanged);
+    }
+
+    private Dictionary<NotificationSeverity, string> IconClasses = new Dictionary<NotificationSeverity, string>()
+    {
+        { NotificationSeverity.Error, "icon-sad-face" },
+        { NotificationSeverity.Info, "icon-speech" },
+        { NotificationSeverity.Success, "icon-glasses-face" },
+        { NotificationSeverity.Warning, "icon-shock-face" }
+    };
+
+    private string IconClass()
+    {
+        return IconClasses[Message!.Severity];
+    }
+
+    private string MessageClass()
+    {
+        return Message!.Severity.ToString().ToLower();
     }
 }

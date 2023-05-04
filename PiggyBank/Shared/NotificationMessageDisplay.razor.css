@@ -1,0 +1,42 @@
+﻿.message {
+    border: 1px solid;
+    border-radius: 0.5rem;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+    .message .close-button {
+        float: right;
+    }
+
+    .message .icon {
+        font-size: 2rem;
+        padding-right: 1rem;
+        vertical-align: middle;
+    }
+
+    .message .text {
+        color: var(--color);
+        font-size: 1.25rem;
+        vertical-align: middle;
+    }
+
+    .message.error {
+        border-color: red;
+        color: red;
+    }
+
+    .message.info {
+        border-color: blue;
+        color: blue;
+    }
+
+    .message.success {
+        border-color: green;
+        color: green;
+    }
+
+    .message.warning {
+        border-color: yellow;
+        color: yellow;
+    }
