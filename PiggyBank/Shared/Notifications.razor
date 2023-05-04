@@ -1,4 +1,8 @@
-﻿@implements IDisposable
+﻿@*
+    Inspired by https://github.com/radzenhq/radzen-blazor/blob/master/Radzen.Blazor/RadzenNotification.razor
+*@
+
+@implements IDisposable
 @inject NotificationService NotificationService
 
 @if (NotificationService.Messages.Count > 0)

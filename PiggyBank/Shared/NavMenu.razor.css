@@ -40,8 +40,8 @@
             }
 
     .dropdown .title {
-        display: inline-flex;
         align-items: center;
+        display: inline-flex;
     }
 
         .dropdown .title:after {
@@ -53,20 +53,20 @@
         }
 
 nav {
-    font-size: 1.25rem;
     background: var(--background-accent);
-    padding: 0 0.5rem;
     display: grid;
-    place-items: start;
+    font-size: 1.25rem;
     margin: 0;
+    padding: 0 0.5rem;
+    place-items: start;
 }
 
     nav > ul {
+        display: grid;
+        grid-auto-flow: column;
         list-style: none;
         margin: 0;
         padding: 0;
-        display: grid;
-        grid-auto-flow: column;
     }
 
     nav ul li {
@@ -76,10 +76,11 @@ nav {
 
         nav ul li a,
         nav ul li .title {
-            text-align: left;
-            display: inline-block;
             color: var(--link-color);
+            display: inline-block;
             line-height: 2rem;
+            text-align: left;
+            vertical-align: middle;
         }
 
         nav ul li a,
@@ -87,17 +88,11 @@ nav {
             padding: 0.5rem 1rem;
         }
 
-/*        nav ul li > a:focus,
-        nav ul li > .title:focus {
-            outline: none;
-        }*/
-
-
 .logo {
-    font-size: 1.75em;
-    vertical-align: middle;
     color: var(--green);
+    font-size: 1.75em;
     text-decoration: none;
+    vertical-align: middle;
 }
 
 .title {

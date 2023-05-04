@@ -1,8 +1,14 @@
-﻿@inject NotificationService NotificationService
+﻿@*
+
+Inspired by https://github.com/radzenhq/radzen-blazor/blob/master/Radzen.Blazor/RadzenNotificationMessage.razor
+
+*@
+
+@inject NotificationService NotificationService
 
 @if (Message is object)
 {
-    <div class="message @(MessageClass())">
+    <div aria-live="polite" class="message @(MessageClass())">
         <span class="icon @(IconClass())"></span>
         <span class="sr-only">@(Message.Severity)</span>
         <span class="text">@Message.Message</span>

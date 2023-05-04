@@ -1,4 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿//
+// Inspired by https://github.com/radzenhq/radzen-blazor/blob/master/Radzen.Blazor/NotificationService.cs
+//
+
+using System.Collections.ObjectModel;
 
 namespace PiggyBank.Data.Services;
 
