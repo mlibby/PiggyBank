@@ -19,33 +19,18 @@
 </p>
 
 <ul>
-    @if (_commodityCount > 0)
-    {
-        <li>Commodities ( @_commodityProcessed / @_commodityCount )</li>
-    }
-    else
-    {
-        <li>Commodities (pending)</li>
-    }
-
-    @if (_accountCount > 0)
-    {
-        <li>Accounts ( @_accountProcessed / @_accountCount )</li>
-    }
-    else
-    {
-        <li>Accounts (pending)</li>
-    }
-
-    @if (_transactionCount > 0)
-    {
-        <li>Transactions ( @_transactionProcessed / @_transactionCount )</li>
-    }
-    else
-    {
-        <li>Transactions (pending)</li>
-    }
-
+    <li>
+        <label for="commodity-progress">Commodities</label>
+        <progress id="commodity-progress" value="@CommodityProgress" />
+    </li>
+    <li>
+        <label for="commodity-progress">Accounts</label>
+        <progress id="commodity-progress" value="@AccountProgress" />
+    </li>
+    <li>
+        <label for="commodity-progress">Transactions</label>
+        <progress id="commodity-progress" value="@TransactionProgress" />
+    </li>
     @if (_complete)
     {
         <li>Finished!</li>
@@ -66,6 +51,10 @@
     private int _transactionCount;
     private int _transactionProcessed;
     private Task? _transactionImportTask;
+
+    private float AccountProgress { get => _accountCount == 0 ? 0 : (float)_accountProcessed / _accountCount; }
+    private float CommodityProgress { get => _commodityCount == 0 ? 0 : (float)_commodityProcessed / _commodityCount; }
+    private float TransactionProgress { get => _transactionCount == 0 ? 0 : (float)_transactionProcessed / _transactionCount; }
 
     protected async Task Import()
     {

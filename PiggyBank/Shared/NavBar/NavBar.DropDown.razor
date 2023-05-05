@@ -1,0 +1,30 @@
+﻿<li class="dropdown">
+    <button type="button" class="title" @onfocus="Toggle" aria-expanded="@Expanded" aria-controls="@DropdownId">
+        @Title
+    </button>
+    <ul id="@DropdownId" class="menu">
+       @ChildContent 
+    </ul>
+</li>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = null!;
+
+    private string DropdownId { get; set; } = null!;
+
+    private bool Expanded { get; set; } = false;
+
+    protected override void OnInitialized()
+    {
+        DropdownId = Guid.NewGuid().ToString();
+    }
+
+    protected void Toggle()
+    {
+        Expanded = !Expanded;
+    }
+}

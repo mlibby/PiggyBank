@@ -1,0 +1,11 @@
+﻿<li>
+    <a href="@Href">@Title</a>
+</li>
+
+@code{
+    [Parameter]
+    public string Href { get; set; } = null!;
+
+    [Parameter]
+    public string Title { get; set; } = null!;
+}
