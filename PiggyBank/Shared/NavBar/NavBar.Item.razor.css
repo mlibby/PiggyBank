@@ -1,0 +1,27 @@
+﻿/* 
+    Many thanks to Stephanie Eckles for this article:
+    https://moderncss.dev/css-only-accessible-dropdown-navigation-menu/ 
+    Her techniques formed the foundation of the code for this component
+*/
+
+li {
+    list-style: none;
+    padding: 0;
+}
+
+    li a,
+    li .title {
+        color: var(--link-color);
+        display: inline-block;
+        line-height: 2rem;
+        padding: 0.5rem 1rem;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+.title {
+    background-color: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 1.25rem;
+}

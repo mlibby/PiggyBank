@@ -1,5 +1,11 @@
 # PiggyBank Says "Thank You"
 
+PiggyBank would not be possible without all kinds of incredible open source
+projects and writers who have shared code and technical how-to articles.
+
+PiggyBank rarely "lifts" code directly, but has been helped along the way 
+by the projects and people listed below.
+
 ## Personal Finance
 
 ### GnuCash
@@ -8,16 +14,14 @@ For being an inspiration and a solid personal finance tool for years
 
 ## Web Tech
 
-Kate Rose Morley: https://iamkate.com/code/tree-views/
+### Kate Rose Morley
 
-Stephanie Eckles: https://moderncss.dev/css-only-accessible-dropdown-navigation-menu/
+Tree View (used for account views): https://iamkate.com/code/tree-views/
 
-RadZen: https://github.com/radzenhq/radzen-blazor
+### Stephanie Eckles
 
-## Open Source Authors
+Nav Bar: https://moderncss.dev/css-only-accessible-dropdown-navigation-menu/
 
-I may not be directly using anyone's code, but there are many times I've learned to 
-do something new from reading someone else's code. It's the best way (for me) to 
-learn, actually.
+### RadZen
 
-
+Notifications: https://github.com/radzenhq/radzen-blazor

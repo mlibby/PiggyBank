@@ -4,60 +4,12 @@
     Her techniques formed the foundation of the code for this component
 */
 
-.dropdown {
-    position: relative;
-}
-
-    .dropdown:hover .menu,
-    .dropdown:focus-within .menu {
-        opacity: 1;
-        transform: rotateX(0) translateX(-50%);
-        visibility: visible;
-    }
-
-    .dropdown .menu {
-        background: var(--background-highlight);
-        border-radius: 0.125rem;
-        left: 7.75rem;
-        min-width: 15rem;
-        opacity: 0.3;
-        padding: 0.5rem;
-        position: absolute;
-        transform: rotateX(-90deg) translateX(-50%);
-        transform-origin: top center;
-        transition: 280ms all ease-out;
-        visibility: hidden;
-        width: auto;
-    }
-
-        .dropdown .menu a {
-            display: block;
-            padding: 0.5rem;
-        }
-
-            .dropdown .menu a:hover {
-                background: var(--background-accent);
-            }
-
-    .dropdown .title {
-        align-items: center;
-        display: inline-flex;
-    }
-
-        .dropdown .title:after {
-            content: "";
-            border: 0.35rem solid transparent;
-            border-top-color: var(--green);
-            margin-left: 0.25rem;
-            transform: translateY(0.15rem);
-        }
-
 nav {
     background: var(--background-accent);
     display: grid;
     font-size: 1.25rem;
     margin: 0;
-    padding: 0 0.5rem;
+    padding: 1rem 1rem 0.33rem 1rem;
     place-items: start;
 }
 
@@ -68,25 +20,6 @@ nav {
         margin: 0;
         padding: 0;
     }
-
-    nav ul li {
-        list-style: none;
-        padding: 0;
-    }
-
-        nav ul li a,
-        nav ul li .title {
-            color: var(--link-color);
-            display: inline-block;
-            line-height: 2rem;
-            text-align: left;
-            vertical-align: middle;
-        }
-
-        nav ul li a,
-        nav ul li .title {
-            padding: 0.5rem 1rem;
-        }
 
 .logo {
     color: var(--green);
