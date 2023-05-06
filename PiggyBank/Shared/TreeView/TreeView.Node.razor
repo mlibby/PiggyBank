@@ -1,4 +1,4 @@
-﻿@if (Model is object && ChildContent is object)
+﻿@if (Model is object)
 {
     foreach (var node in Model)
     {
@@ -6,24 +6,21 @@
         {
             <li>
                 <details>
-                    <summary>@ChildContent</summary>
+                    <summary>@node.Summary</summary>
                     <ul>
-                        <TreeView_Node ChildContent="ChildContent!" Model="node.Children" />
+                        <TreeView_Node Model="node.Children" />
                     </ul>
                 </details>
             </li>
         }
         else
         {
-            <li>@ChildContent</li>
+            <li>@node.Summary</li>
         }
     }
 }
 
 @code {
     [Parameter]
-    public ICollection<IChildish>? Model { get; set; }
-
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    public ICollection<TreeViewModel>? Model { get; set; }
 }

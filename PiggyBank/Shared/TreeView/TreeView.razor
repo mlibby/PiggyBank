@@ -1,15 +1,12 @@
-﻿@if (ChildContent is object && Model is object)
+﻿@if (Model is object)
 {
     <ul class="tree">
-        <TreeView_Node ChildContent="ChildContent" Model="Model" />
+        <TreeView_Node Model="Model" />
     </ul>
 }
 
 @code {
     [Parameter]
-    public ICollection<IChildish>? Model { get; set; }
-
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    public ICollection<TreeViewModel>? Model { get; set; }
 }
 

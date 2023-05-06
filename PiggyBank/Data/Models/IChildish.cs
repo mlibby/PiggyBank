@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Data.Models;
 
-public interface IChildish
+public interface IChildish<T> where T : ModelBase
 {
-    ICollection<IChildish> Children { get; set; }
+    ICollection<T> Children { get; set; }
 }

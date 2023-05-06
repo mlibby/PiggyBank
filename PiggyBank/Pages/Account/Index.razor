@@ -3,8 +3,10 @@
 *@
 
 @page "/accounts"
+@using Microsoft.AspNetCore.Html;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using PiggyBank.Data.Models
+@using PiggyBank.Shared.TreeView;
 @inject AccountService AccountService
 @inject ImportService ImportService
 
@@ -27,9 +29,7 @@
 }
 else if (_accounts is object)
 {
-    <PiggyBank.Shared.TreeView.TreeView Model="@((ICollection<IChildish>)_accounts)">
-        <span>@AccountName()</span>
-    </PiggyBank.Shared.TreeView.TreeView>
+    <PiggyBank.Shared.TreeView.TreeView Model="@AccountsToTreeViewModel(RootAccounts)" />
 }
 else
 {
@@ -41,6 +41,19 @@ else
     private int _recordCount = 0;
     private int _recordsProcessed = 0;
     private ICollection<Account>? _accounts;
+
+    protected ICollection<Account> RootAccounts
+    {
+        get
+        {
+            if (_accounts is object)
+            {
+                return _accounts.Where(a => a.Parent == null).ToList();
+            }
+
+            return new List<Account>();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -62,5 +75,21 @@ else
 
         _accounts = await AccountService.GetAccountsAsync();
         _importing = false;
+    }
+
+    protected ICollection<TreeViewModel> AccountsToTreeViewModel(ICollection<Account> accounts)
+    {
+        var model = new List<TreeViewModel>();
+        foreach (var account in accounts.OrderBy(a => a.Name))
+        {
+            var tvm = new TreeViewModel(new HtmlString(account.Name));
+            if (account.Children.Count > 0)
+            {
+                tvm.Children = AccountsToTreeViewModel(account.Children);
+            }
+            model.Add(tvm);
+        }
+
+        return model;
     }
 }
