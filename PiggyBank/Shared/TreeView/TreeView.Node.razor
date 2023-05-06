@@ -1,0 +1,29 @@
+﻿@if (Model is object && ChildContent is object)
+{
+    foreach (var node in Model)
+    {
+        if (node.Children.Count > 0)
+        {
+            <li>
+                <details>
+                    <summary>@ChildContent</summary>
+                    <ul>
+                        <TreeView_Node ChildContent="ChildContent!" Model="node.Children" />
+                    </ul>
+                </details>
+            </li>
+        }
+        else
+        {
+            <li>@ChildContent</li>
+        }
+    }
+}
+
+@code {
+    [Parameter]
+    public ICollection<IChildish>? Model { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

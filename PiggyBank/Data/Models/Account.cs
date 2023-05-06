@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Data.Models;
 
-public partial class Account : ModelBase
+public partial class Account : ModelBase, IChildish<Account>
 {
     public string Name { get; set; } = null!;
 
@@ -14,7 +14,7 @@ public partial class Account : ModelBase
 
     public virtual Commodity Commodity { get; set; } = null!;
 
-    public virtual ICollection<Account> Children { get; } = new List<Account>();
+    public virtual ICollection<Account> Children { get; set; } = new List<Account>();
 
     public virtual Account? Parent { get; set; }
 

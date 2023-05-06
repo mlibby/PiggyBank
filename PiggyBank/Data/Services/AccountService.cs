@@ -6,7 +6,7 @@ namespace PiggyBank.Data.Services
 
         public AccountService(PiggyBankContext context) => _context = context;
 
-        public async Task<IEnumerable<Account>> GetAccountsAsync()
+        public async Task<ICollection<Account>> GetAccountsAsync()
         {
             return await _context.Accounts.Include(a => a.Commodity).ToListAsync();
         }

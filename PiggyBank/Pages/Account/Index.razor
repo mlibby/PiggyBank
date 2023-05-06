@@ -27,31 +27,9 @@
 }
 else if (_accounts is object)
 {
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Commodity</th>
-                <th>Description</th>
-                <th>Hidden</th>
-                <th>Locked</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var account in _accounts)
-            {
-                <tr>
-                    <td>@account.Name</td>
-                    <td>@account.Type</td>
-                    <td>@account.Commodity.Mnemonic</td>
-                    <td>@account.Description</td>
-                    <td>@account.IsHidden</td>
-                    <td>@account.IsLocked</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <PiggyBank.Shared.TreeView.TreeView Model="@((ICollection<IChildish>)_accounts)">
+        <span>@AccountName()</span>
+    </PiggyBank.Shared.TreeView.TreeView>
 }
 else
 {
@@ -62,11 +40,16 @@ else
     private bool _importing;
     private int _recordCount = 0;
     private int _recordsProcessed = 0;
-    private IEnumerable<Account>? _accounts;
+    private ICollection<Account>? _accounts;
 
     protected override async Task OnInitializedAsync()
     {
         _accounts = await AccountService.GetAccountsAsync();
+    }
+
+    protected string AccountName(object data)
+    {
+        return ((Account)data).Name;
     }
 
     protected async Task Import()
