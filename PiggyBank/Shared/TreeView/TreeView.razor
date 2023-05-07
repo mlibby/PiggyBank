@@ -1,4 +1,8 @@
-﻿@if (Model is object)
+﻿@*
+    Inspired by https://iamkate.com/code/tree-views/
+*@
+
+@if (Model is object)
 {
     <ul class="tree">
         <TreeView_Node Model="Model" />
