@@ -1,0 +1,79 @@
+﻿@page "/report/income-expense"
+@using Microsoft.AspNetCore.Html;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using PiggyBank.Data.Models
+@using PiggyBank.Shared.TreeView;
+@inject AccountService AccountService
+
+<h1>Income / Expense</h1>
+
+@if (_importing)
+{
+    <p>Table will update after import completes.</p>
+}
+else if (_accounts is object)
+{
+    <PiggyBank.Shared.TreeView.TreeView Model="@AccountsToTreeViewModel(RootAccounts)" />
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private bool _importing;
+    private int _recordCount = 0;
+    private int _recordsProcessed = 0;
+    private ICollection<Account>? _accounts;
+
+    private List<Account.AccountType> _incomeExpenseTypes = new List<Account.AccountType>()
+    {
+        Account.AccountType.Income,
+        Account.AccountType.Expense,
+    };
+
+    protected ICollection<Account> RootAccounts
+    {
+        get
+        {
+            if (_accounts is object)
+            {
+                return _accounts
+                    .Where(a => a.Parent == null && _incomeExpenseTypes.Contains (a.Type))
+                    .ToList();
+            }
+
+            return new List<Account>();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _accounts = await AccountService.GetAccountsWithSplitsAsync();
+    }
+
+    protected string AccountName(object data)
+    {
+        return ((Account)data).Name;
+    }
+
+    protected ICollection<TreeViewModel> AccountsToTreeViewModel(ICollection<Account> accounts)
+    {
+        var model = new List<TreeViewModel>();
+
+        var date = DateTime.UtcNow;
+        var balances = new Balances(accounts, new DateTime(date.Year, 1, 1), date);
+
+        foreach (var account in accounts.OrderBy(a => a.Name))
+        {
+            var tvm = new TreeViewModel(new HtmlString($"{account.Name}: {balances[account.Id]}"));
+            if (account.Children.Count > 0)
+            {
+                tvm.Children = AccountsToTreeViewModel(account.Children);
+            }
+            model.Add(tvm);
+        }
+
+        return model;
+    }
+}
