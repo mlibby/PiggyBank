@@ -2,9 +2,12 @@
 
 <PageTitle>PiggyBank</PageTitle>
 
-<PiggyBank.Shared.NavBar.NavBar/>
-<PiggyBank.Shared.Notifications.Notifications />
-
-<main>
-    @Body
-</main>
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+    <main>
+        <PiggyBank.Shared.Notifications.Notifications />
+        @Body
+    </main>
+</div>

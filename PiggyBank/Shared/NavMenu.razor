@@ -1,0 +1,89 @@
+﻿<div class="title-bar">
+    <a class="logo" href="/" title="Home">
+        <span class="icon-pig"></span>
+        <span class="sr-only">Home</span>
+    </a>
+
+    <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="icon-menu"></span>
+    </button>
+</div>
+
+<nav class="@NavMenuCssClass" aria-label="Site" @onclick="ToggleNavMenu">
+    <h1>Import</h1>
+    <ul>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="/import/gnucash">
+                <span class="icon-download" aria-hidden="true"></span>
+                <span class="sr-only">Import</span>
+                <span class="link-text">GnuCash Data</span>
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="/import/ofx">
+                <span class="icon-upload" aria-hidden="true"></span>
+                <span class="sr-only">Import</span>
+                <span class="link-text">OFX/QFX File</span>
+            </NavLink>
+        </li>
+    </ul>
+    <h1>Reports</h1>
+    <ul>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="/report/budget">
+                <span class="icon-calculator" aria-hidden="true"></span>
+                <span class="link-text">Budget</span>
+                <span class="sr-only">Report</span>
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="/report/income-expense">
+                <span class="icon-calculator" aria-hidden="true"></span>
+                <span class="link-text">Income/Expense</span>
+                <span class="sr-only">Report</span>
+            </NavLink>
+        </li>
+    </ul>
+    <h1>Manage</h1>
+    <ul>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="/accounts">
+                <span class="icon-library" aria-hidden="true"></span>
+                <span class="sr-only">Manage</span>
+                <span class="link-text">Accounts</span>
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="/commodities">
+                <span class="icon-coin-dollar" aria-hidden="true"></span>
+                <span class="sr-only">Manage</span>
+                <span class="link-text">Commodities</span>
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="/transactions">
+                <span class="icon-credit-card" aria-hidden="true"></span>
+                <span class="sr-only">Manage</span>
+                <span class="link-text">Transactions</span>
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="/budget">
+                <span class="icon-pie-chart" aria-hidden="true"></span>
+                <span class="sr-only">Manage</span>
+                <span class="link-text">Budget</span>
+            </NavLink>
+        </li>
+    </ul>
+</nav>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

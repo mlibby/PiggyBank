@@ -1,3 +1,22 @@
 ﻿main {
     padding: 0.5rem 1rem;
 }
+
+.page {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+@media (min-width: 641px) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        /* width: 256px; */
+    }
+}
