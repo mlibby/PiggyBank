@@ -11,7 +11,7 @@ namespace PiggyBank.Data.Services
             return await _context.Accounts.Include(a => a.Commodity).ToListAsync();
         }
 
-        public async Task<ICollection<Account>> GetAccountsWithSplitsAsync()
+        public async Task<ICollection<Account>> GetAccountsIncludeSplitsAsync()
         {
             return await _context.Accounts
                 .Include(a => a.Commodity)

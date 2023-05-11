@@ -18,7 +18,7 @@ public class Balances
     }
     public Decimal this[Guid accountId]
     {
-        get { return _Balances[accountId]; }
+        get { return _Balances.ContainsKey(accountId) ? _Balances[accountId] : 0.0M; }
     }
 
     private void CalculateBalance(Account account)
