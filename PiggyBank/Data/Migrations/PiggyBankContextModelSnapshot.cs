@@ -393,11 +393,8 @@ namespace PiggyBank.Data.Migrations
                         .HasMaxLength(2048)
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("EnterDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("PostDate")
-                        .HasColumnType("datetime");
+                    b.Property<DateOnly>("PostDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 

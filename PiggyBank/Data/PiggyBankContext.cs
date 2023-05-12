@@ -116,8 +116,7 @@ namespace PiggyBank.Data
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
                 entity.Property(e => e.Description).HasMaxLength(2048);
-                entity.Property(e => e.EnterDate).HasColumnType("datetime");
-                entity.Property(e => e.PostDate).HasColumnType("datetime");
+                entity.Property(e => e.PostDate).HasColumnType("date");
 
                 entity.HasOne(d => d.Commodity).WithMany()
                     .HasForeignKey(d => d.CommodityId)

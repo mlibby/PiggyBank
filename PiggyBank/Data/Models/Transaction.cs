@@ -2,9 +2,7 @@
 
 public partial class Transaction : ModelBase
 {
-    public DateTime PostDate { get; set; }
-
-    public DateTime EnterDate { get; set; }
+    public DateOnly PostDate { get; set; }
 
     public string Description { get; set; } = null!;
 

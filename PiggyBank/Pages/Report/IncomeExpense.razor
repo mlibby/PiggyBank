@@ -21,8 +21,8 @@ else
 }
 
 @code {
-    private DateTime _startDate = DateTime.MinValue;
-    private DateTime _endDate = DateTime.MaxValue;
+    private DateOnly _startDate = DateOnly.MinValue;
+    private DateOnly _endDate = DateOnly.MaxValue;
     private bool _importing;
     private int _recordCount = 0;
     private int _recordsProcessed = 0;
@@ -53,8 +53,9 @@ else
     protected override async Task OnInitializedAsync()
     {
         _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
-        _endDate = DateTime.UtcNow;
-        _startDate = new DateTime(_endDate.Year, 1, 1, 0, 0, 0, DateTimeKind.Utc);  
+        var endDate = DateTime.Now;
+        _endDate = DateOnly.FromDateTime(endDate);
+        _startDate = new DateOnly(_endDate.Year, 1, 1);  
         _balances = new Balances(_accounts, _startDate, _endDate);
     }
 
@@ -66,7 +67,6 @@ else
     protected ICollection<TreeViewModel> AccountsToTreeViewModel(ICollection<Account> accounts)
     {
         var model = new List<TreeViewModel>();
-
 
         foreach (var account in accounts.OrderBy(a => a.Name))
         {

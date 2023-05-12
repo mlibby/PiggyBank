@@ -141,14 +141,15 @@ public class ImportService
         });
     }
 
-    private DateTime ConvertDate(string? dateString)
+    private DateOnly ConvertDate(string? dateString)
     {
-        if (string.IsNullOrWhiteSpace(dateString))
+        DateTime date = DateTime.Today;
+        if (!string.IsNullOrWhiteSpace(dateString))
         {
-            return DateTime.UtcNow;
+            date = DateTime.Parse(dateString);
         }
 
-        return DateTime.Parse(dateString);
+        return DateOnly.FromDateTime(date);
     }
 
     /// <summary>
@@ -214,7 +215,6 @@ public class ImportService
     {
         transaction.Id = Guid.Parse(gncTransaction.Guid);
         transaction.Description = gncTransaction.Description ?? "";
-        transaction.EnterDate = ConvertDate(gncTransaction.EnterDate);
         transaction.PostDate = ConvertDate(gncTransaction.PostDate);
         transaction.CommodityId = Guid.Parse(gncTransaction.CurrencyGuid);
 

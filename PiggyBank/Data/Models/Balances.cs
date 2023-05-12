@@ -4,10 +4,16 @@ public class Balances
 {
     private Dictionary<Guid, Decimal> _Balances = new Dictionary<Guid, Decimal>();
 
-    public DateTime StartDate { get; }
-    public DateTime EndDate { get; }
+    public DateOnly StartDate { get; }
+    public DateOnly EndDate { get; }
 
-    public Balances(IEnumerable<Account> accounts, DateTime startDate, DateTime endDate)
+    /// <summary>
+    /// Calculates balances for all accounts in the tree
+    /// </summary>
+    /// <param name="accounts">A tree of accounts, must have one record with a null parent ID to work</param>
+    /// <param name="startDate">the earliest date of transaction to include</param>
+    /// <param name="endDate">the last date of transaction to include</param>
+    public Balances(IEnumerable<Account> accounts, DateOnly startDate, DateOnly endDate)
     {
         StartDate = startDate;
         EndDate = endDate;
