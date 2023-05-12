@@ -35,7 +35,6 @@ else
         Account.AccountType.Expense,
     };
 
-
     protected ICollection<Account> RootAccounts
     {
         get
@@ -55,7 +54,7 @@ else
     {
         _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
         _endDate = DateTime.UtcNow;
-        _startDate = new DateTime(_endDate.Year, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        _startDate = new DateTime(_endDate.Year, 1, 1, 0, 0, 0, DateTimeKind.Utc);  
         _balances = new Balances(_accounts, _startDate, _endDate);
     }
 

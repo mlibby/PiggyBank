@@ -18,18 +18,18 @@
     }
 </p>
 
-<ul>
+<ul aria-live="polite">
     <li>
-        <label for="commodity-progress">Commodities</label>
-        <progress id="commodity-progress" value="@CommodityProgress" />
+        <div id="commodities-label">Commodities</div>
+        <progress value="@CommodityProgress" role="progressbar" aria-labelledby="commodities-label" />
     </li>
     <li>
-        <label for="commodity-progress">Accounts</label>
-        <progress id="commodity-progress" value="@AccountProgress" />
+        <div id="accounts-label">Accounts</div>
+        <progress value="@AccountProgress" role="progressbar" aria-labelledby="accounts-label" />
     </li>
     <li>
-        <label for="commodity-progress">Transactions</label>
-        <progress id="commodity-progress" value="@TransactionProgress" />
+        <div id="transactions-label">Transactions</div>
+        <progress value="@TransactionProgress" role="progressbar" aria-labelledby="transactions-label" />
     </li>
     @if (_complete)
     {

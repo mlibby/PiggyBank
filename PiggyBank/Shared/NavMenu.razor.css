@@ -20,7 +20,8 @@
 
     nav [class^="icon-"], [class*=" icon-"] {
         font-size: 1.33rem;
-        padding: 0.5rem
+        padding: 0.5rem;
+        text-decoration: none;
     }
 
 .logo {
@@ -51,25 +52,20 @@
     .nav-item ::deep a {
         align-items: center;
         border-radius: 4px;
-        color: #d7d7d7;
+        color: var(--color);
         display: flex;
         height: 2rem;
         line-height: 2rem;
-        text-decoration: none;
     }
 
         .nav-item ::deep a.active {
-            background-color: rgba(255,255,255,0.25);
-            color: white;
+            background-color: var(--background-active);
+            color: var(--color-highlight);
         }
 
         .nav-item ::deep a:hover {
-            background-color: rgba(255,255,255,0.1);
-            color: white;
-        }
-
-        .nav-item ::deep a > .link-text {
-            text-decoration: underline;
+            background-color: var(--background-hover);
+            color: var(--color-highlight);
         }
 
 ::deep .nav-link {

@@ -7,9 +7,12 @@
 
 :root {
     --background-accent: #d0d0d0;
+    --background-active: rgba(255,255,255,0.3);
     --background-color: #e8e8e8;
     --background-highlight: #ffffff;
-    --color: #080808;
+    --background-hover: rgba(255,255,255,0.5);
+    --color: #101010;
+    --color-highlight: #000000;
     --green: #378b6d;
     --link-color: #0000ff;
 }
@@ -17,9 +20,12 @@
 @media(prefers-color-scheme: dark) {
     :root {
         --background-accent: #202020;
+        --background-active: rgba(255,255,255,0.1);
         --background-color: #181818;
         --background-highlight: #000000;
+        --background-hover: rgba(255,255,255,0.25);
         --color: #d0d0d0;
+        --color-highlight: #f8f8f8;
         --green: #42a884;
         --link-color: #8080ff;
     }
