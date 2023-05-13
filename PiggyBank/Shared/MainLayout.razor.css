@@ -20,3 +20,9 @@
         /* width: 256px; */
     }
 }
+
+@media print {
+    .sidebar {
+        display: none;
+    }
+}

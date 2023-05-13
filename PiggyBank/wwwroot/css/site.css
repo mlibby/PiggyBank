@@ -32,7 +32,13 @@
 }
 
 html {
-    font-size: 16pt;
+    font-size: 14pt;
+}
+
+@media print {
+    html {
+        font-size: 12pt;
+    }
 }
 
 a, a:visited {
@@ -132,6 +138,24 @@ h6 {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+}
+
+.income-expense .account {
+    display: grid;
+    grid-template-columns: auto max-content;
+    align-items: end;
+}
+
+.income-expense .name {
+    position: relative;
+    overflow: hidden;
+}
+
+.income-expense .spacer::after {
+    position: absolute;
+    padding-left: .25ch;
+    content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";
+    text-align: right;
 }
 
 .tree {

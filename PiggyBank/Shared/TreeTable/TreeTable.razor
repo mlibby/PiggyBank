@@ -1,0 +1,30 @@
+﻿@if (Model is object)
+{
+    <table>
+        <colgroup span="@Model.MaxDepth"></colgroup>
+        <colgroup>
+            @for (var x = 1; x < Model.Columns.Count; x++)
+            {
+                <col />
+            }
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col" colspan="@Model.MaxDepth">@Model.FirstColumn</th>
+                @foreach (var column in Model.Columns)
+                {
+                    <th scope="col" style="text-align: right; padding-right: 0.5rem;">@column</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <TreeTable_Node Model="Model" Nodes="Model.Nodes" />
+        </tbody>
+    </table>
+}
+
+@code {
+    [Parameter]
+    public TreeTableModel? Model { get; set; }
+}
+

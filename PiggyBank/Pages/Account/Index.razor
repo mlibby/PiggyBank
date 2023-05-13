@@ -78,7 +78,7 @@ else
         var model = new List<TreeViewModel>();
         foreach (var account in accounts.OrderBy(a => a.Name))
         {
-            var tvm = new TreeViewModel(new HtmlString(account.Name));
+            var tvm = new TreeViewModel(new MarkupString(account.Name));
             if (account.Children.Count > 0)
             {
                 tvm.Children = AccountsToTreeViewModel(account.Children);

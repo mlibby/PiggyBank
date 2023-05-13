@@ -1,0 +1,21 @@
+﻿table {
+    border-collapse: collapse;
+}
+
+thead th {
+    border-bottom: 1px solid var(--color);
+}
+
+tbody ::deep tr:nth-child(odd) {
+    background-color: var(--background-accent);
+}
+
+::deep th {
+    text-align: left;
+    vertical-align: top;
+}
+
+::deep td {
+    text-align: right;
+    padding-left: 2rem;
+}

@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Html;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using PiggyBank.Data.Models
-@using PiggyBank.Shared.TreeView;
+@using PiggyBank.Shared.TreeTable;
 @inject AccountService AccountService
 
 <h1>Income &amp; Expense Report</h1>
@@ -13,12 +13,14 @@
 }
 else if (_accounts is object && _balances is object)
 {
-    <p>For the period @_startDate to @_endDate</p>
-    <h2>Income</h2>
-    <PiggyBank.Shared.TreeView.TreeView Model="@AccountsToTreeViewModel(Account.AccountType.Income)" />
+    <div class="income-expense">
+        <p>For the period @_startDate to @_endDate</p>
+        <h2>Income</h2>
+        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Income)" />
 
-    <h2>Expense</h2>
-    <PiggyBank.Shared.TreeView.TreeView Model="@AccountsToTreeViewModel(Account.AccountType.Expense)" />
+        <h2 class="pt">Expense</h2>
+        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Expense)" />
+    </div>
 }
 else
 {
@@ -34,17 +36,6 @@ else
     private ICollection<Account>? _accounts;
     private Balances? _balances;
 
-    protected ICollection<Account> ParentAccount(Account.AccountType accountType)
-    {
-        if (_accounts is object)
-        {
-            return _accounts
-                .Where(a => a.Parent == null && a.Type == accountType)
-                .ToList();
-        }
-
-        return new List<Account>();
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -60,36 +51,38 @@ else
         return ((Account)data).Name;
     }
 
-    protected ICollection<TreeViewModel> AccountsToTreeViewModel(Account.AccountType accountType)
+    protected TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
     {
-        ICollection<TreeViewModel> model = new List<TreeViewModel>();
+        var columns = new List<string> { "YTD", "YTD2" };
+        TreeTableModel model = new TreeTableModel("Account", columns);
 
-        if (_accounts is object)
+        if (_accounts is not object) return model;
+
+        var rootAccount = GetRootAccount(accountType);
+        if (rootAccount is object)
         {
-            var accounts = ParentAccount(accountType);
-
-            model = AccountsToTreeViewModel(accounts);
+            AddAccountsToModel(rootAccount, model);
         }
 
         return model;
     }
 
-    protected ICollection<TreeViewModel> AccountsToTreeViewModel(ICollection<Account> accounts)
+    protected void AddAccountsToModel(Account account, TreeTableModel model, TreeTableNodeModel? parent = null)
     {
-        var model = new List<TreeViewModel>();
+        var balance = account.Commodity.DisplayAmount(_balances![account.Id]);
+        var balances = new List<string> { balance, balance };
+        var node = model.CreateNode(account.Name, balances, parent);
 
-        foreach (var account in accounts.OrderBy(a => a.Name))
+        foreach (var childAccount in account.Children.OrderBy(a => a.Name))
         {
-            var balance = account.Commodity.DisplayAmount(_balances![account.Id]);
-            var tvm = new TreeViewModel(new HtmlString($"{account.Name}: {balance}"));
-            if (account.Children.Count > 0)
-            {
-                tvm.Children = AccountsToTreeViewModel(account.Children);
-            }
-
-            model.Add(tvm);
+            AddAccountsToModel(childAccount, model, node);
         }
+    }
 
-        return model;
+    private Account? GetRootAccount(Account.AccountType accountType)
+    {
+        if (_accounts is not object) return null;
+
+        return _accounts.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Html;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace PiggyBank.Shared.TreeView
 {
@@ -6,8 +6,8 @@ namespace PiggyBank.Shared.TreeView
     {
         public ICollection<TreeViewModel> Children { get; set; } = new List<TreeViewModel>();
 
-        public HtmlString Summary { get; set; }
+        public MarkupString Summary { get; set; }
 
-        public TreeViewModel(HtmlString summary) => Summary = summary;
+        public TreeViewModel(MarkupString summary) => Summary = summary;
     }
 }

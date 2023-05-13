@@ -1,0 +1,46 @@
+﻿@if (Model is object && Nodes is object)
+{
+    foreach (var node in Nodes)
+    {
+        <tr>
+            @if (node.Children.Count > 0)
+            {
+                <th scope="rowgroup" rowspan="@(node.CountAllChildren() + 1)">@node.Header</th>
+                @for (var d = Model.MaxDepth; d > Depth; d--)
+                {
+                    <th></th>
+                }
+            }
+            else
+            {
+                <th scope="row">@node.Header</th>
+                @for (var d = Model.MaxDepth; d > Depth; d--)
+                {
+                    <th></th>
+                }
+            }
+            @foreach (var value in node.Values)
+            {
+                <td>@value</td>
+            }
+        </tr>
+
+        if (node.Children.Count > 0)
+        {
+            <TreeTable_Node Model="Model" Nodes="node.Children" Depth="DepthPlusOne" />
+        }
+    }
+}
+
+@code {
+    [Parameter]
+    public TreeTableModel? Model { get; set; }
+
+    [Parameter]
+    public ICollection<TreeTableNodeModel>? Nodes { get; set; }
+
+    [Parameter]
+    public int Depth { get; set; } = 1;
+
+    private int DepthPlusOne { get => Depth + 1; }
+}
