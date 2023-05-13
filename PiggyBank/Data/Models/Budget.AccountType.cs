@@ -2,7 +2,7 @@
 
 public partial class Account
 {
-    public enum BudgetType
+    public enum AccountType
     {
         Asset,
         Equity,

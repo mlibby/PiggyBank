@@ -15,6 +15,9 @@
     --color-highlight: #000000;
     --green: #378b6d;
     --link-color: #0000ff;
+    --warning: #ffff00;
+    --warning-accent: #ffff80;
+    --warning-color: #000000;
 }
 
 @media(prefers-color-scheme: dark) {
@@ -28,6 +31,9 @@
         --color-highlight: #f8f8f8;
         --green: #42a884;
         --link-color: #8080ff;
+        --warning-background: #000000;
+        --warning-accent: #ffff80;
+        --warning-color: #ffff00;
     }
 }
 
@@ -108,25 +114,6 @@ h5 {
 h6 {
     font-size: 1rem;
 }
-
-#blazor-error-ui {
-    background: lightyellow;
-    bottom: 0;
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
-    display: none;
-    left: 0;
-    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-}
-
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
 
 .sr-only {
     position: absolute;
@@ -259,3 +246,23 @@ ul.tree {
     padding-left: 0;
 }
 */
+
+#blazor-error-ui {
+    background: var(--warning-background);
+    border: 2px solid var(--warning-accent);
+    bottom: 0;
+    color: var(--warning-color);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }

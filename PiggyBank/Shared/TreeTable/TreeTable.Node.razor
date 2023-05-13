@@ -6,19 +6,17 @@
             @if (node.Children.Count > 0)
             {
                 <th scope="rowgroup" rowspan="@(node.CountAllChildren() + 1)">@node.Header</th>
-                @for (var d = Model.MaxDepth; d > Depth; d--)
-                {
-                    <th></th>
-                }
             }
             else
             {
                 <th scope="row">@node.Header</th>
-                @for (var d = Model.MaxDepth; d > Depth; d--)
-                {
-                    <th></th>
-                }
             }
+
+            @for (var d = Model.MaxDepth; d > Depth; d--)
+            {
+                <td></td>
+            }
+
             @foreach (var value in node.Values)
             {
                 <td>@value</td>

@@ -28,8 +28,8 @@ namespace PiggyBank.Data
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(e => e.Id);
-
                 entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Description).HasMaxLength(255);
                 entity.Property(e => e.Name).HasMaxLength(255);
                 entity.Property(e => e.Type).HasConversion(
@@ -46,11 +46,32 @@ namespace PiggyBank.Data
                     .HasConstraintName("FK_Accounts_Accounts");
             });
 
+            modelBuilder.Entity<Budget>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Description).HasMaxLength(255);
+                entity.Property(e => e.Name).HasMaxLength(255);
+                entity.Property(e => e.StartDate).HasColumnType("date");
+                entity.Property(e => e.EndDate).HasColumnType("date");
+            });
+
+            modelBuilder.Entity<BudgetAmount>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Type).HasConversion(
+                    v => v.ToString(),
+                    v => (BudgetAmount.AmountType)Enum.Parse(typeof(BudgetAmount.AmountType), v));
+
+            });
+
             modelBuilder.Entity<Commodity>(entity =>
             {
                 entity.HasKey(e => e.Id);
-
                 entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Cusip).HasMaxLength(255);
                 entity.Property(e => e.Mnemonic).HasMaxLength(255);
                 entity.Property(e => e.Name).HasMaxLength(255);
