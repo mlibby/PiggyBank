@@ -31,6 +31,10 @@
     }
 }
 
+html {
+    font-size: 16pt;
+}
+
 a, a:visited {
     color: var(--link-color);
 }
@@ -130,8 +134,21 @@ h6 {
     border-width: 0;
 }
 
+.tree {
+    padding-left: 0;
+}
+
+    .tree li {
+        list-style: none;
+    }
+
+    .tree li, .tree summary {
+        padding-bottom: 0.33rem;
+    }
+
 /* using <summary> and <details> and styles from https://iamkate.com/code/tree-views/ */
 
+/*
 .tree {
     --spacing: 1.5rem;
     --radius: 10px;
@@ -217,3 +234,4 @@ h6 {
 ul.tree {
     padding-left: 0;
 }
+*/

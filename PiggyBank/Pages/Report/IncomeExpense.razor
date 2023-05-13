@@ -5,7 +5,7 @@
 @using PiggyBank.Shared.TreeView;
 @inject AccountService AccountService
 
-<h1>Income / Expense</h1>
+<h1>Income &amp; Expense Report</h1>
 
 @if (_importing)
 {
@@ -13,7 +13,12 @@
 }
 else if (_accounts is object && _balances is object)
 {
-    <PiggyBank.Shared.TreeView.TreeView Model="@AccountsToTreeViewModel(RootAccounts)" />
+    <p>For the period @_startDate to @_endDate</p>
+    <h2>Income</h2>
+    <PiggyBank.Shared.TreeView.TreeView Model="@AccountsToTreeViewModel(Account.AccountType.Income)" />
+
+    <h2>Expense</h2>
+    <PiggyBank.Shared.TreeView.TreeView Model="@AccountsToTreeViewModel(Account.AccountType.Expense)" />
 }
 else
 {
@@ -29,25 +34,16 @@ else
     private ICollection<Account>? _accounts;
     private Balances? _balances;
 
-    private List<Account.AccountType> _incomeExpenseTypes = new List<Account.AccountType>()
+    protected ICollection<Account> ParentAccount(Account.AccountType accountType)
     {
-        Account.AccountType.Income,
-        Account.AccountType.Expense,
-    };
-
-    protected ICollection<Account> RootAccounts
-    {
-        get
+        if (_accounts is object)
         {
-            if (_accounts is object)
-            {
-                return _accounts
-                    .Where(a => a.Parent == null && _incomeExpenseTypes.Contains(a.Type))
-                    .ToList();
-            }
-
-            return new List<Account>();
+            return _accounts
+                .Where(a => a.Parent == null && a.Type == accountType)
+                .ToList();
         }
+
+        return new List<Account>();
     }
 
     protected override async Task OnInitializedAsync()
@@ -55,13 +51,27 @@ else
         _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
         var endDate = DateTime.Now;
         _endDate = DateOnly.FromDateTime(endDate);
-        _startDate = new DateOnly(_endDate.Year, 1, 1);  
+        _startDate = new DateOnly(_endDate.Year, 1, 1);
         _balances = new Balances(_accounts, _startDate, _endDate);
     }
 
     protected string AccountName(object data)
     {
         return ((Account)data).Name;
+    }
+
+    protected ICollection<TreeViewModel> AccountsToTreeViewModel(Account.AccountType accountType)
+    {
+        ICollection<TreeViewModel> model = new List<TreeViewModel>();
+
+        if (_accounts is object)
+        {
+            var accounts = ParentAccount(accountType);
+
+            model = AccountsToTreeViewModel(accounts);
+        }
+
+        return model;
     }
 
     protected ICollection<TreeViewModel> AccountsToTreeViewModel(ICollection<Account> accounts)
