@@ -32,6 +32,7 @@ public class Program
         builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
         builder.Services.AddScoped<AccountService, AccountService>();
+        builder.Services.AddScoped<BudgetService, BudgetService>();
         builder.Services.AddScoped<CommodityService, CommodityService>();
         builder.Services.AddScoped<ImportService, ImportService>();
         builder.Services.AddScoped<NotificationService, NotificationService>();

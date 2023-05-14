@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PiggyBank.Data;
 
@@ -10,9 +11,11 @@ using PiggyBank.Data;
 namespace PiggyBank.Data.Migrations
 {
     [DbContext(typeof(PiggyBankContext))]
-    partial class PiggyBankContextModelSnapshot : ModelSnapshot
+    [Migration("20230514001201_Budgets")]
+    partial class Budgets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0-preview.3.23174.2");

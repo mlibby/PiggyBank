@@ -3,12 +3,11 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using PiggyBank.Data.Models
 @using PiggyBank.Shared.TreeView;
-@inject AccountService AccountService
-@inject ImportService ImportService
+@inject BudgetService BudgetService
 
 <h1>Manage Budgets</h1>
 
-if (_budgets is object)
+@if (_budgets is object)
 {
     <ul>
         <li>budget 1</li>
@@ -20,44 +19,10 @@ else
 }
 
 @code {
-    private IList<Budget>? _accounts;
-
-    protected IList<Account> RootAccounts
-    {
-        get
-        {
-            if (_accounts is object)
-            {
-                return _accounts.Where(a => a.Parent == null).ToList();
-            }
-
-            return new List<Account>();
-        }
-    }
+    private ICollection<Budget>? _budgets;
 
     protected override async Task OnInitializedAsync()
     {
-        _accounts = await AccountService.GetAccountsAsync();
-    }
-
-    protected string AccountName(object data)
-    {
-        return ((Account)data).Name;
-    }
-
-    protected ICollection<TreeViewModel> AccountsToTreeViewModel(ICollection<Account> accounts)
-    {
-        var model = new List<TreeViewModel>();
-        foreach (var account in accounts.OrderBy(a => a.Name))
-        {
-            var tvm = new TreeViewModel(new MarkupString(account.Name));
-            if (account.Children.Count > 0)
-            {
-                tvm.Children = AccountsToTreeViewModel(account.Children);
-            }
-            model.Add(tvm);
-        }
-
-        return model;
+        _budgets = await BudgetService.GetBudgetsAsync();
     }
 }

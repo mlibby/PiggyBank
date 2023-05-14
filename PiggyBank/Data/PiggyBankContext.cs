@@ -11,6 +11,10 @@ namespace PiggyBank.Data
 
         public virtual DbSet<Account> Accounts { get; set; } = null!;
 
+        public virtual DbSet<Budget> Budgets { get; set; } = null!;
+
+        public virtual DbSet<BudgetAmount> BudgetAmounts { get; set; } = null!;
+
         public virtual DbSet<Commodity> Commodities { get; set; } = null!;
 
         public virtual DbSet<Configuration> Configurations { get; set; } = null!;
@@ -61,10 +65,20 @@ namespace PiggyBank.Data
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.AmountDate).HasColumnType("date");
                 entity.Property(e => e.Type).HasConversion(
                     v => v.ToString(),
                     v => (BudgetAmount.AmountType)Enum.Parse(typeof(BudgetAmount.AmountType), v));
 
+                entity.HasOne(d => d.Account).WithMany()
+                   .HasForeignKey(d => d.AccountId)
+                   .OnDelete(DeleteBehavior.Cascade)
+                   .HasConstraintName("FK_BudgetAmount_Account");
+
+                entity.HasOne(d => d.Budget).WithMany(b => b.Amounts)
+                   .HasForeignKey(d => d.BudgetId)
+                   .OnDelete(DeleteBehavior.ClientSetNull)
+                   .HasConstraintName("FK_BudgetAmount_Budget");
             });
 
             modelBuilder.Entity<Commodity>(entity =>

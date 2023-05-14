@@ -11,4 +11,6 @@ public partial class Budget : ModelBase
     public DateOnly EndDate { get; set; }
 
     public bool IsHidden { get; set; } = false;
+
+    public virtual ICollection<BudgetAmount> Amounts { get; } = new List<BudgetAmount>();
 }

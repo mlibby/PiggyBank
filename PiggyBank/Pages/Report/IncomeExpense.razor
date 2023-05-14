@@ -7,11 +7,7 @@
 
 <h1>Income &amp; Expense Report</h1>
 
-@if (_importing)
-{
-    <p>Table will update after import completes.</p>
-}
-else if (_accounts is object && _balances is object)
+if (_accounts is object && _balances is object)
 {
     <div class="income-expense">
         <p>For the period @_startDate to @_endDate</p>
@@ -30,9 +26,6 @@ else
 @code {
     private DateOnly _startDate = DateOnly.MinValue;
     private DateOnly _endDate = DateOnly.MaxValue;
-    private bool _importing;
-    private int _recordCount = 0;
-    private int _recordsProcessed = 0;
     private ICollection<Account>? _accounts;
     private Balances? _balances;
 

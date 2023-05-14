@@ -1,24 +1,14 @@
 namespace PiggyBank.Data.Services
 {
-    public class AccountService
+    public class BudgetService
     {
         private PiggyBankContext _context;
 
-        public AccountService(PiggyBankContext context) => _context = context;
+        public BudgetService(PiggyBankContext context) => _context = context;
 
-        public async Task<ICollection<Account>> GetAccountsAsync()
+        public async Task<ICollection<Budget>> GetBudgetsAsync()
         {
-            return await _context.Accounts.Include(a => a.Commodity).ToListAsync();
-        }
-
-        public async Task<ICollection<Account>> GetAccountsIncludeSplitsAsync()
-        {
-            return await _context.Accounts
-                .Include(a => a.Commodity)
-                .Include(a => a.Children)
-                .Include(a => a.Splits)
-                .ThenInclude(s => s.Transaction)
-                .ToListAsync();
+            return await _context.Budgets.ToListAsync();
         }
     }
 }
