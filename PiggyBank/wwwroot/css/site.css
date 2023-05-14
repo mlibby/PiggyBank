@@ -13,6 +13,7 @@
     --background-hover: rgba(255,255,255,0.5);
     --color: #101010;
     --color-highlight: #000000;
+    --color-label: #303030;
     --green: #378b6d;
     --link-color: #0000ff;
     --warning: #ffff00;
@@ -29,6 +30,7 @@
         --background-hover: rgba(255,255,255,0.25);
         --color: #d0d0d0;
         --color-highlight: #f8f8f8;
+        --color-label: #b0b0b0;
         --green: #42a884;
         --link-color: #8080ff;
         --warning-background: #000000;
@@ -85,6 +87,70 @@ body {
 .collapse {
     display: none;
 }
+
+form {
+    padding-top: 1rem;
+}
+
+    form .buttons {
+        padding-top: 1rem;
+    }
+
+    form input[type=checkbox] {
+        float: left;
+    }
+
+    form .field {
+        padding-bottom: 0.66rem;
+    }
+
+        form .field.checkbox {
+            display: flex;
+        }
+
+            form .field.checkbox label {
+                padding-left: 0.5rem;
+            }
+
+    form label {
+        float: left;
+        width: 100%;
+        top: 0px;
+        color: var(--color-label);
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-align: left;
+        line-height: 1.5;
+    }
+
+        form label.checkbox {
+            float: left;
+            padding: 5px 20px;
+            line-height: 1.7;
+        }
+
+    form input[type=text] {
+        width: 100%;
+        height: 32px;
+        padding: 0px 10px;
+        background-color: rgba(0,0,0,0.03);
+        border: none;
+        display: inline;
+        color: #303030;
+        font-size: 16px;
+        font-weight: 400;
+        float: left;
+        -webkit-box-shadow: inset 1px 1px 0px rgba(0,0,0,0.05), 1px 1px 0px rgba(255,255,255,1);
+        -moz-box-shadow: inset 1px 1px 0px rgba(0,0,0,0.05), 1px 1px 0px rgba(255,255,255,1);
+        box-shadow: inset 1px 1px 0px rgba(0,0,0,0.05), 1px 1px 0px rgba(255,255,255,1);
+    }
+
+input[type=text]:focus,
+input[type=password]:focus {
+    background-color: #f8f8c6;
+    outline: none;
+}
+
 
 h1, h2, h3, h4, h5, h6 {
     padding: 0;

@@ -1,17 +1,35 @@
 ﻿@page "/budgets"
-@using Microsoft.AspNetCore.Html;
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using PiggyBank.Data.Models
-@using PiggyBank.Shared.TreeView;
+
 @inject BudgetService BudgetService
 
 <h1>Manage Budgets</h1>
 
+<div><a class="btn" href="/budget/add"><span class="icon-plus" aria-hidden="true"></span> Add New Budget</a></div>
+
 @if (_budgets is object)
 {
-    <ul>
-        <li>budget 1</li>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Starts</th>
+                <th scope="col">Ends</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var budget in _budgets)
+            {
+                if (budget.IsHidden) continue;
+                <tr>
+                    <th scope="row"><a href="/budget/edit/@budget.Id">@budget.Name</a></th>
+                    <td>@budget.Description</td>
+                    <td>@budget.StartDate</td>
+                    <td>@budget.EndDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {

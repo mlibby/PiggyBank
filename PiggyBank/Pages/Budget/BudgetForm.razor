@@ -1,0 +1,83 @@
+﻿@page "/budget/add"
+@page "/budget/edit/{budgetId:guid}"
+@inject BudgetService BudgetService
+@inject NavigationManager NavigationManager
+
+<h1>@Action Budget</h1>
+
+@if (_budget is object)
+{
+    <EditForm Model="@_budget" OnValidSubmit="SaveBudget">
+        <DataAnnotationsValidator />
+        <div class="field">
+            <label for="name">Name</label>
+            <InputText id="name" @bind-Value="_budget.Name" />
+            <ValidationMessage For="() => _budget.Name" />
+        </div>
+        <div class="field">
+            <label for="description">Description</label>
+            <InputText id="description" @bind-Value="_budget.Description" />
+            <ValidationMessage For="() => _budget.Description" />
+        </div>
+        <div class="field">
+            <label for="start-date">Start Date</label>
+            <InputDate id="start-date" @bind-Value="_budget.StartDate" />
+            <ValidationMessage For="() => _budget.StartDate" />
+        </div>
+        <div class="field">
+            <label for="end-date">End Date</label>
+            <InputDate id="end-date" @bind-Value="_budget.EndDate" />
+            <ValidationMessage For="() => _budget.EndDate" />
+        </div>
+        <div class="field checkbox">
+            <InputCheckbox id="is-hidden" @bind-Value="_budget.IsHidden" />
+            <label for="is-hidden">Is Hidden?</label>
+        </div>
+
+        <div class="buttons">
+            <button class="primary" type="submit">Save</button>
+            <button class="light" @onclick="Cancel">Cancel</button>
+        </div>
+    </EditForm>
+}
+@code {
+    [Parameter]
+    public Guid budgetId { get; set; }
+
+    protected Budget? _budget;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (budgetId == Guid.Empty)
+        {
+            _budget = new Budget()
+                {
+                    Id = Guid.Empty
+                };
+        }
+        else
+        {
+            _budget = await BudgetService.GetBudgetAsync(budgetId);
+        }
+    }
+
+    protected string Action
+    {
+        get
+        {
+            return budgetId == Guid.Empty ? "Add" : "Edit";
+        }
+    }
+
+    protected async Task SaveBudget()
+    {
+        if (_budget is not object) return;
+        await BudgetService.Save(_budget);
+        Cancel();
+    }
+
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo("/budgets");
+    }
+}
