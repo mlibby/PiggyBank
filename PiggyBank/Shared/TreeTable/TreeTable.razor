@@ -10,13 +10,25 @@
         </colgroup>
         <thead>
             <tr>
-                <th scope="col" colspan="@Model.MaxDepth">@Model.FirstColumn</th>
+                <th id="@(Model.Name.ToLower())-@(Model.FirstColumn.ToLower())" scope="col" colspan="@Model.MaxDepth">@Model.FirstColumn</th>
                 @foreach (var column in Model.Columns)
                 {
-                    <th scope="col" style="text-align: right; padding-right: 0.5rem;">@column</th>
+                    <th id="@(Model.Name.ToLower())-@(column.ToLower())" scope="col" style="text-align: right;">@column</th>
                 }
             </tr>
         </thead>
+        @if (Model.Footer is object)
+        {
+            <tfoot>
+                <tr>
+                    <th headers="@(Model.Name.ToLower())-@(Model.FirstColumn.ToLower())" colspan="@Model.MaxDepth">@Model.Footer</th>
+                    @for (var columnIndex = 0; columnIndex < Model.FooterValues.Count; columnIndex++)
+                    {
+                        <td headers="@(Model.Name.ToLower())-@(Model.Columns[columnIndex].ToLower())">@Model.FooterValues[columnIndex]</td>
+                    }
+                </tr>
+            </tfoot>
+        }
         <tbody>
             <TreeTable_Node Model="Model" Nodes="Model.Nodes" />
         </tbody>

@@ -2,8 +2,19 @@
     border-collapse: collapse;
 }
 
+tfoot {
+    display: table-row-group;
+    border-bottom-style: double;
+}
+
+tfoot th, tfoot td {
+    padding: 0.2rem 0;
+}
+
 thead th {
-    border-bottom: 1px solid var(--color);
+    background: var(--color-label);
+    color: var(--background-color);
+    padding: 0.2rem;
 }
 
 tbody ::deep tr:nth-child(odd) {

@@ -1,3 +1,3 @@
-﻿.pt {
-    padding-top: 2rem;
+﻿::deep h2 {
+    padding: 1rem 0;
 }

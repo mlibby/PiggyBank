@@ -5,6 +5,11 @@ public class TreeTableModel
     public List<string> Columns { get; }
     public string FirstColumn { get; } = string.Empty;
 
+    public string Footer { get; set; } = null!;
+    public List<string> FooterValues { get; set; } = new List<string>();
+
+    public string Name { get; } = string.Empty;
+
     private int? _maxDepth = null;
     public int MaxDepth
     {
@@ -21,8 +26,9 @@ public class TreeTableModel
 
     public ObservableCollection<TreeTableNodeModel> Nodes { get; } = new ObservableCollection<TreeTableNodeModel>();
 
-    public TreeTableModel(string firstColumn, List<string> columns)
+    public TreeTableModel(string name, string firstColumn, List<string> columns)
     {
+        Name = name;
         FirstColumn = firstColumn;
         Columns = columns;
         Nodes.CollectionChanged += Nodes_CollectionChanged;
@@ -51,17 +57,19 @@ public class TreeTableModel
         return node;
     }
 
-    private int CalculateMaxDepth(ObservableCollection<TreeTableNodeModel>? nodes, int maxDepth = 0)
+    private int CalculateMaxDepth(ObservableCollection<TreeTableNodeModel>? nodes, int depth = 1)
     {
+        var maxDepth = depth;
+
         nodes = nodes ?? Nodes;
         foreach (var node in nodes)
         {
             if (node.Children.Count > 0)
             {
-                var depth = CalculateMaxDepth(node.Children, maxDepth + 1);
-                if (depth > maxDepth)
+                var childMaxDepth = CalculateMaxDepth(node.Children, depth + 1);
+                if (childMaxDepth > maxDepth)
                 {
-                    maxDepth = depth;
+                    maxDepth = childMaxDepth;
                 }
             }
         }

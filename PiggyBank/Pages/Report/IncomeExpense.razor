@@ -4,14 +4,15 @@
 
 <h1>Income &amp; Expense Report</h1>
 
-if (_accounts is object && _balances is object)
+@if (_accounts is object && _balances is object)
 {
     <div class="income-expense">
         <p>For the period @_startDate to @_endDate</p>
+
         <h2>Income</h2>
         <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Income)" />
 
-        <h2 class="pt">Expense</h2>
+        <h2>Expense</h2>
         <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Expense)" />
     </div>
 }
@@ -25,7 +26,6 @@ else
     private DateOnly _endDate = DateOnly.MaxValue;
     private ICollection<Account>? _accounts;
     private Balances? _balances;
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,14 +44,22 @@ else
     protected TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
     {
         var columns = new List<string> { "YTD", "YTD2" };
-        TreeTableModel model = new TreeTableModel("Account", columns);
+        TreeTableModel model = new TreeTableModel(accountType.ToString(), "Account", columns);
 
         if (_accounts is not object) return model;
 
         var rootAccount = GetRootAccount(accountType);
         if (rootAccount is object)
         {
-            AddAccountsToModel(rootAccount, model);
+            foreach (var account in rootAccount.Children)
+            {
+                AddAccountsToModel(account, model);
+            }
+
+            model.Footer = "Total Income";
+            var balance = rootAccount.Commodity.DisplayAmount(_balances![rootAccount.Id]);
+            model.FooterValues.Add(balance);
+            model.FooterValues.Add(balance);
         }
 
         return model;
