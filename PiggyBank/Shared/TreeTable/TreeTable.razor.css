@@ -1,32 +1,4 @@
-﻿table {
-    border-collapse: collapse;
-}
-
-tfoot {
-    display: table-row-group;
-    border-bottom-style: double;
-}
-
-tfoot th, tfoot td {
-    padding: 0.2rem 0;
-}
-
-thead th {
-    background: var(--color-label);
-    color: var(--background-color);
-    padding: 0.2rem;
-}
-
-tbody ::deep tr:nth-child(odd) {
-    background-color: var(--background-accent);
-}
-
-::deep th {
-    text-align: left;
-    vertical-align: top;
-}
-
-::deep td {
+﻿::deep td {
     text-align: right;
     padding-left: 2rem;
 }

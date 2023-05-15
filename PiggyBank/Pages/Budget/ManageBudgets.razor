@@ -4,11 +4,14 @@
 
 <h1>Manage Budgets</h1>
 
-<div><a class="btn" href="/budget/add"><span class="icon-plus" aria-hidden="true"></span> Add New Budget</a></div>
+<p>A budget is a collection of budget amounts. Each budget amount is tied to a given period (month or year) and account.</p>
+
+<p><a class="btn btn-primary" href="/budget/add"><span class="icon-plus" aria-hidden="true"></span> Add New Budget</a></p>
 
 @if (_budgets is object)
 {
     <table>
+        <caption>Budgets</caption>
         <thead>
             <tr>
                 <th scope="col">Name</th>

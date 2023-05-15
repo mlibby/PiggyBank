@@ -64,7 +64,27 @@ body {
     margin: 0;
 }
 
-.btn-secondary {
+.btn {
+    background: var(--background-accent);
+    border: 2px solid;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+
+    .btn:hover {
+        background: var(--background-hover);
+    }
+
+.btn-primary,
+a.btn-primary,
+a.btn-primary:visited {
+    color: var(--green);
+}
+
+/*.btn-secondary {
     background-color: #879096;
     border-color: #879096;
 }
@@ -83,7 +103,7 @@ body {
         background-color: #42a884;
         border-color: #42a884;
     }
-
+*/
 .collapse {
     display: none;
 }
@@ -159,6 +179,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 2rem;
+    padding-bottom: 0.5rem;
 }
 
 h2 {
@@ -181,6 +202,12 @@ h6 {
     font-size: 1rem;
 }
 
+p {
+    box-sizing: border-box;
+    margin: 0.5rem 0;
+    padding: 0;
+}
+
 .sr-only {
     position: absolute;
     width: 1px;
@@ -193,22 +220,43 @@ h6 {
     border-width: 0;
 }
 
-.income-expense .account {
-    display: grid;
-    grid-template-columns: auto max-content;
-    align-items: end;
+table {
+    border-collapse: collapse;
+    display: block;
+    margin-top: 1rem;
 }
 
-.income-expense .name {
-    position: relative;
-    overflow: hidden;
+    table caption {
+        font-size: 1.25rem;
+        padding-bottom: 0.33rem;
+        text-align: left;
+    }
+
+tbody tr:nth-child(odd) {
+    background-color: var(--background-accent);
 }
 
-.income-expense .spacer::after {
-    position: absolute;
-    padding-left: .25ch;
-    content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";
-    text-align: right;
+td, th {
+    padding: 0.5rem;
+}
+
+tfoot {
+    display: table-row-group;
+    border-bottom-style: double;
+}
+
+    tfoot th, tfoot td {
+        padding: 0.2rem 0;
+    }
+
+thead th {
+    background: var(--color-label);
+    color: var(--background-color);
+}
+
+th {
+    text-align: left;
+    vertical-align: top;
 }
 
 .tree {
