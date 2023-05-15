@@ -64,23 +64,25 @@ body {
     margin: 0;
 }
 
-.btn {
+.btn, button {
     background: var(--background-accent);
     border: 2px solid;
     border-radius: 0.5rem;
+    color: var(--color);
     cursor: pointer;
     display: inline-block;
     padding: 0.5rem 1rem;
     text-decoration: none;
 }
 
-    .btn:hover {
+    .btn:hover, button:hover {
         background: var(--background-hover);
     }
 
 .btn-primary,
 a.btn-primary,
-a.btn-primary:visited {
+a.btn-primary:visited,
+button.primary {
     color: var(--green);
 }
 
@@ -104,16 +106,18 @@ a.btn-primary:visited {
         border-color: #42a884;
     }
 */
+
 .collapse {
     display: none;
 }
 
 form {
     padding-top: 1rem;
+    padding-bottom: 2rem;
 }
 
     form .buttons {
-        padding-top: 1rem;
+        padding-top: 0.5rem;
     }
 
     form input[type=checkbox] {
@@ -182,20 +186,24 @@ h1 {
     padding-bottom: 0.5rem;
 }
 
-h2 {
-    font-size: 1.75rem;
+h2, h3, h4, h5, h6 {
+    padding-top: 1rem;
 }
 
-h3 {
+h2 {
     font-size: 1.5rem;
 }
 
-h4 {
+h3 {
     font-size: 1.25rem;
 }
 
-h5 {
+h4 {
     font-size: 1.1rem;
+}
+
+h5 {
+    font-size: 1rem;
 }
 
 h6 {
@@ -244,10 +252,6 @@ tfoot {
     display: table-row-group;
     border-bottom-style: double;
 }
-
-    tfoot th, tfoot td {
-        padding: 0.2rem 0;
-    }
 
 thead th {
     background: var(--color-label);

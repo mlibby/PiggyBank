@@ -1,5 +1,7 @@
 ﻿/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
+/* some changes made for PiggyBank */
+
 /* Document
    ========================================================================== */
 
@@ -227,7 +229,8 @@ button,
  */
 
 fieldset {
-    padding: 0.35em 0.75em 0.625em;
+    padding: 0.35em 0.75em 0.5em;
+    margin-bottom: 1rem;
 }
 
 /**
@@ -242,7 +245,7 @@ legend {
     color: inherit; /* 2 */
     display: table; /* 1 */
     max-width: 100%; /* 1 */
-    padding: 0; /* 3 */
+    padding: 0 0.5rem; /* 3 */
     white-space: normal; /* 1 */
 }
 

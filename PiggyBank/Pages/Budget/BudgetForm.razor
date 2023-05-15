@@ -38,7 +38,46 @@
             <button class="primary" type="submit">Save</button>
             <button class="light" @onclick="Cancel">Cancel</button>
         </div>
+
     </EditForm>
+
+    @if (_budget.Amounts.Count == 0)
+    {
+        <h2>Add Budget Amounts</h2>
+        <form>
+            <fieldset>
+                <legend>Default Period</legend>
+                <InputRadioGroup @bind-Value="_defaultPeriod">
+                    <label>
+                        <InputRadio Value="DefaultPeriod.Monthly" />
+                        &nbsp;Monthly
+                    </label>
+                    <label>
+                        <InputRadio Value="DefaultPeriod.Annual" />
+                        &nbsp;Annual
+                    </label>
+                </InputRadioGroup>
+            </fieldset>
+            <fieldset>
+                <legend>Use Data From</legend>
+                <div class="field">
+                    <label for="amount-start-date">Start Date</label>
+                    <InputDate id="amount-start-date" @bind-Value="_amountStartDate" />
+                </div>
+                <div class="field">
+                    <label for="amount-end-date">End Date</label>
+                    <InputDate id="amount-end-date" @bind-Value="_amountEndDate" />
+                </div>
+            </fieldset>
+            <div class="buttons">
+                <button class="primary" @onclick="AddBudgetAmounts">Add Budget Amounts</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <p><a href="/budget/amounts/@_budget.Id">Manage Budget Amounts</a></p>
+    }
 }
 @code {
     [Parameter]
@@ -46,13 +85,23 @@
 
     protected Budget? _budget;
 
+    protected DateOnly _amountStartDate = DateOnly.MinValue;
+    protected DateOnly _amountEndDate = DateOnly.MaxValue;
+
+    protected enum DefaultPeriod { Monthly, Annual };
+    protected DefaultPeriod _defaultPeriod = DefaultPeriod.Monthly;
+
     protected override async Task OnInitializedAsync()
     {
         if (budgetId == Guid.Empty)
         {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            var nextYear = today.Year + 1;
             _budget = new Budget()
                 {
-                    Id = Guid.Empty
+                    Id = Guid.Empty,
+                    StartDate = new DateOnly(nextYear, 1, 1),
+                    EndDate = new DateOnly(nextYear, 12, 31),
                 };
         }
         else
@@ -67,6 +116,11 @@
         {
             return budgetId == Guid.Empty ? "Add" : "Edit";
         }
+    }
+
+    protected void AddBudgetAmounts()
+    {
+
     }
 
     protected async Task SaveBudget()
