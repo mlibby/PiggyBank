@@ -24,8 +24,11 @@ else
 @code {
     private DateOnly _startDate = DateOnly.MinValue;
     private DateOnly _endDate = DateOnly.MaxValue;
+    private string _priorYear = null!;
+    private DateOnly _priorYearStart = DateOnly.MinValue;
+    private DateOnly _priorYearEnd = DateOnly.MaxValue;
     private ICollection<Account>? _accounts;
-    private Balances? _balances;
+    private Dictionary<string, Balances>? _balances;
 
     protected override async Task OnInitializedAsync()
     {
@@ -33,7 +36,19 @@ else
         var endDate = DateTime.Now;
         _endDate = DateOnly.FromDateTime(endDate);
         _startDate = new DateOnly(_endDate.Year, 1, 1);
-        _balances = new Balances(_accounts, _startDate, _endDate);
+        var ytdBalances = new Balances(_accounts, _startDate, _endDate);
+
+        var priorYear = _endDate.Year - 1;
+        _priorYear = priorYear.ToString();
+        _priorYearStart = new DateOnly(priorYear, 1, 1);
+        _priorYearEnd = new DateOnly(priorYear, 12, 31);
+        var priorBalances = new Balances(_accounts, _priorYearStart, _priorYearEnd);
+
+        _balances = new Dictionary<string, Balances>
+        {
+            { "YTD", ytdBalances },
+            { _priorYear, priorBalances }
+        };
     }
 
     protected string AccountName(object data)
@@ -43,7 +58,7 @@ else
 
     protected TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
     {
-        var columns = new List<string> { "YTD", "YTD2" };
+        var columns = new List<string> { "YTD", _priorYear };
         TreeTableModel model = new TreeTableModel(accountType.ToString(), "Account", columns);
 
         if (_accounts is not object) return model;
@@ -56,10 +71,9 @@ else
                 AddAccountsToModel(account, model);
             }
 
-            model.Footer = "Total Income";
-            var balance = rootAccount.Commodity.DisplayAmount(_balances![rootAccount.Id]);
-            model.FooterValues.Add(balance);
-            model.FooterValues.Add(balance);
+            model.Footer = $"Total {rootAccount.Name}";
+            model.FooterValues.Add(rootAccount.Commodity.DisplayAmount(_balances!["YTD"][rootAccount.Id]));
+            model.FooterValues.Add(rootAccount.Commodity.DisplayAmount(_balances![_priorYear][rootAccount.Id]));
         }
 
         return model;
@@ -67,8 +81,10 @@ else
 
     protected void AddAccountsToModel(Account account, TreeTableModel model, TreeTableNodeModel? parent = null)
     {
-        var balance = account.Commodity.DisplayAmount(_balances![account.Id]);
-        var balances = new List<string> { balance, balance };
+        var balances = new List<string> {
+            account.Commodity.DisplayAmount(_balances!["YTD"][account.Id]),
+            account.Commodity.DisplayAmount(_balances![_priorYear][account.Id])
+        };
         var node = model.CreateNode(account.Name, balances, parent);
 
         foreach (var childAccount in account.Children.OrderBy(a => a.Name))

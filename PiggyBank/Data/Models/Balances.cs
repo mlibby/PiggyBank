@@ -29,9 +29,13 @@ public class Balances
 
     private void CalculateBalance(Account account)
     {
-        var balance = account.Splits
-            .Where(s => s.Transaction.PostDate >= StartDate && s.Transaction.PostDate <= EndDate)
-            .Sum(s => s.Value);
+        var splits = account.Splits
+            .Where(s =>
+                s.Transaction.PostDate >= StartDate &&
+                s.Transaction.PostDate <= EndDate &&
+                !s.Transaction.Description.ToLower().StartsWith("close books"))
+            .ToList();
+        var balance = splits.Sum(s => s.Value);
 
         if (account.Type == Account.AccountType.Income)
         {
