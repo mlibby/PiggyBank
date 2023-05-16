@@ -116,8 +116,6 @@ public class ImportService
             var processedCount = 0;
             foreach (var gncTransaction in gncTransactions)
             {
-
-
                 Transaction? transaction = await _piggyBankContext.Transactions
                     .Include(t => t.Splits)
                     .SingleOrDefaultAsync(t => t.Id == Guid.Parse(gncTransaction.Guid));

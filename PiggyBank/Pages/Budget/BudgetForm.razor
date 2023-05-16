@@ -33,12 +33,10 @@
             <InputCheckbox id="is-hidden" @bind-Value="_budget.IsHidden" />
             <label for="is-hidden">Is Hidden?</label>
         </div>
-
         <div class="buttons">
             <button class="primary" type="submit">Save</button>
             <button class="light" @onclick="Cancel">Cancel</button>
         </div>
-
     </EditForm>
 
     @if (_budget.Amounts.Count == 0)

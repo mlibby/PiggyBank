@@ -66,7 +66,7 @@ else
         var rootAccount = GetRootAccount(accountType);
         if (rootAccount is object)
         {
-            foreach (var account in rootAccount.Children)
+            foreach (var account in rootAccount.Children.OrderBy(c => c.Name))
             {
                 AddAccountsToModel(account, model);
             }

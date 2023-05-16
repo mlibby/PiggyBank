@@ -231,7 +231,6 @@ p {
 table {
     border-collapse: collapse;
     display: block;
-    margin-top: 1rem;
 }
 
     table caption {
