@@ -30,5 +30,13 @@ namespace PiggyBank.Data.Services
 
             return await _context.SaveChangesAsync();
         }
+
+        public async Task CalculateAmounts(Budget budget, BudgetAmount.Configuration config, AccountService accountService)
+        {
+            var allAccounts = await accountService.GetAccountsAsync();
+            var accounts = allAccounts.Where(a => config.AccountTypes.Contains(a.Type));
+
+
+        }
     }
 }

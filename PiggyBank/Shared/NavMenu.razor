@@ -1,12 +1,12 @@
 ﻿<nav>
     <div class="title-bar">
         <a class="logo" href="/" title="Home">
-            <span class="icon-pig"></span>
+            <svg class="icon icon-pig"><use xlink:href="#icon-pig"></use></svg>
             <span class="link-text">PiggyBank</span>
         </a>
 
         <button title="toggle site navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="icon-menu"></span>
+            <svg class="icon icon-menu"><use xlink:href="#icon-menu"></use></svg>
         </button>
     </div>
 
@@ -17,7 +17,6 @@
                 <ul>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/import/gnucash">
-                            <span class="icon-download" aria-hidden="true"></span>
                             <span class="link-text">
                                 <span class="sr-only">Import </span>
                                 GnuCash Data
@@ -26,7 +25,6 @@
                     </li>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/import/ofx">
-                            <span class="icon-upload" aria-hidden="true"></span>
                             <span class="link-text">
                                 <span class="sr-only">Import </span>
                                 OFX/QFX File
@@ -40,7 +38,6 @@
                 <ul>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/report/budget">
-                            <span class="icon-calculator" aria-hidden="true"></span>
                             <span class="link-text">
                                 Budget
                                 <span class="sr-only"> Report</span>
@@ -49,7 +46,6 @@
                     </li>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/report/income-expense">
-                            <span class="icon-calculator" aria-hidden="true"></span>
                             <span class="link-text">
                                 Income &amp; Expense
                                 <span class="sr-only"> Report</span>
@@ -63,7 +59,6 @@
                 <ul>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/accounts">
-                            <span class="icon-library" aria-hidden="true"></span>
                             <span class="link-text">
                                 <span class="sr-only">Manage </span>
                                 Accounts
@@ -72,7 +67,6 @@
                     </li>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/commodities">
-                            <span class="icon-coin-dollar" aria-hidden="true"></span>
                             <span class="link-text">
                                 <span class="sr-only">Manage </span>
                                 Commodities
@@ -81,7 +75,6 @@
                     </li>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/transactions">
-                            <span class="icon-credit-card" aria-hidden="true"></span>
                             <span class="link-text">
                                 <span class="sr-only">Manage </span>
                                 Transactions
@@ -90,7 +83,6 @@
                     </li>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/budgets">
-                            <span class="icon-pie-chart" aria-hidden="true"></span>
                             <span class="link-text">
                                 <span class="sr-only">Manage </span>
                                 Budgets

@@ -27,7 +27,6 @@
     <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\Read Me.txt" />
     <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\selection.json" />
     <_ContentIncludedByDefault Remove="wwwroot\css\fonts\icomoon\style.css" />
-    <_ContentIncludedByDefault Remove="wwwroot\css\icomoon.css" />
   </ItemGroup>
 
   <ItemGroup>

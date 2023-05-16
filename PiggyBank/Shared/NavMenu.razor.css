@@ -18,9 +18,7 @@
         padding: 0;
     }
 
-    nav [class^="icon-"], [class*=" icon-"] {
-        font-size: 1.33rem;
-        padding: 0.5rem;
+    nav .icon {
         text-decoration: none;
     }
 
@@ -38,8 +36,16 @@
     padding-top: 0.1rem;
     text-decoration: none;
 }
+
+    .logo .icon {
+        color: var(--green);
+        fill: var(--green);
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
     .logo .link-text {
-        margin-left: -1rem;
+        margin-left: -0.5rem;
     }
 
 .title {
@@ -80,7 +86,7 @@
         }
 
 ::deep .nav-link {
-    padding-right: 0.5rem;
+    padding: 0 0.5rem;
     text-decoration: none;
 }
 

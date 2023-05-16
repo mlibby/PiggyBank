@@ -1,9 +1,10 @@
-﻿@font-face {
+﻿/*@font-face {
     font-family: 'Fira Mono';
-    src: url('fonts/FiraMono-Medium.ttf') format('truetype'), url('fonts/FiraMono-Medium.woff') format('woff');
+    src: url('fonts/FiraMono-Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
 }
+*/
 
 :root {
     --background-accent: #d0d0d0;
@@ -54,7 +55,7 @@ a, a:visited {
 }
 
 body, input, button, select, optgroup, textarea {
-    font-family: "Fira Mono" !important;
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 }
 
 body {
@@ -79,12 +80,12 @@ body {
         background: var(--background-hover);
     }
 
-.btn-primary,
-a.btn-primary,
-a.btn-primary:visited,
-button.primary {
-    color: var(--green);
-}
+    .btn-primary,
+    a.btn-primary,
+    a.btn-primary:visited,
+    button.primary {
+        color: var(--green);
+    }
 
 /*.btn-secondary {
     background-color: #879096;
@@ -118,10 +119,6 @@ form {
 
     form .buttons {
         padding-top: 0.5rem;
-    }
-
-    form input[type=checkbox] {
-        float: left;
     }
 
     form .field {
@@ -208,6 +205,16 @@ h5 {
 
 h6 {
     font-size: 1rem;
+}
+
+.icon {
+    display: inline-block;
+    fill: var(--color);
+    height: 1em;
+    stroke: var(--color);
+    stroke-width: 0;
+    vertical-align: top;
+    width: 1em;
 }
 
 p {

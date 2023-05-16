@@ -1,5 +1,6 @@
 ﻿@page "/budget/add"
 @page "/budget/edit/{budgetId:guid}"
+@inject AccountService AccountService
 @inject BudgetService BudgetService
 @inject NavigationManager NavigationManager
 
@@ -39,7 +40,12 @@
         </div>
     </EditForm>
 
-    @if (_budget.Amounts.Count == 0)
+
+    @if (_addingAmounts)
+    {
+        <p>Adding amounts.</p>
+    }
+    else if (_budget.Amounts.Count == 0)
     {
         <h2>Add Budget Amounts</h2>
         <form>
@@ -47,12 +53,12 @@
                 <legend>Default Period</legend>
                 <InputRadioGroup @bind-Value="_defaultPeriod">
                     <label>
-                        <InputRadio Value="DefaultPeriod.Monthly" />
-                        &nbsp;Monthly
+                        <InputRadio Value="BudgetAmount.AmountType.Monthly" />
+                        Monthly
                     </label>
                     <label>
-                        <InputRadio Value="DefaultPeriod.Annual" />
-                        &nbsp;Annual
+                        <InputRadio Value="BudgetAmount.AmountType.Annual" disabled="true" />
+                        Annual
                     </label>
                 </InputRadioGroup>
             </fieldset>
@@ -66,6 +72,25 @@
                     <label for="amount-end-date">End Date</label>
                     <InputDate id="amount-end-date" @bind-Value="_amountEndDate" />
                 </div>
+            </fieldset>
+            <fieldset>
+                <legend>Account Types to Include</legend>
+                <label>
+                    <InputCheckbox @bind-Value="_includeAsset" />
+                    Asset
+                </label>
+                <label>
+                    <InputCheckbox @bind-Value="_includeExpense" />
+                    Expense
+                </label>
+                <label>
+                    <InputCheckbox @bind-Value="_includeIncome" />
+                    Income
+                </label>
+                <label>
+                    <InputCheckbox @bind-Value="_includeLiability" />
+                    Liability
+                </label>
             </fieldset>
             <div class="buttons">
                 <button class="primary" @onclick="AddBudgetAmounts">Add Budget Amounts</button>
@@ -83,17 +108,25 @@
 
     protected Budget? _budget;
 
+    protected bool _addingAmounts = false;
+    protected BudgetAmount.AmountType _defaultPeriod = BudgetAmount.AmountType.Monthly;
+
     protected DateOnly _amountStartDate = DateOnly.MinValue;
     protected DateOnly _amountEndDate = DateOnly.MaxValue;
 
-    protected enum DefaultPeriod { Monthly, Annual };
-    protected DefaultPeriod _defaultPeriod = DefaultPeriod.Monthly;
+    protected bool _includeAsset = false;
+    protected bool _includeExpense = true;
+    protected bool _includeIncome = true;
+    protected bool _includeLiability = false;
 
     protected override async Task OnInitializedAsync()
     {
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        _amountStartDate = new DateOnly(today.Year - 1, 1, 1);
+        _amountEndDate = new DateOnly(today.Year, 12, 31);
+
         if (budgetId == Guid.Empty)
         {
-            var today = DateOnly.FromDateTime(DateTime.Today);
             var nextYear = today.Year + 1;
             _budget = new Budget()
                 {
@@ -116,9 +149,48 @@
         }
     }
 
-    protected void AddBudgetAmounts()
+    protected async Task AddBudgetAmounts()
     {
+        if (_budget is not object) return;
+        if (_addingAmounts) return;
+        _addingAmounts = true;
 
+        var config = GetAmountConfig();
+        await BudgetService.CalculateAmounts(_budget, config, AccountService);
+
+        _addingAmounts = false;
+    }
+
+    private BudgetAmount.Configuration GetAmountConfig()
+    {
+        var config = new BudgetAmount.Configuration
+            {
+                DefaultPeriod = _defaultPeriod,
+                StartDate = _amountStartDate,
+                EndDate = _amountEndDate
+            };
+
+        if (_includeAsset)
+        {
+            config.AccountTypes.Add(Account.AccountType.Asset);
+        }
+
+        if (_includeExpense)
+        {
+            config.AccountTypes.Add(Account.AccountType.Expense);
+        }
+
+        if (_includeIncome)
+        {
+            config.AccountTypes.Add(Account.AccountType.Income);
+        }
+
+        if (_includeLiability)
+        {
+            config.AccountTypes.Add(Account.AccountType.Liability);
+        }
+
+        return config;
     }
 
     protected async Task SaveBudget()
