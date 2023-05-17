@@ -8,7 +8,7 @@ public class TreeTableModel
     public string Footer { get; set; } = null!;
     public List<string> FooterValues { get; set; } = new List<string>();
 
-    public string Name { get; } = string.Empty;
+    public string Title { get; } = string.Empty;
 
     private int? _maxDepth = null;
     public int MaxDepth
@@ -26,9 +26,9 @@ public class TreeTableModel
 
     public ObservableCollection<TreeTableNodeModel> Nodes { get; } = new ObservableCollection<TreeTableNodeModel>();
 
-    public TreeTableModel(string name, string firstColumn, List<string> columns)
+    public TreeTableModel(string title, string firstColumn, List<string> columns)
     {
-        Name = name;
+        Title = title;
         FirstColumn = firstColumn;
         Columns = columns;
         Nodes.CollectionChanged += Nodes_CollectionChanged;

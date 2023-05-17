@@ -1,12 +1,4 @@
-﻿/*@font-face {
-    font-family: 'Fira Mono';
-    src: url('fonts/FiraMono-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-}
-*/
-
-:root {
+﻿:root {
     --background-accent: #d0d0d0;
     --background-active: rgba(255,255,255,0.3);
     --background-color: #e8e8e8;
@@ -87,27 +79,6 @@ body {
         color: var(--green);
     }
 
-/*.btn-secondary {
-    background-color: #879096;
-    border-color: #879096;
-}
-
-    .btn-secondary:hover {
-        background-color: #697178;
-        border-color: #697178;
-    }
-
-.btn-success {
-    background-color: #05a172;
-    border-color: #05a172;
-}
-
-    .btn-success:hover {
-        background-color: #42a884;
-        border-color: #42a884;
-    }
-*/
-
 .collapse {
     display: none;
 }
@@ -172,38 +143,33 @@ input[type=password]:focus {
     outline: none;
 }
 
-
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
     padding: 0;
     margin: 0;
 }
 
-h1 {
+h1, .h1 {
     font-size: 2rem;
-    padding-bottom: 0.5rem;
 }
 
-h2, h3, h4, h5, h6 {
-    padding-top: 1rem;
-}
-
-h2 {
+h2, .h2 {
     font-size: 1.5rem;
 }
 
-h3 {
+h3, .h3 {
     font-size: 1.25rem;
 }
 
-h4 {
+h4, .h4 {
     font-size: 1.1rem;
 }
 
-h5 {
+h5, .h5 {
     font-size: 1rem;
 }
 
-h6 {
+h6, .h6 {
     font-size: 1rem;
 }
 
@@ -224,15 +190,15 @@ p {
 }
 
 .sr-only {
-    position: absolute;
-    width: 1px;
+    border-width: 0;
+    clip: rect(0, 0, 0, 0);
     height: 1px;
-    padding: 0;
     margin: -1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
+    padding: 0;
+    position: absolute;
     white-space: nowrap;
-    border-width: 0;
+    width: 1px;
 }
 
 table {
@@ -255,8 +221,8 @@ td, th {
 }
 
 tfoot {
-    display: table-row-group;
     border-bottom-style: double;
+    display: table-row-group;
 }
 
 thead th {
@@ -280,96 +246,6 @@ th {
     .tree li, .tree summary {
         padding-bottom: 0.33rem;
     }
-
-/* using <summary> and <details> and styles from https://iamkate.com/code/tree-views/ */
-
-/*
-.tree {
-    --spacing: 1.5rem;
-    --radius: 10px;
-}
-
-    .tree li {
-        display: block;
-        position: relative;
-        padding-left: calc(2 * var(--spacing) - var(--radius) - 2px);
-    }
-
-        .tree li.hidden-account {
-            display: none;
-        }
-
-    .tree ul {
-        margin-left: calc(var(--radius) - var(--spacing));
-        padding-left: 0;
-    }
-
-        .tree ul li {
-            border-left: 2px solid #ddd;
-        }
-
-            .tree ul li:last-child {
-                border-color: transparent;
-            }
-
-            .tree ul li::before {
-                content: '';
-                display: block;
-                position: absolute;
-                top: calc(var(--spacing) / -2);
-                left: -2px;
-                width: calc(var(--spacing) + 2px);
-                height: calc(var(--spacing) + 1px);
-                border: solid #ddd;
-                border-width: 0 0 2px 2px;
-            }
-
-    .tree summary {
-        display: block;
-        cursor: pointer;
-    }
-
-        .tree summary::marker {
-            display: none;
-        }
-
-        .tree summary:focus {
-            outline: none;
-        }
-
-        .tree summary:focus-visible {
-            outline: 1px dotted var(--background-highlight);
-        }
-
-        .tree li::after,
-        .tree summary::before {
-            content: '';
-            display: block;
-            position: absolute;
-            top: calc(var(--spacing) / 2 - var(--radius));
-            left: calc(var(--spacing) - var(--radius) - 1px);
-            width: calc(2 * var(--radius));
-            height: calc(2 * var(--radius));
-            border-radius: 50%;
-            background: #ddd;
-        }
-
-        .tree summary::before {
-            content: '+';
-            background: #696;
-            color: #fff;
-            line-height: calc(2 * var(--radius) - 2px);
-            text-align: center;
-        }
-
-    .tree details[open] > summary::before {
-        content: '−';
-    }
-
-ul.tree {
-    padding-left: 0;
-}
-*/
 
 #blazor-error-ui {
     background: var(--warning-background);

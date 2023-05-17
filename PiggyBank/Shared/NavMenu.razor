@@ -10,10 +10,10 @@
         </button>
     </div>
 
-    <div class="@NavMenuCssClass" aria-label="Site" @onclick="ToggleNavMenu">
+    <div class="@NavMenuCssClass menu-wrapper" aria-label="Site" @onclick="ToggleNavMenu">
         <ul>
             <li>
-                <h2>Import</h2>
+                <div class="h2">Import</div>
                 <ul>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/import/gnucash">
@@ -34,7 +34,7 @@
                 </ul>
             </li>
             <li>
-                <h2>Reports</h2>
+                <div class="h2">Reports</div>
                 <ul>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/report/budget">
@@ -55,7 +55,7 @@
                 </ul>
             </li>
             <li>
-                <h2>Manage</h2>
+                <div class="h2">Manage</div>
                 <ul>
                     <li class="nav-item">
                         <NavLink class="nav-link" href="/accounts">

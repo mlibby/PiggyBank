@@ -1,3 +1,6 @@
+using PiggyBank.Data.Import.GnuCash;
+using PiggyBank.Data.Import.GnuCash.Models;
+
 namespace PiggyBank.Data.Services;
 
 public class ImportService

@@ -3,13 +3,13 @@
     font-size: 1.25rem;
     height: 100%;
     margin: 0;
-    padding: 0.5rem 0.5rem 0.5rem 1rem;
-    place-items: start;
+    padding: 0.5rem 1rem 0 0.5rem;
 }
 
-    nav ::deep h2 {
+    nav ::deep .h2 {
         padding: 0.5rem 0 0.5rem;
         font-size: 1.25rem;
+        font-weight: bold;
     }
 
     nav ::deep ul {
@@ -32,7 +32,6 @@
 .logo {
     color: var(--green);
     font-size: 1.75rem;
-    margin-left: -0.5rem;
     padding-top: 0.1rem;
     text-decoration: none;
 }
@@ -47,6 +46,10 @@
     .logo .link-text {
         margin-left: -0.5rem;
     }
+
+.menu-wrapper {
+    margin-left: 0.5rem;
+}
 
 .title {
     background-color: transparent;

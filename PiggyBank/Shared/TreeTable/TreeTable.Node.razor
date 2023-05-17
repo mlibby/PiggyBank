@@ -6,7 +6,7 @@
             @if (node.Children.Count > 0)
             {
                 var rowspan = node.CountAllChildren() + 1;
-                <th headers="@(Model.Name.ToLower())-@(Model.FirstColumn.ToLower())" scope="rowgroup" rowspan="@rowspan">@node.Header</th>
+                <th headers="@(Model.Title.ToLower())-@(Model.FirstColumn.ToLower())" scope="rowgroup" rowspan="@rowspan">@node.Header</th>
             }
             else
             {
@@ -20,7 +20,7 @@
 
             @for (var columnIndex = 0; columnIndex < node.Values.Count; columnIndex++)
             {
-                <td headers="@(Model.Name.ToLower())-@(Model.Columns[columnIndex].ToLower())">@node.Values[columnIndex]</td>
+                <td headers="@(Model.Title.ToLower())-@(Model.Columns[columnIndex].ToLower())">@node.Values[columnIndex]</td>
             }
         </tr>
 

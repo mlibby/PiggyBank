@@ -1,6 +1,7 @@
 ﻿@if (Model is object)
 {
     <table>
+        <caption><h2>@Model.Title</h2></caption>
         <colgroup span="@Model.MaxDepth"></colgroup>
         <colgroup>
             @for (var x = 1; x < Model.Columns.Count; x++)
@@ -10,10 +11,10 @@
         </colgroup>
         <thead>
             <tr>
-                <th id="@(Model.Name.ToLower())-@(Model.FirstColumn.ToLower())" scope="col" colspan="@Model.MaxDepth">@Model.FirstColumn</th>
+                <th id="@(Model.Title.ToLower())-@(Model.FirstColumn.ToLower())" scope="col" colspan="@Model.MaxDepth">@Model.FirstColumn</th>
                 @foreach (var column in Model.Columns)
                 {
-                    <th id="@(Model.Name.ToLower())-@(column.ToLower())" scope="col" style="text-align: right;">@column</th>
+                    <th id="@(Model.Title.ToLower())-@(column.ToLower())" scope="col" style="text-align: right;">@column</th>
                 }
             </tr>
         </thead>
@@ -21,10 +22,10 @@
         {
             <tfoot>
                 <tr>
-                    <th headers="@(Model.Name.ToLower())-@(Model.FirstColumn.ToLower())" colspan="@Model.MaxDepth">@Model.Footer</th>
+                    <th headers="@(Model.Title.ToLower())-@(Model.FirstColumn.ToLower())" colspan="@Model.MaxDepth">@Model.Footer</th>
                     @for (var columnIndex = 0; columnIndex < Model.FooterValues.Count; columnIndex++)
                     {
-                        <td headers="@(Model.Name.ToLower())-@(Model.Columns[columnIndex].ToLower())">@Model.FooterValues[columnIndex]</td>
+                        <td headers="@(Model.Title.ToLower())-@(Model.Columns[columnIndex].ToLower())">@Model.FooterValues[columnIndex]</td>
                     }
                 </tr>
             </tfoot>

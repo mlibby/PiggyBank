@@ -7,12 +7,9 @@
 @if (_accounts is object && _balances is object)
 {
     <div class="income-expense">
-        <p>For the period @_startDate to @_endDate</p>
+        <h2>Report Date: @_endDate</h2>
 
-        <h2>Income</h2>
         <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Income)" />
-
-        <h2>Expense</h2>
         <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Expense)" />
     </div>
 }
@@ -59,7 +56,8 @@ else
     protected TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
     {
         var columns = new List<string> { "YTD", _priorYear };
-        TreeTableModel model = new TreeTableModel(accountType.ToString(), "Account", columns);
+        var tableTitle = $"{accountType.ToString()} Totals for Year to Date and {_priorYear}"; 
+        TreeTableModel model = new TreeTableModel(tableTitle, "Account", columns);
 
         if (_accounts is not object) return model;
 
