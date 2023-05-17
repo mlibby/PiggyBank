@@ -30,6 +30,7 @@
 }
 
 .logo {
+    border-radius: 4px;
     color: var(--green);
     font-size: 1.75rem;
     padding-top: 0.1rem;
@@ -83,7 +84,8 @@
             color: var(--color-highlight);
         }
 
-        .nav-item ::deep a:hover {
+        .nav-item ::deep a:hover,
+        a.logo:hover {
             background-color: var(--background-hover);
             color: var(--color-highlight);
         }
