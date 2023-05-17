@@ -5,13 +5,20 @@
     padding: 1rem;
 }
 
+    ::deep .icon.logo {
+        width: 2rem;
+        height: 2rem;
+        margin-top: -0.25rem;
+    }
+
     .message .close-button {
         float: right;
+        margin: -0.5rem 0 0 0;
     }
 
     .message .icon {
-        font-size: 2rem;
-        padding-right: 1rem;
+        font-size: 1rem;
+        padding-right: 0;
         vertical-align: middle;
     }
 

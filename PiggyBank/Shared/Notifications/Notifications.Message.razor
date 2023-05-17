@@ -9,11 +9,11 @@ Inspired by https://github.com/radzenhq/radzen-blazor/blob/master/Radzen.Blazor/
 @if (Message is object)
 {
     <div aria-live="polite" class="message @(MessageClass())">
-        <span class="icon @(IconClass())"></span>
+        @(new MarkupString($"<svg class='icon logo #{IconClass()}'><use xlink:href='#{IconClass()}'/></svg>"))
         <span class="sr-only">@(Message.Severity)</span>
         <span class="text">@Message.Message</span>
         <button class="close-button" @onclick="Close">
-            <span class="icon-close"></span>
+            <svg class="icon icon-close"><use xlink:href="#icon-close"></use></svg>
             <span class="sr-only">Close</span>
         </button>
     </div>
