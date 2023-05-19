@@ -2,7 +2,7 @@ namespace PiggyBank.Data.Services
 {
     public class BudgetService
     {
-        private PiggyBankContext _context;
+        private readonly PiggyBankContext _context;
 
         public BudgetService(PiggyBankContext context) => _context = context;
 
@@ -36,7 +36,23 @@ namespace PiggyBank.Data.Services
             var allAccounts = await accountService.GetAccountsAsync();
             var accounts = allAccounts.Where(a => config.AccountTypes.Contains(a.Type));
 
-
+            var amountBalances = new Balances(accounts, config.StartDate, config.EndDate);
+            var periodCount = DateHelper.CalculatePeriods(config.StartDate, config.EndDate).Count;
+            var budgetPeriods = DateHelper.CalculatePeriods(budget.StartDate, budget.EndDate);
+            BudgetAmount.AmountType amountType = config.DefaultPeriod == DateHelper.PeriodType.Monthly ? BudgetAmount.AmountType.Monthly : BudgetAmount.AmountType.Annual;
+            foreach (var account in accounts)
+            {
+                foreach (var period in budgetPeriods)
+                {
+                    budget.Amounts.Add(new BudgetAmount
+                    {
+                        Account = account,
+                        AmountDate = period,
+                        Type = amountType,
+                        Value = amountBalances[account.Id] / periodCount * (int)amountType
+                    }); ; ;
+                }
+            }
         }
     }
 }

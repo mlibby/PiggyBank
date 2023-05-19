@@ -4,7 +4,7 @@
     {
         public class Configuration
         {
-            public BudgetAmount.AmountType DefaultPeriod { get; set; }
+            public DateHelper.PeriodType DefaultPeriod { get; set; }
 
             public DateOnly StartDate { get; set; } = DateOnly.MinValue;
             public DateOnly EndDate { get; set; } = DateOnly.MaxValue;

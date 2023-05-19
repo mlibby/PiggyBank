@@ -1,0 +1,9 @@
+﻿<div class="message error">
+    @(new MarkupString($"<svg class='icon logo icon-sad-face'><use xlink:href='#icon-sad-face'/></svg>"))
+    <h1 class="message-text">Not Found: @Message</h1>
+</div>
+
+@code {
+    [Parameter]
+    public string Message { get; set; } = "Could not locate resource";
+}

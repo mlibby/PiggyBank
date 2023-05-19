@@ -2,7 +2,7 @@
 
 public class Balances
 {
-    private Dictionary<Guid, Decimal> _Balances = new Dictionary<Guid, Decimal>();
+    private readonly Dictionary<Guid, Decimal> _Balances = new();
 
     public DateOnly StartDate { get; }
     public DateOnly EndDate { get; }
@@ -24,7 +24,8 @@ public class Balances
     }
     public Decimal this[Guid accountId]
     {
-        get { return _Balances.ContainsKey(accountId) ? _Balances[accountId] : 0.0M; }
+        get => _Balances.ContainsKey(accountId) ? _Balances[accountId] : 0.0M;
+        set => _Balances[accountId] = value;
     }
 
     private void CalculateBalance(Account account)

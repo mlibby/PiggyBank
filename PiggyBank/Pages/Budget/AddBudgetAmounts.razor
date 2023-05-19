@@ -1,0 +1,211 @@
+﻿@page "/budget/{budgetId}/amounts/add"
+@inject AccountService AccountService
+@inject BudgetService BudgetService
+@inject NavigationManager NavigationManager
+
+@if (_found && _budget is object)
+{
+    <h1>Add Budget Amounts to @_budget.Name</h1>
+
+    <EditForm EditContext="_editContext" OnValidSubmit="SaveBudget">
+        <DataAnnotationsValidator />
+        <ValidationSummary role="alert" aria-label="budget form errors" />
+
+        <fieldset>
+            <legend>Default Period</legend>
+            <InputRadioGroup @bind-Value="_model.DefaultPeriod">
+                <label class="form-control">
+                    <InputRadio Value="DateHelper.PeriodType.Monthly" />
+                    Monthly
+                </label>
+                <label class="form-control">
+                    <InputRadio Value="DateHelper.PeriodType.Annual" />
+                    Annual
+                </label>
+            </InputRadioGroup>
+        </fieldset>
+        <fieldset>
+            <legend>Use Data From</legend>
+            <div class="field">
+                <label for="amount-start-date">Start Date</label>
+                <InputDate id="amount-start-date" @bind-Value="_model.StartDate" />
+            </div>
+            <div class="field">
+                <label for="amount-end-date">End Date</label>
+                <InputDate id="amount-end-date" @bind-Value="_model.EndDate" />
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Account Types to Include</legend>
+            <label>
+                <InputCheckbox @bind-Value="_model.IncludeAsset" />
+                Asset
+            </label>
+            <label>
+                <InputCheckbox @bind-Value="_model.IncludeExpense" />
+                Expense
+            </label>
+            <label>
+                <InputCheckbox @bind-Value="_model.IncludeIncome" />
+                Income
+            </label>
+            <label>
+                <InputCheckbox @bind-Value="_model.IncludeLiability" />
+                Liability
+            </label>
+        </fieldset>
+
+        <div class="buttons">
+            <button class="primary" type="submit">Save</button>
+            <button class="light" @onclick="Cancel">Cancel</button>
+        </div>
+    </EditForm>
+}
+else if (_found)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <NotFound Message="@_notFoundMessage" />
+}
+
+@code {
+    [Parameter]
+    public string budgetId { get; set; } = null!;
+
+    private bool _found = true;
+    private string _notFoundMessage = "Budget not found";
+
+    private Budget? _budget;
+    private FormModel _model = new();
+    private EditContext? _editContext;
+    private ValidationMessageStore? _validationMessageStore;
+
+    private bool _addingAmounts = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        _model.StartDate = new DateOnly(today.Year - 1, 1, 1);
+        _model.EndDate = new DateOnly(today.Year, 12, 31);
+
+        var budgetGuid = Guid.Empty;
+        if (string.IsNullOrWhiteSpace(budgetId) || !Guid.TryParse(budgetId, out budgetGuid))
+        {
+            _notFoundMessage = $"Invalid budget ID: {budgetId}";
+            _found = false;
+            return;
+        }
+
+        _budget = await BudgetService.GetBudgetAsync(budgetGuid);
+        if (_budget is not object)
+        {
+            _notFoundMessage = $"Budget ID '{budgetGuid}' not found";
+            _found = false;
+            return;
+        }
+
+        _editContext = new EditContext(_model);
+        _validationMessageStore = new ValidationMessageStore(_editContext);
+        _editContext!.OnValidationRequested += HandleValidationRequested;
+    }
+
+    //private async Task AddBudgetAmounts()
+    //{
+    //    if (_budget is not object) return;
+    //    if (_addingAmounts) return;
+    //    _addingAmounts = true;
+
+    //    var config = GetAmountConfig();
+    //    await BudgetService.CalculateAmounts(_budget, config, AccountService);
+
+    //    _addingAmounts = false;
+    //}
+
+    private BudgetAmount.Configuration GetAmountConfig()
+    {
+        var config = new BudgetAmount.Configuration
+            {
+                DefaultPeriod = _model.DefaultPeriod,
+                StartDate = _model.StartDate,
+                EndDate = _model.EndDate
+            };
+
+        if (_model.IncludeAsset)
+        {
+            config.AccountTypes.Add(Account.AccountType.Asset);
+        }
+
+        if (_model.IncludeExpense)
+        {
+            config.AccountTypes.Add(Account.AccountType.Expense);
+        }
+
+        if (_model.IncludeIncome)
+        {
+            config.AccountTypes.Add(Account.AccountType.Income);
+        }
+
+        if (_model.IncludeLiability)
+        {
+            config.AccountTypes.Add(Account.AccountType.Liability);
+        }
+
+        return config;
+    }
+
+    private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
+    {
+        if (_budget is not object) return;
+        if (_validationMessageStore is not object) return;
+
+        _validationMessageStore.Clear();
+
+        if (_model.StartDate.Day != 1)
+        {
+            _validationMessageStore.Add(() => _model.StartDate, "Start date must be the first day of the month");
+        }
+
+        var endMonthDays = DateTime.DaysInMonth(_model.EndDate.Year, _model.EndDate.Month);
+        if (_model.EndDate.Day != endMonthDays)
+        {
+            _validationMessageStore.Add(() => _model.EndDate, "End date must be on the last day of the month");
+        }
+    }
+
+    private async Task SaveBudget()
+    {
+        if (_budget is not object) return;
+        await BudgetService.Save(_budget);
+        // Cancel();
+    }
+
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo("/budgets");
+    }
+
+    private class FormModel
+    {
+        public DateHelper.PeriodType DefaultPeriod { get; set; } = DateHelper.PeriodType.Monthly;
+
+        public DateOnly StartDate { get; set; } = DateOnly.MinValue;
+        public DateOnly EndDate { get; set; } = DateOnly.MaxValue;
+
+        public bool IncludeAsset { get; set; } = false;
+        public bool IncludeExpense { get; set; } = true;
+        public bool IncludeIncome { get; set; } = true;
+        public bool IncludeLiability { get; set; } = false;
+
+        [Required]
+        [Range(typeof(bool), "true", "true", ErrorMessage = "At least one account type is required.")]
+        public bool AccountSelected
+        {
+            get
+            {
+                return IncludeAsset || IncludeExpense || IncludeIncome || IncludeLiability;
+            }
+        }
+    }
+}

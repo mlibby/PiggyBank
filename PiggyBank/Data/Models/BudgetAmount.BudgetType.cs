@@ -4,8 +4,8 @@ public partial class BudgetAmount
 {
     public enum AmountType
     {
-        Annual,
-        Monthly,
+        Monthly = 1,
+        Annual = 12,
     }
 }
 

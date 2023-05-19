@@ -4,20 +4,26 @@
 @inject BudgetService BudgetService
 @inject NavigationManager NavigationManager
 
-<h1>@Action Budget</h1>
-
-@if (_budget is object)
+@if (!_found)
 {
-    <EditForm Model="@_budget" OnValidSubmit="SaveBudget">
+    <NotFound Message="@_notFoundMessage" />
+}
+else if (_budget is object)
+{
+    <h1>@Action Budget</h1>
+
+    <EditForm EditContext="_editContext" OnValidSubmit="SaveBudget">
         <DataAnnotationsValidator />
+        <ValidationSummary role="alert" aria-label="budget form errors" />
+
         <div class="field">
             <label for="name">Name</label>
-            <InputText id="name" @bind-Value="_budget.Name" />
+            <InputText id="name" @bind-Value="_budget.Name" required aria-required="true" />
             <ValidationMessage For="() => _budget.Name" />
         </div>
         <div class="field">
             <label for="description">Description</label>
-            <InputText id="description" @bind-Value="_budget.Description" />
+            <InputText id="description" @bind-Value="_budget.Description" required aria-required="true" />
             <ValidationMessage For="() => _budget.Description" />
         </div>
         <div class="field">
@@ -35,95 +41,45 @@
             <label for="is-hidden">Is Hidden?</label>
         </div>
         <div class="buttons">
+            @if (_budget.Amounts.Count == 0)
+            {
+                <button class="primary" @onclick="SaveAndAddAmounts">Save, then Add Buget Amounts</button>
+            }
             <button class="primary" type="submit">Save</button>
             <button class="light" @onclick="Cancel">Cancel</button>
         </div>
     </EditForm>
 
-
-    @if (_addingAmounts)
+    @if (_budget.Id != Guid.Empty)
     {
-        <p>Adding amounts.</p>
-    }
-    else if (_budget.Amounts.Count == 0)
-    {
-        <h2>Add Budget Amounts</h2>
-        <form>
-            <fieldset>
-                <legend>Default Period</legend>
-                <InputRadioGroup @bind-Value="_defaultPeriod">
-                    <label>
-                        <InputRadio Value="BudgetAmount.AmountType.Monthly" />
-                        Monthly
-                    </label>
-                    <label>
-                        <InputRadio Value="BudgetAmount.AmountType.Annual" disabled="true" />
-                        Annual
-                    </label>
-                </InputRadioGroup>
-            </fieldset>
-            <fieldset>
-                <legend>Use Data From</legend>
-                <div class="field">
-                    <label for="amount-start-date">Start Date</label>
-                    <InputDate id="amount-start-date" @bind-Value="_amountStartDate" />
-                </div>
-                <div class="field">
-                    <label for="amount-end-date">End Date</label>
-                    <InputDate id="amount-end-date" @bind-Value="_amountEndDate" />
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Account Types to Include</legend>
-                <label>
-                    <InputCheckbox @bind-Value="_includeAsset" />
-                    Asset
-                </label>
-                <label>
-                    <InputCheckbox @bind-Value="_includeExpense" />
-                    Expense
-                </label>
-                <label>
-                    <InputCheckbox @bind-Value="_includeIncome" />
-                    Income
-                </label>
-                <label>
-                    <InputCheckbox @bind-Value="_includeLiability" />
-                    Liability
-                </label>
-            </fieldset>
-            <div class="buttons">
-                <button class="primary" @onclick="AddBudgetAmounts">Add Budget Amounts</button>
-            </div>
-        </form>
-    }
-    else
-    {
-        <p><a href="/budget/amounts/@_budget.Id">Manage Budget Amounts</a></p>
+        if (_budget.Amounts.Count == 0)
+        {
+            <p><a href="/budget/@_budget.Id/amounts/add">Add Budget Amounts</a></p>
+        }
+        else
+        {
+            <p><a href="/budget/@_budget.Id/amounts">Manage Budget Amounts</a></p>
+        }
     }
 }
+else
+{
+    <p>Loading...</p>
+}
+
 @code {
     [Parameter]
     public Guid budgetId { get; set; }
 
-    protected Budget? _budget;
+    private bool _found = true;
+    private string _notFoundMessage = "";
+    private Budget? _budget;
+    private EditContext? _editContext;
+    private ValidationMessageStore? _validationMessageStore;
 
-    protected bool _addingAmounts = false;
-    protected BudgetAmount.AmountType _defaultPeriod = BudgetAmount.AmountType.Monthly;
-
-    protected DateOnly _amountStartDate = DateOnly.MinValue;
-    protected DateOnly _amountEndDate = DateOnly.MaxValue;
-
-    protected bool _includeAsset = false;
-    protected bool _includeExpense = true;
-    protected bool _includeIncome = true;
-    protected bool _includeLiability = false;
-
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         var today = DateOnly.FromDateTime(DateTime.Today);
-        _amountStartDate = new DateOnly(today.Year - 1, 1, 1);
-        _amountEndDate = new DateOnly(today.Year, 12, 31);
 
         if (budgetId == Guid.Empty)
         {
@@ -139,9 +95,20 @@
         {
             _budget = await BudgetService.GetBudgetAsync(budgetId);
         }
+
+        if (_budget is not object)
+        {
+            _notFoundMessage = $"Budget with ID '{budgetId}' was not found";
+            _found = false;
+            return;
+        }
+
+        _editContext = new EditContext(_budget);
+        _validationMessageStore = new ValidationMessageStore(_editContext);
+        _editContext!.OnValidationRequested += HandleValidationRequested;
     }
 
-    protected string Action
+    private string Action
     {
         get
         {
@@ -149,51 +116,33 @@
         }
     }
 
-    protected async Task AddBudgetAmounts()
+    private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
     {
         if (_budget is not object) return;
-        if (_addingAmounts) return;
-        _addingAmounts = true;
+        if (_validationMessageStore is not object) return;
 
-        var config = GetAmountConfig();
-        await BudgetService.CalculateAmounts(_budget, config, AccountService);
+        _validationMessageStore.Clear();
 
-        _addingAmounts = false;
+        if (_budget.StartDate.Day != 1)
+        {
+            _validationMessageStore.Add(() => _budget.StartDate, "Budget should start on the first day of the month");
+        }
+
+        var endMonthDays = DateTime.DaysInMonth(_budget.EndDate.Year, _budget.EndDate.Month);
+        if (_budget.EndDate.Day != endMonthDays)
+        {
+            _validationMessageStore.Add(() => _budget.EndDate, "Budget should end on the last day of the month");
+        }
     }
 
-    private BudgetAmount.Configuration GetAmountConfig()
+    private async Task SaveAndAddAmounts()
     {
-        var config = new BudgetAmount.Configuration
-            {
-                DefaultPeriod = _defaultPeriod,
-                StartDate = _amountStartDate,
-                EndDate = _amountEndDate
-            };
-
-        if (_includeAsset)
-        {
-            config.AccountTypes.Add(Account.AccountType.Asset);
-        }
-
-        if (_includeExpense)
-        {
-            config.AccountTypes.Add(Account.AccountType.Expense);
-        }
-
-        if (_includeIncome)
-        {
-            config.AccountTypes.Add(Account.AccountType.Income);
-        }
-
-        if (_includeLiability)
-        {
-            config.AccountTypes.Add(Account.AccountType.Liability);
-        }
-
-        return config;
+        if (_budget is not object) return;
+        await BudgetService.Save(_budget);
+        NavigationManager.NavigateTo($"/budget/{_budget.Id}/amounts/add");
     }
 
-    protected async Task SaveBudget()
+    private async Task SaveBudget()
     {
         if (_budget is not object) return;
         await BudgetService.Save(_budget);

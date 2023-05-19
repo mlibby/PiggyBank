@@ -72,11 +72,18 @@ body {
         background: var(--background-hover);
     }
 
+    .btn:focus, button:focus {
+        background: var(--background-active);
+    }
+
     .btn-primary,
-    a.btn-primary,
-    a.btn-primary:visited,
-    button.primary {
+    .btn-primary .icon,
+    .btn-primary:visited,
+    button.primary,
+    button.primary .icon {
         color: var(--green);
+        fill: var(--green);
+        stroke: var(--green);
     }
 
 .collapse {
@@ -104,6 +111,25 @@ form {
                 padding-left: 0.5rem;
             }
 
+    form input {
+        background: var(--color);
+    }
+
+        form input[type=radio]:checked {
+            color: var(--color);
+        }
+
+        form input[type=text] {
+            width: 100%;
+            height: 2rem;
+            padding: 0px 0.66rem;
+            border: none;
+            display: inline;
+            font-size: 1rem;
+            font-weight: 400;
+            float: left;
+        }
+
     form label {
         float: left;
         width: 100%;
@@ -112,36 +138,14 @@ form {
         font-size: 0.9rem;
         font-weight: 700;
         text-align: left;
-        line-height: 1.5;
+        line-height: 1.5rem;
     }
 
         form label.checkbox {
             float: left;
-            padding: 5px 20px;
-            line-height: 1.7;
+            padding: 0.25rem 2rem;
+            line-height: 1.66rem;
         }
-
-    form input[type=text] {
-        width: 100%;
-        height: 32px;
-        padding: 0px 10px;
-        background-color: rgba(0,0,0,0.03);
-        border: none;
-        display: inline;
-        color: #303030;
-        font-size: 16px;
-        font-weight: 400;
-        float: left;
-        -webkit-box-shadow: inset 1px 1px 0px rgba(0,0,0,0.05), 1px 1px 0px rgba(255,255,255,1);
-        -moz-box-shadow: inset 1px 1px 0px rgba(0,0,0,0.05), 1px 1px 0px rgba(255,255,255,1);
-        box-shadow: inset 1px 1px 0px rgba(0,0,0,0.05), 1px 1px 0px rgba(255,255,255,1);
-    }
-
-input[type=text]:focus,
-input[type=password]:focus {
-    background-color: #f8f8c6;
-    outline: none;
-}
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -175,13 +179,62 @@ h6, .h6 {
 
 .icon {
     display: inline-block;
-    fill: var(--color);
     height: 1em;
-    stroke: var(--color);
     stroke-width: 0;
     vertical-align: top;
     width: 1em;
 }
+
+.message {
+    border: 2px solid;
+    border-radius: 1rem;
+    display: flex;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+    .message .icon.logo {
+        width: 2rem;
+        height: 2rem;
+        padding-right: 1rem;
+    }
+
+    .message .close-button {
+        float: right;
+        margin: -0.5rem 0 0 0;
+    }
+
+    .message .message-text {
+        color: var(--color);
+    }
+
+    .message.error {
+        border-color: red;
+        color: red;
+        fill: red;
+        stroke: red;
+    }
+
+    .message.info {
+        border-color: blue;
+        color: blue;
+        fill: blue;
+        stroke: blue;
+    }
+
+    .message.success {
+        border-color: var(--green);
+        color: var(--green);
+        fill: var(--green);
+        stroke: var(--green);
+    }
+
+    .message.warning {
+        border-color: yellow;
+        color: yellow;
+        fill: yellow;
+        stroke: yellow;
+    }
 
 p {
     box-sizing: border-box;
