@@ -95,7 +95,7 @@ else
 
 @code {
     [Parameter]
-    public string budgetId { get; set; } = null!;
+    public Guid budgetId { get; set; } 
 
     private bool _found = true;
     private string _notFoundMessage = "Budget not found";
@@ -113,18 +113,10 @@ else
         _model.StartDate = new DateOnly(today.Year - 1, 1, 1);
         _model.EndDate = new DateOnly(today.Year, 12, 31);
 
-        var budgetGuid = Guid.Empty;
-        if (string.IsNullOrWhiteSpace(budgetId) || !Guid.TryParse(budgetId, out budgetGuid))
-        {
-            _notFoundMessage = $"Invalid budget ID: {budgetId}";
-            _found = false;
-            return;
-        }
-
-        _budget = await BudgetService.GetBudgetAsync(budgetGuid);
+        _budget = await BudgetService.GetBudgetAsync(budgetId);
         if (_budget is not object)
         {
-            _notFoundMessage = $"Budget ID '{budgetGuid}' not found";
+            _notFoundMessage = $"Budget ID '{budgetId}' not found";
             _found = false;
             return;
         }

@@ -11,6 +11,15 @@ namespace PiggyBank.Data.Services
             return await _context.BudgetAmounts.CountAsync(ba => ba.BudgetId == budgetId);
         }
 
+        public async Task<Budget?> GetBudgetAndAmountsAsync(Guid budgetId)
+        {
+            return await _context.Budgets
+                .Include(b => b.Amounts)
+                .ThenInclude(a => a.Account)
+                .ThenInclude(a => a.Commodity)
+                .SingleOrDefaultAsync(b => b.Id == budgetId);
+        }
+
         public async Task<ICollection<Budget>> GetBudgetsAsync()
         {
             return await _context.Budgets.ToListAsync();
@@ -49,6 +58,8 @@ namespace PiggyBank.Data.Services
             BudgetAmount.AmountType amountType = config.DefaultPeriod == DateHelper.PeriodType.Monthly ? BudgetAmount.AmountType.Monthly : BudgetAmount.AmountType.Annual;
             foreach (var account in accounts)
             {
+                if (account.IsHidden || account.IsPlaceholder) { continue; }
+
                 foreach (var period in budgetPeriods)
                 {
                     budget.Amounts.Add(new BudgetAmount
