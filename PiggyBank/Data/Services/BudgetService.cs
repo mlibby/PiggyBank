@@ -6,6 +6,11 @@ namespace PiggyBank.Data.Services
 
         public BudgetService(PiggyBankContext context) => _context = context;
 
+        public async Task<int> GetBudgetAmountCountAsync(Guid budgetId)
+        {
+            return await _context.BudgetAmounts.CountAsync(ba => ba.BudgetId == budgetId);
+        }
+
         public async Task<ICollection<Budget>> GetBudgetsAsync()
         {
             return await _context.Budgets.ToListAsync();

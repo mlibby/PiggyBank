@@ -1,5 +1,5 @@
-﻿@page "/budget/add"
-@page "/budget/edit/{budgetId:guid}"
+﻿@attribute [Route(PageRoute.BudgetAdd)]
+@attribute [Route(PageRoute.BudgetEdit)]
 @inject AccountService AccountService
 @inject BudgetService BudgetService
 @inject NavigationManager NavigationManager
@@ -41,25 +41,22 @@ else if (_budget is object)
             <label for="is-hidden">Is Hidden?</label>
         </div>
         <div class="buttons">
-            @if (_budget.Amounts.Count == 0)
+            @if (_budgetAmountCount == 0)
             {
-                <button class="primary" @onclick="SaveAndAddAmounts">Save, then Add Buget Amounts</button>
+                <button class="primary pr1" @onclick="SaveAndCalculateAmounts">Save, then Calculate Buget Amounts</button>
             }
             <button class="primary" type="submit">Save</button>
             <button class="light" @onclick="Cancel">Cancel</button>
         </div>
     </EditForm>
 
-    @if (_budget.Id != Guid.Empty)
+    if (_budgetAmountCount == 0)
     {
-        if (_budget.Amounts.Count == 0)
-        {
-            <p><a href="/budget/@_budget.Id/amounts/add">Add Budget Amounts</a></p>
-        }
-        else
-        {
-            <p><a href="/budget/@_budget.Id/amounts">Manage Budget Amounts</a></p>
-        }
+        <p><a href="@PageRoute.BudgetAmountCalculateFor(_budget.Id)">Calculate Budget Amounts</a></p>
+    }
+    else
+    {
+        <p><a href="@PageRoute.BudgetAmountIndexFor(_budget.Id)">Manage @_budgetAmountCount Budget Amounts</a></p>
     }
 }
 else
@@ -76,6 +73,7 @@ else
     private Budget? _budget;
     private EditContext? _editContext;
     private ValidationMessageStore? _validationMessageStore;
+    private int _budgetAmountCount = 0;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -102,6 +100,8 @@ else
             _found = false;
             return;
         }
+
+        _budgetAmountCount = await BudgetService.GetBudgetAmountCountAsync(budgetId);
 
         _editContext = new EditContext(_budget);
         _validationMessageStore = new ValidationMessageStore(_editContext);
@@ -135,11 +135,11 @@ else
         }
     }
 
-    private async Task SaveAndAddAmounts()
+    private async Task SaveAndCalculateAmounts()
     {
         if (_budget is not object) return;
         await BudgetService.Save(_budget);
-        NavigationManager.NavigateTo($"/budget/{_budget.Id}/amounts/add");
+        NavigationManager.NavigateTo(PageRoute.BudgetAmountCalculateFor(_budget.Id));
     }
 
     private async Task SaveBudget()
@@ -151,6 +151,6 @@ else
 
     protected void Cancel()
     {
-        NavigationManager.NavigateTo("/budgets");
+        NavigationManager.NavigateTo(PageRoute.BudgetIndex);
     }
 }

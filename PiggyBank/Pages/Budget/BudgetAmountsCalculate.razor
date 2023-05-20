@@ -1,4 +1,4 @@
-﻿@page "/budget/{budgetId}/amounts/add"
+﻿@attribute [Route(PageRoute.BudgetAmountCalculate)]
 @inject BudgetService BudgetService
 @inject NavigationManager NavigationManager
 
@@ -173,7 +173,7 @@ else
     private void Cancel()
     {
         if (_budget is not object) return;
-        NavigationManager.NavigateTo($"/budget/{_budget.Id}/edit");
+        NavigationManager.NavigateTo(PageRoute.BudgetEditFor(_budget.Id));
     }
 
     private BudgetAmount.Configuration GetAmountConfig()

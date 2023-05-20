@@ -96,6 +96,9 @@ form {
 }
 
     form .buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
         padding-top: 0.5rem;
     }
 
@@ -249,6 +252,10 @@ p {
 
 .pt1 {
     padding-top: 1rem;
+}
+
+.pr1 {
+    padding-right: 1rem;
 }
 
 .sr-only {
