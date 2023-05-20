@@ -1,0 +1,49 @@
+﻿@page "/budgets"
+
+@inject BudgetService BudgetService
+
+<h1>Manage Budgets</h1>
+
+<p>A budget is a collection of budget amounts. Each budget amount is tied to a given period (month or year) and account.</p>
+
+<p><a class="btn btn-primary" href="/budget/add"><svg class="icon icon-plus"><use xlink:href="#icon-plus"></use></svg> Add New Budget</a></p>
+
+@if (_budgets is object)
+{
+    <table>
+        <caption>Budgets</caption>
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Starts</th>
+                <th scope="col">Ends</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var budget in _budgets)
+            {
+                if (budget.IsHidden) continue;
+                <tr>
+                    <th scope="row"><a href="/budget/edit/@budget.Id">@budget.Name</a></th>
+                    <td>@budget.Description</td>
+                    <td>@budget.StartDate</td>
+                    <td>@budget.EndDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Loading...</p>
+}
+
+@code {
+    private ICollection<Budget>? _budgets;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _budgets = await BudgetService.GetBudgetsAsync();
+    }
+}

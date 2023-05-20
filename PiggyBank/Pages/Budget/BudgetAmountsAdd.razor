@@ -1,11 +1,38 @@
 ﻿@page "/budget/{budgetId}/amounts/add"
-@inject AccountService AccountService
 @inject BudgetService BudgetService
 @inject NavigationManager NavigationManager
 
-@if (_found && _budget is object)
+@if (!_found)
+{
+    <Notifications_NotFound Message="@_notFoundMessage" />
+}
+else if (_budget is object)
 {
     <h1>Add Budget Amounts to @_budget.Name</h1>
+
+    <details>
+        <summary>
+            About Adding Amounts
+        </summary>
+        <p>
+            Use the form on this page to automatically add budget amounts to the budget @(_budget.Name).
+        </p>
+        <p>
+            If you select a default period of "monthly" there will be an amount budgeted for each month in the
+            budget range of @(_budget.StartDate) to @(_budget.EndDate). Selecting "annual" will result in only
+            one budget for the entire year.
+        </p>
+        <p>
+            "Use Data From" controls what past periods to use when calculating budget amounts. PiggyBank computes
+            the average monthly or annual amount by adding the total of all transactions in that range and dividing
+            by the number of periods.
+        </p>
+        <p>
+            You must select at least one account type to create budget amounts for. Most users will want to use at
+            least the Expense account type to track spending, but it is also possible to include Income, Assets, and
+            Liabilities.
+        </p>
+    </details>
 
     <EditForm EditContext="_editContext" OnValidSubmit="SaveBudget">
         <DataAnnotationsValidator />
@@ -56,18 +83,14 @@
         </fieldset>
 
         <div class="buttons">
-            <button class="primary" type="submit">Save</button>
+            <button class="primary" type="submit">Add Amounts</button>
             <button class="light" @onclick="Cancel">Cancel</button>
         </div>
     </EditForm>
 }
-else if (_found)
-{
-    <p>Loading...</p>
-}
 else
 {
-    <NotFound Message="@_notFoundMessage" />
+    <p>Loading...</p>
 }
 
 @code {
@@ -111,17 +134,47 @@ else
         _editContext!.OnValidationRequested += HandleValidationRequested;
     }
 
-    //private async Task AddBudgetAmounts()
-    //{
-    //    if (_budget is not object) return;
-    //    if (_addingAmounts) return;
-    //    _addingAmounts = true;
+    private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
+    {
+        if (_budget is not object) return;
+        if (_validationMessageStore is not object) return;
 
-    //    var config = GetAmountConfig();
-    //    await BudgetService.CalculateAmounts(_budget, config, AccountService);
+        _validationMessageStore.Clear();
 
-    //    _addingAmounts = false;
-    //}
+        if (_model.StartDate.Day != 1)
+        {
+            _validationMessageStore.Add(() => _model.StartDate, "Start date must be the first day of the month");
+        }
+
+        var endMonthDays = DateTime.DaysInMonth(_model.EndDate.Year, _model.EndDate.Month);
+        if (_model.EndDate.Day != endMonthDays)
+        {
+            _validationMessageStore.Add(() => _model.EndDate, "End date must be on the last day of the month");
+        }
+    }
+
+    private async Task SaveBudget()
+    {
+        if (_budget is not object) return;
+
+        if (_budget is not object) return;
+        if (_addingAmounts) return;
+        _addingAmounts = true;
+
+        var config = GetAmountConfig();
+        await BudgetService.CalculateAmounts(_budget, config);
+
+        await BudgetService.Save(_budget);
+        _addingAmounts = false;
+
+        Cancel();
+    }
+
+    private void Cancel()
+    {
+        if (_budget is not object) return;
+        NavigationManager.NavigateTo($"/budget/{_budget.Id}/edit");
+    }
 
     private BudgetAmount.Configuration GetAmountConfig()
     {
@@ -153,37 +206,6 @@ else
         }
 
         return config;
-    }
-
-    private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
-    {
-        if (_budget is not object) return;
-        if (_validationMessageStore is not object) return;
-
-        _validationMessageStore.Clear();
-
-        if (_model.StartDate.Day != 1)
-        {
-            _validationMessageStore.Add(() => _model.StartDate, "Start date must be the first day of the month");
-        }
-
-        var endMonthDays = DateTime.DaysInMonth(_model.EndDate.Year, _model.EndDate.Month);
-        if (_model.EndDate.Day != endMonthDays)
-        {
-            _validationMessageStore.Add(() => _model.EndDate, "End date must be on the last day of the month");
-        }
-    }
-
-    private async Task SaveBudget()
-    {
-        if (_budget is not object) return;
-        await BudgetService.Save(_budget);
-        // Cancel();
-    }
-
-    protected void Cancel()
-    {
-        NavigationManager.NavigateTo("/budgets");
     }
 
     private class FormModel

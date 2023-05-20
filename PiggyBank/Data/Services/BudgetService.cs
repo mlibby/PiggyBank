@@ -31,11 +31,13 @@ namespace PiggyBank.Data.Services
             return await _context.SaveChangesAsync();
         }
 
-        public async Task CalculateAmounts(Budget budget, BudgetAmount.Configuration config, AccountService accountService)
+        public async Task CalculateAmounts(Budget budget, BudgetAmount.Configuration config)
         {
-            var allAccounts = await accountService.GetAccountsAsync();
-            var accounts = allAccounts.Where(a => config.AccountTypes.Contains(a.Type));
-
+            var accounts = await _context.Accounts
+                .Include(a => a.Splits)
+                .ThenInclude(s => s.Transaction)
+                .Where(a => config.AccountTypes.Contains(a.Type))
+                .ToListAsync();
             var amountBalances = new Balances(accounts, config.StartDate, config.EndDate);
             var periodCount = DateHelper.CalculatePeriods(config.StartDate, config.EndDate).Count;
             var budgetPeriods = DateHelper.CalculatePeriods(budget.StartDate, budget.EndDate);
