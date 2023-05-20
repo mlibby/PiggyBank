@@ -177,6 +177,10 @@ h6, .h6 {
     font-size: 1rem;
 }
 
+.ib {
+    display: inline-block;
+}
+
 .icon {
     display: inline-block;
     height: 1em;
@@ -239,7 +243,12 @@ h6, .h6 {
 p {
     box-sizing: border-box;
     margin: 0.5rem 0;
+    max-width: 50rem;
     padding: 0;
+}
+
+.pt1 {
+    padding-top: 1rem;
 }
 
 .sr-only {

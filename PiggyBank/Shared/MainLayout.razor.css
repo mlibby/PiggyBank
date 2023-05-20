@@ -17,6 +17,9 @@
         height: 100vh;
         position: sticky;
         top: 0;
+        width: 13rem;
+        min-width: 13rem;
+        max-width: 13rem;
     }
 }
 

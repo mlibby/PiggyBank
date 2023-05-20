@@ -8,14 +8,14 @@
 }
 else if (_budget is object)
 {
-    <h1>Add Budget Amounts to @_budget.Name</h1>
+    <h1>Add Amounts to Budget "@_budget.Name"</h1>
 
-    <details>
+    <details class="pt1">
         <summary>
-            About Adding Amounts
+            <h2 class="ib">About Adding Amounts (click for more...)</h2>
         </summary>
         <p>
-            Use the form on this page to automatically add budget amounts to the budget @(_budget.Name).
+            Use the form on this page to automatically add budget amounts to the budget "@(_budget.Name)".
         </p>
         <p>
             If you select a default period of "monthly" there will be an amount budgeted for each month in the
@@ -34,12 +34,12 @@ else if (_budget is object)
         </p>
     </details>
 
-    <EditForm EditContext="_editContext" OnValidSubmit="SaveBudget">
+    <EditForm EditContext="_editContext" OnValidSubmit="SaveBudget" style="position:absolute;">
         <DataAnnotationsValidator />
         <ValidationSummary role="alert" aria-label="budget form errors" />
 
         <fieldset>
-            <legend>Default Period</legend>
+            <legend>Default Period Type</legend>
             <InputRadioGroup @bind-Value="_model.DefaultPeriod">
                 <label class="form-control">
                     <InputRadio Value="DateHelper.PeriodType.Monthly" />
