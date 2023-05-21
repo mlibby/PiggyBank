@@ -24,7 +24,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                     gncAccount.ParentGuid = null;
                 }
 
-                Account? account = await PiggyBankContext.Accounts
+                var account = await PiggyBankContext.Accounts
                     .SingleOrDefaultAsync(a => a.Id == Guid.Parse(gncAccount.Guid));
 
                 if (account is null)
@@ -48,7 +48,6 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
             return gnuCashAccounts.Count;
         });
 
-
     public Task<int> ImportCommodities(IProgress<int> processed, IProgress<int> count, CancellationToken cancellationToken) =>
         Task.Run<int>(async () =>
         {
@@ -65,8 +64,8 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 var symbol = await GnuCashContext.Slots
                     .SingleOrDefaultAsync(s => s.ObjGuid == gncCommodity.Guid && s.Name == "user_symbol");
 
-                Guid guid = Guid.Parse(gncCommodity.Guid);
-                Commodity? commodity = await PiggyBankContext
+                var guid = Guid.Parse(gncCommodity.Guid);
+                var commodity = await PiggyBankContext
                     .Commodities.SingleOrDefaultAsync(c => c.Id == guid);
 
                 if (commodity is null)
@@ -101,7 +100,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
             var processedCount = 0;
             foreach (var gncTransaction in gncTransactions)
             {
-                Transaction? transaction = await PiggyBankContext.Transactions
+                var transaction = await PiggyBankContext.Transactions
                     .Include(t => t.Splits)
                     .SingleOrDefaultAsync(t => t.Id == Guid.Parse(gncTransaction.Guid));
 
@@ -123,9 +122,9 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
             return gncTransactions.Count;
         });
 
-    private DateOnly ConvertDate(string? dateString)
+    private static DateOnly ConvertDate(string? dateString)
     {
-        DateTime date = DateTime.Today;
+        var date = DateTime.Today;
         if (!string.IsNullOrWhiteSpace(dateString))
         {
             date = DateTime.Parse(dateString);
@@ -158,7 +157,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
             return accounts;
         });
 
-    private void UpdateAccount(GncAccount gncAccount, Account account)
+    private static void UpdateAccount(GncAccount gncAccount, Account account)
     {
         account.Id = Guid.Parse(gncAccount.Guid);
         account.Name = gncAccount.Name;
@@ -170,7 +169,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
         account.IsHidden = gncAccount.Hidden > 0;
     }
 
-    private void UpdateCommodity(GncCommodity gncCommodity, Commodity commodity, GncSlot? symbol)
+    private static void UpdateCommodity(GncCommodity gncCommodity, Commodity commodity, GncSlot? symbol)
     {
         commodity.Id = Guid.Parse(gncCommodity.Guid);
         commodity.Cusip = gncCommodity.Cusip;
@@ -181,17 +180,17 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
         commodity.Type = GncCommodity.TypeMap[gncCommodity.Namespace];
     }
 
-    private void UpdateSplit(GncSplit gncSplit, Split split)
+    private static void UpdateSplit(GncSplit gncSplit, Split split)
     {
         split.Id = Guid.Parse(gncSplit.Guid);
         split.AccountId = Guid.Parse(gncSplit.AccountGuid);
         split.Memo = gncSplit.Memo;
         split.Action = gncSplit.Action;
-        split.Value = new Decimal(gncSplit.ValueNumber) / new Decimal(gncSplit.ValueDenomination);
-        split.Quantity = new Decimal(gncSplit.QuantityNumber) / new Decimal(gncSplit.QuantityDenomination);
+        split.Value = new decimal(gncSplit.ValueNumber) / new decimal(gncSplit.ValueDenomination);
+        split.Quantity = new decimal(gncSplit.QuantityNumber) / new decimal(gncSplit.QuantityDenomination);
     }
 
-    private void UpdateTransaction(GncTransaction gncTransaction, Transaction transaction)
+    private static void UpdateTransaction(GncTransaction gncTransaction, Transaction transaction)
     {
         transaction.Id = Guid.Parse(gncTransaction.Guid);
         transaction.Description = gncTransaction.Description ?? "";
@@ -204,7 +203,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
 
         foreach (var gncSplit in gncTransaction.Splits)
         {
-            Split? split = transaction.Splits
+            var split = transaction.Splits
                 .SingleOrDefault(s => s.Id == Guid.Parse(gncSplit.Guid));
 
             if (split is not null)

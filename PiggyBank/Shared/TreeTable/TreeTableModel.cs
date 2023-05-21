@@ -15,10 +15,7 @@ public class TreeTableModel
     {
         get
         {
-            if (_maxDepth is null)
-            {
-                _maxDepth = CalculateMaxDepth(null);
-            }
+            _maxDepth ??= CalculateMaxDepth(null);
 
             return _maxDepth.Value;
         }
@@ -34,10 +31,7 @@ public class TreeTableModel
         Nodes.CollectionChanged += Nodes_CollectionChanged;
     }
 
-    private void Nodes_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        _maxDepth = null;
-    }
+    private void Nodes_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => _maxDepth = null;
 
     public TreeTableNodeModel CreateNode(string header, List<string> values, TreeTableNodeModel? parent = null)
     {
@@ -61,7 +55,7 @@ public class TreeTableModel
     {
         var maxDepth = depth;
 
-        nodes = nodes ?? Nodes;
+        nodes ??= Nodes;
         foreach (var node in nodes)
         {
             if (node.Children.Count > 0)

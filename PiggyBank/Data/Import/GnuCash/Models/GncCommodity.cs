@@ -2,7 +2,7 @@
 
 public partial class GncCommodity
 {
-    public static readonly Dictionary<string, Commodity.CommodityType> TypeMap = new Dictionary<string, Commodity.CommodityType>()
+    public static readonly Dictionary<string, Commodity.CommodityType> TypeMap = new()
     {
         {"CURRENCY", Commodity.CommodityType.Currency },
         {"FUND", Commodity.CommodityType.Stock },
