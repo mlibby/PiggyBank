@@ -34,6 +34,9 @@ public class PiggyBankContext : IdentityDbContext
 
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Source).HasConversion(
+                v => v.ToString(),
+                v => (Source.SourceType)Enum.Parse(typeof(Source.SourceType), v));
             entity.Property(e => e.Type).HasConversion(
                 v => v.ToString(),
                 v => (Account.AccountType)Enum.Parse(typeof(Account.AccountType), v));
@@ -87,6 +90,9 @@ public class PiggyBankContext : IdentityDbContext
             entity.Property(e => e.Cusip).HasMaxLength(255);
             entity.Property(e => e.Mnemonic).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.Source).HasConversion(
+                v => v.ToString(),
+                v => (Source.SourceType)Enum.Parse(typeof(Source.SourceType), v));
             entity.Property(e => e.Symbol).HasMaxLength(16);
             entity.Property(e => e.Type).HasConversion(
                 v => v.ToString(),
@@ -130,6 +136,9 @@ public class PiggyBankContext : IdentityDbContext
             entity.Property(e => e.Action).HasMaxLength(2048);
             entity.Property(e => e.Memo).HasMaxLength(2048);
             entity.Property(e => e.Quantity).HasColumnType("decimal(28, 9)");
+            entity.Property(e => e.Source).HasConversion(
+                v => v.ToString(),
+                v => (Source.SourceType)Enum.Parse(typeof(Source.SourceType), v));
             entity.Property(e => e.Value).HasColumnType("decimal(28, 9)");
 
             entity.HasOne(d => d.Account).WithMany(p => p.Splits)
@@ -150,6 +159,9 @@ public class PiggyBankContext : IdentityDbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Description).HasMaxLength(2048);
             entity.Property(e => e.PostDate).HasColumnType("date");
+            entity.Property(e => e.Source).HasConversion(
+                v => v.ToString(),
+                v => (Source.SourceType)Enum.Parse(typeof(Source.SourceType), v));
 
             entity.HasOne(d => d.Commodity).WithMany()
                 .HasForeignKey(d => d.CommodityId)

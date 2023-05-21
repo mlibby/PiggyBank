@@ -1,8 +1,7 @@
 namespace PiggyBank.Pages.Import;
 
-public partial class GnuCash
+public partial class GnuCash : IDisposable
 {
-    private CancellationToken _importCancellationToken;
     private CancellationTokenSource? _importCancellationTokenSource;
     private bool _complete;
     private bool _importing;
@@ -15,6 +14,7 @@ public partial class GnuCash
     private int _transactionCount;
     private int _transactionProcessed;
     private Task? _transactionImportTask;
+
     private float AccountProgress => _accountCount == 0 ? 0 : (float)_accountProcessed / _accountCount;
     private float CommodityProgress => _commodityCount == 0 ? 0 : (float)_commodityProcessed / _commodityCount;
     private float TransactionProgress => _transactionCount == 0 ? 0 : (float)_transactionProcessed / _transactionCount;
@@ -27,6 +27,7 @@ public partial class GnuCash
         }
 
         _importing = true;
+
         _complete = false;
         _commodityCount = 0;
         _commodityProcessed = 0;
@@ -34,46 +35,45 @@ public partial class GnuCash
         _accountProcessed = 0;
         _transactionCount = 0;
         _transactionProcessed = 0;
+
         _importCancellationTokenSource = new CancellationTokenSource();
-        _importCancellationToken = _importCancellationTokenSource.Token;
 
-        var count = new Progress<int>(value => _commodityCount = value);
-        var processed = new Progress<int>(value => _commodityProcessed = value);
-
-        _commodityImportTask = ImportService.ImportCommodities(processed, count, _importCancellationToken);
+        var count = new Progress<int>(value => { _commodityCount = value; StateHasChanged(); });
+        var processed = new Progress<int>(value => { _commodityProcessed = value; StateHasChanged(); });
+        _commodityImportTask = ImportService.ImportCommodities(processed, count, _importCancellationTokenSource.Token);
         await _commodityImportTask;
 
-        count = new Progress<int>(value => _accountCount = value);
-        processed = new Progress<int>(value => _accountProcessed = value);
-
-        _accountImportTask = ImportService.ImportAccounts(processed, count, _importCancellationToken);
+        count = new Progress<int>(value => { _accountCount = value; StateHasChanged(); });
+        processed = new Progress<int>(value => { _accountProcessed = value; StateHasChanged(); });
+        _accountImportTask = ImportService.ImportAccounts(processed, count, _importCancellationTokenSource.Token);
         await _accountImportTask;
 
-        count = new Progress<int>(value => _transactionCount = value);
-        processed = new Progress<int>(value => _transactionProcessed = value);
-
-        _transactionImportTask = ImportService.ImportTransactions(processed, count, _importCancellationToken);
+        count = new Progress<int>(value => { _transactionCount = value; StateHasChanged(); });
+        processed = new Progress<int>(value => { _transactionProcessed = value; StateHasChanged(); });
+        _transactionImportTask = ImportService.ImportTransactions(processed, count, _importCancellationTokenSource.Token);
         await _transactionImportTask;
 
         _importing = false;
         _complete = true;
-
-        // TODO: do we need this? Does the UI not refresh?
-        // Either way we should only call this once during
-        // this method so we don't redraw the UI several
-        // extra times.
-        StateHasChanged();
     }
 
     public void Dispose()
     {
-        if (_importCancellationTokenSource is null || !_importing)
-        {
-            return;
-        }
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
-        logger.LogInformation("Cancelling GnuCash imports");
-        _importCancellationTokenSource.Cancel();
-        MessageService.NotifyWarning("GnuCash imports cancelled");
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            if (_importCancellationTokenSource is not null && _importing)
+            {
+                _importCancellationTokenSource.Cancel();
+                MessageService.NotifyWarning("GnuCash imports cancelled");
+
+                _importing = false;
+            }
+        }
     }
 }

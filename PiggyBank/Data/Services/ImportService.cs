@@ -29,7 +29,10 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
 
                 if (account is null)
                 {
-                    account = new Account();
+                    account = new Account()
+                    {
+                        Source = Source.SourceType.GnuCash
+                    };
                     PiggyBankContext.Accounts.Add(account);
                 }
 
@@ -70,7 +73,10 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
 
                 if (commodity is null)
                 {
-                    commodity = new Commodity();
+                    commodity = new Commodity()
+                    {
+                        Source = Source.SourceType.GnuCash
+                    };
                     PiggyBankContext.Commodities.Add(commodity);
                 }
 
@@ -97,6 +103,11 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
             var gncTransactions = await GnuCashContext.Transactions.Include(t => t.Splits).ToListAsync();
             count.Report(gncTransactions.Count);
 
+            var existingTransactionIds = await PiggyBankContext.Transactions
+                .Where(t => t.Source == Source.SourceType.GnuCash)
+                .Select(t => t.Id)
+                .ToListAsync();
+
             var processedCount = 0;
             foreach (var gncTransaction in gncTransactions)
             {
@@ -106,18 +117,25 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
 
                 if (transaction is null)
                 {
-                    transaction = new Transaction();
+                    transaction = new Transaction()
+                    {
+                        Source = Source.SourceType.GnuCash
+                    };
                     PiggyBankContext.Transactions.Add(transaction);
                 }
 
                 UpdateTransaction(gncTransaction, transaction!);
                 await PiggyBankContext.SaveChangesAsync();
 
+                existingTransactionIds.Remove(transaction.Id);
+
                 cancellationToken.ThrowIfCancellationRequested();
 
                 processedCount++;
                 processed.Report(processedCount);
             }
+
+            // TODO: delete transactions that were not found again -- need flag
 
             return gncTransactions.Count;
         });
@@ -213,7 +231,11 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 continue;
             }
 
-            split = new Split();
+            split = new Split()
+            {
+                Source = Source.SourceType.GnuCash
+            };
+
             transaction.Splits.Add(split);
             UpdateSplit(gncSplit, split);
         }

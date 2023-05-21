@@ -3,7 +3,7 @@ namespace PiggyBank.Pages.Budget;
 public partial class BudgetForm
 {
     [Parameter]
-    public Guid budgetId { get; set; }
+    public Guid BudgetId { get; set; }
 
     private bool _found = true;
     private string _notFoundMessage = "";
@@ -14,7 +14,7 @@ public partial class BudgetForm
     protected override async Task OnParametersSetAsync()
     {
         var today = DateOnly.FromDateTime(DateTime.Today);
-        if (budgetId == Guid.Empty)
+        if (BudgetId == Guid.Empty)
         {
             var nextYear = today.Year + 1;
             _budget = new Data.Models.Budget()
@@ -26,23 +26,23 @@ public partial class BudgetForm
         }
         else
         {
-            _budget = await BudgetService.GetBudgetAsync(budgetId);
+            _budget = await BudgetService.GetBudgetAsync(BudgetId);
         }
 
         if (_budget is null)
         {
-            _notFoundMessage = $"Budget with ID '{budgetId}' was not found";
+            _notFoundMessage = $"Budget with ID '{BudgetId}' was not found";
             _found = false;
             return;
         }
 
-        _budgetAmountCount = await BudgetService.GetBudgetAmountCountAsync(budgetId);
+        _budgetAmountCount = await BudgetService.GetBudgetAmountCountAsync(BudgetId);
         _editContext = new EditContext(_budget);
         _validationMessageStore = new ValidationMessageStore(_editContext);
         _editContext!.OnValidationRequested += HandleValidationRequested;
     }
 
-    private string Action => budgetId == Guid.Empty ? "Add" : "Edit";
+    private string Action => BudgetId == Guid.Empty ? "Add" : "Edit";
 
     private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
     {

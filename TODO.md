@@ -1,11 +1,11 @@
 # UI
 
 - [ ] Convert import progress updates to use <progress> 
-- [ ] Incorporate a reset/normalize.css into site.css
-- [ ] /accounts to use <AccountTree> Razor component
-- [ ] Improve button styling
+- [X] Incorporate a reset/normalize.css into site.css
+- [X] /accounts to use <AccountTree> Razor component
+- [X] Improve button styling
 
 # Functionality
 
-- [ ] Migrate Account Balance logic
+- [X] Migrate Account Balance logic
 - [ ] Migrate account tree validation (no non-placeholders with sub-accounts)

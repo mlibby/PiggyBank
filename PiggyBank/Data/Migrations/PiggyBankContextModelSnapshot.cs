@@ -15,7 +15,7 @@ namespace PiggyBank.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.0-preview.3.23174.2");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.0-preview.4.23259.3");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -239,6 +239,10 @@ namespace PiggyBank.Data.Migrations
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -336,6 +340,10 @@ namespace PiggyBank.Data.Migrations
                     b.Property<int>("Precision")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Symbol")
                         .HasMaxLength(16)
                         .HasColumnType("TEXT");
@@ -423,6 +431,10 @@ namespace PiggyBank.Data.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(28, 9)");
 
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("TransactionId")
                         .HasColumnType("TEXT");
 
@@ -453,6 +465,10 @@ namespace PiggyBank.Data.Migrations
 
                     b.Property<DateOnly>("PostDate")
                         .HasColumnType("date");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

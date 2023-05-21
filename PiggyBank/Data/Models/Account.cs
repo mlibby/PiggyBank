@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Data.Models;
 
-public partial class Account : ModelBase
+public partial class Account : SourceModelBase
 {
     public string Name { get; set; } = null!;
 

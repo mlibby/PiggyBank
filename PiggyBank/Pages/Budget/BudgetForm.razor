@@ -40,10 +40,10 @@ else if (_budget is not null)
         <div class="buttons">
             @if (_budgetAmountCount == 0)
             {
-                <button class="primary pr1" @onclick="SaveAndCalculateAmounts">Save, then Calculate Buget Amounts</button>
+                <button class="primary pr1" type="button" @onclick="SaveAndCalculateAmounts">Save, then Calculate Buget Amounts</button>
             }
             <button class="primary" type="submit">Save</button>
-            <button class="light" @onclick="Cancel">Cancel</button>
+            <button class="light" type="button" @onclick="Cancel">Cancel</button>
         </div>
     </EditForm>
 

@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Data.Models;
 
-public partial class Transaction : ModelBase
+public partial class Transaction : SourceModelBase
 {
     public DateOnly PostDate { get; set; }
 

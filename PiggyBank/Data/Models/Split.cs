@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Data.Models;
 
-public partial class Split : ModelBase
+public partial class Split : SourceModelBase
 {
     public Guid TransactionId { get; set; }
 

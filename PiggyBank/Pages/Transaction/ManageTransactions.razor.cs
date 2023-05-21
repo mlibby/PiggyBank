@@ -1,7 +1,8 @@
 namespace PiggyBank.Pages.Transaction;
 
-public partial class ManageTransactions
+public partial class ManageTransactions : IDisposable
 {
+    private CancellationTokenSource? _importCancellationTokenSource;
     private bool _importing;
     private int _recordCount = 0;
     private int _recordsProcessed = 0;
@@ -11,15 +12,33 @@ public partial class ManageTransactions
     async Task ImportClicked()
     {
         _importing = true;
+
         var count = new Progress<int>(value => _recordCount = value);
         var processed = new Progress<int>(value => _recordsProcessed = value);
-        await ImportService.ImportTransactions(processed, count, CancellationToken.None);
+        _importCancellationTokenSource = new CancellationTokenSource();
+        await ImportService.ImportTransactions(processed, count, _importCancellationTokenSource.Token);
+
         _transactions = await TransactionService.GetTransactionsAsync();
         _importing = false;
+    }
 
-        // TODO: do we need this? Does the UI not refresh?
-        // Either way we should only call this once during
-        // this method so we don't redraw the UI an extra time.
-        StateHasChanged();
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            if (_importCancellationTokenSource is not null && _importing)
+            {
+                _importCancellationTokenSource.Cancel();
+                MessageService.NotifyWarning("GnuCash transaction import cancelled");
+
+                _importing = false;
+            }
+        }
     }
 }

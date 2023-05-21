@@ -3,7 +3,7 @@ namespace PiggyBank.Pages.Budget;
 public partial class BudgetAmountIndex
 {
     [Parameter]
-    public Guid budgetId { get; set; }
+    public Guid BudgetId { get; set; }
 
     private bool _loading = true;
     private bool _found = true;
@@ -13,10 +13,10 @@ public partial class BudgetAmountIndex
     protected override async Task OnParametersSetAsync()
     {
         _loading = true;
-        _budget = await BudgetService.GetBudgetAndAmountsAsync(budgetId);
+        _budget = await BudgetService.GetBudgetAndAmountsAsync(BudgetId);
         if (_budget is null)
         {
-            _notFoundMessage = $"Budget with ID '{budgetId}' not found";
+            _notFoundMessage = $"Budget with ID '{BudgetId}' not found";
             _found = false;
             return;
         }
@@ -24,16 +24,16 @@ public partial class BudgetAmountIndex
         var periods = _budget.Amounts.Select(a => a.AmountDate).Distinct().Order();
         var columns = periods.Select(p => p.ToString()).ToList();
         _model = new("Budget Amounts", "Account", columns);
-        var amounts = GetAmountsDictionary(_budget);
+        var amounts = BuildAmountsDictionary(_budget);
         var orderedAccounts = _budget.Amounts.Select(a => a.Account).Distinct().OrderBy(a => a.FullName);
         foreach (var account in orderedAccounts)
         {
             List<string> values = new();
             foreach (var period in periods)
             {
-                if (amounts.ContainsKey(account.Id) && amounts[account.Id].ContainsKey(period))
+                if (amounts.TryGetValue(account.Id, out var accountAmount) && accountAmount.TryGetValue(period, out var amount))
                 {
-                    values.Add(amounts[account.Id][period]);
+                    values.Add(amount);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ public partial class BudgetAmountIndex
         _loading = false;
     }
 
-    private Dictionary<Guid, Dictionary<DateOnly, string>> GetAmountsDictionary(Data.Models.Budget budget)
+    private static Dictionary<Guid, Dictionary<DateOnly, string>> BuildAmountsDictionary(Data.Models.Budget budget)
     {
         Dictionary<Guid, Dictionary<DateOnly, string>> dict = new();
         foreach (var amount in budget.Amounts)

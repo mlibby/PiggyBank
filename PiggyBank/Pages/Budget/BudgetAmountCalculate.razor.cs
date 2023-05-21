@@ -3,7 +3,7 @@ namespace PiggyBank.Pages.Budget;
 public partial class BudgetAmountCalculate
 {
     [Parameter]
-    public Guid budgetId { get; set; }
+    public Guid BudgetId { get; set; }
 
     private bool _found = true;
     private string _notFoundMessage = "Budget not found";
@@ -21,10 +21,10 @@ public partial class BudgetAmountCalculate
         _model.StartDate = new DateOnly(today.Year - 1, 1, 1);
         _model.EndDate = new DateOnly(today.Year, 12, 31);
 
-        _budget = await BudgetService.GetBudgetAsync(budgetId);
+        _budget = await BudgetService.GetBudgetAsync(BudgetId);
         if (_budget is null)
         {
-            _notFoundMessage = $"Budget ID '{budgetId}' not found";
+            _notFoundMessage = $"Budget ID '{BudgetId}' not found";
             _found = false;
             return;
         }

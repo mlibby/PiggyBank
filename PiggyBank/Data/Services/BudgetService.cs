@@ -51,8 +51,15 @@ public record BudgetService(PiggyBankContext Context)
 
         foreach (var account in accounts)
         {
-            if (!config.AccountTypes.Contains(account.Type)) { continue; }
-            if (account.IsHidden || account.IsPlaceholder) { continue; }
+            if (!config.AccountTypes.Contains(account.Type))
+            {
+                continue;
+            }
+
+            if (account.IsHidden || account.IsPlaceholder)
+            {
+                continue;
+            }
 
             foreach (var period in budgetPeriods)
             {
