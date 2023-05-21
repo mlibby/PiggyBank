@@ -22,4 +22,5 @@ global using System.Collections.Specialized;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Diagnostics;
+global using System.Linq;
 global using System.Security.Claims;

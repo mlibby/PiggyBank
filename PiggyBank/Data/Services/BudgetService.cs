@@ -35,10 +35,13 @@ public record BudgetService(PiggyBankContext Context)
 
     public async Task CalculateAmounts(Budget budget, BudgetAmount.Configuration config)
     {
+        // would like to have a .Where clause that check account.Type is in config.AccountTypes
+        // but EF can't seem to translate this into SQL correctly when storing enums in the DB
+        // as varchar fields
         var accounts = await Context.Accounts
+            .Include(a => a.Commodity)
             .Include(a => a.Splits)
             .ThenInclude(s => s.Transaction)
-            .Where(a => config.AccountTypes.Contains(a.Type))
             .ToListAsync();
 
         var amountBalances = new Balances(accounts, config.StartDate, config.EndDate);
@@ -48,6 +51,7 @@ public record BudgetService(PiggyBankContext Context)
 
         foreach (var account in accounts)
         {
+            if (!config.AccountTypes.Contains(account.Type)) { continue; }
             if (account.IsHidden || account.IsPlaceholder) { continue; }
 
             foreach (var period in budgetPeriods)
