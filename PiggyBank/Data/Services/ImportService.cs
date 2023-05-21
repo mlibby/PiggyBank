@@ -5,7 +5,7 @@ namespace PiggyBank.Data.Services;
 public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext PiggyBankContext)
 {
     public Task<int> ImportAccounts(IProgress<int> processed, IProgress<int> count, CancellationToken cancellationToken) =>
-        Task.Run<int>(async () =>
+        Task.Run(async () =>
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -49,7 +49,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
         });
 
     public Task<int> ImportCommodities(IProgress<int> processed, IProgress<int> count, CancellationToken cancellationToken) =>
-        Task.Run<int>(async () =>
+        Task.Run(async () =>
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -90,7 +90,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
         });
 
     public Task<int> ImportTransactions(IProgress<int> processed, IProgress<int> count, CancellationToken cancellationToken) =>
-        Task.Run<int>(async () =>
+        Task.Run(async () =>
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -142,7 +142,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
     /// <param name="accounts"></param>
     /// <returns></returns>
     private Task<List<GncAccount>> GetGnuCashAccounts(string parentGuid, List<GncAccount> accounts) =>
-        Task.Run<List<GncAccount>>(async () =>
+        Task.Run(async () =>
         {
             var childAccounts = await GnuCashContext.Accounts
             .Where(a => a.ParentGuid == parentGuid)

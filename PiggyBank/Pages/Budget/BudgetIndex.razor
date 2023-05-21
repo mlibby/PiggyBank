@@ -21,7 +21,10 @@
         <tbody>
             @foreach (var budget in _budgets)
             {
-                if (budget.IsHidden) continue;
+                if (budget.IsHidden) 
+                {
+                    continue;
+                }
                 <tr>
                     <th scope="row"><a href="@PageRoute.BudgetEditFor(budget.Id)">@budget.Name</a></th>
                     <td>@budget.Description</td>
@@ -35,13 +38,4 @@
 else
 {
     <p>Loading...</p>
-}
-
-@code {
-    private ICollection<Budget>? _budgets;
-
-    protected override async Task OnInitializedAsync()
-    {
-        _budgets = await BudgetService.GetBudgetsAsync();
-    }
 }

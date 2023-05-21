@@ -1,5 +1,6 @@
 ﻿global using Microsoft.AspNetCore.Components;
 global using Microsoft.AspNetCore.Components.Authorization;
+global using Microsoft.AspNetCore.Components.Forms;
 global using Microsoft.AspNetCore.Components.Server;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -14,6 +15,8 @@ global using PiggyBank.Data.Import.GnuCash;
 global using PiggyBank.Data.Models;
 global using PiggyBank.Data.Services;
 global using PiggyBank.Helpers;
+global using PiggyBank.Shared.TreeTable;
+global using PiggyBank.Shared.TreeView;
 global using System.Collections.ObjectModel;
 global using System.Collections.Specialized;
 global using System.ComponentModel.DataAnnotations;
