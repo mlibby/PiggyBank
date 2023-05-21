@@ -1,19 +1,21 @@
 ﻿@attribute [Route(PageRoute.BudgetAmountCalculate)]
 
+<PageTitle>Calculate Budget Amounts</PageTitle>
+
 @if (!_found)
 {
     <Notifications_NotFound Message="@_notFoundMessage" />
 }
 else if (_budget is not null)
 {
-    <h1>Add Amounts to Budget "@_budget.Name"</h1>
+    <h1>Calculate Amounts for Budget "@_budget.Name"</h1>
 
     <details class="pt1">
         <summary>
-            <h2 class="ib">About Adding Amounts (click for more...)</h2>
+            <h2 class="ib">About Calculating Amounts (click for more...)</h2>
         </summary>
         <p>
-            Use the form on this page to automatically add budget amounts to the budget "@(_budget.Name)".
+            Use the form on this page to automatically calculate budget amounts to the budget "@(_budget.Name)".
         </p>
         <p>
             If you select a default period of "monthly" there will be an amount budgeted for each month in the
@@ -32,7 +34,7 @@ else if (_budget is not null)
         </p>
     </details>
 
-    <EditForm EditContext="_editContext" OnValidSubmit="SaveBudget" style="position:absolute;">
+    <EditForm EditContext="_editContext" OnValidSubmit="CalculateAmounts" style="position:absolute;">
         <DataAnnotationsValidator />
         <ValidationSummary role="alert" aria-label="budget form errors" />
 
@@ -81,8 +83,8 @@ else if (_budget is not null)
         </fieldset>
 
         <div class="buttons">
-            <button class="primary" type="submit">Add Amounts</button>
-            <button class="light" @onclick="Cancel">Cancel</button>
+            <button class="primary" type="submit">Calculate Amounts</button>
+            <button class="light" type="button" @onclick="Cancel">Cancel</button>
         </div>
     </EditForm>
 }
@@ -103,7 +105,7 @@ else
     private EditContext? _editContext;
     private ValidationMessageStore? _validationMessageStore;
 
-    private bool _addingAmounts = false;
+    private bool _calculatingAmounts = false;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -143,19 +145,17 @@ else
         }
     }
 
-    private async Task SaveBudget()
+    private async Task CalculateAmounts()
     {
         if (_budget is null) return;
-
-        if (_budget is null) return;
-        if (_addingAmounts) return;
-        _addingAmounts = true;
+        if (_calculatingAmounts) return;
+        _calculatingAmounts = true;
 
         var config = GetAmountConfig();
         await BudgetService.CalculateAmounts(_budget, config);
 
         await BudgetService.Save(_budget);
-        _addingAmounts = false;
+        _calculatingAmounts = false;
 
         Cancel();
     }
