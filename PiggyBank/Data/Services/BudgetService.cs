@@ -1,75 +1,64 @@
-namespace PiggyBank.Data.Services
+namespace PiggyBank.Data.Services;
+
+public record BudgetService(PiggyBankContext Context)
 {
-    public class BudgetService
+    public async Task<int> GetBudgetAmountCountAsync(Guid budgetId) =>
+        await Context.BudgetAmounts.CountAsync(ba => ba.BudgetId == budgetId);
+
+    public async Task<Budget?> GetBudgetAndAmountsAsync(Guid budgetId) =>
+        await Context.Budgets
+            .Include(b => b.Amounts)
+            .ThenInclude(a => a.Account)
+            .ThenInclude(a => a.Commodity)
+            .SingleOrDefaultAsync(b => b.Id == budgetId);
+
+    public async Task<ICollection<Budget>> GetBudgetsAsync() =>
+        await Context.Budgets.ToListAsync();
+
+    public async Task<Budget?> GetBudgetAsync(Guid id) =>
+        await Context.Budgets.FindAsync(id);
+
+    public async Task<int> Save(Budget budget)
     {
-        private readonly PiggyBankContext _context;
-
-        public BudgetService(PiggyBankContext context) => _context = context;
-
-        public async Task<int> GetBudgetAmountCountAsync(Guid budgetId)
+        if (budget.Id == Guid.Empty)
         {
-            return await _context.BudgetAmounts.CountAsync(ba => ba.BudgetId == budgetId);
+            budget.Id = Guid.NewGuid();
+            Context.Budgets.Add(budget);
+        }
+        else
+        {
+            Context.Entry(budget).State = EntityState.Modified;
         }
 
-        public async Task<Budget?> GetBudgetAndAmountsAsync(Guid budgetId)
-        {
-            return await _context.Budgets
-                .Include(b => b.Amounts)
-                .ThenInclude(a => a.Account)
-                .ThenInclude(a => a.Commodity)
-                .SingleOrDefaultAsync(b => b.Id == budgetId);
-        }
+        return await Context.SaveChangesAsync();
+    }
 
-        public async Task<ICollection<Budget>> GetBudgetsAsync()
-        {
-            return await _context.Budgets.ToListAsync();
-        }
+    public async Task CalculateAmounts(Budget budget, BudgetAmount.Configuration config)
+    {
+        var accounts = await Context.Accounts
+            .Include(a => a.Splits)
+            .ThenInclude(s => s.Transaction)
+            .Where(a => config.AccountTypes.Contains(a.Type))
+            .ToListAsync();
 
-        public async Task<Budget?> GetBudgetAsync(Guid id)
-        {
-            return await _context.Budgets.FindAsync(id);
-        }
+        var amountBalances = new Balances(accounts, config.StartDate, config.EndDate);
+        var periodCount = DateHelper.CalculatePeriods(config.StartDate, config.EndDate).Count;
+        var budgetPeriods = DateHelper.CalculatePeriods(budget.StartDate, budget.EndDate);
+        var amountType = config.DefaultPeriod == DateHelper.PeriodType.Monthly ? BudgetAmount.AmountType.Monthly : BudgetAmount.AmountType.Annual;
 
-        public async Task<int> Save(Budget budget)
+        foreach (var account in accounts)
         {
-            if (budget.Id == Guid.Empty)
+            if (account.IsHidden || account.IsPlaceholder) { continue; }
+
+            foreach (var period in budgetPeriods)
             {
-                budget.Id = Guid.NewGuid();
-                _context.Budgets.Add(budget);
-            }
-            else
-            {
-                _context.Entry(budget).State = EntityState.Modified;
-            }
-
-            return await _context.SaveChangesAsync();
-        }
-
-        public async Task CalculateAmounts(Budget budget, BudgetAmount.Configuration config)
-        {
-            var accounts = await _context.Accounts
-                .Include(a => a.Splits)
-                .ThenInclude(s => s.Transaction)
-                .Where(a => config.AccountTypes.Contains(a.Type))
-                .ToListAsync();
-            var amountBalances = new Balances(accounts, config.StartDate, config.EndDate);
-            var periodCount = DateHelper.CalculatePeriods(config.StartDate, config.EndDate).Count;
-            var budgetPeriods = DateHelper.CalculatePeriods(budget.StartDate, budget.EndDate);
-            BudgetAmount.AmountType amountType = config.DefaultPeriod == DateHelper.PeriodType.Monthly ? BudgetAmount.AmountType.Monthly : BudgetAmount.AmountType.Annual;
-            foreach (var account in accounts)
-            {
-                if (account.IsHidden || account.IsPlaceholder) { continue; }
-
-                foreach (var period in budgetPeriods)
+                budget.Amounts.Add(new BudgetAmount
                 {
-                    budget.Amounts.Add(new BudgetAmount
-                    {
-                        Account = account,
-                        AmountDate = period,
-                        Type = amountType,
-                        Value = amountBalances[account.Id] / periodCount * (int)amountType
-                    }); ; ;
-                }
+                    Account = account,
+                    AmountDate = period,
+                    Type = amountType,
+                    Value = amountBalances[account.Id] / periodCount * (int)amountType
+                });
             }
         }
     }

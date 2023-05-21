@@ -1,14 +1,7 @@
-namespace PiggyBank.Data.Services
+namespace PiggyBank.Data.Services;
+
+public record CommodityService(PiggyBankContext Context)
 {
-    public class CommodityService
-    {
-        private PiggyBankContext _context;
-
-        public CommodityService(PiggyBankContext context) => _context = context;
-
-        public async Task<IEnumerable<Commodity>> GetCommoditiesAsync()
-        {
-            return await _context.Commodities.ToListAsync();
-        }
-    }
+    public async Task<IEnumerable<Commodity>> GetCommoditiesAsync() =>
+        await Context.Commodities.ToListAsync();
 }

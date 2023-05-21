@@ -1,8 +1,4 @@
 ﻿@attribute [Route(PageRoute.CommodityIndex)]
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using PiggyBank.Data.Models
-@inject CommodityService CommodityService
-@inject ImportService ImportService
 
 <h1>Commodities</h1>
 
@@ -21,7 +17,7 @@
 {
     <p>Table will update after import completes.</p>
 }
-else if (_commodities is object)
+else if (_commodities is not null)
 {
     <table>
         <thead>

@@ -1,27 +1,16 @@
-using PiggyBank.Data.Import.GnuCash;
 using PiggyBank.Data.Import.GnuCash.Models;
 
 namespace PiggyBank.Data.Services;
 
-public class ImportService
+public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext PiggyBankContext)
 {
-    private GnuCashContext _gnuCashContext;
-    private PiggyBankContext _piggyBankContext;
-
-    public ImportService(PiggyBankContext piggyBankContext, GnuCashContext gnuCashContext)
-    {
-        _gnuCashContext = gnuCashContext;
-        _piggyBankContext = piggyBankContext;
-    }
-
-    public Task<int> ImportAccounts(IProgress<int> processed, IProgress<int> count, CancellationToken cancellationToken)
-    {
-        return Task.Run<int>(async () =>
+    public Task<int> ImportAccounts(IProgress<int> processed, IProgress<int> count, CancellationToken cancellationToken) =>
+        Task.Run<int>(async () =>
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var accounts = new List<GncAccount>();
-            var rootAccount = await _gnuCashContext.Accounts
+            var rootAccount = await GnuCashContext.Accounts
                 .SingleAsync(a => a.AccountType == "ROOT" && a.Name == "Root Account");
 
             var gnuCashAccounts = await GetGnuCashAccounts(rootAccount.Guid, accounts);
@@ -35,19 +24,19 @@ public class ImportService
                     gncAccount.ParentGuid = null;
                 }
 
-                Account? account = await _piggyBankContext.Accounts
+                Account? account = await PiggyBankContext.Accounts
                     .SingleOrDefaultAsync(a => a.Id == Guid.Parse(gncAccount.Guid));
 
-                if (account is not object)
+                if (account is null)
                 {
                     account = new Account();
-                    _piggyBankContext.Accounts.Add(account);
+                    PiggyBankContext.Accounts.Add(account);
                 }
 
                 if (!account.IsLocked)
                 {
                     UpdateAccount(gncAccount, account!);
-                    await _piggyBankContext.SaveChangesAsync();
+                    await PiggyBankContext.SaveChangesAsync();
                 }
 
                 cancellationToken.ThrowIfCancellationRequested();
@@ -58,16 +47,14 @@ public class ImportService
 
             return gnuCashAccounts.Count;
         });
-    }
 
 
-    public Task<int> ImportCommodities(IProgress<int> processed, IProgress<int> count, CancellationToken cancellationToken)
-    {
-        return Task.Run<int>(async () =>
+    public Task<int> ImportCommodities(IProgress<int> processed, IProgress<int> count, CancellationToken cancellationToken) =>
+        Task.Run<int>(async () =>
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var gncCommodities = await _gnuCashContext.Commodities
+            var gncCommodities = await GnuCashContext.Commodities
                 .Where(c => c.Namespace != "template")
                 .ToListAsync();
             count.Report(gncCommodities.Count);
@@ -75,23 +62,23 @@ public class ImportService
             var processedCount = 0;
             foreach (var gncCommodity in gncCommodities)
             {
-                var symbol = await _gnuCashContext.Slots
+                var symbol = await GnuCashContext.Slots
                     .SingleOrDefaultAsync(s => s.ObjGuid == gncCommodity.Guid && s.Name == "user_symbol");
 
                 Guid guid = Guid.Parse(gncCommodity.Guid);
-                Commodity? commodity = await _piggyBankContext
+                Commodity? commodity = await PiggyBankContext
                     .Commodities.SingleOrDefaultAsync(c => c.Id == guid);
 
-                if (commodity is not object)
+                if (commodity is null)
                 {
                     commodity = new Commodity();
-                    _piggyBankContext.Commodities.Add(commodity);
+                    PiggyBankContext.Commodities.Add(commodity);
                 }
 
                 if (!commodity.IsLocked)
                 {
                     UpdateCommodity(gncCommodity, commodity!, symbol);
-                    await _piggyBankContext.SaveChangesAsync();
+                    await PiggyBankContext.SaveChangesAsync();
                 }
 
                 cancellationToken.ThrowIfCancellationRequested();
@@ -102,32 +89,30 @@ public class ImportService
 
             return gncCommodities.Count;
         });
-    }
 
-    public Task<int> ImportTransactions(IProgress<int> processed, IProgress<int> count, CancellationToken cancellationToken)
-    {
-        return Task.Run<int>(async () =>
+    public Task<int> ImportTransactions(IProgress<int> processed, IProgress<int> count, CancellationToken cancellationToken) =>
+        Task.Run<int>(async () =>
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var gncTransactions = await _gnuCashContext.Transactions.Include(t => t.Splits).ToListAsync();
+            var gncTransactions = await GnuCashContext.Transactions.Include(t => t.Splits).ToListAsync();
             count.Report(gncTransactions.Count);
 
             var processedCount = 0;
             foreach (var gncTransaction in gncTransactions)
             {
-                Transaction? transaction = await _piggyBankContext.Transactions
+                Transaction? transaction = await PiggyBankContext.Transactions
                     .Include(t => t.Splits)
                     .SingleOrDefaultAsync(t => t.Id == Guid.Parse(gncTransaction.Guid));
 
-                if (transaction is not object)
+                if (transaction is null)
                 {
                     transaction = new Transaction();
-                    _piggyBankContext.Transactions.Add(transaction);
+                    PiggyBankContext.Transactions.Add(transaction);
                 }
 
                 UpdateTransaction(gncTransaction, transaction!);
-                await _piggyBankContext.SaveChangesAsync();
+                await PiggyBankContext.SaveChangesAsync();
 
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -137,7 +122,6 @@ public class ImportService
 
             return gncTransactions.Count;
         });
-    }
 
     private DateOnly ConvertDate(string? dateString)
     {
@@ -158,11 +142,10 @@ public class ImportService
     /// <param name="parentGuid"></param>
     /// <param name="accounts"></param>
     /// <returns></returns>
-    private Task<List<GncAccount>> GetGnuCashAccounts(string parentGuid, List<GncAccount> accounts)
-    {
-        return Task.Run<List<GncAccount>>(async () =>
+    private Task<List<GncAccount>> GetGnuCashAccounts(string parentGuid, List<GncAccount> accounts) =>
+        Task.Run<List<GncAccount>>(async () =>
         {
-            var childAccounts = await _gnuCashContext.Accounts
+            var childAccounts = await GnuCashContext.Accounts
             .Where(a => a.ParentGuid == parentGuid)
             .ToListAsync();
 
@@ -174,13 +157,12 @@ public class ImportService
 
             return accounts;
         });
-    }
 
     private void UpdateAccount(GncAccount gncAccount, Account account)
     {
         account.Id = Guid.Parse(gncAccount.Guid);
         account.Name = gncAccount.Name;
-        account.ParentId = gncAccount.ParentGuid is object ? Guid.Parse(gncAccount.ParentGuid!) : null;
+        account.ParentId = gncAccount.ParentGuid is not null ? Guid.Parse(gncAccount.ParentGuid!) : null;
         account.Description = gncAccount.Description!;
         account.CommodityId = Guid.Parse(gncAccount.CommodityGuid!);
         account.Type = gncAccount.PiggyBankAccountType;
@@ -225,7 +207,7 @@ public class ImportService
             Split? split = transaction.Splits
                 .SingleOrDefault(s => s.Id == Guid.Parse(gncSplit.Guid));
 
-            if (split is object)
+            if (split is not null)
             {
                 originalSplitGuids.Remove(split.Id);
                 UpdateSplit(gncSplit, split);

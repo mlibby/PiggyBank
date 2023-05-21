@@ -1,4 +1,4 @@
-﻿@if (Model is object)
+﻿@if (Model is not null)
 {
     <table>
         <caption><h2>@Model.Title</h2></caption>
@@ -18,7 +18,7 @@
                 }
             </tr>
         </thead>
-        @if (Model.Footer is object)
+        @if (Model.Footer is not null)
         {
             <tfoot>
                 <tr>
@@ -40,4 +40,3 @@
     [Parameter]
     public TreeTableModel? Model { get; set; }
 }
-

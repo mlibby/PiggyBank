@@ -1,4 +1,6 @@
-﻿@using Microsoft.AspNetCore.Authorization
+﻿@using System.ComponentModel.DataAnnotations;
+@using System.Net.Http
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
@@ -9,6 +11,19 @@
 @using Microsoft.JSInterop
 @using PiggyBank
 @using PiggyBank.Data.Models
+@using PiggyBank.Pages.Import;
 @using PiggyBank.Shared
 @using PiggyBank.Shared.Notifications
-@using System.Net.Http
+@using PiggyBank.Shared.TreeTable;
+@using PiggyBank.Shared.TreeView;
+
+@inject AccountService AccountService
+@inject BudgetService BudgetService
+@inject CommodityService CommodityService
+@inject ILogger<GnuCash> logger
+@inject ImportService ImportService
+@inject NavigationManager NavigationManager
+@inject NavigationManager NavMan
+@inject NotificationService MessageService
+@inject NotificationService NotificationService
+@inject TransactionService TransactionService

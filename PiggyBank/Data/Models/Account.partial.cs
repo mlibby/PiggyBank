@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace PiggyBank.Data.Models;
+﻿namespace PiggyBank.Data.Models;
 
 public partial class Account
 {
@@ -11,7 +9,9 @@ public partial class Account
         {
             if (!account.IsPlaceholder && account.Children.Count > 0)
             {
-                warnings.Add(new ValidationWarning(account, "Non-placeholder account may not have sub-accounts. Please move sub-accounts to a placeholder or mark account as a placeholder."));
+                warnings.Add(new ValidationWarning(
+                    account,
+                    "Non-placeholder account may not have sub-accounts. Please move sub-accounts to a placeholder or mark account as a placeholder."));
             }
         }
 
@@ -19,6 +19,7 @@ public partial class Account
     }
 
     private string _FullName = null!;
+
     [NotMapped]
     public string FullName
     {
@@ -27,8 +28,8 @@ public partial class Account
             if (string.IsNullOrWhiteSpace(_FullName))
             {
                 var names = new List<string>() { Name };
-                var account = this.Parent;
-                while (account is object)
+                var account = Parent;
+                while (account is not null)
                 {
                     names.Add(account.Name);
                     account = account.Parent;
@@ -42,4 +43,3 @@ public partial class Account
         }
     }
 }
-

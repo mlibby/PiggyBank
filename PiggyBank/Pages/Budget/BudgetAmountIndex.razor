@@ -1,8 +1,4 @@
-﻿@using PiggyBank.Shared.TreeTable;
-@attribute [Route(PageRoute.BudgetAmountIndex)]
-
-@inject BudgetService BudgetService
-@inject NavigationManager NavMan
+﻿@attribute [Route(PageRoute.BudgetAmountIndex)]
 
 <h1>Manage Budget Amounts</h1>
 
@@ -17,7 +13,7 @@
 {
     <Notifications_NotFound Message="@_notFoundMessage" />
 }
-else if (!_loading && _model is object)
+else if (!_loading && _model is not null)
 {
     <PiggyBank.Shared.TreeTable.TreeTable Model="_model" />
 }
@@ -41,7 +37,7 @@ else
         _loading = true;
         _budget = await BudgetService.GetBudgetAndAmountsAsync(budgetId);
 
-        if (_budget is not object)
+        if (_budget is null)
         {
             _notFoundMessage = $"Budget with ID '{budgetId}' not found";
             _found = false;

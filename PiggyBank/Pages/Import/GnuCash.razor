@@ -1,10 +1,6 @@
 ﻿@attribute [Route(PageRoute.ImportGnuCash)]
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using PiggyBank.Data.Models
+
 @implements IDisposable
-@inject ILogger<GnuCash> logger
-@inject ImportService ImportService
-@inject NotificationService MessageService
 
 <h1>Import from GnuCash</h1>
 <p>
@@ -94,7 +90,7 @@
 
     public void Dispose()
     {
-        if (_importCancellationTokenSource is object && _importing)
+        if (_importCancellationTokenSource is not null && _importing)
         {
             logger.LogInformation("Cancelling GnuCash imports");
             _importCancellationTokenSource.Cancel();
