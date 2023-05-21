@@ -7,7 +7,9 @@ public partial class ManageAccounts
     private int _recordsProcessed = 0;
     private ICollection<Data.Models.Account>? _accounts;
     protected ICollection<Data.Models.Account> RootAccounts =>
-        _accounts is not null ? _accounts.Where(a => a.Parent == null).ToList() : (ICollection<Data.Models.Account>)new List<Data.Models.Account>();
+        _accounts is not null ?
+        _accounts.Where(a => a.Parent == null).ToList() :
+        (ICollection<Data.Models.Account>)new List<Data.Models.Account>();
 
     protected override async Task OnInitializedAsync() => _accounts = await AccountService.GetAccountsAsync();
 
@@ -21,11 +23,6 @@ public partial class ManageAccounts
         await ImportService.ImportAccounts(processed, count, new CancellationToken());
         _accounts = await AccountService.GetAccountsAsync();
         _importing = false;
-
-        // TODO: do we need this? Does the UI not refresh?
-        // Either way we should only call this once during
-        // this method so we don't redraw the UI an extra time.
-        StateHasChanged();
     }
 
     protected ICollection<TreeViewModel> AccountsToTreeViewModel(ICollection<Data.Models.Account> accounts)

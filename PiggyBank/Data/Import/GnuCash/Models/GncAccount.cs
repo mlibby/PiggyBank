@@ -2,7 +2,7 @@
 
 public partial class GncAccount
 {
-    private static Dictionary<string, Account.AccountType> GnuCashToPiggyBank = new()
+    private static Dictionary<string, Account.AccountType> s_gnuCashToPiggyBank = new()
     {
         { "ASSET", Account.AccountType.Asset },
         { "BANK", Account.AccountType.Asset },
@@ -40,5 +40,5 @@ public partial class GncAccount
 
     public long? Placeholder { get; set; }
 
-    public Account.AccountType PiggyBankAccountType => GnuCashToPiggyBank[AccountType.ToUpper()];
+    public Account.AccountType PiggyBankAccountType => s_gnuCashToPiggyBank[AccountType.ToUpper()];
 }
