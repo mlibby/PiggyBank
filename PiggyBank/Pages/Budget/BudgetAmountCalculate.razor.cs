@@ -7,16 +7,20 @@ public partial class BudgetAmountCalculate
 
     private bool _found = true;
     private string _notFoundMessage = "Budget not found";
+
     private Data.Models.Budget? _budget;
     private FormModel _model = new();
     private EditContext? _editContext;
     private ValidationMessageStore? _validationMessageStore;
-    private bool _addingAmounts = false;
+
+    private bool _calculatingAmounts = false;
+
     protected override async Task OnParametersSetAsync()
     {
         var today = DateOnly.FromDateTime(DateTime.Today);
         _model.StartDate = new DateOnly(today.Year - 1, 1, 1);
         _model.EndDate = new DateOnly(today.Year, 12, 31);
+
         _budget = await BudgetService.GetBudgetAsync(budgetId);
         if (_budget is null)
         {
@@ -32,17 +36,13 @@ public partial class BudgetAmountCalculate
 
     private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
     {
-        if (_budget is null)
-        {
-            return;
-        }
-
-        if (_validationMessageStore is null)
+        if (_budget is null || _validationMessageStore is null)
         {
             return;
         }
 
         _validationMessageStore.Clear();
+
         if (_model.StartDate.Day != 1)
         {
             _validationMessageStore.Add(() => _model.StartDate, "Start date must be the first day of the month");
@@ -55,18 +55,21 @@ public partial class BudgetAmountCalculate
         }
     }
 
-    private async Task SaveBudget()
+    private async Task CalculateAmounts()
     {
-        if (_budget is null || _budget is null || _addingAmounts)
+        if (_budget is null || _calculatingAmounts)
         {
             return;
         }
 
-        _addingAmounts = true;
+        _calculatingAmounts = true;
+
         var config = GetAmountConfig();
         await BudgetService.CalculateAmounts(_budget, config);
+
         await BudgetService.Save(_budget);
-        _addingAmounts = false;
+        _calculatingAmounts = false;
+
         Cancel();
     }
 
@@ -88,6 +91,7 @@ public partial class BudgetAmountCalculate
             StartDate = _model.StartDate,
             EndDate = _model.EndDate
         };
+
         if (_model.IncludeAsset)
         {
             config.AccountTypes.Add(Data.Models.Account.AccountType.Asset);
@@ -114,8 +118,10 @@ public partial class BudgetAmountCalculate
     private class FormModel
     {
         public DateHelper.PeriodType DefaultPeriod { get; set; } = DateHelper.PeriodType.Monthly;
+
         public DateOnly StartDate { get; set; } = DateOnly.MinValue;
         public DateOnly EndDate { get; set; } = DateOnly.MaxValue;
+
         public bool IncludeAsset { get; set; } = false;
         public bool IncludeExpense { get; set; } = true;
         public bool IncludeIncome { get; set; } = true;
