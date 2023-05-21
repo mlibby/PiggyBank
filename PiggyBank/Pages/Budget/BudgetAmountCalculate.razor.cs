@@ -7,7 +7,7 @@ public partial class BudgetAmountCalculate
 
     private bool _found = true;
     private string _notFoundMessage = "Budget not found";
-    private PiggyBank.Data.Models.Budget? _budget;
+    private Data.Models.Budget? _budget;
     private FormModel _model = new();
     private EditContext? _editContext;
     private ValidationMessageStore? _validationMessageStore;

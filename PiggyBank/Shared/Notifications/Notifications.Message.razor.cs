@@ -14,7 +14,7 @@ public partial class Notifications_Message
         }
     }
 
-    private Dictionary<NotificationSeverity, string> IconClasses = new Dictionary<NotificationSeverity, string>()
+    private Dictionary<NotificationSeverity, string> IconClasses = new()
     {
         { NotificationSeverity.Error, "icon-sad-face" },
         { NotificationSeverity.Info, "icon-speech" },

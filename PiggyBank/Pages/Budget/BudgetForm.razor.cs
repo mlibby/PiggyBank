@@ -7,7 +7,7 @@ public partial class BudgetForm
 
     private bool _found = true;
     private string _notFoundMessage = "";
-    private PiggyBank.Data.Models.Budget? _budget;
+    private Data.Models.Budget? _budget;
     private EditContext? _editContext;
     private ValidationMessageStore? _validationMessageStore;
     private int _budgetAmountCount = 0;
@@ -17,7 +17,7 @@ public partial class BudgetForm
         if (budgetId == Guid.Empty)
         {
             var nextYear = today.Year + 1;
-            _budget = new PiggyBank.Data.Models.Budget()
+            _budget = new Data.Models.Budget()
             {
                 Id = Guid.Empty,
                 StartDate = new DateOnly(nextYear, 1, 1),

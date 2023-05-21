@@ -8,7 +8,7 @@ public partial class BudgetAmountIndex
     private bool _loading = true;
     private bool _found = true;
     private string _notFoundMessage = "not found";
-    private PiggyBank.Data.Models.Budget? _budget = null;
+    private Data.Models.Budget? _budget = null;
     private TreeTableModel? _model = null;
     protected override async Task OnParametersSetAsync()
     {
@@ -48,7 +48,7 @@ public partial class BudgetAmountIndex
         _loading = false;
     }
 
-    private Dictionary<Guid, Dictionary<DateOnly, string>> GetAmountsDictionary(PiggyBank.Data.Models.Budget budget)
+    private Dictionary<Guid, Dictionary<DateOnly, string>> GetAmountsDictionary(Data.Models.Budget budget)
     {
         Dictionary<Guid, Dictionary<DateOnly, string>> dict = new();
         foreach (var amount in budget.Amounts)

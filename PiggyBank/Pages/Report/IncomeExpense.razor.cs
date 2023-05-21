@@ -43,8 +43,8 @@ public partial class IncomeExpense
             "YTD",
             _priorYear
         };
-        var tableTitle = $"{accountType.ToString()} Totals for Year to Date and {_priorYear}";
-        TreeTableModel model = new TreeTableModel(tableTitle, "Account", columns);
+        var tableTitle = $"{accountType} Totals for Year to Date and {_priorYear}";
+        var model = new TreeTableModel(tableTitle, "Account", columns);
         if (_accounts is null)
         {
             return model;
@@ -81,5 +81,5 @@ public partial class IncomeExpense
     }
 
     private Data.Models.Account? GetRootAccount(Data.Models.Account.AccountType accountType)
-        => _accounts is null ? null : _accounts.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
+        => _accounts?.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
 }
