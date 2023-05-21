@@ -1,12 +1,8 @@
 ﻿@*
-
-Inspired by https://github.com/radzenhq/radzen-blazor/blob/master/Radzen.Blazor/RadzenNotificationMessage.razor
-
+    Inspired by https://github.com/radzenhq/radzen-blazor/blob/master/Radzen.Blazor/RadzenNotificationMessage.razor
 *@
 
-@inject NotificationService NotificationService
-
-@if (Message is object)
+@if (Message is not null)
 {
     <div aria-live="polite" class="message @(MessageClass())">
         @(new MarkupString($"<svg class='icon logo #{IconClass()}'><use xlink:href='#{IconClass()}'/></svg>"))
@@ -25,7 +21,7 @@ Inspired by https://github.com/radzenhq/radzen-blazor/blob/master/Radzen.Blazor/
 
     public void Close()
     {
-        if (Message is object)
+        if (Message is not null)
         {
             NotificationService.Messages.Remove(Message);
             Message = null;

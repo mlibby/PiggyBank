@@ -1,6 +1,4 @@
 ﻿@attribute [Route(PageRoute.TransactionIndex)]
-@inject TransactionService TransactionService
-@inject ImportService ImportService
 
 <h1>Transactions</h1>
 
@@ -19,7 +17,7 @@
 {
     <p>Table will update after import completes.</p>
 }
-else if (_transactions is object)
+else if (_transactions is not null)
 {
     <table>
         <thead>

@@ -1,15 +1,12 @@
 ﻿@attribute [Route(PageRoute.BudgetIndex)]
 
-@inject BudgetService BudgetService
-@inject NavigationManager NavMan
-
 <h1>Manage Budgets</h1>
 
 <p>A budget is a collection of budget amounts. Each budget amount is tied to a given period (month or year) and account.</p>
 
 <p><a class="btn btn-primary" href="@PageRoute.BudgetAdd"><svg class="icon icon-plus"><use xlink:href="#icon-plus"></use></svg> Add New Budget</a></p>
 
-@if (_budgets is object)
+@if (_budgets is not null)
 {
     <table>
         <caption>Budgets</caption>

@@ -1,10 +1,8 @@
 ﻿@attribute [Route(PageRoute.ReportIncomeExpense)]
-@using PiggyBank.Shared.TreeTable;
-@inject AccountService AccountService
 
 <h1>Income &amp; Expense Report</h1>
 
-@if (_accounts is object && _balances is object)
+@if (_accounts is not null && _balances is not null)
 {
     <div class="income-expense">
         <h2>Report Date: @_endDate</h2>
@@ -59,10 +57,10 @@ else
         var tableTitle = $"{accountType.ToString()} Totals for Year to Date and {_priorYear}"; 
         TreeTableModel model = new TreeTableModel(tableTitle, "Account", columns);
 
-        if (_accounts is not object) return model;
+        if (_accounts is null) return model;
 
         var rootAccount = GetRootAccount(accountType);
-        if (rootAccount is object)
+        if (rootAccount is not null)
         {
             foreach (var account in rootAccount.Children.OrderBy(c => c.Name))
             {
@@ -93,7 +91,7 @@ else
 
     private Account? GetRootAccount(Account.AccountType accountType)
     {
-        if (_accounts is not object) return null;
+        if (_accounts is null) return null;
 
         return _accounts.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
     }

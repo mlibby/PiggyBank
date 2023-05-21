@@ -1,12 +1,10 @@
 ﻿@attribute [Route(PageRoute.BudgetAmountCalculate)]
-@inject BudgetService BudgetService
-@inject NavigationManager NavigationManager
 
 @if (!_found)
 {
     <Notifications_NotFound Message="@_notFoundMessage" />
 }
-else if (_budget is object)
+else if (_budget is not null)
 {
     <h1>Add Amounts to Budget "@_budget.Name"</h1>
 
@@ -114,7 +112,7 @@ else
         _model.EndDate = new DateOnly(today.Year, 12, 31);
 
         _budget = await BudgetService.GetBudgetAsync(budgetId);
-        if (_budget is not object)
+        if (_budget is null)
         {
             _notFoundMessage = $"Budget ID '{budgetId}' not found";
             _found = false;
@@ -128,8 +126,8 @@ else
 
     private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
     {
-        if (_budget is not object) return;
-        if (_validationMessageStore is not object) return;
+        if (_budget is null) return;
+        if (_validationMessageStore is null) return;
 
         _validationMessageStore.Clear();
 
@@ -147,9 +145,9 @@ else
 
     private async Task SaveBudget()
     {
-        if (_budget is not object) return;
+        if (_budget is null) return;
 
-        if (_budget is not object) return;
+        if (_budget is null) return;
         if (_addingAmounts) return;
         _addingAmounts = true;
 
@@ -164,7 +162,7 @@ else
 
     private void Cancel()
     {
-        if (_budget is not object) return;
+        if (_budget is null) return;
         NavigationManager.NavigateTo(PageRoute.BudgetEditFor(_budget.Id));
     }
 

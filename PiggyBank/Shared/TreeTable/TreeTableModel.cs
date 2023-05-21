@@ -15,7 +15,7 @@ public class TreeTableModel
     {
         get
         {
-            if (_maxDepth is not object)
+            if (_maxDepth is null)
             {
                 _maxDepth = CalculateMaxDepth(null);
             }
@@ -44,7 +44,7 @@ public class TreeTableModel
         var node = new TreeTableNodeModel(header, values);
         node.Children.CollectionChanged += Nodes_CollectionChanged;
 
-        if (parent is object)
+        if (parent is not null)
         {
             parent.Children.Add(node);
 
@@ -104,4 +104,3 @@ public class TreeTableNodeModel
         return count;
     }
 }
-

@@ -2,7 +2,7 @@
     Inspired by https://iamkate.com/code/tree-views/
 *@
 
-@if (Model is object)
+@if (Model is not null)
 {
     <ul class="tree">
         <TreeView_Node Model="Model" />
@@ -13,4 +13,3 @@
     [Parameter]
     public ICollection<TreeViewModel>? Model { get; set; }
 }
-

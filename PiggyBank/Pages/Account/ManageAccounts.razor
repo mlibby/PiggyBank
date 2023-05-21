@@ -1,10 +1,4 @@
 ﻿@attribute [Route(PageRoute.AccountIndex)]
-@using Microsoft.AspNetCore.Html;
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using PiggyBank.Data.Models
-@using PiggyBank.Shared.TreeView;
-@inject AccountService AccountService
-@inject ImportService ImportService
 
 <h1>Accounts</h1>
 
@@ -23,7 +17,7 @@
 {
     <p>Table will update after import completes.</p>
 }
-else if (_accounts is object)
+else if (_accounts is not null)
 {
     <PiggyBank.Shared.TreeView.TreeView Model="@AccountsToTreeViewModel(RootAccounts)" />
 }
@@ -42,7 +36,7 @@ else
     {
         get
         {
-            if (_accounts is object)
+            if (_accounts is not null)
             {
                 return _accounts.Where(a => a.Parent == null).ToList();
             }
