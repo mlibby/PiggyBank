@@ -9,6 +9,7 @@ public partial class IncomeExpense
     private DateOnly _priorYearEnd = DateOnly.MaxValue;
     private ICollection<Data.Models.Account>? _accounts;
     private Dictionary<string, Balances>? _balances;
+
     protected override async Task OnInitializedAsync()
     {
         _accounts = await AccountService.GetAccountsIncludeSplitsAsync();

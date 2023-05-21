@@ -6,6 +6,7 @@ public partial class ManageCommodities
     private int _recordCount = 0;
     private int _recordsProcessed = 0;
     private IEnumerable<Data.Models.Commodity>? _commodities;
+
     protected override async Task OnInitializedAsync() => _commodities = await CommodityService.GetCommoditiesAsync();
 
     protected async Task Import()

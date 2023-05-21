@@ -10,6 +10,7 @@ public partial class BudgetAmountIndex
     private string _notFoundMessage = "not found";
     private Data.Models.Budget? _budget = null;
     private TreeTableModel? _model = null;
+
     protected override async Task OnParametersSetAsync()
     {
         _loading = true;

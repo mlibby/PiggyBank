@@ -70,7 +70,7 @@ public partial class GnuCash : IDisposable
             if (_importCancellationTokenSource is not null && _importing)
             {
                 _importCancellationTokenSource.Cancel();
-                MessageService.NotifyWarning("GnuCash imports cancelled");
+                NotificationService.NotifyWarning("GnuCash imports cancelled");
 
                 _importing = false;
             }

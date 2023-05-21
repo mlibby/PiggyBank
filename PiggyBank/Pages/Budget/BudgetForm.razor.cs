@@ -11,6 +11,7 @@ public partial class BudgetForm
     private EditContext? _editContext;
     private ValidationMessageStore? _validationMessageStore;
     private int _budgetAmountCount = 0;
+
     protected override async Task OnParametersSetAsync()
     {
         var today = DateOnly.FromDateTime(DateTime.Today);

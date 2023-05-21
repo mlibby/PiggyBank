@@ -7,6 +7,7 @@ public partial class ManageTransactions : IDisposable
     private int _recordCount = 0;
     private int _recordsProcessed = 0;
     private IEnumerable<Data.Models.Transaction>? _transactions;
+
     protected override async Task OnInitializedAsync() => _transactions = await TransactionService.GetTransactionsAsync();
 
     async Task ImportClicked()
@@ -35,7 +36,7 @@ public partial class ManageTransactions : IDisposable
             if (_importCancellationTokenSource is not null && _importing)
             {
                 _importCancellationTokenSource.Cancel();
-                MessageService.NotifyWarning("GnuCash transaction import cancelled");
+                NotificationService.NotifyWarning("GnuCash transaction import cancelled");
 
                 _importing = false;
             }

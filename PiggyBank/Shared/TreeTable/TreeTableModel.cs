@@ -11,6 +11,7 @@ public class TreeTableModel
     public string Title { get; } = string.Empty;
 
     private int? _maxDepth = null;
+
     public int MaxDepth
     {
         get

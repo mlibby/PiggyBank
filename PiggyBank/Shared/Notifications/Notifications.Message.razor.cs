@@ -21,6 +21,7 @@ public partial class Notifications_Message
         { NotificationSeverity.Success, "icon-glasses-face" },
         { NotificationSeverity.Warning, "icon-shock-face" }
     };
+
     private string IconClass() => IconClasses[Message!.Severity];
 
     private string MessageClass() => Message!.Severity.ToString().ToLower();
