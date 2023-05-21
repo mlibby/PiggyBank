@@ -90,22 +90,22 @@ public partial class BudgetAmountCalculate
         };
         if (_model.IncludeAsset)
         {
-            config.AccountTypes.Add(PiggyBank.Data.Models.Account.AccountType.Asset);
+            config.AccountTypes.Add(Data.Models.Account.AccountType.Asset);
         }
 
         if (_model.IncludeExpense)
         {
-            config.AccountTypes.Add(PiggyBank.Data.Models.Account.AccountType.Expense);
+            config.AccountTypes.Add(Data.Models.Account.AccountType.Expense);
         }
 
         if (_model.IncludeIncome)
         {
-            config.AccountTypes.Add(PiggyBank.Data.Models.Account.AccountType.Income);
+            config.AccountTypes.Add(Data.Models.Account.AccountType.Income);
         }
 
         if (_model.IncludeLiability)
         {
-            config.AccountTypes.Add(PiggyBank.Data.Models.Account.AccountType.Liability);
+            config.AccountTypes.Add(Data.Models.Account.AccountType.Liability);
         }
 
         return config;
