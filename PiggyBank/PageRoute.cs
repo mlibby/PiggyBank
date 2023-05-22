@@ -5,16 +5,16 @@ public static class PageRoute
     public const string AccountIndex = "/account";
     public const string BudgetAdd = "/budget/add";
 
-    public const string BudgetAmountAdd = "/budget/{budgetId:guid}/amount/add";
+    public const string BudgetAmountAdd = "/budget/{BudgetId:guid}/amount/add";
     public static string BudgetAmountAddFor(Guid budgetId) => $"/budget/{budgetId}/amount/add";
 
-    public const string BudgetAmountCalculate = "/budget/{budgetId:guid}/amount/calculate";
+    public const string BudgetAmountCalculate = "/budget/{BudgetId:guid}/amount/calculate";
     public static string BudgetAmountCalculateFor(Guid budgetId) => $"/budget/{budgetId}/amount/calculate";
 
-    public const string BudgetAmountIndex = "/budget/{budgetId:guid}/amount";
+    public const string BudgetAmountIndex = "/budget/{BudgetId:guid}/amount";
     public static string BudgetAmountIndexFor(Guid budgetId) => $"/budget/{budgetId}/amount";
 
-    public const string BudgetEdit = "/budget/{budgetId:guid}/edit";
+    public const string BudgetEdit = "/budget/{BudgetId:guid}/edit";
     public static string BudgetEditFor(Guid budgetId) => $"/budget/{budgetId}/edit";
 
     public const string BudgetIndex = "/budget";
