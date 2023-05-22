@@ -1,11 +1,11 @@
-namespace PiggyBank.Pages.Commodity;
+namespace PiggyBank.Pages.CommodityPages;
 
 public partial class ManageCommodities
 {
     private bool _importing;
     private int _recordCount = 0;
     private int _recordsProcessed = 0;
-    private IEnumerable<Data.Models.Commodity>? _commodities;
+    private IEnumerable<Commodity>? _commodities;
 
     protected override async Task OnInitializedAsync() => _commodities = await CommodityService.GetCommoditiesAsync();
 

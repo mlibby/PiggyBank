@@ -1,4 +1,4 @@
-namespace PiggyBank.Pages.Report;
+namespace PiggyBank.Pages.ReportPages;
 
 public partial class IncomeExpense
 {
@@ -7,7 +7,7 @@ public partial class IncomeExpense
     private string _priorYear = null!;
     private DateOnly _priorYearStart = DateOnly.MinValue;
     private DateOnly _priorYearEnd = DateOnly.MaxValue;
-    private ICollection<Data.Models.Account>? _accounts;
+    private ICollection<Account>? _accounts;
     private Dictionary<string, Balances>? _balances;
 
     protected override async Task OnInitializedAsync()
@@ -35,9 +35,9 @@ public partial class IncomeExpense
         };
     }
 
-    protected string AccountName(object data) => ((Data.Models.Account)data).Name;
+    protected string AccountName(object data) => ((Account)data).Name;
 
-    protected TreeTableModel CreateTreeTableModel(Data.Models.Account.AccountType accountType)
+    protected TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
     {
         var columns = new List<string>
         {
@@ -67,7 +67,7 @@ public partial class IncomeExpense
         return model;
     }
 
-    protected void AddAccountsToModel(Data.Models.Account account, TreeTableModel model, TreeTableNodeModel? parent = null)
+    protected void AddAccountsToModel(Account account, TreeTableModel model, TreeTableNodeModel? parent = null)
     {
         var balances = new List<string>
         {
@@ -81,6 +81,6 @@ public partial class IncomeExpense
         }
     }
 
-    private Data.Models.Account? GetRootAccount(Data.Models.Account.AccountType accountType)
+    private Account? GetRootAccount(Account.AccountType accountType)
         => _accounts?.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
 }

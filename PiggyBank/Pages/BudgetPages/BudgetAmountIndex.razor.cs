@@ -1,4 +1,4 @@
-namespace PiggyBank.Pages.Budget;
+namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetAmountIndex
 {
@@ -49,7 +49,7 @@ public partial class BudgetAmountIndex
         _loading = false;
     }
 
-    private static Dictionary<Guid, Dictionary<DateOnly, string>> BuildAmountsDictionary(Data.Models.Budget budget)
+    private static Dictionary<Guid, Dictionary<DateOnly, string>> BuildAmountsDictionary(Budget budget)
     {
         Dictionary<Guid, Dictionary<DateOnly, string>> dict = new();
         foreach (var amount in budget.Amounts)

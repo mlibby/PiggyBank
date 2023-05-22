@@ -12,5 +12,5 @@ public partial class BudgetAmount : ModelBase
 
     public DateOnly AmountDate { get; set; }
 
-    public Decimal Value { get; set; } = Decimal.Zero;
+    public decimal Value { get; set; } = decimal.Zero;
 }

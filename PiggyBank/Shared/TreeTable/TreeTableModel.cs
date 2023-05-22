@@ -17,7 +17,6 @@ public class TreeTableModel
         get
         {
             _maxDepth ??= CalculateMaxDepth(null);
-
             return _maxDepth.Value;
         }
     }
@@ -42,7 +41,6 @@ public class TreeTableModel
         if (parent is not null)
         {
             parent.Children.Add(node);
-
         }
         else
         {

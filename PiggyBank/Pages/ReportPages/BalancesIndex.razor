@@ -1,0 +1,19 @@
+﻿@*@attribute [Route(PageRoute.ReportBalances)]
+
+<h1>Balances Report</h1>
+
+@if (_accounts is not null && _balances is not null)
+{
+    <div class="income-expense">
+        <h2>Report Date: @_endDate</h2>
+
+        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Asset)" />
+        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Equity)" />
+        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Liability)" />
+    </div>
+}
+else
+{
+    <p>Loading...</p>
+}
+*@

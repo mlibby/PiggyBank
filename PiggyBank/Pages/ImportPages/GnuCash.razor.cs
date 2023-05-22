@@ -1,4 +1,4 @@
-namespace PiggyBank.Pages.Import;
+namespace PiggyBank.Pages.ImportPages;
 
 public partial class GnuCash : IDisposable
 {

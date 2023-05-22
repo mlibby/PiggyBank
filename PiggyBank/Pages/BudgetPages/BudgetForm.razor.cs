@@ -1,4 +1,4 @@
-namespace PiggyBank.Pages.Budget;
+namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetForm
 {
@@ -18,7 +18,7 @@ public partial class BudgetForm
         if (BudgetId == Guid.Empty)
         {
             var nextYear = today.Year + 1;
-            _budget = new Data.Models.Budget()
+            _budget = new Budget()
             {
                 Id = Guid.Empty,
                 StartDate = new DateOnly(nextYear, 1, 1),

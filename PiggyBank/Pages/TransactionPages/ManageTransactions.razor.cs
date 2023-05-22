@@ -1,4 +1,4 @@
-namespace PiggyBank.Pages.Transaction;
+namespace PiggyBank.Pages.TransactionPages;
 
 public partial class ManageTransactions : IDisposable
 {
@@ -6,7 +6,7 @@ public partial class ManageTransactions : IDisposable
     private bool _importing;
     private int _recordCount = 0;
     private int _recordsProcessed = 0;
-    private IEnumerable<Data.Models.Transaction>? _transactions;
+    private IEnumerable<Transaction>? _transactions;
 
     protected override async Task OnInitializedAsync() => _transactions = await TransactionService.GetTransactionsAsync();
 

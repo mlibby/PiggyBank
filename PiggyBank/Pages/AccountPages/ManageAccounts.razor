@@ -1,0 +1,27 @@
+﻿@attribute [Route(PageRoute.AccountIndex)]
+
+<h1>Accounts</h1>
+
+<p>
+    @if (_importing)
+    {
+        @:Importing accounts from GnuCash (@_recordsProcessed / @_recordCount)
+    }
+    else
+    {
+        <button class="btn-primary" @onclick="Import">Import from GnuCash</button>
+    }
+</p>
+
+@if (_importing)
+{
+    <p>Table will update after import completes.</p>
+}
+else if (_accounts is not null)
+{
+    <PiggyBank.Shared.TreeView.TreeView Model="@AccountsToTreeViewModel(RootAccounts)" />
+}
+else
+{
+    <p>Loading...</p>
+}

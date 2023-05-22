@@ -1,4 +1,4 @@
-namespace PiggyBank.Pages.Budget;
+namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetAmountCalculate
 {
@@ -94,22 +94,22 @@ public partial class BudgetAmountCalculate
 
         if (_model.IncludeAsset)
         {
-            config.AccountTypes.Add(Data.Models.Account.AccountType.Asset);
+            config.AccountTypes.Add(Account.AccountType.Asset);
         }
 
         if (_model.IncludeExpense)
         {
-            config.AccountTypes.Add(Data.Models.Account.AccountType.Expense);
+            config.AccountTypes.Add(Account.AccountType.Expense);
         }
 
         if (_model.IncludeIncome)
         {
-            config.AccountTypes.Add(Data.Models.Account.AccountType.Income);
+            config.AccountTypes.Add(Account.AccountType.Income);
         }
 
         if (_model.IncludeLiability)
         {
-            config.AccountTypes.Add(Data.Models.Account.AccountType.Liability);
+            config.AccountTypes.Add(Account.AccountType.Liability);
         }
 
         return config;

@@ -21,6 +21,7 @@ public static class PageRoute
     public const string CommodityIndex = "/commodity";
     public const string ImportGnuCash = "/import/gnucash";
     public const string ImportOfx = "/import/ofx";
+    public const string ReportBalances = "/report/balances";
     public const string ReportBudget = "/report/budget";
     public const string ReportIncomeExpense = "/report/income-expense";
     public const string TransactionIndex = "/transaction";

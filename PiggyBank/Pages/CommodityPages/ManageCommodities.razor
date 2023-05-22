@@ -1,0 +1,53 @@
+﻿@attribute [Route(PageRoute.CommodityIndex)]
+
+<h1>Commodities</h1>
+
+<p>
+    @if (_importing)
+    {
+        @:Importing commodities from GnuCash (@_recordsProcessed / @_recordCount)
+    }
+    else
+    {
+        <button class="primary" @onclick="Import">Import from GnuCash</button>
+    }
+</p>
+
+@if (_importing)
+{
+    <p>Table will update after import completes.</p>
+}
+else if (_commodities is not null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Mnemonic</th>
+                <th>Cusip</th>
+                <th>Symbol</th>
+                <th>Precision</th>
+                <th>Locked</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var commodity in _commodities)
+            {
+                <tr>
+                    <td>@commodity.Name</td>
+                    <td>@commodity.Type</td>
+                    <td>@commodity.Mnemonic</td>
+                    <td>@commodity.Cusip</td>
+                    <td>@commodity.Symbol</td>
+                    <td>@commodity.Precision</td>
+                    <td>@commodity.IsLocked</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Loading...</p>
+}

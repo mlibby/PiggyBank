@@ -1,7 +1,7 @@
-namespace PiggyBank.Pages.Budget;
+namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetIndex
 {
-    private ICollection<Data.Models.Budget>? _budgets;
+    private ICollection<Budget>? _budgets;
     protected override async Task OnInitializedAsync() => _budgets = await BudgetService.GetBudgetsAsync();
 }

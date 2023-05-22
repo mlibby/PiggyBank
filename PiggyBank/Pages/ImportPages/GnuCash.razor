@@ -1,0 +1,32 @@
+﻿@attribute [Route(PageRoute.ImportGnuCash)]
+
+<h1>Import from GnuCash</h1>
+<p>
+    @if (_importing)
+    {
+        @:Importing from GnuCash...
+    }
+    else
+    {
+        <button class="primary" @onclick="Import">Import data from GnuCash</button>
+    }
+</p>
+
+<ul aria-live="polite">
+    <li>
+        <div id="commodities-label">Commodities</div>
+        <progress value="@CommodityProgress" role="progressbar" aria-labelledby="commodities-label" />
+    </li>
+    <li>
+        <div id="accounts-label">Accounts</div>
+        <progress value="@AccountProgress" role="progressbar" aria-labelledby="accounts-label" />
+    </li>
+    <li>
+        <div id="transactions-label">Transactions</div>
+        <progress value="@TransactionProgress" role="progressbar" aria-labelledby="transactions-label" />
+    </li>
+    @if (_complete)
+    {
+        <li>Finished!</li>
+    }
+</ul>
