@@ -2,10 +2,14 @@ namespace PiggyBank.Pages.AccountPages;
 
 public partial class ManageAccounts
 {
+    [Inject] private AccountService AccountService { get; set; } = default!;
+    [Inject] private ImportService ImportService { get; set; } = default!;
+
     private bool _importing;
     private int _recordCount = 0;
     private int _recordsProcessed = 0;
     private ICollection<Account>? _accounts;
+
     protected ICollection<Account> RootAccounts =>
         _accounts is not null ?
         _accounts.Where(a => a.Parent == null).ToList() :

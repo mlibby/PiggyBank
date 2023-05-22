@@ -18,14 +18,13 @@ public partial class Account
         return warnings;
     }
 
-    private string _FullName = null!;
-
+    private string _fullName = null!;
     [NotMapped]
     public string FullName
     {
         get
         {
-            if (string.IsNullOrWhiteSpace(_FullName))
+            if (string.IsNullOrWhiteSpace(_fullName))
             {
                 var names = new List<string>() { Name };
                 var account = Parent;
@@ -36,10 +35,10 @@ public partial class Account
                 }
 
                 names.Reverse();
-                _FullName = string.Join(":", names);
+                _fullName = string.Join(":", names);
             }
 
-            return _FullName;
+            return _fullName;
         }
     }
 }

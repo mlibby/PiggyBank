@@ -2,6 +2,8 @@ namespace PiggyBank.Shared.Notifications;
 
 public partial class Notifications_Message
 {
+    [Inject] private NotificationService NotificationService { get; set; } = default!;
+
     [Parameter]
     public NotificationMessage? Message { get; set; }
 

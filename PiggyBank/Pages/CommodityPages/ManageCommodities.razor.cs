@@ -2,6 +2,9 @@ namespace PiggyBank.Pages.CommodityPages;
 
 public partial class ManageCommodities
 {
+    [Inject] private CommodityService CommodityService { get; set; } = default!;
+    [Inject] private ImportService ImportService { get; set; } = default!;
+
     private bool _importing;
     private int _recordCount = 0;
     private int _recordsProcessed = 0;

@@ -2,8 +2,10 @@ namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetAmountCalculate
 {
-    [Parameter]
-    public Guid BudgetId { get; set; }
+    [Inject] private BudgetService BudgetService { get; set; } = default!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
+
+    [Parameter] public Guid BudgetId { get; set; }
 
     private bool _found = true;
     private string _notFoundMessage = "Budget not found";

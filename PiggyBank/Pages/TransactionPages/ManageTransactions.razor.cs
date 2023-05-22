@@ -2,6 +2,10 @@ namespace PiggyBank.Pages.TransactionPages;
 
 public partial class ManageTransactions : IDisposable
 {
+    [Inject] private TransactionService TransactionService { get; set; } = default!;
+    [Inject] private ImportService ImportService { get; set; } = default!;
+    [Inject] private NotificationService NotificationService { get; set; } = default!;
+
     private CancellationTokenSource? _importCancellationTokenSource;
     private bool _importing;
     private int _recordCount = 0;

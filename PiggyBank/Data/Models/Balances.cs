@@ -2,7 +2,7 @@
 
 public class Balances
 {
-    private readonly Dictionary<Guid, decimal> _Balances = new();
+    private readonly Dictionary<Guid, decimal> _balances = new();
 
     public DateOnly StartDate { get; }
     public DateOnly EndDate { get; }
@@ -24,8 +24,8 @@ public class Balances
     }
     public decimal this[Guid accountId]
     {
-        get => _Balances.TryGetValue(accountId, out var balance) ? balance : 0.0M;
-        set => _Balances[accountId] = value;
+        get => _balances.TryGetValue(accountId, out var balance) ? balance : 0.0M;
+        set => _balances[accountId] = value;
     }
 
     private void CalculateBalance(Account account)
@@ -46,9 +46,9 @@ public class Balances
         foreach (var childAccount in account.Children)
         {
             CalculateBalance(childAccount);
-            balance += _Balances[childAccount.Id];
+            balance += _balances[childAccount.Id];
         }
 
-        _Balances.Add(account.Id, balance);
+        _balances.Add(account.Id, balance);
     }
 }

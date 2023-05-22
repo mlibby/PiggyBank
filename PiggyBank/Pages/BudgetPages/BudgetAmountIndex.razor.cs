@@ -2,8 +2,9 @@ namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetAmountIndex
 {
-    [Parameter]
-    public Guid BudgetId { get; set; }
+    [Inject] private BudgetService BudgetService { get; set; } = default!;
+
+    [Parameter] public Guid BudgetId { get; set; }
 
     private bool _loading = true;
     private bool _found = true;
