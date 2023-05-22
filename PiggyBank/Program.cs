@@ -1,4 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.UseWebRoot("wwwroot").UseStaticWebAssets();
+
 var services = builder.Services;
 
 // Add services to the container.
