@@ -28,6 +28,8 @@ public class Balances
         set => _balances[accountId] = value;
     }
 
+    public bool TryGetValue(Guid accountId, out decimal balance) => _balances.TryGetValue(accountId, out balance);
+
     private void CalculateBalance(Account account)
     {
         var splits = account.Splits

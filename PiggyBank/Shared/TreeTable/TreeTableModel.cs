@@ -5,7 +5,7 @@ public class TreeTableModel
     public List<string> Columns { get; }
     public string FirstColumn { get; } = string.Empty;
 
-    public string Footer { get; set; } = null!;
+    public string? Footer { get; set; } = null;
     public List<string> FooterValues { get; set; } = new List<string>();
 
     public string Title { get; } = string.Empty;

@@ -6,22 +6,16 @@ public partial class BalancesIndex
 
     private DateOnly _today = DateOnly.MinValue;
     private int _monthsToShow = 12;
-    private List<DateOnly> _periods = new List<DateOnly>();
+    private List<DateOnly> _periods = new();
     private ICollection<Account>? _accounts;
-    private Dictionary<Guid, Balances>? _balances;
 
     protected override async Task OnInitializedAsync()
     {
         _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
         _today = DateOnly.FromDateTime(DateTime.Now);
-
-        _balances = new Dictionary<Guid, Balances>();
-
-        _periods.AddRange(DateHelper.CalculatePeriods(_today.AddMonths(-_monthsToShow), _today));
-        foreach (var period in _periods)
-        {
-            var balances = new Balances(_accounts, period, period.AddMonths(1).AddDays(-1));
-        }
+        var currentPeriod = new DateOnly(_today.Year, _today.Month, 1);
+        _periods.AddRange(DateHelper.CalculatePeriods(currentPeriod.AddMonths(-_monthsToShow), currentPeriod));
+        _periods.Reverse();
     }
 
     protected string AccountName(object data) => ((Account)data).Name;
@@ -36,15 +30,21 @@ public partial class BalancesIndex
             return model;
         }
 
+        Dictionary<DateOnly, Balances>? balances = new();
+        foreach (var period in _periods)
+        {
+            balances[period] = new Balances(_accounts, DateOnly.MinValue, period.AddMonths(1).AddDays(-1));
+        }
+
         var rootAccount = GetRootAccount(accountType);
         if (rootAccount is not null)
         {
             foreach (var account in rootAccount.Children.OrderBy(c => c.Name))
             {
-                AddAccountsToModel(account, model);
+                AddAccountsToModel(account, model, null, balances);
             }
 
-            model.Footer = $"Total {rootAccount.Name}";
+            //model.Footer = $"Total {rootAccount.Name}";
             //model.FooterValues.Add(rootAccount.Commodity.DisplayAmount(_balances!["YTD"][rootAccount.Id]));
             //model.FooterValues.Add(rootAccount.Commodity.DisplayAmount(_balances![_priorYear][rootAccount.Id]));
         }
@@ -52,17 +52,33 @@ public partial class BalancesIndex
         return model;
     }
 
-    protected void AddAccountsToModel(Data.Models.Account account, TreeTableModel model, TreeTableNodeModel? parent = null)
+    protected void AddAccountsToModel(
+        Account account,
+        TreeTableModel model,
+        TreeTableNodeModel? parent,
+        Dictionary<DateOnly, Balances> dateBalances)
     {
-        var balances = new List<string>
+        List<string> balanceDisplays = new();
+        foreach (var period in _periods)
         {
-            //account.Commodity.DisplayAmount(_balances!["YTD"][account.Id]),
-            //account.Commodity.DisplayAmount(_balances![_priorYear][account.Id])
-        };
-        var node = model.CreateNode(account.Name, balances, parent);
-        foreach (var childAccount in account.Children.OrderBy(a => a.Name))
+            if (dateBalances.TryGetValue(period, out var balances) && balances.TryGetValue(account.Id, out var balance))
+            {
+                balanceDisplays.Add(account.DisplayAmount(balance));
+            }
+            else
+            {
+                balanceDisplays.Add("n/a");
+            }
+        }
+
+        if (!account.IsHidden)
         {
-            AddAccountsToModel(childAccount, model, node);
+            var node = model.CreateNode(account.Name, balanceDisplays, parent);
+
+            foreach (var childAccount in account.Children.OrderBy(a => a.Name))
+            {
+                AddAccountsToModel(childAccount, model, node, dateBalances);
+            }
         }
     }
 

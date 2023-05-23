@@ -2,19 +2,18 @@
 
 <h1>Balances Report</h1>
 
-<EditForm>
+<form>
     <div class="field">
         <InputNumber id="months-to-show" @bind-Value="_monthsToShow" />
         <label for="months-to-show">Months to show</label>
     </div>
-</EditForm>
+</form>
 
-@if (_accounts is not null && _balances is not null)
+@if (_accounts is not null)
 {
     <h2>Report Date: @_today</h2>
 
     <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Asset)" />
-    <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Equity)" />
     <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Liability)" />
 }
 else
