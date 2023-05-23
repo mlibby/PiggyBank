@@ -4,25 +4,21 @@ public partial class BalancesIndex
 {
     [Inject] private AccountService AccountService { get; set; } = default!;
 
-    private DateOnly _startDate = DateOnly.MinValue;
-    private DateOnly _endDate = DateOnly.MaxValue;
-    private string _priorYear = null!;
-    private DateOnly _priorYearStart = DateOnly.MinValue;
-    private DateOnly _priorYearEnd = DateOnly.MaxValue;
+    private DateOnly _today = DateOnly.MinValue;
+    private int _monthsToShow = 12;
+    private List<DateOnly> _periods = new List<DateOnly>();
     private ICollection<Account>? _accounts;
     private Dictionary<Guid, Balances>? _balances;
 
     protected override async Task OnInitializedAsync()
     {
         _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
-        var endDate = DateTime.Now;
-        _endDate = DateOnly.FromDateTime(endDate);
-        _startDate = _endDate.AddYears(-1);
+        _today = DateOnly.FromDateTime(DateTime.Now);
 
         _balances = new Dictionary<Guid, Balances>();
 
-        var periods = DateHelper.CalculatePeriods(_startDate, _endDate);
-        foreach (var period in periods)
+        _periods.AddRange(DateHelper.CalculatePeriods(_today.AddMonths(-_monthsToShow), _today));
+        foreach (var period in _periods)
         {
             var balances = new Balances(_accounts, period, period.AddMonths(1).AddDays(-1));
         }
@@ -32,12 +28,8 @@ public partial class BalancesIndex
 
     protected TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
     {
-        var columns = new List<string>
-        {
-            "YTD",
-            _priorYear
-        };
-        var tableTitle = $"{accountType} Totals for Year to Date and {_priorYear}";
+        var columns = _periods.Select(p => p.ToString()).ToList();
+        var tableTitle = $"{accountType} Balances";
         var model = new TreeTableModel(tableTitle, "Account", columns);
         if (_accounts is null)
         {
