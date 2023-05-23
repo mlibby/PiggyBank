@@ -1,2 +1,0 @@
-Add-Migration -c PiggyBankContext [MigrationName] -verbose
-Update-Database -Context PiggyBankSqliteContext --verbose

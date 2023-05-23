@@ -1,0 +1,20 @@
+DB Commands (from Package Manager Console)
+
+Add-Migration -c PiggyBankContext [MigrationName] -verbose
+Update-Database -Context PiggyBankSqliteContext --verbose
+
+
+DB reset (SQL)
+
+delete from BudgetAmounts;
+delete from Budgets;
+delete from Splits;
+delete from Transactions;
+delete from Accounts;
+delete from Commodities;
+
+
+Command Line
+
+dotnet run --project PiggyBank --urls "https://*:5000"
+dotnet ef database update --project PiggyBank --context PiggyBankContext
