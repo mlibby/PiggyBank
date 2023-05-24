@@ -1,6 +1,6 @@
 ﻿namespace PiggyBank.Helpers;
 
-public class DateHelper
+public static class DateHelper
 {
     public enum PeriodType
     {
@@ -15,6 +15,17 @@ public class DateHelper
         for (var thisDate = startDate; thisDate <= endDate; thisDate = thisDate.AddMonths(monthsToAdd))
         {
             periods.Add(thisDate);
+        }
+
+        return periods;
+    }
+
+    public static List<DateRange> CalculateDateRanges(DateOnly startDate, DateOnly endDate)
+    {
+        var periods = new List<DateRange>();
+        for (var thisDate = startDate; thisDate <= endDate; thisDate = thisDate.AddMonths(1))
+        {
+            periods.Add(new DateRange(thisDate, thisDate.AddMonths(1).AddDays(-1)));
         }
 
         return periods;

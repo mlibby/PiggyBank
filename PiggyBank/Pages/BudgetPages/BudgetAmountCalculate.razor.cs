@@ -1,6 +1,6 @@
 namespace PiggyBank.Pages.BudgetPages;
 
-public partial class BudgetAmountCalculate
+public partial class BudgetAmountCalculate : ComponentBase
 {
     [Inject] private BudgetService BudgetService { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;

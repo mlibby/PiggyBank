@@ -2,14 +2,21 @@
 
 <h1>Balances Report</h1>
 
-<form>
+<p>This report is under construction, but may provide some value in its current state.</p>
+<p>
+    NOTE: Accounts that use your default currency will be correct. Investments are totalled using price at purchase
+    and do not account for updated prices. This is on the list of things to change.
+</p>
+
+@*<form>
     <div class="field">
-        <InputNumber id="months-to-show" @bind-Value="_monthsToShow" />
         <label for="months-to-show">Months to show</label>
+        <InputNumber id="months-to-show" @bind-Value="_monthsToShow" @onchange="RebuildTable" />
     </div>
 </form>
+*@
 
-@if (_accounts is not null)
+@if (_accounts is not null && _periodRanges is not null)
 {
     <h2>Report Date: @_today</h2>
 

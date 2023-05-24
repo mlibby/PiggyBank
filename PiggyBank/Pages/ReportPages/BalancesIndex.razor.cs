@@ -6,23 +6,46 @@ public partial class BalancesIndex
 
     private DateOnly _today = DateOnly.MinValue;
     private int _monthsToShow = 12;
-    private List<DateOnly> _periods = new();
+    private List<DateRange>? _periodRanges = null;
     private ICollection<Account>? _accounts;
 
     protected override async Task OnInitializedAsync()
     {
         _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
-        _today = DateOnly.FromDateTime(DateTime.Now);
-        var currentPeriod = new DateOnly(_today.Year, _today.Month, 1);
-        _periods.AddRange(DateHelper.CalculatePeriods(currentPeriod.AddMonths(-_monthsToShow), currentPeriod));
-        _periods.Reverse();
+        ComputePeriods();
     }
 
     protected string AccountName(object data) => ((Account)data).Name;
 
-    protected TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
+    protected void RebuildTable()
     {
-        var columns = _periods.Select(p => p.ToString()).ToList();
+        ComputePeriods();
+        StateHasChanged();
+    }
+
+    protected void ComputePeriods()
+    {
+        _periodRanges = null;
+
+        _today = DateOnly.FromDateTime(DateTime.Now);
+        List<DateRange> periodRanges = new();
+        var currentPeriod = new DateRange(new DateOnly(_today.Year, _today.Month, 1), _today);
+        periodRanges.Add(currentPeriod);
+        var periods = DateHelper.CalculateDateRanges(currentPeriod.StartDate.AddMonths(-_monthsToShow), currentPeriod.StartDate);
+        periods.Reverse();
+        periodRanges.AddRange(periods.Where(p => p.EndDate < _today));
+
+        _periodRanges = periodRanges;
+    }
+
+    protected TreeTableModel? CreateTreeTableModel(Account.AccountType accountType)
+    {
+        if (_periodRanges is null)
+        {
+            return null;
+        }
+
+        var columns = _periodRanges.Select(p => p.EndDate.ToString()).ToList();
         var tableTitle = $"{accountType} Balances";
         var model = new TreeTableModel(tableTitle, "Account", columns);
         if (_accounts is null)
@@ -31,9 +54,9 @@ public partial class BalancesIndex
         }
 
         Dictionary<DateOnly, Balances>? balances = new();
-        foreach (var period in _periods)
+        foreach (var periodRange in _periodRanges)
         {
-            balances[period] = new Balances(_accounts, DateOnly.MinValue, period.AddMonths(1).AddDays(-1));
+            balances[periodRange.EndDate] = new Balances(_accounts, DateOnly.MinValue, periodRange.EndDate);
         }
 
         var rootAccount = GetRootAccount(accountType);
@@ -58,10 +81,15 @@ public partial class BalancesIndex
         TreeTableNodeModel? parent,
         Dictionary<DateOnly, Balances> dateBalances)
     {
-        List<string> balanceDisplays = new();
-        foreach (var period in _periods)
+        if (_periodRanges is null)
         {
-            if (dateBalances.TryGetValue(period, out var balances) && balances.TryGetValue(account.Id, out var balance))
+            return;
+        }
+
+        List<string> balanceDisplays = new();
+        foreach (var periodRange in _periodRanges)
+        {
+            if (dateBalances.TryGetValue(periodRange.EndDate, out var balances) && balances.TryGetValue(account.Id, out var balance))
             {
                 balanceDisplays.Add(account.DisplayAmount(balance));
             }
