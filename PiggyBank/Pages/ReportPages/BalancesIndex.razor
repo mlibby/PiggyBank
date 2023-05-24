@@ -1,19 +1,29 @@
-﻿@*@attribute [Route(PageRoute.ReportBalances)]
+﻿@attribute [Route(PageRoute.ReportBalances)]
 
 <h1>Balances Report</h1>
 
-@if (_accounts is not null && _balances is not null)
-{
-    <div class="income-expense">
-        <h2>Report Date: @_endDate</h2>
+<p>This report is under construction, but may provide some value in its current state.</p>
+<p>
+    NOTE: Accounts that use your default currency will be correct. Investments are totalled using price at purchase
+    and do not account for updated prices. This is on the list of things to change.
+</p>
 
-        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Asset)" />
-        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Equity)" />
-        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Liability)" />
+@*<form>
+    <div class="field">
+        <label for="months-to-show">Months to show</label>
+        <InputNumber id="months-to-show" @bind-Value="_monthsToShow" @onchange="RebuildTable" />
     </div>
+</form>
+*@
+
+@if (_accounts is not null && _periodRanges is not null)
+{
+    <h2>Report Date: @_today</h2>
+
+    <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Asset)" />
+    <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Liability)" />
 }
 else
 {
     <p>Loading...</p>
 }
-*@

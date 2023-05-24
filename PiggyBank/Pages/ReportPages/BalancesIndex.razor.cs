@@ -4,44 +4,59 @@ public partial class BalancesIndex
 {
     [Inject] private AccountService AccountService { get; set; } = default!;
 
-    private DateOnly _startDate = DateOnly.MinValue;
-    private DateOnly _endDate = DateOnly.MaxValue;
-    private string _priorYear = null!;
-    private DateOnly _priorYearStart = DateOnly.MinValue;
-    private DateOnly _priorYearEnd = DateOnly.MaxValue;
+    private DateOnly _today = DateOnly.MinValue;
+    private int _monthsToShow = 12;
+    private List<DateRange>? _periodRanges = null;
     private ICollection<Account>? _accounts;
-    private Dictionary<Guid, Balances>? _balances;
 
     protected override async Task OnInitializedAsync()
     {
         _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
-        var endDate = DateTime.Now;
-        _endDate = DateOnly.FromDateTime(endDate);
-        _startDate = _endDate.AddYears(-1);
-
-        _balances = new Dictionary<Guid, Balances>();
-
-        var periods = DateHelper.CalculatePeriods(_startDate, _endDate);
-        foreach (var period in periods)
-        {
-            var balances = new Balances(_accounts, period, period.AddMonths(1).AddDays(-1));
-        }
+        ComputePeriods();
     }
 
     protected string AccountName(object data) => ((Account)data).Name;
 
-    protected TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
+    protected void RebuildTable()
     {
-        var columns = new List<string>
+        ComputePeriods();
+        StateHasChanged();
+    }
+
+    protected void ComputePeriods()
+    {
+        _periodRanges = null;
+
+        _today = DateOnly.FromDateTime(DateTime.Now);
+        List<DateRange> periodRanges = new();
+        var currentPeriod = new DateRange(new DateOnly(_today.Year, _today.Month, 1), _today);
+        periodRanges.Add(currentPeriod);
+        var periods = DateHelper.CalculateDateRanges(currentPeriod.StartDate.AddMonths(-_monthsToShow), currentPeriod.StartDate);
+        periods.Reverse();
+        periodRanges.AddRange(periods.Where(p => p.EndDate < _today));
+
+        _periodRanges = periodRanges;
+    }
+
+    protected TreeTableModel? CreateTreeTableModel(Account.AccountType accountType)
+    {
+        if (_periodRanges is null)
         {
-            "YTD",
-            _priorYear
-        };
-        var tableTitle = $"{accountType} Totals for Year to Date and {_priorYear}";
+            return null;
+        }
+
+        var columns = _periodRanges.Select(p => p.EndDate.ToString()).ToList();
+        var tableTitle = $"{accountType} Balances";
         var model = new TreeTableModel(tableTitle, "Account", columns);
         if (_accounts is null)
         {
             return model;
+        }
+
+        Dictionary<DateOnly, Balances>? balances = new();
+        foreach (var periodRange in _periodRanges)
+        {
+            balances[periodRange.EndDate] = new Balances(_accounts, DateOnly.MinValue, periodRange.EndDate);
         }
 
         var rootAccount = GetRootAccount(accountType);
@@ -49,10 +64,10 @@ public partial class BalancesIndex
         {
             foreach (var account in rootAccount.Children.OrderBy(c => c.Name))
             {
-                AddAccountsToModel(account, model);
+                AddAccountsToModel(account, model, null, balances);
             }
 
-            model.Footer = $"Total {rootAccount.Name}";
+            //model.Footer = $"Total {rootAccount.Name}";
             //model.FooterValues.Add(rootAccount.Commodity.DisplayAmount(_balances!["YTD"][rootAccount.Id]));
             //model.FooterValues.Add(rootAccount.Commodity.DisplayAmount(_balances![_priorYear][rootAccount.Id]));
         }
@@ -60,17 +75,38 @@ public partial class BalancesIndex
         return model;
     }
 
-    protected void AddAccountsToModel(Data.Models.Account account, TreeTableModel model, TreeTableNodeModel? parent = null)
+    protected void AddAccountsToModel(
+        Account account,
+        TreeTableModel model,
+        TreeTableNodeModel? parent,
+        Dictionary<DateOnly, Balances> dateBalances)
     {
-        var balances = new List<string>
+        if (_periodRanges is null)
         {
-            //account.Commodity.DisplayAmount(_balances!["YTD"][account.Id]),
-            //account.Commodity.DisplayAmount(_balances![_priorYear][account.Id])
-        };
-        var node = model.CreateNode(account.Name, balances, parent);
-        foreach (var childAccount in account.Children.OrderBy(a => a.Name))
+            return;
+        }
+
+        List<string> balanceDisplays = new();
+        foreach (var periodRange in _periodRanges)
         {
-            AddAccountsToModel(childAccount, model, node);
+            if (dateBalances.TryGetValue(periodRange.EndDate, out var balances) && balances.TryGetValue(account.Id, out var balance))
+            {
+                balanceDisplays.Add(account.DisplayAmount(balance));
+            }
+            else
+            {
+                balanceDisplays.Add("n/a");
+            }
+        }
+
+        if (!account.IsHidden)
+        {
+            var node = model.CreateNode(account.Name, balanceDisplays, parent);
+
+            foreach (var childAccount in account.Children.OrderBy(a => a.Name))
+            {
+                AddAccountsToModel(childAccount, model, node, dateBalances);
+            }
         }
     }
 

@@ -2,21 +2,14 @@
 
 public partial class Account
 {
-    public static IEnumerable<ValidationWarning> Validate(List<Account> accounts)
+    private static Dictionary<AccountType, decimal> s_displayMultiplier = new()
     {
-        var warnings = new List<ValidationWarning>();
-        foreach (var account in accounts)
-        {
-            if (!account.IsPlaceholder && account.Children.Count > 0)
-            {
-                warnings.Add(new ValidationWarning(
-                    account,
-                    "Non-placeholder account may not have sub-accounts. Please move sub-accounts to a placeholder or mark account as a placeholder."));
-            }
-        }
-
-        return warnings;
-    }
+        { AccountType.Asset, 1.0m },
+        { AccountType.Equity, -1.0m },
+        { AccountType.Expense, -1.0m },
+        { AccountType.Income, 1.0m },
+        { AccountType.Liability, -1.0m }
+    };
 
     private string _fullName = null!;
     [NotMapped]
@@ -40,5 +33,27 @@ public partial class Account
 
             return _fullName;
         }
+    }
+
+    public static IEnumerable<ValidationWarning> Validate(List<Account> accounts)
+    {
+        var warnings = new List<ValidationWarning>();
+        foreach (var account in accounts)
+        {
+            if (!account.IsPlaceholder && account.Children.Count > 0)
+            {
+                warnings.Add(new ValidationWarning(
+                    account,
+                    "Non-placeholder account may not have sub-accounts. Please move sub-accounts to a placeholder or mark account as a placeholder."));
+            }
+        }
+
+        return warnings;
+    }
+
+    public string DisplayAmount(decimal amount)
+    {
+        amount = s_displayMultiplier[Type] * amount;
+        return Commodity.DisplayAmount(amount);
     }
 }
