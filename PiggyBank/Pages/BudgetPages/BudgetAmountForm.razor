@@ -1,0 +1,45 @@
+﻿@attribute [Route(PageRoute.BudgetAmountAdd)]
+@attribute [Route(PageRoute.BudgetAmountEdit)]
+
+@if (!_found)
+{
+    <Notifications_NotFound Message="@_notFoundMessage" />
+}
+else if (_loading)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <h1>@Action Budget Amounts for "@(_model.Budget.Name)"</h1>
+
+    <EditForm EditContext="_editContext" OnValidSubmit="Save">
+        <DataAnnotationsValidator />
+        <ValidationSummary role="alert" aria-label="budget amounts form errors" />
+
+        <div class="field">
+            <label for="account">Account</label>
+            <InputSelect id="account" @bind-Value="_model.AccountId">
+                <option value="">Select Account...</option>
+                @foreach (var account in _model.Accounts)
+                {
+                    <option value="@account.Id">@account.FullName</option>
+                }
+            </InputSelect>
+        </div>
+
+        @foreach (var period in _model.Amounts.Keys.Order())
+        {
+            <div class="field">
+                <label for="period">Name</label>
+                <InputText id="period" @bind-Value="_model.Amounts[period]" required aria-required="true" />
+                <ValidationMessage For="() => _model.Amounts[period]" />
+            </div>
+        }
+
+        <div class="buttons">
+            <button class="primary" type="submit">Save</button>
+            <button class="light" type="button" @onclick="Cancel">Cancel</button>
+        </div>
+    </EditForm>
+}

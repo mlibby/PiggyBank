@@ -2,6 +2,16 @@ namespace PiggyBank.Data.Services;
 
 public record BudgetService(PiggyBankContext Context)
 {
+    public async Task<Budget?> GetBudgetAccountAmountsAsync(Guid budgetId, Guid accountId) =>
+        await Context.Budgets
+            .Include(b => b.Amounts.Where(a => a.AccountId == accountId))
+            .ThenInclude(a => a.Account)
+            .ThenInclude(a => a.Commodity)
+            .Include(b => b.Amounts)
+            .ThenInclude(a => a.Account)
+            .ThenInclude(a => a.Parent)
+            .SingleOrDefaultAsync(b => b.Id == budgetId);
+
     public async Task<int> GetBudgetAmountCountAsync(Guid budgetId) =>
         await Context.BudgetAmounts.CountAsync(ba => ba.BudgetId == budgetId);
 
@@ -10,6 +20,9 @@ public record BudgetService(PiggyBankContext Context)
             .Include(b => b.Amounts)
             .ThenInclude(a => a.Account)
             .ThenInclude(a => a.Commodity)
+            .Include(b => b.Amounts)
+            .ThenInclude(a => a.Account)
+            .ThenInclude(a => a.Parent)
             .SingleOrDefaultAsync(b => b.Id == budgetId);
 
     public async Task<ICollection<Budget>> GetBudgetsAsync() =>

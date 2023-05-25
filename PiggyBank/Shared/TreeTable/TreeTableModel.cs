@@ -1,4 +1,6 @@
-﻿namespace PiggyBank.Shared.TreeTable;
+﻿using System.Web;
+
+namespace PiggyBank.Shared.TreeTable;
 
 public class TreeTableModel
 {
@@ -33,7 +35,10 @@ public class TreeTableModel
 
     private void Nodes_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => _maxDepth = null;
 
-    public TreeTableNodeModel CreateNode(string header, List<string> values, TreeTableNodeModel? parent = null)
+    public TreeTableNodeModel CreateNode(string header, List<string> values, TreeTableNodeModel? parent = null) =>
+        CreateNode(new MarkupString(HttpUtility.HtmlEncode(header)), values, parent);
+
+    public TreeTableNodeModel CreateNode(MarkupString header, List<string> values, TreeTableNodeModel? parent = null)
     {
         var node = new TreeTableNodeModel(header, values);
         node.Children.CollectionChanged += Nodes_CollectionChanged;
@@ -75,12 +80,12 @@ public class TreeTableNodeModel
 {
     public ObservableCollection<TreeTableNodeModel> Children { get; } = new ObservableCollection<TreeTableNodeModel>();
     public List<string> Values { get; }
-    public string Header { get; }
+    public MarkupString Header { get; }
 
     /// <summary>
     /// WARNING: do not use this constructor. Use <c>TreeTableModel.CreateNode(...)</c> instead.
     /// </summary>
-    internal TreeTableNodeModel(string header, List<string> values)
+    internal TreeTableNodeModel(MarkupString header, List<string> values)
     {
         Header = header;
         Values = values;
