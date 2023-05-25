@@ -43,7 +43,8 @@ public partial class BudgetAmountIndex
                 }
             }
 
-            var node = new TreeTableNodeModel(account.FullName, values);
+            var editLink = new MarkupString($"<a href='{PageRoute.BudgetAmountEditFor(_budget.Id, account.Id)}'>{account.FullName}</a>");
+            var node = _model.CreateNode(editLink, values);
             _model.Nodes.Add(node);
         }
 

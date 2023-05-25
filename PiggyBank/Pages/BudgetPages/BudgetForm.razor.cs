@@ -9,7 +9,7 @@ public partial class BudgetForm
 
     private bool _found = true;
     private string _notFoundMessage = "";
-    private Data.Models.Budget? _budget;
+    private Budget? _budget;
     private EditContext? _editContext;
     private ValidationMessageStore? _validationMessageStore;
     private int _budgetAmountCount = 0;

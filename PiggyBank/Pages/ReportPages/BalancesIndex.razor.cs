@@ -45,7 +45,7 @@ public partial class BalancesIndex
             return null;
         }
 
-        var columns = _periodRanges.Select(p => p.EndDate.ToString()).ToList();
+        var columns = _periodRanges.Select(p => p.EndDate.ToString()).ToList<string>();
         var tableTitle = $"{accountType} Balances";
         var model = new TreeTableModel(tableTitle, "Account", columns);
         if (_accounts is null)
