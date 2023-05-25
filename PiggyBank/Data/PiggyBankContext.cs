@@ -86,7 +86,7 @@ public class PiggyBankContext : IdentityDbContext
             entity.Property(e => e.Name).HasMaxLength(255);
             entity.Property(e => e.Source).HasConversion<string>(
                 v => v.ToString(),
-                v => (Source.SourceType)Enum.Parse(typeof(Source.SourceType), v));
+                v => (DataSource.DataSourceType)Enum.Parse(typeof(DataSource.DataSourceType), v));
             entity.Property(e => e.Symbol).HasMaxLength(16);
             entity.Property(e => e.Type).HasConversion<string>();
         });

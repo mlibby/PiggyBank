@@ -31,7 +31,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 {
                     account = new Account()
                     {
-                        Source = Source.SourceType.GnuCash
+                        Source = DataSource.DataSourceType.GnuCash
                     };
                     PiggyBankContext.Accounts.Add(account);
                 }
@@ -75,7 +75,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 {
                     commodity = new Commodity()
                     {
-                        Source = Source.SourceType.GnuCash
+                        Source = DataSource.DataSourceType.GnuCash
                     };
                     PiggyBankContext.Commodities.Add(commodity);
                 }
@@ -104,7 +104,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
             count.Report(gncTransactions.Count);
 
             var existingTransactionIds = await PiggyBankContext.Transactions
-                .Where(t => t.Source == Source.SourceType.GnuCash)
+                .Where(t => t.Source == DataSource.DataSourceType.GnuCash)
                 .Select(t => t.Id)
                 .ToListAsync();
 
@@ -119,7 +119,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 {
                     transaction = new Transaction()
                     {
-                        Source = Source.SourceType.GnuCash
+                        Source = DataSource.DataSourceType.GnuCash
                     };
                     PiggyBankContext.Transactions.Add(transaction);
                 }
@@ -233,7 +233,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
 
             split = new Split()
             {
-                Source = Source.SourceType.GnuCash
+                Source = DataSource.DataSourceType.GnuCash
             };
 
             transaction.Splits.Add(split);

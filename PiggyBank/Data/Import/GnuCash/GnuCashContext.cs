@@ -32,7 +32,7 @@ public partial class GnuCashContext : DbContext
 
     public virtual DbSet<GncOrder> Orders { get; set; }
 
-    public virtual DbSet<GncPrice> Prices { get; set; }
+    public virtual DbSet<Price> Prices { get; set; }
 
     public virtual DbSet<GncRecurrence> Recurrences { get; set; }
 
@@ -573,7 +573,7 @@ public partial class GnuCashContext : DbContext
                 .HasColumnName("reference");
         });
 
-        modelBuilder.Entity<GncPrice>(entity =>
+        modelBuilder.Entity<Price>(entity =>
         {
             entity.HasKey(e => e.Guid);
 

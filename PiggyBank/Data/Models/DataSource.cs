@@ -1,8 +1,8 @@
 ﻿namespace PiggyBank.Data.Models;
 
-public static class Source
+public static class DataSource
 {
-    public enum SourceType
+    public enum DataSourceType
     {
         User,
         GnuCash,
