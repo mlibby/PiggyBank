@@ -4,6 +4,11 @@ public partial class Price
 {
     public enum PriceType
     {
-        { "bid" | "ask" | "last" | "nav" | "transaction" | "unknown" },
+        Ask = 1,
+        Bid = 2,
+        Last = 3,
+        NetAssetValue = 4,
+        Transaction = 5,
+        Unknown = 6,
     }
 }

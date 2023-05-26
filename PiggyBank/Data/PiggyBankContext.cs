@@ -19,6 +19,8 @@ public class PiggyBankContext : IdentityDbContext
 
     public virtual DbSet<ExternalId> ExternalIds { get; set; } = null!;
 
+    public virtual DbSet<Price> Prices { get; set; } = null!;
+
     public virtual DbSet<Split> Splits { get; set; } = null!;
 
     public virtual DbSet<Transaction> Transactions { get; set; } = null!;
@@ -114,6 +116,18 @@ public class PiggyBankContext : IdentityDbContext
                 .HasColumnName("ExternalId");
             entity.Property(e => e.Type).HasConversion<string>();
             entity.Property(e => e.Source).HasConversion<string>();
+        });
+
+        modelBuilder.Entity<Price>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Date).HasColumnType("date");
+            entity.Property(e => e.Value).HasColumnType("decimal(28, 9)");
+            entity.HasOne(d => d.Commodity).WithMany()
+                .HasForeignKey(d => d.CommodityId)
+                .HasConstraintName("FK_Prices_Commodities");
         });
 
         modelBuilder.Entity<Split>(entity =>

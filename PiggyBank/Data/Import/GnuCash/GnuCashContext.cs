@@ -573,7 +573,7 @@ public partial class GnuCashContext : DbContext
                 .HasColumnName("reference");
         });
 
-        modelBuilder.Entity<Price>(entity =>
+        modelBuilder.Entity<GncPrice>(entity =>
         {
             entity.HasKey(e => e.Guid);
 

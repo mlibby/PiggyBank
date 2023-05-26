@@ -410,6 +410,36 @@ namespace PiggyBank.Data.Migrations
                     b.ToTable("ExternalIds");
                 });
 
+            modelBuilder.Entity("PiggyBank.Data.Models.Price", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("CommodityId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("PriceSource")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Source")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(28, 9)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommodityId");
+
+                    b.ToTable("Prices");
+                });
+
             modelBuilder.Entity("PiggyBank.Data.Models.Split", b =>
                 {
                     b.Property<Guid>("Id")
@@ -564,6 +594,18 @@ namespace PiggyBank.Data.Migrations
                     b.Navigation("Account");
 
                     b.Navigation("Budget");
+                });
+
+            modelBuilder.Entity("PiggyBank.Data.Models.Price", b =>
+                {
+                    b.HasOne("PiggyBank.Data.Models.Commodity", "Commodity")
+                        .WithMany()
+                        .HasForeignKey("CommodityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Prices_Commodities");
+
+                    b.Navigation("Commodity");
                 });
 
             modelBuilder.Entity("PiggyBank.Data.Models.Split", b =>

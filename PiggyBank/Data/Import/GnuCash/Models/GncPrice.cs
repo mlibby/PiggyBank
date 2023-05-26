@@ -33,10 +33,10 @@ public partial class GncPrice
         { "user:xfer-dialog", Price.PriceSourceType.TransferDialog },
     };
 
-    public Dictionary<string, Price.PriceType> PriceTypeMap = new() {
-        {
-            { "bid" | "ask" | "last" | "nav" | "transaction" | "unknown" }
-    }
+    //public Dictionary<string, Price.PriceType> PriceTypeMap = new() {
+    //    {
+    //        { "bid" | "ask" | "last" | "nav" | "transaction" | "unknown" }
+    //}
 
-    }
+    //}
 }

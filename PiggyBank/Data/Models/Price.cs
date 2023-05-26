@@ -4,7 +4,7 @@ public partial class Price : SourceModelBase
 {
     public Guid CommodityId { get; set; }
 
-    public Guid CurrencyId { get; set; }
+    public virtual Commodity Commodity { get; set; } = null!;
 
     public DateOnly Date { get; set; }
 
@@ -12,7 +12,5 @@ public partial class Price : SourceModelBase
 
     public PriceType Type { get; set; }
 
-    public long ValueNumber { get; set; }
-
-    public long ValueDenomination { get; set; }
+    public decimal Value { get; set; }
 }
