@@ -14,7 +14,13 @@ public partial class BudgetAmountIndex
 
     protected override async Task OnParametersSetAsync()
     {
+        if (_loading)
+        {
+            return;
+        }
+
         _loading = true;
+
         _budget = await BudgetService.GetBudgetAndAmountsAsync(BudgetId);
         if (_budget is null)
         {
