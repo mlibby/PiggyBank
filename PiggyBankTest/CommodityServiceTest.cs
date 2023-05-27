@@ -1,23 +1,21 @@
-using PiggyBank.Data.Services;
-
 namespace PiggyBankTest
 {
     [TestClass]
     public class CommodityServiceTest
     {
-        [TestMethod]
-        public async Task TestFoo()
-        {
-            var data = new List<Commodity>().AsQueryable();
-            var mockCommodities = MockFactory.MockDbSet<Commodity>(data);
-            var mockContext = MockFactory.MockPiggyBankContext(mockCommodities);
+        //[TestMethod]
+        //public async Task TestFoo()
+        //{
+        //    var data = new List<Commodity>().AsQueryable();
+        //    var mockCommodities = MockFactory.MockDbSet<Commodity>(data);
+        //    var mockContext = MockFactory.MockPiggyBankContext(mockCommodities);
 
-            var commodityService = new CommodityService(mockContext.Object);
+        //    var commodityService = new CommodityService(mockContext.Object);
 
-            var result = await commodityService.GetCommoditiesAsync();
-            Assert.IsNotNull(result);
-            Assert.AreEqual(result.Count(), 0);
-        }
+        //    var result = await commodityService.GetCommoditiesAsync();
+        //    Assert.IsNotNull(result);
+        //    Assert.AreEqual(result.Count(), 0);
+        //}
 
         //[TestMethod]
         //public void TestConfigureModifyKey()

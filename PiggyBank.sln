@@ -7,14 +7,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		AUTHORS.md = AUTHORS.md
-		LICENSE = LICENSE
 		commands.txt = commands.txt
+		LICENSE = LICENSE
 		README.md = README.md
 		THANKYOU.md = THANKYOU.md
 		TODO.md = TODO.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiggyBank", "PiggyBank\PiggyBank.csproj", "{F5A4647B-B209-4BFB-89C4-5B089EC299DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PiggyBankTest", "PiggyBankTest\PiggyBankTest.csproj", "{03FB9B71-8D8F-4A1B-BC04-308208CBF172}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{F5A4647B-B209-4BFB-89C4-5B089EC299DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5A4647B-B209-4BFB-89C4-5B089EC299DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5A4647B-B209-4BFB-89C4-5B089EC299DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03FB9B71-8D8F-4A1B-BC04-308208CBF172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03FB9B71-8D8F-4A1B-BC04-308208CBF172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03FB9B71-8D8F-4A1B-BC04-308208CBF172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03FB9B71-8D8F-4A1B-BC04-308208CBF172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
