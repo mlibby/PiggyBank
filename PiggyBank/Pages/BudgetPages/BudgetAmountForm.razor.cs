@@ -76,13 +76,6 @@ public partial class BudgetAmountForm
 
             Account = Accounts.Single(a => a.Id == AccountId);
             ShowAccountSelect = AccountId == Guid.Empty;
-
-            //Amounts = new();
-            //var budgetAmounts = budget.Amounts.Where(a => a.AccountId == accountId);
-            //foreach (var amount in budgetAmounts)
-            //{
-            //	Amounts.Add(amount.AmountDate, amount.Value);
-            //}
         }
     }
 }
