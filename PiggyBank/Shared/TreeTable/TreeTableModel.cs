@@ -35,10 +35,10 @@ public class TreeTableModel
 
     private void Nodes_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => _maxDepth = null;
 
-    public TreeTableNodeModel CreateNode(string header, List<string> values, TreeTableNodeModel? parent = null) =>
-        CreateNode(new MarkupString(HttpUtility.HtmlEncode(header)), values, parent);
+    public TreeTableNodeModel AddNewNode(string header, List<string> values, TreeTableNodeModel? parent = null) =>
+        AddNewNode(new MarkupString(HttpUtility.HtmlEncode(header)), values, parent);
 
-    public TreeTableNodeModel CreateNode(MarkupString header, List<string> values, TreeTableNodeModel? parent = null)
+    public TreeTableNodeModel AddNewNode(MarkupString header, List<string> values, TreeTableNodeModel? parent = null)
     {
         var node = new TreeTableNodeModel(header, values);
         node.Children.CollectionChanged += Nodes_CollectionChanged;
@@ -83,7 +83,7 @@ public class TreeTableNodeModel
     public MarkupString Header { get; }
 
     /// <summary>
-    /// WARNING: do not use this constructor. Use <c>TreeTableModel.CreateNode(...)</c> instead.
+    /// WARNING: do not use this constructor. Use <c>TreeTableModel.AddNewNode(...)</c> instead.
     /// </summary>
     internal TreeTableNodeModel(MarkupString header, List<string> values)
     {

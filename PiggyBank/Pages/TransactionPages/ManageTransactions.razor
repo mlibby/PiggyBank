@@ -2,6 +2,35 @@
 
 <h1>Transactions</h1>
 
+<details>
+    <summary><h2>About Transactions (click for more...)</h2></summary>
+    <p>
+        PiggyBank uses double-entry bookkeeping. Every transaction is composed of two or more
+        entries (called "splits" in PiggyBank) that must balance. In PiggyBank splits can have a positive
+        or negative value. If the sum of all the split values in transaction equal zero, then the transaction
+        is balanced. PiggyBank will not save unbalanced transactions.
+    </p>
+    <p>
+        Each split must be associated with an account and the same account should not have multiple splits in a
+        single transaction. Because of the need to balance all of the splits within a transaction, some amounts
+        are the opposite of what you might expect. In an income account, a negative value indicates that you have
+        been given money from an outside source. Typically this negative value on the split for an income account
+        will be balanced by a positive value on a split associated with an asset (i.e. bank) account. Or if you
+        are creating a transaction that corresponds to a paycheck, you might have a single income split with the
+        total ("gross") pay amount as a negative number, and a number of splits with positive values that are
+        associated to bank accounts, but also possibly to expense accounts, like for taxes or health insurance
+        premiums.
+    </p>
+    <p>
+        Often the display of the values will be translated to positive numbers purposes to make it
+        easier to work with (like in reports or for data entry). In traditional
+        double-entry bookkeeping systems, all amounts would be positive, but would be tracked in separate
+        debit and credit columns. PiggyBank does not do this because it makes the math harder to perform. Instead
+        just remember that in income, liability and equity accounts, a negative value corresponds to a "credit"
+        in double-entry bookkeeping terms. 
+    </p>
+</details>
+
 <p>
     @if (_importing)
     {

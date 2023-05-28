@@ -75,7 +75,7 @@ public record BudgetService(PiggyBankContext Context)
                     Account = account,
                     AmountDate = period,
                     Type = amountType,
-                    Value = amountBalances[account.Id] / periodCount * (int)amountType
+                    Value = decimal.Round(amountBalances[account.Id] / periodCount * (int)amountType, config.RoundTo),
                 });
             }
         }

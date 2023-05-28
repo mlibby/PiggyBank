@@ -101,7 +101,7 @@ public partial class BalancesIndex
 
         if (!account.IsHidden)
         {
-            var node = model.CreateNode(account.Name, balanceDisplays, parent);
+            var node = model.AddNewNode(account.Name, balanceDisplays, parent);
 
             foreach (var childAccount in account.Children.OrderBy(a => a.Name))
             {

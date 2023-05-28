@@ -76,7 +76,7 @@ public partial class IncomeExpense
             account.Commodity.DisplayAmount(_balances!["YTD"][account.Id]),
             account.Commodity.DisplayAmount(_balances![_priorYear][account.Id])
         };
-        var node = model.CreateNode(account.Name, balances, parent);
+        var node = model.AddNewNode(account.Name, balances, parent);
         foreach (var childAccount in account.Children.OrderBy(a => a.Name))
         {
             AddAccountsToModel(childAccount, model, node);

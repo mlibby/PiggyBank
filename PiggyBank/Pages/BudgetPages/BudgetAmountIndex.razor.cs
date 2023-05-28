@@ -50,7 +50,7 @@ public partial class BudgetAmountIndex
             }
 
             var editLink = new MarkupString($"<a href='{PageRoute.BudgetAmountEditFor(_budget.Id, account.Id)}'>{account.FullName}</a>");
-            var node = model.CreateNode(editLink, values);
+            var node = model.AddNewNode(editLink, values);
         }
 
         _model = model;

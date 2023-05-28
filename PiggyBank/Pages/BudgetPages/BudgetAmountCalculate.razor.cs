@@ -91,7 +91,8 @@ public partial class BudgetAmountCalculate : ComponentBase
         {
             DefaultPeriod = _model.DefaultPeriod,
             StartDate = _model.StartDate,
-            EndDate = _model.EndDate
+            EndDate = _model.EndDate,
+            RoundTo = _model.RoundTo,
         };
 
         if (_model.IncludeAsset)
@@ -123,6 +124,8 @@ public partial class BudgetAmountCalculate : ComponentBase
 
         public DateOnly StartDate { get; set; } = DateOnly.MinValue;
         public DateOnly EndDate { get; set; } = DateOnly.MaxValue;
+
+        public int RoundTo { get; set; } = 0;
 
         public bool IncludeAsset { get; set; } = false;
         public bool IncludeExpense { get; set; } = true;

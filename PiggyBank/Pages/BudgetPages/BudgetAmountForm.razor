@@ -19,7 +19,7 @@ else
 
         <div class="field">
             <label for="account">Account</label>
-            <InputSelect id="account" @bind-Value="_model.AccountId">
+            <InputSelect id="account" @bind-Value="_model.AccountId" disabled="@_model.DisableAccountSelect">
                 <option value="@(Guid.Empty)">Select Account...</option>
                 @foreach (var account in _model.Accounts)
                 {

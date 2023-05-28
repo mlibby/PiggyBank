@@ -67,6 +67,7 @@ public partial class BudgetAmountForm
         public Guid AccountId { get; set; } = new();
         public ICollection<Account> Accounts { get; set; } = null!;
         public Dictionary<DateOnly, decimal> Amounts { get; set; } = null!;
+        public bool DisableAccountSelect => AccountId == Guid.Empty;
 
         public void Load(Budget budget, Guid accountId, ICollection<Account> accounts)
         {
