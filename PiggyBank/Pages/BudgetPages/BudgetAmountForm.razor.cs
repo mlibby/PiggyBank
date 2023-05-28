@@ -19,7 +19,7 @@ public partial class BudgetAmountForm
 
     protected override async Task OnParametersSetAsync()
     {
-        var budget = await BudgetService.GetBudgetAccountAmountsAsync(BudgetId, AccountId);
+        var budget = await BudgetService.GetBudgetAndAmountsAsync(BudgetId);
 
         if (budget is null)
         {
@@ -42,6 +42,15 @@ public partial class BudgetAmountForm
 
     private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
     {
+        if (_validationMessageStore is null)
+        {
+            return;
+        }
+
+        if (_model.AccountId == Guid.Empty)
+        {
+            _validationMessageStore.Add(() => _model.AccountId, "Must select account");
+        }
     }
 
     private async Task Save()
@@ -57,7 +66,7 @@ public partial class BudgetAmountForm
         public Budget Budget { get; set; } = new();
         public Guid AccountId { get; set; } = new();
         public ICollection<Account> Accounts { get; set; } = null!;
-        public Dictionary<DateOnly, string> Amounts { get; set; } = null!;
+        public Dictionary<DateOnly, decimal> Amounts { get; set; } = null!;
 
         public void Load(Budget budget, Guid accountId, ICollection<Account> accounts)
         {
@@ -66,9 +75,10 @@ public partial class BudgetAmountForm
             Accounts = accounts;
 
             Amounts = new();
-            foreach (var amount in budget.Amounts)
+            var budgetAmounts = budget.Amounts.Where(a => a.AccountId == accountId);
+            foreach (var amount in budgetAmounts)
             {
-                Amounts.Add(amount.AmountDate, amount.Account.DisplayAmount(amount.Value));
+                Amounts.Add(amount.AmountDate, amount.Value);
             }
         }
     }

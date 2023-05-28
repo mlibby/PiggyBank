@@ -108,10 +108,22 @@ form {
 
         form .field.checkbox {
             display: flex;
+            flex-direction: row;
         }
 
             form .field.checkbox label {
                 padding-left: 0.5rem;
+            }
+
+        form .field.inline-field {
+            display: flex;
+            flex-direction: row;
+        }
+
+            form .field.inline-field label {
+                float: none;
+                width: unset;
+                padding-right: 0.5rem;
             }
 
     form input {

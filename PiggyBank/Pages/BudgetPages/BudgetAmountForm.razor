@@ -15,12 +15,12 @@ else
 
     <EditForm EditContext="_editContext" OnValidSubmit="Save">
         <DataAnnotationsValidator />
-        <ValidationSummary role="alert" aria-label="budget amounts form errors" />
+        @*<ValidationSummary role="alert" aria-label="budget amounts form errors" />*@
 
         <div class="field">
             <label for="account">Account</label>
             <InputSelect id="account" @bind-Value="_model.AccountId">
-                <option value="">Select Account...</option>
+                <option value="@(Guid.Empty)">Select Account...</option>
                 @foreach (var account in _model.Accounts)
                 {
                     <option value="@account.Id">@account.FullName</option>
@@ -28,14 +28,25 @@ else
             </InputSelect>
         </div>
 
-        @foreach (var period in _model.Amounts.Keys.Order())
-        {
-            <div class="field">
-                <label for="period">Name</label>
-                <InputText id="period" @bind-Value="_model.Amounts[period]" required aria-required="true" />
-                <ValidationMessage For="() => _model.Amounts[period]" />
-            </div>
-        }
+        <table>
+            <thead>
+                <tr>
+                    <th>Period</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            @foreach (var period in _model.Amounts.Keys.Order())
+            {
+                var periodId = Guid.NewGuid();
+                <tr>
+                    <th><label for="@periodId">@period</label></th>
+                    <td>
+                        <input id="@periodId" value="@_model.Amounts[period]" required aria-required="true" />
+                    </td>
+                    @*<ValidationMessage For="() => _model.Amounts[period]" />*@
+                </tr>
+            }
+        </table>
 
         <div class="buttons">
             <button class="primary" type="submit">Save</button>
