@@ -2,9 +2,17 @@
 
 <h1>Manage Budgets</h1>
 
-<p>A budget is a collection of budget amounts. Each budget amount is tied to a given period (month or year) and account.</p>
-
-<p><a class="btn btn-primary" href="@PageRoute.BudgetAdd"><svg class="icon icon-plus"><use xlink:href="#icon-plus"></use></svg> Add New Budget</a></p>
+<p>
+    NOTE: At the moment budgets only allow for monthly amounts that are not cumulative. Support for
+    annual amounts and cumulative (carry-over style) monthly amounts is on the roadmap (also, making a
+    roadmap is on the roadmap).
+</p>
+<p>
+    A budget is a collection of budget amounts. Each budget amount is tied to a given period (month or year) and account.
+</p>
+<p>
+    <a class="btn btn-primary" href="@PageRoute.BudgetAdd"><svg class="icon icon-plus"><use xlink:href="#icon-plus"></use></svg> Add New Budget</a>
+</p>
 
 @if (_budgets is not null)
 {
@@ -21,7 +29,7 @@
         <tbody>
             @foreach (var budget in _budgets)
             {
-                if (budget.IsHidden) 
+                if (budget.IsHidden)
                 {
                     continue;
                 }

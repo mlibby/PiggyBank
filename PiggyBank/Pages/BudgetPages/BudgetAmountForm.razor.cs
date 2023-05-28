@@ -38,8 +38,6 @@ public partial class BudgetAmountForm
         _loading = false;
     }
 
-    private string Action => BudgetId == Guid.Empty ? "Add" : "Edit";
-
     private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
     {
         if (_validationMessageStore is null)
@@ -65,9 +63,10 @@ public partial class BudgetAmountForm
     {
         public Budget Budget { get; set; } = new();
         public Guid AccountId { get; set; } = new();
+        public Account? Account { get; set; }
         public ICollection<Account> Accounts { get; set; } = null!;
-        public Dictionary<DateOnly, decimal> Amounts { get; set; } = null!;
-        public bool DisableAccountSelect => AccountId == Guid.Empty;
+        // public Dictionary<DateOnly, decimal> Amounts { get; set; } = null!;
+        public bool ShowAccountSelect { get; set; } = false;
 
         public void Load(Budget budget, Guid accountId, ICollection<Account> accounts)
         {
@@ -75,12 +74,15 @@ public partial class BudgetAmountForm
             AccountId = accountId;
             Accounts = accounts;
 
-            Amounts = new();
-            var budgetAmounts = budget.Amounts.Where(a => a.AccountId == accountId);
-            foreach (var amount in budgetAmounts)
-            {
-                Amounts.Add(amount.AmountDate, amount.Value);
-            }
+            Account = Accounts.Single(a => a.Id == AccountId);
+            ShowAccountSelect = AccountId == Guid.Empty;
+
+            //Amounts = new();
+            //var budgetAmounts = budget.Amounts.Where(a => a.AccountId == accountId);
+            //foreach (var amount in budgetAmounts)
+            //{
+            //	Amounts.Add(amount.AmountDate, amount.Value);
+            //}
         }
     }
 }

@@ -11,22 +11,32 @@ else if (_loading)
 }
 else
 {
-    <h1>@Action Budget Amounts for "@(_model.Budget.Name)"</h1>
+    @if (_model.ShowAccountSelect)
+    {
+        <h1>Add Budget Amounts for "@(_model.Budget.Name)"</h1>
+    }
+    else
+    {
+        <h1>Edit Budget Amounts for "@(_model.Budget.Name)", Account "@(_model.Account.FullName)"</h1>
+    }
 
     <EditForm EditContext="_editContext" OnValidSubmit="Save">
         <DataAnnotationsValidator />
-        @*<ValidationSummary role="alert" aria-label="budget amounts form errors" />*@
+        <ValidationSummary role="alert" aria-label="budget amounts form errors" />
 
-        <div class="field">
-            <label for="account">Account</label>
-            <InputSelect id="account" @bind-Value="_model.AccountId" disabled="@_model.DisableAccountSelect">
-                <option value="@(Guid.Empty)">Select Account...</option>
-                @foreach (var account in _model.Accounts)
-                {
-                    <option value="@account.Id">@account.FullName</option>
-                }
-            </InputSelect>
-        </div>
+        @if (_model.ShowAccountSelect)
+        {
+            <div class="field">
+                <label for="account">Account</label>
+                <InputSelect id="account" @bind-Value="_model.AccountId">
+                    <option value="@(Guid.Empty)">Select Account...</option>
+                    @foreach (var account in _model.Accounts)
+                    {
+                        <option value="@account.Id">@account.FullName</option>
+                    }
+                </InputSelect>
+            </div>
+        }
 
         <table>
             <thead>
@@ -35,15 +45,14 @@ else
                     <th>Amount</th>
                 </tr>
             </thead>
-            @foreach (var period in _model.Amounts.Keys.Order())
+            @foreach (var amount in _model.Budget.Amounts.Where(a => a.AccountId == _model.AccountId).OrderBy(a => a.AmountDate))
             {
-                var periodId = Guid.NewGuid();
                 <tr>
-                    <th><label for="@periodId">@period</label></th>
+                    <th><label for="@(amount.Id)">@(amount.AmountDate)</label></th>
                     <td>
-                        <input id="@periodId" value="@_model.Amounts[period]" required aria-required="true" />
+                        <InputNumber id="@(amount.Id)" @bind-Value="amount.Value" required aria-required="true" />
                     </td>
-                    @*<ValidationMessage For="() => _model.Amounts[period]" />*@
+                    <ValidationMessage For="() => amount" />
                 </tr>
             }
         </table>
