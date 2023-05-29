@@ -2,11 +2,46 @@
 
 <h1>Budget Report</h1>
 
-@if (_model is not null)
+@if (_loading)
 {
-        <TreeTable Model="@_model" />
+    <p>Loading...</p>
+}
+else if (_budget is null)
+{
+    if (_budgets is null)
+    {
+        <p>No budgets found. Go <a href="@(PageRoute.BudgetAdd)">add a budget</a>.</p>
+    }
+    else
+    {
+        <InputSelect @bind-Value="BudgetId">
+            <option value="@(Guid.Empty)">Select Budget...</option>
+            @foreach (var budget in _budgets)
+            {
+                <option value="@budget.Id">@budget.Name</option>
+            }
+        </InputSelect>
+    }
 }
 else
 {
-    <p>Loading...</p>
+    if (_budget.Amounts.Any(a => a.Account.Type == Account.AccountType.Income))
+    {
+        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Income)" />
+    }
+
+    if (_budget.Amounts.Any(a => a.Account.Type == Account.AccountType.Expense))
+    {
+        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Expense)" />
+    }
+
+    if (_budget.Amounts.Any(a => a.Account.Type == Account.AccountType.Asset))
+    {
+        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Asset)" />
+    }
+
+    if (_budget.Amounts.Any(a => a.Account.Type == Account.AccountType.Liability))
+    {
+        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Liability)" />
+    }
 }

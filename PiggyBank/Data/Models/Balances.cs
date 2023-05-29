@@ -22,6 +22,17 @@ public class Balances
             CalculateBalance(rootAccount);
         }
     }
+
+    public Balances(IEnumerable<Account> accounts, Budget budget, DateOnly startDate, DateOnly endDate)
+    {
+        StartDate = startDate;
+        EndDate = endDate;
+        foreach (var rootAccount in accounts.Where(a => a.ParentId == null))
+        {
+            CalculateBudgetBalance(rootAccount, budget);
+        }
+    }
+
     public decimal this[Guid accountId]
     {
         get => _balances.TryGetValue(accountId, out var balance) ? balance : 0.0M;
@@ -48,6 +59,25 @@ public class Balances
         foreach (var childAccount in account.Children)
         {
             CalculateBalance(childAccount);
+            balance += _balances[childAccount.Id];
+        }
+
+        _balances.Add(account.Id, balance);
+    }
+
+    private void CalculateBudgetBalance(Account account, Budget budget)
+    {
+        var amounts = budget.Amounts
+            .Where(a =>
+                a.AccountId == account.Id &&
+                a.AmountDate >= StartDate &&
+                a.AmountDate <= EndDate)
+            .ToList();
+        var balance = amounts.Sum(a => a.Value);
+
+        foreach (var childAccount in account.Children)
+        {
+            CalculateBudgetBalance(childAccount, budget);
             balance += _balances[childAccount.Id];
         }
 

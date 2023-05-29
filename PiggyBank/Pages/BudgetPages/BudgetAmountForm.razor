@@ -17,7 +17,7 @@ else
     }
     else
     {
-        <h1>Edit Budget Amounts for "@(_model.Budget.Name)", Account "@(_model.Account.FullName)"</h1>
+        <h1>Edit Budget Amounts for "@(_model.Budget.Name)", Account "@(_model!.Account!.FullName)"</h1>
     }
 
     <EditForm EditContext="_editContext" OnValidSubmit="Save">

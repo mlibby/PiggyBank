@@ -5,6 +5,16 @@ public record BudgetService(PiggyBankContext Context)
     public async Task<int> GetBudgetAmountCountAsync(Guid budgetId) =>
         await Context.BudgetAmounts.CountAsync(ba => ba.BudgetId == budgetId);
 
+    public Budget? GetBudgetAndAmounts(Guid budgetId) =>
+        Context.Budgets
+            .Include(b => b.Amounts)
+            .ThenInclude(a => a.Account)
+            .ThenInclude(a => a.Commodity)
+            .Include(b => b.Amounts)
+            .ThenInclude(a => a.Account)
+            .ThenInclude(a => a.Parent)
+            .SingleOrDefault(b => b.Id == budgetId);
+
     public async Task<Budget?> GetBudgetAndAmountsAsync(Guid budgetId) =>
         await Context.Budgets
             .Include(b => b.Amounts)
@@ -21,33 +31,28 @@ public record BudgetService(PiggyBankContext Context)
     public async Task<Budget?> GetBudgetAsync(Guid id) =>
         await Context.Budgets.FindAsync(id);
 
-    public async Task<Guid?> GetDefaultBudgetIdAsync()
+    public async Task<Guid> GetDefaultBudgetIdAsync()
     {
         var defaultBudget = await Context.Configurations
             .SingleOrDefaultAsync(c => c.Key == Configuration.ConfigurationKey.DefaultBudgetId);
 
-        if (defaultBudget is not null && Guid.TryParse(defaultBudget.Value, out var guid))
-        {
-            return guid;
-        }
-
-        return null;
+        return defaultBudget is not null && Guid.TryParse(defaultBudget.Value, out var guid) ?
+            guid :
+            Guid.Empty;
     }
 
-    public async Task SaveDefaultBudgetId(Guid budgetId)
+    public void SaveDefaultBudgetId(Guid budgetId)
     {
-        var defaultBudget = await Context.Configurations
-            .SingleOrDefaultAsync(c => c.Key == Configuration.ConfigurationKey.DefaultBudgetId);
+        var defaultBudget = Context.Configurations
+            .SingleOrDefault(c => c.Key == Configuration.ConfigurationKey.DefaultBudgetId);
 
-        if (defaultBudget is null)
+        defaultBudget ??= new Configuration()
         {
-            defaultBudget = new Configuration()
-            {
-                Key = Configuration.ConfigurationKey.DefaultBudgetId
-            };
-        }
+            Key = Configuration.ConfigurationKey.DefaultBudgetId
+        };
 
         defaultBudget.Value = budgetId.ToString();
+        Context.SaveChanges();
     }
 
     public async Task<int> Save(Budget budget)
