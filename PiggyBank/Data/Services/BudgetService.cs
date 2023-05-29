@@ -21,6 +21,35 @@ public record BudgetService(PiggyBankContext Context)
     public async Task<Budget?> GetBudgetAsync(Guid id) =>
         await Context.Budgets.FindAsync(id);
 
+    public async Task<Guid?> GetDefaultBudgetIdAsync()
+    {
+        var defaultBudget = await Context.Configurations
+            .SingleOrDefaultAsync(c => c.Key == Configuration.ConfigurationKey.DefaultBudgetId);
+
+        if (defaultBudget is not null && Guid.TryParse(defaultBudget.Value, out var guid))
+        {
+            return guid;
+        }
+
+        return null;
+    }
+
+    public async Task SaveDefaultBudgetId(Guid budgetId)
+    {
+        var defaultBudget = await Context.Configurations
+            .SingleOrDefaultAsync(c => c.Key == Configuration.ConfigurationKey.DefaultBudgetId);
+
+        if (defaultBudget is null)
+        {
+            defaultBudget = new Configuration()
+            {
+                Key = Configuration.ConfigurationKey.DefaultBudgetId
+            };
+        }
+
+        defaultBudget.Value = budgetId.ToString();
+    }
+
     public async Task<int> Save(Budget budget)
     {
         if (budget.Id == Guid.Empty)

@@ -1,0 +1,12 @@
+﻿@attribute [Route(PageRoute.ReportBudget)]
+
+<h1>Budget Report</h1>
+
+@if (_model is not null)
+{
+        <TreeTable Model="@_model" />
+}
+else
+{
+    <p>Loading...</p>
+}
