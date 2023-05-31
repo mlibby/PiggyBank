@@ -4,10 +4,13 @@
     --background-color: #e8e8e8;
     --background-highlight: #ffffff;
     --background-hover: rgba(255,255,255,0.5);
+    --background-input: #e0e0e0;
     --color: #101010;
     --color-highlight: #000000;
+    --color-input: #000000;
+    --color-input-border: #202020;
     --color-label: #303030;
-    --green: #008030;
+    --green: #005621;
     --link-color: #0000ff;
     --warning: #ffff00;
     --warning-accent: #ffff80;
@@ -21,8 +24,11 @@
         --background-color: #181818;
         --background-highlight: #000000;
         --background-hover: rgba(255,255,255,0.25);
+        --background-input: #303030;
         --color: #d0d0d0;
         --color-highlight: #f8f8f8;
+        --color-input: #f8f8f8;
+        --color-input-border: #b8b8b8;
         --color-label: #b0b0b0;
         --green: #42a884;
         --link-color: #8080ff;
@@ -109,6 +115,7 @@ form {
         form .field.checkbox {
             display: flex;
             flex-direction: row;
+            padding-top: 0.25rem;
         }
 
             form .field.checkbox label {
@@ -127,11 +134,16 @@ form {
             }
 
     form input {
-        background: var(--color);
+        background: var(--background-input);
+        border: 2px solid var(--color-input-border);
+        color: var(--color-input);
+        padding: 0.25rem;
+        font-size: 1.1rem;
     }
 
         form input[type=radio]:checked {
-            color: var(--color);
+            background: var(--background-input);
+            color: var(--color-input);
         }
 
         form input[type=text] {
