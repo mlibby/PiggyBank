@@ -2,7 +2,7 @@
 
 public partial class Configuration : ModelBase
 {
-    public string Key { get; set; } = null!;
+    public ConfigurationKey Key { get; set; }
 
     public string Value { get; set; } = null!;
 }

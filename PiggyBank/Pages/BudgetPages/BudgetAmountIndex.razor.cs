@@ -6,7 +6,7 @@ public partial class BudgetAmountIndex
 
     [Parameter] public Guid BudgetId { get; set; }
 
-    private bool _loading = true;
+    private bool _loading = false;
     private bool _found = true;
     private string _notFoundMessage = "not found";
     private Data.Models.Budget? _budget = null;
@@ -14,7 +14,13 @@ public partial class BudgetAmountIndex
 
     protected override async Task OnParametersSetAsync()
     {
+        if (_loading)
+        {
+            return;
+        }
+
         _loading = true;
+
         _budget = await BudgetService.GetBudgetAndAmountsAsync(BudgetId);
         if (_budget is null)
         {
@@ -25,7 +31,7 @@ public partial class BudgetAmountIndex
 
         var periods = _budget.Amounts.Select(a => a.AmountDate).Distinct().Order();
         var columns = periods.Select(p => p.ToString()).ToList();
-        _model = new("Budget Amounts", "Account", columns);
+        var model = new TreeTableModel("Budget Amounts", "Account", columns);
         var amounts = BuildAmountsDictionary(_budget);
         var orderedAccounts = _budget.Amounts.Select(a => a.Account).Distinct().OrderBy(a => a.FullName);
         foreach (var account in orderedAccounts)
@@ -44,10 +50,10 @@ public partial class BudgetAmountIndex
             }
 
             var editLink = new MarkupString($"<a href='{PageRoute.BudgetAmountEditFor(_budget.Id, account.Id)}'>{account.FullName}</a>");
-            var node = _model.CreateNode(editLink, values);
-            _model.Nodes.Add(node);
+            var node = model.AddNewNode(editLink, values);
         }
 
+        _model = model;
         _loading = false;
     }
 

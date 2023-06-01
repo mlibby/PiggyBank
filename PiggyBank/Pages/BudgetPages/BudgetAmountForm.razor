@@ -11,31 +11,51 @@ else if (_loading)
 }
 else
 {
-    <h1>@Action Budget Amounts for "@(_model.Budget.Name)"</h1>
+    @if (_model.ShowAccountSelect)
+    {
+        <h1>Add Budget Amounts for "@(_model.Budget.Name)"</h1>
+    }
+    else
+    {
+        <h1>Edit Budget Amounts for "@(_model.Budget.Name)", Account "@(_model!.Account!.FullName)"</h1>
+    }
 
     <EditForm EditContext="_editContext" OnValidSubmit="Save">
         <DataAnnotationsValidator />
         <ValidationSummary role="alert" aria-label="budget amounts form errors" />
 
-        <div class="field">
-            <label for="account">Account</label>
-            <InputSelect id="account" @bind-Value="_model.AccountId">
-                <option value="">Select Account...</option>
-                @foreach (var account in _model.Accounts)
-                {
-                    <option value="@account.Id">@account.FullName</option>
-                }
-            </InputSelect>
-        </div>
-
-        @foreach (var period in _model.Amounts.Keys.Order())
+        @if (_model.ShowAccountSelect)
         {
             <div class="field">
-                <label for="period">Name</label>
-                <InputText id="period" @bind-Value="_model.Amounts[period]" required aria-required="true" />
-                <ValidationMessage For="() => _model.Amounts[period]" />
+                <label for="account">Account</label>
+                <InputSelect id="account" @bind-Value="_model.AccountId">
+                    <option value="@(Guid.Empty)">Select Account...</option>
+                    @foreach (var account in _model.Accounts)
+                    {
+                        <option value="@account.Id">@account.FullName</option>
+                    }
+                </InputSelect>
             </div>
         }
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Period</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            @foreach (var amount in _model.Budget.Amounts.Where(a => a.AccountId == _model.AccountId).OrderBy(a => a.AmountDate))
+            {
+                <tr>
+                    <th><label for="@(amount.Id)">@(amount.AmountDate)</label></th>
+                    <td>
+                        <InputNumber id="@(amount.Id)" @bind-Value="amount.Value" required aria-required="true" />
+                    </td>
+                    <ValidationMessage For="() => amount" />
+                </tr>
+            }
+        </table>
 
         <div class="buttons">
             <button class="primary" type="submit">Save</button>

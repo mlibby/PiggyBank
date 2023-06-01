@@ -9,6 +9,8 @@ public partial class BudgetAmount
         public DateOnly StartDate { get; set; } = DateOnly.MinValue;
         public DateOnly EndDate { get; set; } = DateOnly.MaxValue;
 
+        public int RoundTo { get; set; } = 0;
+
         public List<Account.AccountType> AccountTypes { get; set; } = new List<Account.AccountType>();
     }
 }

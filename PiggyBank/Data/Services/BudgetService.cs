@@ -2,18 +2,18 @@ namespace PiggyBank.Data.Services;
 
 public record BudgetService(PiggyBankContext Context)
 {
-    public async Task<Budget?> GetBudgetAccountAmountsAsync(Guid budgetId, Guid accountId) =>
-        await Context.Budgets
-            .Include(b => b.Amounts.Where(a => a.AccountId == accountId))
+    public async Task<int> GetBudgetAmountCountAsync(Guid budgetId) =>
+        await Context.BudgetAmounts.CountAsync(ba => ba.BudgetId == budgetId);
+
+    public Budget? GetBudgetAndAmounts(Guid budgetId) =>
+        Context.Budgets
+            .Include(b => b.Amounts)
             .ThenInclude(a => a.Account)
             .ThenInclude(a => a.Commodity)
             .Include(b => b.Amounts)
             .ThenInclude(a => a.Account)
             .ThenInclude(a => a.Parent)
-            .SingleOrDefaultAsync(b => b.Id == budgetId);
-
-    public async Task<int> GetBudgetAmountCountAsync(Guid budgetId) =>
-        await Context.BudgetAmounts.CountAsync(ba => ba.BudgetId == budgetId);
+            .SingleOrDefault(b => b.Id == budgetId);
 
     public async Task<Budget?> GetBudgetAndAmountsAsync(Guid budgetId) =>
         await Context.Budgets
@@ -30,6 +30,30 @@ public record BudgetService(PiggyBankContext Context)
 
     public async Task<Budget?> GetBudgetAsync(Guid id) =>
         await Context.Budgets.FindAsync(id);
+
+    public async Task<Guid> GetDefaultBudgetIdAsync()
+    {
+        var defaultBudget = await Context.Configurations
+            .SingleOrDefaultAsync(c => c.Key == Configuration.ConfigurationKey.DefaultBudgetId);
+
+        return defaultBudget is not null && Guid.TryParse(defaultBudget.Value, out var guid) ?
+            guid :
+            Guid.Empty;
+    }
+
+    public void SaveDefaultBudgetId(Guid budgetId)
+    {
+        var defaultBudget = Context.Configurations
+            .SingleOrDefault(c => c.Key == Configuration.ConfigurationKey.DefaultBudgetId);
+
+        defaultBudget ??= new Configuration()
+        {
+            Key = Configuration.ConfigurationKey.DefaultBudgetId
+        };
+
+        defaultBudget.Value = budgetId.ToString();
+        Context.SaveChanges();
+    }
 
     public async Task<int> Save(Budget budget)
     {
@@ -85,7 +109,7 @@ public record BudgetService(PiggyBankContext Context)
                     Account = account,
                     AmountDate = period,
                     Type = amountType,
-                    Value = amountBalances[account.Id] / periodCount * (int)amountType
+                    Value = decimal.Round(amountBalances[account.Id] / periodCount * (int)amountType, config.RoundTo),
                 });
             }
         }

@@ -81,6 +81,10 @@ else if (_budget is not null)
                 Liability
             </label>
         </fieldset>
+        <div class="field">
+            <label for="round-to">Decimal places to round to</label>
+            <InputNumber @bind-Value="_model.RoundTo" />
+        </div>
 
         <div class="buttons">
             <button class="primary" type="submit">Calculate Amounts</button>
