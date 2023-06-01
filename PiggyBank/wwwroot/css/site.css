@@ -1,361 +1,362 @@
 ﻿:root {
-    --background-accent: #d0d0d0;
-    --background-active: rgba(255,255,255,0.3);
-    --background-color: #e8e8e8;
-    --background-highlight: #ffffff;
-    --background-hover: rgba(255,255,255,0.5);
-    --background-input: #e0e0e0;
-    --color: #101010;
-    --color-highlight: #000000;
-    --color-input: #000000;
-    --color-input-border: #202020;
-    --color-label: #303030;
-    --green: #005621;
-    --link-color: #0000ff;
-    --warning: #ffff00;
-    --warning-accent: #ffff80;
-    --warning-color: #000000;
+	--background-accent: #d0d0d0;
+	--background-active: rgba(255,255,255,0.3);
+	--background-color: #e8e8e8;
+	--background-highlight: #ffffff;
+	--background-hover: rgba(255,255,255,0.5);
+	--background-input: #e0e0e0;
+	--color: #101010;
+	--color-highlight: #000000;
+	--color-input: #000000;
+	--color-input-border: #202020;
+	--color-label: #303030;
+	--green: #005621;
+	--link-color: #0000ff;
+	--warning: #ffff00;
+	--warning-accent: #ffff80;
+	--warning-color: #000000;
 }
 
 @media(prefers-color-scheme: dark) {
-    :root {
-        --background-accent: #202020;
-        --background-active: rgba(255,255,255,0.1);
-        --background-color: #181818;
-        --background-highlight: #000000;
-        --background-hover: rgba(255,255,255,0.25);
-        --background-input: #303030;
-        --color: #d0d0d0;
-        --color-highlight: #f8f8f8;
-        --color-input: #f8f8f8;
-        --color-input-border: #b8b8b8;
-        --color-label: #b0b0b0;
-        --green: #42a884;
-        --link-color: #8080ff;
-        --warning-background: #000000;
-        --warning-accent: #ffff80;
-        --warning-color: #ffff00;
-    }
+	:root {
+		--background-accent: #202020;
+		--background-active: rgba(255,255,255,0.1);
+		--background-color: #181818;
+		--background-highlight: #000000;
+		--background-hover: rgba(255,255,255,0.25);
+		--background-input: #303030;
+		--color: #d0d0d0;
+		--color-highlight: #f8f8f8;
+		--color-input: #f8f8f8;
+		--color-input-border: #b8b8b8;
+		--color-label: #b0b0b0;
+		--green: #42a884;
+		--link-color: #8080ff;
+		--warning-background: #000000;
+		--warning-accent: #ffff80;
+		--warning-color: #ffff00;
+	}
 }
 
 html {
-    font-size: 14pt;
+	font-size: 14pt;
 }
 
 @media print {
-    html {
-        font-size: 12pt;
-    }
+	html {
+		font-size: 12pt;
+	}
 }
 
 a, a:visited {
-    color: var(--link-color);
+	color: var(--link-color);
 }
 
 body, input, button, select, optgroup, textarea {
-    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+	font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 }
 
 body {
-    background: var(--background-color);
-    color: var(--color);
-    padding: 0;
-    margin: 0;
+	background: var(--background-color);
+	color: var(--color);
+	padding: 0;
+	margin: 0;
 }
 
 .btn, button {
-    background: var(--background-accent);
-    border: 2px solid;
-    border-radius: 0.5rem;
-    color: var(--color);
-    cursor: pointer;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
+	background: var(--background-accent);
+	border: 2px solid;
+	border-radius: 0.5rem;
+	color: var(--color);
+	cursor: pointer;
+	display: inline-block;
+	padding: 0.5rem 1rem;
+	text-decoration: none;
 }
 
-    .btn:hover, button:hover {
-        background: var(--background-hover);
-    }
+	.btn:hover, button:hover {
+		background: var(--background-hover);
+	}
 
-    .btn:focus, button:focus {
-        background: var(--background-active);
-    }
+	.btn:focus, button:focus {
+		background: var(--background-active);
+	}
 
-    .btn-primary,
-    .btn-primary .icon,
-    .btn-primary:visited,
-    button.primary,
-    button.primary .icon {
-        color: var(--green);
-        fill: var(--green);
-        stroke: var(--green);
-    }
+	.btn-primary,
+	.btn-primary .icon,
+	.btn-primary:visited,
+	button.primary,
+	button.primary .icon {
+		color: var(--green);
+		fill: var(--green);
+		stroke: var(--green);
+	}
 
 .collapse {
-    display: none;
+	display: none;
 }
 
 form {
-    padding-top: 1rem;
-    padding-bottom: 2rem;
+	padding-top: 1rem;
+	padding-bottom: 2rem;
 }
 
-    form .buttons {
-        display: flex;
-        flex-direction: row;
-        gap: 0.5rem;
-        padding-top: 0.5rem;
-    }
+	form .buttons {
+		display: flex;
+		flex-direction: row;
+		gap: 0.5rem;
+		padding-top: 0.5rem;
+	}
 
-    form .field {
-        padding-bottom: 0.66rem;
-    }
+	form .field {
+		padding-bottom: 0.66rem;
+	}
 
-        form .field.checkbox {
-            display: flex;
-            flex-direction: row;
-            padding-top: 0.25rem;
-        }
+		form .field.checkbox {
+			display: flex;
+			flex-direction: row;
+			padding-top: 0.25rem;
+		}
 
-            form .field.checkbox label {
-                padding-left: 0.5rem;
-            }
+			form .field.checkbox label {
+				padding-left: 0.5rem;
+			}
 
-        form .field.inline-field {
-            display: flex;
-            flex-direction: row;
-        }
+		form .field.inline-field {
+			display: flex;
+			flex-direction: row;
+		}
 
-            form .field.inline-field label {
-                float: none;
-                width: unset;
-                padding-right: 0.5rem;
-            }
+			form .field.inline-field label {
+				float: none;
+				width: unset;
+				padding-right: 0.5rem;
+			}
 
-    form input {
-        background: var(--background-input);
-        border: 2px solid var(--color-input-border);
-        color: var(--color-input);
-        padding: 0.25rem;
-        font-size: 1.1rem;
-    }
+	form input {
+		background: var(--background-input);
+		border: 2px solid var(--color-input-border);
+		color: var(--color-input);
+		padding: 0.25rem;
+		font-size: 1.1rem;
+	}
 
-        form input[type=radio]:checked {
-            background: var(--background-input);
-            color: var(--color-input);
-        }
+		form input[type=radio]:checked {
+			background: var(--background-input);
+			color: var(--color-input);
+		}
 
-        form input[type=text] {
-            width: 100%;
-            height: 2rem;
-            padding: 0px 0.66rem;
-            border: none;
-            display: inline;
-            font-size: 1rem;
-            font-weight: 400;
-            float: left;
-        }
+		form input[type=text] {
+			width: 100%;
+			height: 2rem;
+			padding: 0px 0.66rem;
+			border: none;
+			display: inline;
+			font-size: 1rem;
+			font-weight: 400;
+			float: left;
+		}
 
-    form label {
-        float: left;
-        width: 100%;
-        top: 0px;
-        color: var(--color-label);
-        font-size: 0.9rem;
-        font-weight: 700;
-        text-align: left;
-        line-height: 1.5rem;
-    }
+	form label {
+		float: left;
+		width: 100%;
+		top: 0px;
+		color: var(--color-label);
+		font-size: 0.9rem;
+		font-weight: 700;
+		text-align: left;
+		line-height: 1.5rem;
+	}
 
-        form label.checkbox {
-            float: left;
-            padding: 0.25rem 2rem;
-            line-height: 1.66rem;
-        }
+		form label.checkbox {
+			float: left;
+			padding: 0.25rem 2rem;
+			line-height: 1.66rem;
+		}
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-    padding: 0;
-    margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 h1, .h1 {
-    font-size: 2rem;
+	font-size: 2rem;
 }
 
 h2, .h2 {
-    font-size: 1.5rem;
+	font-size: 1.5rem;
+	padding-top: 1rem;
 }
 
 h3, .h3 {
-    font-size: 1.25rem;
+	font-size: 1.25rem;
 }
 
 h4, .h4 {
-    font-size: 1.1rem;
+	font-size: 1.1rem;
 }
 
 h5, .h5 {
-    font-size: 1rem;
+	font-size: 1rem;
 }
 
 h6, .h6 {
-    font-size: 1rem;
+	font-size: 1rem;
 }
 
 .ib {
-    display: inline-block;
+	display: inline-block;
 }
 
 .icon {
-    display: inline-block;
-    height: 1em;
-    stroke-width: 0;
-    vertical-align: top;
-    width: 1em;
+	display: inline-block;
+	height: 1em;
+	stroke-width: 0;
+	vertical-align: top;
+	width: 1em;
 }
 
 .message {
-    border: 2px solid;
-    border-radius: 1rem;
-    display: flex;
-    margin: 1rem;
-    padding: 1rem;
+	border: 2px solid;
+	border-radius: 1rem;
+	display: flex;
+	margin: 1rem;
+	padding: 1rem;
 }
 
-    .message .icon.logo {
-        width: 2rem;
-        height: 2rem;
-        padding-right: 1rem;
-    }
+	.message .icon.logo {
+		width: 2rem;
+		height: 2rem;
+		padding-right: 1rem;
+	}
 
-    .message .close-button {
-        float: right;
-        margin: -0.5rem 0 0 0;
-    }
+	.message .close-button {
+		float: right;
+		margin: -0.5rem 0 0 0;
+	}
 
-    .message .message-text {
-        color: var(--color);
-    }
+	.message .message-text {
+		color: var(--color);
+	}
 
-    .message.error {
-        border-color: red;
-        color: red;
-        fill: red;
-        stroke: red;
-    }
+	.message.error {
+		border-color: red;
+		color: red;
+		fill: red;
+		stroke: red;
+	}
 
-    .message.info {
-        border-color: blue;
-        color: blue;
-        fill: blue;
-        stroke: blue;
-    }
+	.message.info {
+		border-color: blue;
+		color: blue;
+		fill: blue;
+		stroke: blue;
+	}
 
-    .message.success {
-        border-color: var(--green);
-        color: var(--green);
-        fill: var(--green);
-        stroke: var(--green);
-    }
+	.message.success {
+		border-color: var(--green);
+		color: var(--green);
+		fill: var(--green);
+		stroke: var(--green);
+	}
 
-    .message.warning {
-        border-color: yellow;
-        color: yellow;
-        fill: yellow;
-        stroke: yellow;
-    }
+	.message.warning {
+		border-color: yellow;
+		color: yellow;
+		fill: yellow;
+		stroke: yellow;
+	}
 
 p {
-    box-sizing: border-box;
-    margin: 0.5rem 0;
-    max-width: 50rem;
-    padding: 0;
+	box-sizing: border-box;
+	margin: 0.5rem 0;
+	max-width: 50rem;
+	padding: 0;
 }
 
 .pt1 {
-    padding-top: 1rem;
+	padding-top: 1rem;
 }
 
 .pr1 {
-    padding-right: 1rem;
+	padding-right: 1rem;
 }
 
 .sr-only {
-    border-width: 0;
-    clip: rect(0, 0, 0, 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
+	border-width: 0;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 }
 
 table {
-    border-collapse: collapse;
-    display: block;
+	border-collapse: collapse;
+	display: block;
 }
 
-    table caption {
-        font-size: 1.25rem;
-        padding-bottom: 0.33rem;
-        text-align: left;
-    }
+	table caption {
+		font-size: 1.25rem;
+		padding-bottom: 0.33rem;
+		text-align: left;
+	}
 
 tbody tr:nth-child(odd) {
-    background-color: var(--background-accent);
+	background-color: var(--background-accent);
 }
 
 td, th {
-    padding: 0.5rem;
+	padding: 0.5rem;
 }
 
 tfoot {
-    border-bottom-style: double;
-    display: table-row-group;
+	border-bottom-style: double;
+	display: table-row-group;
 }
 
 thead th {
-    background: var(--color-label);
-    color: var(--background-color);
+	background: var(--color-label);
+	color: var(--background-color);
 }
 
 th {
-    text-align: left;
-    vertical-align: top;
+	text-align: left;
+	vertical-align: top;
 }
 
 .tree {
-    padding-left: 0;
+	padding-left: 0;
 }
 
-    .tree li {
-        list-style: none;
-    }
+	.tree li {
+		list-style: none;
+	}
 
-    .tree li, .tree summary {
-        padding-bottom: 0.33rem;
-    }
+	.tree li, .tree summary {
+		padding-bottom: 0.33rem;
+	}
 
 #blazor-error-ui {
-    background: var(--warning-background);
-    border: 2px solid var(--warning-accent);
-    bottom: 0;
-    color: var(--warning-color);
-    display: none;
-    left: 0;
-    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
+	background: var(--warning-background);
+	border: 2px solid var(--warning-accent);
+	bottom: 0;
+	color: var(--warning-color);
+	display: none;
+	left: 0;
+	padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+	#blazor-error-ui .dismiss {
+		cursor: pointer;
+		position: absolute;
+		right: 0.75rem;
+		top: 0.5rem;
+	}
