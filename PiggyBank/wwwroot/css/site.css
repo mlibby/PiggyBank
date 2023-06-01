@@ -275,6 +275,10 @@ p {
 	padding: 0;
 }
 
+.pb0 {
+	padding-bottom: 0;
+}
+
 .pt1 {
 	padding-top: 1rem;
 }

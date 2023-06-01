@@ -2,28 +2,36 @@
 
 <h1>Budget Report</h1>
 
-@if (_loading)
+@if (_model is not null)
 {
-    <p>Loading...</p>
-}
-else if (_budget is null)
-{
-    if (_budgets is null)
+    if (_model.Budgets is null)
     {
         <p>No budgets found. Go <a href="@(PageRoute.BudgetAdd)">add a budget</a>.</p>
     }
     else
     {
-        <InputSelect @bind-Value="BudgetId">
-            <option value="@(Guid.Empty)">Select Budget...</option>
-            @foreach (var budget in _budgets)
-            {
-                <option value="@budget.Id">@budget.Name</option>
-            }
-        </InputSelect>
+        <EditForm class="pb0" EditContext="_editContext">
+            <DataAnnotationsValidator />
+            <ValidationSummary role="alert" aria-label="budget report form errors" />
+            <div class="field">
+                <label for="selected-budget">Budget</label>
+                <InputSelect id="selected-budget" @bind-Value="_model.BudgetId">
+                    <option value="@(Guid.Empty)">Select Budget...</option>
+                    @foreach (var budget in _model.Budgets)
+                    {
+                        <option value="@budget.Id">@budget.Name</option>
+                    }
+                </InputSelect>
+            </div>
+        </EditForm>
     }
 }
-else
+
+@if (_loading)
+{
+    <p>Loading...</p>
+}
+else if (_budget is not null)
 {
     if (_budget.Amounts.Any(a => a.Account.Type == Account.AccountType.Income))
     {

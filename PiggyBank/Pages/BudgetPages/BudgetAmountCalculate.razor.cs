@@ -10,7 +10,7 @@ public partial class BudgetAmountCalculate : ComponentBase
     private bool _found = true;
     private string _notFoundMessage = "Budget not found";
 
-    private Data.Models.Budget? _budget;
+    private Budget? _budget;
     private FormModel _model = new();
     private EditContext? _editContext;
     private ValidationMessageStore? _validationMessageStore;

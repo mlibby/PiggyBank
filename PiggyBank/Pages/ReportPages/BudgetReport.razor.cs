@@ -9,39 +9,36 @@ public partial class BudgetReport
     private const string s_budgetBalance = "budget";
 
     private bool _loading = true;
+    private FormModel? _model;
+    private EditContext? _editContext;
+    private ValidationMessageStore? _validationMessageStore;
 
     private ICollection<Account>? _accounts;
     private Dictionary<string, Balances>? _balances;
     private Budget? _budget = null;
-    private ICollection<Budget>? _budgets = null;
-    private DateOnly _startDate = DateOnly.MinValue;
-    private DateOnly _endDate = DateOnly.MaxValue;
-    private Guid _budgetId = Guid.Empty;
-    private Guid BudgetId
-    {
-        get => _budgetId;
-        set
-        {
-            _budgetId = value;
-            SelectBudget();
-        }
-    }
+
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
 
-        var endDate = DateTime.Now;
-        _endDate = DateOnly.FromDateTime(endDate);
-        _startDate = new DateOnly(_endDate.Year, 1, 1);
-
         _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
-        _budgetId = await BudgetService.GetDefaultBudgetIdAsync();
-        if (_budgetId == Guid.Empty)
+
+        var budgetId = await BudgetService.GetDefaultBudgetIdAsync();
+        var budgets = await BudgetService.GetBudgetsAsync();
+        _model = new FormModel()
         {
-            _budgets = await BudgetService.GetBudgetsAsync();
-        }
-        else
+            BudgetId = budgetId,
+            Budgets = budgets
+        };
+
+        _model.FormChanged += HandleFormChanged;
+
+        _editContext = new EditContext(_model);
+        _validationMessageStore = new ValidationMessageStore(_editContext);
+        //_editContext!.OnValidationRequested += HandleValidationRequested;
+
+        if (_model.BudgetId != Guid.Empty)
         {
             LoadBudget();
         }
@@ -49,14 +46,14 @@ public partial class BudgetReport
         _loading = false;
     }
 
-    protected void LoadBudget()
+    private void LoadBudget()
     {
-        if (_budgetId == Guid.Empty)
+        if (_model is null || _model.BudgetId == Guid.Empty)
         {
             return;
         }
 
-        _budget = BudgetService.GetBudgetAndAmounts(_budgetId);
+        _budget = BudgetService.GetBudgetAndAmounts(_model.BudgetId);
 
         if (_budget is null || _accounts is null)
         {
@@ -65,23 +62,23 @@ public partial class BudgetReport
 
         _balances = new()
         {
-            [s_actualBalance] = new Balances(_accounts, _startDate, _endDate),
-            [s_budgetBalance] = new Balances(_accounts, _budget, _startDate, _endDate)
+            [s_actualBalance] = new Balances(_accounts, _model.StartDate, _model.EndDate),
+            [s_budgetBalance] = new Balances(_accounts, _budget, _model.StartDate, _model.EndDate)
         };
     }
 
-    protected void SelectBudget()
+    private void HandleFormChanged(object? sender, EventArgs e)
     {
-        if (_budgetId == Guid.Empty)
+        if (_model is null || _model.BudgetId == Guid.Empty)
         {
             return;
         }
 
-        BudgetService.SaveDefaultBudgetId(_budgetId);
+        BudgetService.SaveDefaultBudgetId(_model.BudgetId);
         LoadBudget();
     }
 
-    protected TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
+    private TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
     {
         var columns = new List<string>
         {
@@ -115,7 +112,7 @@ public partial class BudgetReport
         return model;
     }
 
-    protected void AddAccountsToModel(Account account, TreeTableModel model, TreeTableNodeModel? parent = null)
+    private void AddAccountsToModel(Account account, TreeTableModel model, TreeTableNodeModel? parent = null)
     {
         var difference = _balances![s_actualBalance][account.Id] - _balances![s_budgetBalance][account.Id];
         var balances = new List<string>
@@ -132,6 +129,55 @@ public partial class BudgetReport
         }
     }
 
-    private Account? GetRootAccount(Account.AccountType accountType)
-        => _accounts?.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
+    private Account? GetRootAccount(Account.AccountType accountType) =>
+        _accounts?.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
+
+    public class FormModel
+    {
+        public FormModel()
+        {
+            var endDate = DateTime.Now;
+            _endDate = DateOnly.FromDateTime(endDate);
+            _startDate = new DateOnly(_endDate.Year, 1, 1);
+        }
+
+        public ICollection<Budget> Budgets { get; set; } = new List<Budget>();
+
+        private DateOnly _startDate;
+        public DateOnly StartDate
+        {
+            get => _startDate;
+            set
+            {
+                _startDate = value;
+                OnFormChanged();
+            }
+        }
+
+        private DateOnly _endDate;
+        public DateOnly EndDate
+        {
+            get => _endDate;
+            set
+            {
+                _endDate = value;
+                OnFormChanged();
+            }
+        }
+
+        private Guid _budgetId = Guid.Empty;
+        public Guid BudgetId
+        {
+            get => _budgetId;
+            set
+            {
+                _budgetId = value;
+                OnFormChanged();
+            }
+        }
+
+        public event EventHandler? FormChanged = default!;
+
+        private void OnFormChanged() => FormChanged?.Invoke(this, EventArgs.Empty);
+    }
 }
