@@ -46,10 +46,14 @@ public record BudgetService(PiggyBankContext Context)
         var defaultBudget = Context.Configurations
             .SingleOrDefault(c => c.Key == Configuration.ConfigurationKey.DefaultBudgetId);
 
-        defaultBudget ??= new Configuration()
+        if (defaultBudget is null)
         {
-            Key = Configuration.ConfigurationKey.DefaultBudgetId
-        };
+            defaultBudget = new Configuration()
+            {
+                Key = Configuration.ConfigurationKey.DefaultBudgetId
+            };
+            Context.Configurations.Add(defaultBudget);
+        }
 
         defaultBudget.Value = budgetId.ToString();
         Context.SaveChanges();

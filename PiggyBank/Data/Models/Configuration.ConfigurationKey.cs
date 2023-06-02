@@ -4,6 +4,6 @@ public partial class Configuration
 {
     public enum ConfigurationKey
     {
-        DefaultBudgetId
+        DefaultBudgetId = 1
     }
 }

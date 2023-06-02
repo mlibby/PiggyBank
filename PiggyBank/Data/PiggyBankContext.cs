@@ -95,10 +95,6 @@ public class PiggyBankContext : IdentityDbContext
         {
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).ValueGeneratedNever();
-
-            entity.Property(e => e.Key).HasConversion<string>(
-                v => v.ToString(),
-                v => (Configuration.ConfigurationKey)Enum.Parse(typeof(Configuration.ConfigurationKey), v));
             entity.Property(e => e.Value)
                 .HasMaxLength(255)
                 .IsUnicode(false);

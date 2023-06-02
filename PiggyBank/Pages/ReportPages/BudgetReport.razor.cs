@@ -17,7 +17,6 @@ public partial class BudgetReport
     private Dictionary<string, Balances>? _balances;
     private Budget? _budget = null;
 
-
     protected override async Task OnInitializedAsync()
     {
         _loading = true;

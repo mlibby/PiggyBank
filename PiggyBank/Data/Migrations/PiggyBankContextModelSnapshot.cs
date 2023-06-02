@@ -360,13 +360,10 @@ namespace PiggyBank.Data.Migrations
             modelBuilder.Entity("PiggyBank.Data.Models.Configuration", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Key")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .IsUnicode(false)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Value")

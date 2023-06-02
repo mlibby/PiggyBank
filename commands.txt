@@ -1,7 +1,7 @@
 DB Commands (from Package Manager Console)
 
 Add-Migration -c PiggyBankContext [MigrationName] -verbose
-Update-Database -Context PiggyBankSqliteContext --verbose
+Update-Database -Context PiggyBankContext --verbose
 
 
 DB reset (SQL)
