@@ -4,9 +4,9 @@ public partial class ExternalId
 {
     public enum IdType
     {
-        Account,
-        Commodity,
-        Transaction
+        Account = 1,
+        Commodity = 2,
+        Transaction = 3
     };
 }
 

@@ -8,5 +8,5 @@ public partial class ExternalId : ModelBase
 
     public IdType Type { get; set; }
 
-    public SourceType Source { get; set; }
+    public Source.SourceType Source { get; set; }
 }

@@ -4,9 +4,9 @@ public partial class Commodity
 {
     public enum CommodityType
     {
-        Asset,
-        Currency,
-        Stock,
+        Asset = 1,
+        Currency = 2,
+        Stock = 3,
     }
 }
 

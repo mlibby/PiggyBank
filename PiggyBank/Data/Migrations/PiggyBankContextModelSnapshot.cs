@@ -7,7 +7,7 @@ using PiggyBank.Data;
 
 #nullable disable
 
-namespace PiggyBank.Data.Migrations
+namespace PiggyBank.Migrations
 {
     [DbContext(typeof(PiggyBankContext))]
     partial class PiggyBankContextModelSnapshot : ModelSnapshot
@@ -239,13 +239,14 @@ namespace PiggyBank.Data.Migrations
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Source")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
@@ -298,9 +299,8 @@ namespace PiggyBank.Data.Migrations
                     b.Property<Guid>("BudgetId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Value")
                         .HasColumnType("TEXT");
@@ -340,17 +340,18 @@ namespace PiggyBank.Data.Migrations
                     b.Property<int>("Precision")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Source")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Symbol")
                         .HasMaxLength(16)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
@@ -362,14 +363,12 @@ namespace PiggyBank.Data.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Key")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .IsUnicode(false)
+                        .HasMaxLength(4096)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -391,13 +390,11 @@ namespace PiggyBank.Data.Migrations
                     b.Property<Guid>("LocalId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Source")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -428,12 +425,14 @@ namespace PiggyBank.Data.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(28, 9)");
 
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Source")
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("TransactionId")
                         .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime");
 
                     b.Property<decimal>("Value")
                         .HasColumnType("decimal(28, 9)");
@@ -463,9 +462,11 @@ namespace PiggyBank.Data.Migrations
                     b.Property<DateOnly>("PostDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Source")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime");
 
                     b.HasKey("Id");
 

@@ -34,8 +34,7 @@ public class PiggyBankContext : IdentityDbContext
 
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(255);
-            entity.Property(e => e.Source).HasConversion<string>();
-            entity.Property(e => e.Type).HasConversion<string>();
+            entity.Property(e => e.Updated).HasColumnType("datetime");
 
             entity.HasOne(d => d.Commodity).WithMany()
                 .HasForeignKey(d => d.CommodityId)
@@ -63,7 +62,6 @@ public class PiggyBankContext : IdentityDbContext
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.AmountDate).HasColumnType("date");
-            entity.Property(e => e.Type).HasConversion<string>();
 
             entity.HasOne(d => d.Account).WithMany()
                .HasForeignKey(d => d.AccountId)
@@ -84,20 +82,15 @@ public class PiggyBankContext : IdentityDbContext
             entity.Property(e => e.Cusip).HasMaxLength(255);
             entity.Property(e => e.Mnemonic).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(255);
-            entity.Property(e => e.Source).HasConversion<string>(
-                v => v.ToString(),
-                v => (Source.SourceType)Enum.Parse(typeof(Source.SourceType), v));
+            entity.Property(e => e.Updated).HasColumnType("datetime");
             entity.Property(e => e.Symbol).HasMaxLength(16);
-            entity.Property(e => e.Type).HasConversion<string>();
         });
 
         modelBuilder.Entity<Configuration>(entity =>
         {
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.Value)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+            entity.Property(e => e.Value).HasMaxLength(4096);
         });
 
         modelBuilder.Entity<ExternalId>(entity =>
@@ -108,8 +101,6 @@ public class PiggyBankContext : IdentityDbContext
             entity.Property(e => e.ExternalIdString)
                 .HasMaxLength(255)
                 .HasColumnName("ExternalId");
-            entity.Property(e => e.Type).HasConversion<string>();
-            entity.Property(e => e.Source).HasConversion<string>();
         });
 
         modelBuilder.Entity<Split>(entity =>
@@ -120,7 +111,7 @@ public class PiggyBankContext : IdentityDbContext
             entity.Property(e => e.Action).HasMaxLength(2048);
             entity.Property(e => e.Memo).HasMaxLength(2048);
             entity.Property(e => e.Quantity).HasColumnType("decimal(28, 9)");
-            entity.Property(e => e.Source).HasConversion<string>();
+            entity.Property(e => e.Updated).HasColumnType("datetime");
             entity.Property(e => e.Value).HasColumnType("decimal(28, 9)");
 
             entity.HasOne(d => d.Account).WithMany(p => p.Splits)
@@ -141,7 +132,7 @@ public class PiggyBankContext : IdentityDbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Description).HasMaxLength(2048);
             entity.Property(e => e.PostDate).HasColumnType("date");
-            entity.Property(e => e.Source).HasConversion<string>();
+            entity.Property(e => e.Updated).HasColumnType("datetime");
 
             entity.HasOne(d => d.Commodity).WithMany()
                 .HasForeignKey(d => d.CommodityId)

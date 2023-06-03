@@ -4,8 +4,8 @@ public static class Source
 {
     public enum SourceType
     {
-        User,
-        GnuCash,
-        Ofx,
+        User = 1,
+        GnuCash = 2,
+        Ofx = 3,
     }
 }

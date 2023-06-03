@@ -1,22 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿//using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
+//#nullable disable
 
-namespace PiggyBank.Data.Migrations;
+//namespace PiggyBank.Data.Migrations;
 
-/// <inheritdoc />
-public partial class CommodityIsLocked : Migration
-{
-    /// <inheritdoc />
-    protected override void Up(MigrationBuilder migrationBuilder) => migrationBuilder.AddColumn<bool>(
-            name: "IsLocked",
-            table: "Commodities",
-            type: "INTEGER",
-            nullable: false,
-            defaultValue: false);
+///// <inheritdoc />
+//public partial class CommodityIsLocked : Migration
+//{
+//    /// <inheritdoc />
+//    protected override void Up(MigrationBuilder migrationBuilder) => migrationBuilder.AddColumn<bool>(
+//            name: "IsLocked",
+//            table: "Commodities",
+//            type: "INTEGER",
+//            nullable: false,
+//            defaultValue: false);
 
-    /// <inheritdoc />
-    protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.DropColumn(
-            name: "IsLocked",
-            table: "Commodities");
-}
+//    /// <inheritdoc />
+//    protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.DropColumn(
+//            name: "IsLocked",
+//            table: "Commodities");
+//}
