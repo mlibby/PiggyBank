@@ -11,10 +11,18 @@
         </colgroup>
         <thead>
             <tr>
-                <th id="@(Model.Title.ToLower())-@(Model.FirstColumn.ToLower())" scope="col" colspan="@Model.MaxDepth">@Model.FirstColumn</th>
+                <th id="@(Model.Title.ToLower())-@(Model.FirstColumn.ToLower())"
+                    scope="col"
+                    colspan="@Model.MaxDepth">
+                    @Model.FirstColumn
+                </th>
                 @foreach (var column in Model.Columns)
                 {
-                    <th id="@(Model.Title.ToLower())-@(column.ToLower())" scope="col" style="text-align: right;">@column</th>
+                    <th id="@(Model.Title.ToLower())-@(column.ToLower())"
+                        scope="col"
+                        style="text-align: right;">
+                        @column
+                    </th>
                 }
             </tr>
         </thead>

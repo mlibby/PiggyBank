@@ -1,0 +1,65 @@
+﻿@if (
+Model is not null &&
+Model.ColumnGroupSize is not null &&
+Model.ColumnGroups is not null
+)
+{
+    <table>
+        <caption><h2>@Model.Title</h2></caption>
+        <colgroup span="@Model.MaxDepth"></colgroup>
+        @for (var x = 1; x < Model.Columns.Count / Model.ColumnGroupSize; x++)
+        {
+            <colgroup>
+                @for (var y = 1; y < Model.ColumnGroupSize; y++)
+                {
+                    <col />
+                }
+            </colgroup>
+        }
+        <thead>
+            <tr>
+                <th id="@(Model.Title.ToLower())-@(Model.FirstColumn.ToLower())"
+                    scope="colgroup"
+                    colspan="@Model.MaxDepth"
+                    rowspan="2"
+                    style="vertical-align: bottom;">
+                    @Model.FirstColumn
+                </th>
+                @foreach (var columnGroup in Model.ColumnGroups)
+                {
+                    <th id="@(columnGroup.ToLower())"
+                        scope="colgroup"
+                        colspan="@Model.ColumnGroupSize"
+                        style="text-align: center;">
+                        @columnGroup
+                    </th>
+                }
+            </tr>
+            <tr>
+                @foreach (var column in Model.Columns)
+                {
+                    <th id="@(Model.Title.ToLower())-@(column.ToLower())"
+                        scope="col"
+                        style="text-align: right;">
+                        @column
+                    </th>
+                }
+            </tr>
+        </thead>
+        @if (Model.Footer is not null)
+        {
+            <tfoot>
+                <tr>
+                    <th headers="@(Model.Title.ToLower())-@(Model.FirstColumn.ToLower())" colspan="@Model.MaxDepth">@Model.Footer</th>
+                    @for (var columnIndex = 0; columnIndex < Model.FooterValues.Count; columnIndex++)
+                    {
+                        <td headers="@(Model.Title.ToLower())-@(Model.Columns[columnIndex].ToLower())">@Model.FooterValues[columnIndex]</td>
+                    }
+                </tr>
+            </tfoot>
+        }
+        <tbody>
+            <TreeTable_Node Model="Model" Nodes="Model.Nodes" />
+        </tbody>
+    </table>
+}

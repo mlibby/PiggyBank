@@ -23,6 +23,11 @@
                     }
                 </InputSelect>
             </div>
+            <div class="field checkbox">
+                <InputCheckbox id="show-completed-separately"
+                @bind-Value="_model.ShowCompletedSeparately" />
+                <label for="show-completed-separately">Show completed periods separately</label>
+            </div>
         </EditForm>
     }
 }
@@ -31,25 +36,27 @@
 {
     <p>Loading...</p>
 }
-else if (_budget is not null)
+else if (_model is not null && _budget is not null)
 {
-    if (_budget.Amounts.Any(a => a.Account.AccountType == AccountType.Income))
-    {
-        <TreeTable Model="@CreateTreeTableModel(AccountType.Income)" />
-    }
+    var accountTypes = new List<AccountType>{
+        AccountType.Income,
+        AccountType.Expense,
+        AccountType.Asset,
+        AccountType.Liability
+    };
 
-    if (_budget.Amounts.Any(a => a.Account.AccountType == AccountType.Expense))
+    foreach (var accountType in accountTypes)
     {
-        <TreeTable Model="@CreateTreeTableModel(AccountType.Expense)" />
-    }
-
-    if (_budget.Amounts.Any(a => a.Account.AccountType == AccountType.Asset))
-    {
-        <TreeTable Model="@CreateTreeTableModel(AccountType.Asset)" />
-    }
-
-    if (_budget.Amounts.Any(a => a.Account.AccountType == AccountType.Liability))
-    {
-        <TreeTable Model="@CreateTreeTableModel(AccountType.Liability)" />
+        if (_budget.Amounts.Any(a => a.Account.AccountType == accountType))
+        {
+            if (_model.ShowCompletedSeparately)
+            {
+                <GroupedTreeTable Model="@CreateTreeTableModel(accountType)" />
+            }
+            else
+            {
+                <TreeTable Model="@CreateTreeTableModel(accountType)" />
+            }
+        }
     }
 }

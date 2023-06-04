@@ -5,8 +5,13 @@ public partial class BudgetReport
     [Inject] private AccountService AccountService { get; set; } = default!;
     [Inject] private BudgetService BudgetService { get; set; } = default!;
 
-    private const string s_actualBalance = "actual";
-    private const string s_budgetBalance = "budget";
+    private enum Column
+    {
+        ActualYTD,
+        BudgetYTD,
+        ActualCurrent,
+        BudgetCurrent
+    }
 
     private bool _loading = true;
     private FormModel? _model;
@@ -14,7 +19,7 @@ public partial class BudgetReport
     //private ValidationMessageStore? _validationMessageStore;
 
     private ICollection<Account>? _accounts;
-    private Dictionary<string, Balances>? _balances;
+    private Dictionary<Column, Balances>? _balances;
     private Budget? _budget = null;
 
     protected override async Task OnInitializedAsync()
@@ -59,11 +64,27 @@ public partial class BudgetReport
             return;
         }
 
-        _balances = new()
+        if (_model.ShowCompletedSeparately)
         {
-            [s_actualBalance] = new Balances(_accounts, _model.StartDate, _model.EndDate),
-            [s_budgetBalance] = new Balances(_accounts, _budget, _model.StartDate, _model.EndDate)
-        };
+            var currentStartDate = new DateOnly(_model.EndDate.Year, _model.EndDate.Month, 1);
+            var completedEndDate = currentStartDate.AddDays(-1);
+
+            _balances = new()
+            {
+                [Column.ActualYTD] = new Balances(_accounts, _model.StartDate, completedEndDate),
+                [Column.BudgetYTD] = new Balances(_accounts, _budget, _model.StartDate, completedEndDate),
+                [Column.ActualCurrent] = new Balances(_accounts, currentStartDate, _model.EndDate),
+                [Column.BudgetCurrent] = new Balances(_accounts, _budget, currentStartDate, _model.EndDate)
+            };
+        }
+        else
+        {
+            _balances = new()
+            {
+                [Column.ActualYTD] = new Balances(_accounts, _model.StartDate, _model.EndDate),
+                [Column.BudgetYTD] = new Balances(_accounts, _budget, _model.StartDate, _model.EndDate)
+            };
+        }
     }
 
     private void HandleFormChanged(object? sender, EventArgs e)
@@ -77,17 +98,41 @@ public partial class BudgetReport
         LoadBudget();
     }
 
-    private TreeTableModel CreateTreeTableModel(AccountType accountType)
+    private TreeTableModel? CreateTreeTableModel(AccountType accountType)
     {
-        var columns = new List<string>
+        if (_model is null)
         {
-            "Actual YTD",
-            "Budget YTD",
-            "YTD Difference",
+            return null;
+        }
+
+        var tableTitle = $"{accountType} Actual and Budget Amounts";
+
+        var columns = new List<string>();
+        if (_model.ShowCompletedSeparately)
+        {
+            columns.Add("Actual");
+            columns.Add("Budget");
+            columns.Add("Difference");
+
+            columns.Add("Actual");
+            columns.Add("Budget");
+            columns.Add("Difference");
+        }
+        else
+        {
+            columns.Add("Actual YTD");
+            columns.Add("Budget YTD");
+            columns.Add("+/- YTD");
         };
 
-        var tableTitle = $"{accountType} Actual and Budget Amounts Year to Date";
         var model = new TreeTableModel(tableTitle, "Account", columns);
+
+        if (_model.ShowCompletedSeparately)
+        {
+            model.ColumnGroups = new List<string>() { "Current", "Completed" };
+            model.ColumnGroupSize = 3;
+        }
+
         if (_accounts is null)
         {
             return model;
@@ -102,10 +147,40 @@ public partial class BudgetReport
             }
 
             model.Footer = $"Total {rootAccount.Name}";
-            model.FooterValues.Add(rootAccount.Commodity.DisplayAmount(_balances![s_actualBalance][rootAccount.Id]));
-            model.FooterValues.Add(rootAccount.Commodity.DisplayAmount(_balances![s_budgetBalance][rootAccount.Id]));
-            var difference = _balances![s_actualBalance][rootAccount.Id] - _balances![s_budgetBalance][rootAccount.Id];
-            model.FooterValues.Add(rootAccount.Commodity.DisplayAmount(difference));
+
+            if (_model.ShowCompletedSeparately)
+            {
+                var differenceCurrent =
+                    _balances![Column.ActualCurrent][rootAccount.Id] -
+                    _balances![Column.BudgetCurrent][rootAccount.Id];
+
+                var differenceYTD =
+                    _balances![Column.ActualYTD][rootAccount.Id] -
+                    _balances![Column.BudgetYTD][rootAccount.Id];
+
+                model.FooterValues = new List<string>()
+                {
+                    rootAccount.DisplayAmount(_balances![Column.ActualCurrent][rootAccount.Id]),
+                    rootAccount.DisplayAmount(_balances![Column.BudgetCurrent][rootAccount.Id]),
+                    rootAccount.DisplayAmount(differenceCurrent),
+                    rootAccount.DisplayAmount(_balances![Column.ActualYTD][rootAccount.Id]),
+                    rootAccount.DisplayAmount(_balances![Column.BudgetYTD][rootAccount.Id]),
+                    rootAccount.DisplayAmount(differenceYTD),
+                };
+            }
+            else
+            {
+                var difference =
+                    _balances![Column.ActualYTD][rootAccount.Id] -
+                    _balances![Column.BudgetYTD][rootAccount.Id];
+
+                model.FooterValues = new List<string>()
+                {
+                    rootAccount.DisplayAmount(_balances![Column.ActualYTD][rootAccount.Id]),
+                    rootAccount.DisplayAmount(_balances![Column.BudgetYTD][rootAccount.Id]),
+                    rootAccount.DisplayAmount(difference),
+                };
+            }
         }
 
         return model;
@@ -113,13 +188,46 @@ public partial class BudgetReport
 
     private void AddAccountsToModel(Account account, TreeTableModel model, TreeTableNodeModel? parent = null)
     {
-        var difference = _balances![s_actualBalance][account.Id] - _balances![s_budgetBalance][account.Id];
-        var balances = new List<string>
+        if (_model is null)
         {
-            account.Commodity.DisplayAmount(_balances![s_actualBalance][account.Id]),
-            account.Commodity.DisplayAmount(_balances![s_budgetBalance][account.Id]),
-            account.Commodity.DisplayAmount(difference)
-        };
+            return;
+        }
+
+        List<string> balances;
+        if (_model.ShowCompletedSeparately)
+        {
+            var differenceCurrent =
+              _balances![Column.ActualCurrent][account.Id] -
+              _balances![Column.BudgetCurrent][account.Id];
+
+            var differenceYTD =
+                _balances![Column.ActualYTD][account.Id] -
+                _balances![Column.BudgetYTD][account.Id];
+
+            balances = new List<string>()
+                {
+                    account.DisplayAmount(_balances![Column.ActualCurrent][account.Id]),
+                    account.DisplayAmount(_balances![Column.BudgetCurrent][account.Id]),
+                    account.DisplayAmount(differenceCurrent),
+                    account.DisplayAmount(_balances![Column.ActualYTD][account.Id]),
+                    account.DisplayAmount(_balances![Column.BudgetYTD][account.Id]),
+                    account.DisplayAmount(differenceYTD),
+                };
+
+        }
+        else
+        {
+            var difference =
+                _balances![Column.ActualYTD][account.Id] -
+                _balances![Column.BudgetYTD][account.Id];
+
+            balances = new List<string>
+                {
+                    account.DisplayAmount(_balances![Column.ActualYTD][account.Id]),
+                    account.DisplayAmount(_balances![Column.BudgetYTD][account.Id]),
+                    account.DisplayAmount(difference)
+                };
+        }
 
         var node = model.AddNewNode(account.Name, balances, parent);
         foreach (var childAccount in account.Children.OrderBy(a => a.Name))
@@ -171,6 +279,17 @@ public partial class BudgetReport
             set
             {
                 _budgetId = value;
+                OnFormChanged();
+            }
+        }
+
+        private bool _showCompletedSeparately = false;
+        public bool ShowCompletedSeparately
+        {
+            get => _showCompletedSeparately;
+            set
+            {
+                _showCompletedSeparately = value;
                 OnFormChanged();
             }
         }
