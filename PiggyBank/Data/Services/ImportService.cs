@@ -31,7 +31,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 {
                     account = new Account()
                     {
-                        Source = DataSource.GnuCash
+                        DataSource = DataSource.GnuCash
                     };
                     PiggyBankContext.Accounts.Add(account);
                 }
@@ -75,7 +75,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 {
                     commodity = new Commodity()
                     {
-                        Source = DataSource.GnuCash
+                        DataSource = DataSource.GnuCash
                     };
                     PiggyBankContext.Commodities.Add(commodity);
                 }
@@ -104,7 +104,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
             count.Report(gncTransactions.Count);
 
             var existingTransactionIds = await PiggyBankContext.Transactions
-                .Where(t => t.Source == DataSource.GnuCash)
+                .Where(t => t.DataSource == DataSource.GnuCash)
                 .Select(t => t.Id)
                 .ToListAsync();
 
@@ -119,7 +119,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 {
                     transaction = new Transaction()
                     {
-                        Source = DataSource.GnuCash
+                        DataSource = DataSource.GnuCash
                     };
                     PiggyBankContext.Transactions.Add(transaction);
                 }
@@ -182,7 +182,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
         account.ParentId = gncAccount.ParentGuid is not null ? Guid.Parse(gncAccount.ParentGuid!) : null;
         account.Description = gncAccount.Description!;
         account.CommodityId = Guid.Parse(gncAccount.CommodityGuid!);
-        account.Type = gncAccount.PiggyBankAccountType;
+        account.AccountType = gncAccount.PiggyBankAccountType;
         account.IsPlaceholder = gncAccount.Placeholder > 0;
         account.IsHidden = gncAccount.Hidden > 0;
     }
@@ -195,7 +195,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
         commodity.Name = gncCommodity.Fullname;
         commodity.Precision = gncCommodity.Fraction.ToString().Length - 1;
         commodity.Symbol = symbol?.StringVal;
-        commodity.Type = GncCommodity.TypeMap[gncCommodity.Namespace];
+        commodity.CommodityType = GncCommodity.TypeMap[gncCommodity.Namespace];
     }
 
     private static void UpdateSplit(GncSplit gncSplit, Split split)
@@ -213,7 +213,6 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
         transaction.Id = Guid.Parse(gncTransaction.Guid);
         transaction.Description = gncTransaction.Description ?? "";
         transaction.PostDate = ConvertDate(gncTransaction.PostDate);
-        transaction.CommodityId = Guid.Parse(gncTransaction.CurrencyGuid);
 
         var originalSplitGuids = transaction.Splits
             .Select(s => s.Id)
@@ -233,7 +232,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
 
             split = new Split()
             {
-                Source = DataSource.GnuCash
+                DataSource = DataSource.GnuCash
             };
 
             transaction.Splits.Add(split);

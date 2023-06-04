@@ -6,9 +6,5 @@ public partial class Transaction : SourceModelBase
 
     public string Description { get; set; } = null!;
 
-    public Guid CommodityId { get; set; }
-
-    public virtual Commodity Commodity { get; set; } = null!;
-
     public virtual ICollection<Split> Splits { get; } = new List<Split>();
 }

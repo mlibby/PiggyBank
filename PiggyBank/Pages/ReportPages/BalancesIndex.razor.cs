@@ -111,5 +111,5 @@ public partial class BalancesIndex
     }
 
     private Data.Models.Account? GetRootAccount(AccountType accountType)
-        => _accounts?.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
+        => _accounts?.SingleOrDefault(a => a.Parent == null && a.AccountType == accountType);
 }

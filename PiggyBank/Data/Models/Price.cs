@@ -8,9 +8,9 @@ public partial class Price : SourceModelBase
 
     public DateOnly Date { get; set; }
 
-    public PriceSourceType PriceSource { get; set; }
+    public PriceSource PriceSource { get; set; }
 
-    public PriceType Type { get; set; }
+    public PriceType PriceType { get; set; }
 
     public decimal Value { get; set; }
 }

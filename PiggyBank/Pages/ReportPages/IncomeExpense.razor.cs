@@ -84,5 +84,5 @@ public partial class IncomeExpense
     }
 
     private Account? GetRootAccount(AccountType accountType)
-        => _accounts?.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
+        => _accounts?.SingleOrDefault(a => a.Parent == null && a.AccountType == accountType);
 }

@@ -33,8 +33,8 @@ public record BudgetService(PiggyBankContext Context)
 
     public async Task<Guid> GetDefaultBudgetIdAsync()
     {
-        var defaultBudget = await Context.Configurations
-            .SingleOrDefaultAsync(c => c.Key == ConfigurationKey.DefaultBudgetId);
+        var defaultBudget = await Context.Settings
+            .SingleOrDefaultAsync(c => c.SettingType == SettingType.DefaultBudgetId);
 
         return defaultBudget is not null && Guid.TryParse(defaultBudget.Value, out var guid) ?
             guid :
@@ -43,16 +43,16 @@ public record BudgetService(PiggyBankContext Context)
 
     public void SaveDefaultBudgetId(Guid budgetId)
     {
-        var defaultBudget = Context.Configurations
-            .SingleOrDefault(c => c.Key == ConfigurationKey.DefaultBudgetId);
+        var defaultBudget = Context.Settings
+            .SingleOrDefault(c => c.SettingType == SettingType.DefaultBudgetId);
 
         if (defaultBudget is null)
         {
-            defaultBudget = new Configuration()
+            defaultBudget = new Setting()
             {
-                Key = ConfigurationKey.DefaultBudgetId
+                SettingType = SettingType.DefaultBudgetId
             };
-            Context.Configurations.Add(defaultBudget);
+            Context.Settings.Add(defaultBudget);
         }
 
         defaultBudget.Value = budgetId.ToString();
@@ -96,7 +96,7 @@ public record BudgetService(PiggyBankContext Context)
         foreach (var account in accounts)
         {
             // TODO: remove this check when https://github.com/dotnet/efcore/issues/30921 is resolved
-            if (!config.AccountTypes.Contains(account.Type))
+            if (!config.AccountTypes.Contains(account.AccountType))
             {
                 continue;
             }
@@ -112,7 +112,7 @@ public record BudgetService(PiggyBankContext Context)
                 {
                     Account = account,
                     AmountDate = period,
-                    Type = amountType,
+                    AmountType = amountType,
                     Value = decimal.Round(amountBalances[account.Id] / periodCount * (int)amountType, config.RoundTo),
                 });
             }

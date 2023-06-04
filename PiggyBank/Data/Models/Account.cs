@@ -2,13 +2,15 @@
 
 public partial class Account : SourceModelBase
 {
+    [StringLength(255)]
     public string Name { get; set; } = null!;
 
+    [StringLength(255)]
     public string Description { get; set; } = null!;
 
     public Guid? ParentId { get; set; }
 
-    public AccountType Type { get; set; }
+    public AccountType AccountType { get; set; }
 
     public Guid CommodityId { get; set; }
 

@@ -6,8 +6,10 @@ public partial class Split : SourceModelBase
 
     public Guid AccountId { get; set; }
 
+    [StringLength(2048)]
     public string Memo { get; set; } = null!;
 
+    [StringLength(2048)]
     public string Action { get; set; } = null!;
 
     public decimal Value { get; set; }

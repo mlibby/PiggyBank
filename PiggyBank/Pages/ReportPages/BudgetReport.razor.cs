@@ -11,7 +11,7 @@ public partial class BudgetReport
     private bool _loading = true;
     private FormModel? _model;
     private EditContext? _editContext;
-    private ValidationMessageStore? _validationMessageStore;
+    //private ValidationMessageStore? _validationMessageStore;
 
     private ICollection<Account>? _accounts;
     private Dictionary<string, Balances>? _balances;
@@ -34,7 +34,7 @@ public partial class BudgetReport
         _model.FormChanged += HandleFormChanged;
 
         _editContext = new EditContext(_model);
-        _validationMessageStore = new ValidationMessageStore(_editContext);
+        //_validationMessageStore = new ValidationMessageStore(_editContext);
         //_editContext!.OnValidationRequested += HandleValidationRequested;
 
         if (_model.BudgetId != Guid.Empty)
@@ -129,7 +129,7 @@ public partial class BudgetReport
     }
 
     private Account? GetRootAccount(AccountType accountType) =>
-        _accounts?.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
+        _accounts?.SingleOrDefault(a => a.Parent == null && a.AccountType == accountType);
 
     public class FormModel
     {

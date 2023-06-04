@@ -10,6 +10,14 @@ public partial class InitialCreate : Migration
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
+        MigrationHelper.CreateEnumTable<AccountType>("AccountType", migrationBuilder);
+        MigrationHelper.CreateEnumTable<AmountType>("AmountType", migrationBuilder);
+        MigrationHelper.CreateEnumTable<CommodityType>("CommodityType", migrationBuilder);
+        MigrationHelper.CreateEnumTable<DataSource>("DataSource", migrationBuilder);
+        MigrationHelper.CreateEnumTable<PriceSource>("PriceSource", migrationBuilder);
+        MigrationHelper.CreateEnumTable<PriceType>("PriceType", migrationBuilder);
+        MigrationHelper.CreateEnumTable<SettingType>("SettingType", migrationBuilder);
+
         migrationBuilder.CreateTable(
             name: "AspNetRoles",
             columns: table => new
@@ -19,10 +27,7 @@ public partial class InitialCreate : Migration
                 NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                 ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-            });
+            constraints: table => table.PrimaryKey("PK_AspNetRoles", x => x.Id));
 
         migrationBuilder.CreateTable(
             name: "AspNetUsers",
@@ -44,10 +49,7 @@ public partial class InitialCreate : Migration
                 LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
                 AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-            });
+            constraints: table => table.PrimaryKey("PK_AspNetUsers", x => x.Id));
 
         migrationBuilder.CreateTable(
             name: "Budgets",
@@ -60,10 +62,7 @@ public partial class InitialCreate : Migration
                 EndDate = table.Column<DateOnly>(type: "date", nullable: false),
                 IsHidden = table.Column<bool>(type: "INTEGER", nullable: false)
             },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_Budgets", x => x.Id);
-            });
+            constraints: table => table.PrimaryKey("PK_Budgets", x => x.Id));
 
         migrationBuilder.CreateTable(
             name: "Commodities",
@@ -71,46 +70,46 @@ public partial class InitialCreate : Migration
             {
                 Id = table.Column<Guid>(type: "TEXT", nullable: false),
                 Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                Symbol = table.Column<string>(type: "TEXT", maxLength: 16, nullable: true),
-                Type = table.Column<int>(type: "INTEGER", nullable: false),
+                Symbol = table.Column<string>(type: "TEXT", maxLength: 1, nullable: true),
+                CommodityType = table.Column<int>(type: "INTEGER", nullable: false),
                 Cusip = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                 Precision = table.Column<int>(type: "INTEGER", nullable: false),
                 Mnemonic = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                 IsLocked = table.Column<bool>(type: "INTEGER", nullable: false),
-                Source = table.Column<int>(type: "INTEGER", nullable: false),
+                DataSource = table.Column<int>(type: "INTEGER", nullable: false),
                 Updated = table.Column<DateTime>(type: "datetime", nullable: false)
             },
             constraints: table =>
             {
                 table.PrimaryKey("PK_Commodities", x => x.Id);
+                table.ForeignKey(
+                    name: "FK_Commodities_CommodityType",
+                    column: x => x.CommodityType,
+                    principalTable: "CommodityType",
+                    principalColumn: "Value");
+                table.ForeignKey(
+                    name: "FK_Commodities_DataSource",
+                    column: x => x.DataSource,
+                    principalTable: "DataSource",
+                    principalColumn: "Value");
             });
 
         migrationBuilder.CreateTable(
-            name: "Configurations",
+            name: "Settings",
             columns: table => new
             {
                 Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                Key = table.Column<int>(type: "INTEGER", nullable: false),
+                SettingType = table.Column<int>(type: "INTEGER", nullable: false),
                 Value = table.Column<string>(type: "TEXT", maxLength: 4096, nullable: false)
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_Configurations", x => x.Id);
-            });
-
-        migrationBuilder.CreateTable(
-            name: "ExternalIds",
-            columns: table => new
-            {
-                Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                LocalId = table.Column<Guid>(type: "TEXT", nullable: false),
-                ExternalId = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                Type = table.Column<int>(type: "INTEGER", nullable: false),
-                Source = table.Column<int>(type: "INTEGER", nullable: false)
-            },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_ExternalIds", x => x.Id);
+                table.PrimaryKey("PK_Settings", x => x.Id);
+                table.ForeignKey(
+                    name: "FK_Settings_SettingType",
+                    column: x => x.SettingType,
+                    principalTable: "SettingType",
+                    principalColumn: "Value");
             });
 
         migrationBuilder.CreateTable(
@@ -227,12 +226,12 @@ public partial class InitialCreate : Migration
                 Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                 Description = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                 ParentId = table.Column<Guid>(type: "TEXT", nullable: true),
-                Type = table.Column<int>(type: "INTEGER", nullable: false),
+                AccountType = table.Column<int>(type: "INTEGER", nullable: false),
                 CommodityId = table.Column<Guid>(type: "TEXT", nullable: false),
                 IsHidden = table.Column<bool>(type: "INTEGER", nullable: false),
                 IsLocked = table.Column<bool>(type: "INTEGER", nullable: false),
                 IsPlaceholder = table.Column<bool>(type: "INTEGER", nullable: false),
-                Source = table.Column<int>(type: "INTEGER", nullable: false),
+                DataSource = table.Column<int>(type: "INTEGER", nullable: false),
                 Updated = table.Column<DateTime>(type: "datetime", nullable: false)
             },
             constraints: table =>
@@ -248,6 +247,55 @@ public partial class InitialCreate : Migration
                     column: x => x.CommodityId,
                     principalTable: "Commodities",
                     principalColumn: "Id");
+                table.ForeignKey(
+                    name: "FK_Accounts_AccountType",
+                    column: x => x.AccountType,
+                    principalTable: "AccountType",
+                    principalColumn: "Value");
+                table.ForeignKey(
+                    name: "FK_Accounts_DataSource",
+                    column: x => x.DataSource,
+                    principalTable: "DataSource",
+                    principalColumn: "Value");
+            });
+
+        migrationBuilder.CreateTable(
+            name: "Prices",
+            columns: table => new
+            {
+                Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                CommodityId = table.Column<Guid>(type: "TEXT", nullable: false),
+                Date = table.Column<DateOnly>(type: "date", nullable: false),
+                PriceSource = table.Column<int>(type: "INTEGER", nullable: false),
+                PriceType = table.Column<int>(type: "INTEGER", nullable: false),
+                Value = table.Column<decimal>(type: "decimal(28, 9)", nullable: false),
+                DataSource = table.Column<int>(type: "INTEGER", nullable: false),
+                Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_Prices", x => x.Id);
+                table.ForeignKey(
+                    name: "FK_Prices_Commodities",
+                    column: x => x.CommodityId,
+                    principalTable: "Commodities",
+                    principalColumn: "Id",
+                    onDelete: ReferentialAction.Cascade);
+                table.ForeignKey(
+                    name: "FK_Prices_PriceSource",
+                    column: x => x.PriceSource,
+                    principalTable: "PriceSource",
+                    principalColumn: "Value");
+                table.ForeignKey(
+                    name: "FK_Prices_PriceType",
+                    column: x => x.PriceType,
+                    principalTable: "PriceType",
+                    principalColumn: "Value");
+                table.ForeignKey(
+                    name: "FK_Prices_DataSource",
+                    column: x => x.DataSource,
+                    principalTable: "DataSource",
+                    principalColumn: "Value");
             });
 
         migrationBuilder.CreateTable(
@@ -257,18 +305,17 @@ public partial class InitialCreate : Migration
                 Id = table.Column<Guid>(type: "TEXT", nullable: false),
                 PostDate = table.Column<DateOnly>(type: "date", nullable: false),
                 Description = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
-                CommodityId = table.Column<Guid>(type: "TEXT", nullable: false),
-                Source = table.Column<int>(type: "INTEGER", nullable: false),
+                DataSource = table.Column<int>(type: "INTEGER", nullable: false),
                 Updated = table.Column<DateTime>(type: "datetime", nullable: false)
             },
             constraints: table =>
             {
                 table.PrimaryKey("PK_Transactions", x => x.Id);
                 table.ForeignKey(
-                    name: "FK_Transactions_Commodities",
-                    column: x => x.CommodityId,
-                    principalTable: "Commodities",
-                    principalColumn: "Id");
+                    name: "FK_Transactions_DataSource",
+                    column: x => x.DataSource,
+                    principalTable: "DataSource",
+                    principalColumn: "Value");
             });
 
         migrationBuilder.CreateTable(
@@ -278,7 +325,7 @@ public partial class InitialCreate : Migration
                 Id = table.Column<Guid>(type: "TEXT", nullable: false),
                 BudgetId = table.Column<Guid>(type: "TEXT", nullable: false),
                 AccountId = table.Column<Guid>(type: "TEXT", nullable: false),
-                Type = table.Column<int>(type: "INTEGER", nullable: false),
+                AmountType = table.Column<int>(type: "INTEGER", nullable: false),
                 AmountDate = table.Column<DateOnly>(type: "date", nullable: false),
                 Value = table.Column<decimal>(type: "TEXT", nullable: false)
             },
@@ -296,6 +343,11 @@ public partial class InitialCreate : Migration
                     column: x => x.BudgetId,
                     principalTable: "Budgets",
                     principalColumn: "Id");
+                table.ForeignKey(
+                    name: "FK_BudgetAmounts_AmountType",
+                    column: x => x.AmountType,
+                    principalTable: "AmountType",
+                    principalColumn: "Value");
             });
 
         migrationBuilder.CreateTable(
@@ -309,7 +361,7 @@ public partial class InitialCreate : Migration
                 Action = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
                 Value = table.Column<decimal>(type: "decimal(28, 9)", nullable: false),
                 Quantity = table.Column<decimal>(type: "decimal(28, 9)", nullable: false),
-                Source = table.Column<int>(type: "INTEGER", nullable: false),
+                DataSource = table.Column<int>(type: "INTEGER", nullable: false),
                 Updated = table.Column<DateTime>(type: "datetime", nullable: false)
             },
             constraints: table =>
@@ -325,6 +377,11 @@ public partial class InitialCreate : Migration
                     column: x => x.TransactionId,
                     principalTable: "Transactions",
                     principalColumn: "Id");
+                table.ForeignKey(
+                    name: "FK_Splits_DataSource",
+                    column: x => x.DataSource,
+                    principalTable: "DataSource",
+                    principalColumn: "Value");
             });
 
         migrationBuilder.CreateIndex(
@@ -385,10 +442,9 @@ public partial class InitialCreate : Migration
             column: "BudgetId");
 
         migrationBuilder.CreateIndex(
-            name: "UX_LocalIDSourceType",
-            table: "ExternalIds",
-            columns: new[] { "LocalId", "Source", "Type" },
-            unique: true);
+            name: "IX_Prices_CommodityId",
+            table: "Prices",
+            column: "CommodityId");
 
         migrationBuilder.CreateIndex(
             name: "IX_Splits_AccountId",
@@ -404,54 +460,5 @@ public partial class InitialCreate : Migration
             name: "IX_Transactions_CommodityId",
             table: "Transactions",
             column: "CommodityId");
-    }
-
-    /// <inheritdoc />
-    protected override void Down(MigrationBuilder migrationBuilder)
-    {
-        migrationBuilder.DropTable(
-            name: "AspNetRoleClaims");
-
-        migrationBuilder.DropTable(
-            name: "AspNetUserClaims");
-
-        migrationBuilder.DropTable(
-            name: "AspNetUserLogins");
-
-        migrationBuilder.DropTable(
-            name: "AspNetUserRoles");
-
-        migrationBuilder.DropTable(
-            name: "AspNetUserTokens");
-
-        migrationBuilder.DropTable(
-            name: "BudgetAmounts");
-
-        migrationBuilder.DropTable(
-            name: "Configurations");
-
-        migrationBuilder.DropTable(
-            name: "ExternalIds");
-
-        migrationBuilder.DropTable(
-            name: "Splits");
-
-        migrationBuilder.DropTable(
-            name: "AspNetRoles");
-
-        migrationBuilder.DropTable(
-            name: "AspNetUsers");
-
-        migrationBuilder.DropTable(
-            name: "Budgets");
-
-        migrationBuilder.DropTable(
-            name: "Accounts");
-
-        migrationBuilder.DropTable(
-            name: "Transactions");
-
-        migrationBuilder.DropTable(
-            name: "Commodities");
     }
 }

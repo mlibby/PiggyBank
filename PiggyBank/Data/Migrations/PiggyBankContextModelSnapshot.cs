@@ -214,8 +214,14 @@ namespace PiggyBank.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("AccountType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<Guid>("CommodityId")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("DataSource")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -238,12 +244,6 @@ namespace PiggyBank.Migrations
 
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Source")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime");
@@ -296,11 +296,11 @@ namespace PiggyBank.Migrations
                     b.Property<DateOnly>("AmountDate")
                         .HasColumnType("date");
 
+                    b.Property<int>("AmountType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<Guid>("BudgetId")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Value")
                         .HasColumnType("TEXT");
@@ -319,10 +319,16 @@ namespace PiggyBank.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("CommodityType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Cusip")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("DataSource")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsLocked")
                         .HasColumnType("INTEGER");
@@ -340,15 +346,9 @@ namespace PiggyBank.Migrations
                     b.Property<int>("Precision")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Source")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Symbol")
-                        .HasMaxLength(16)
+                        .HasMaxLength(1)
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime");
@@ -356,52 +356,6 @@ namespace PiggyBank.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Commodities");
-                });
-
-            modelBuilder.Entity("PiggyBank.Data.Models.Configuration", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Key")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasMaxLength(4096)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Configurations");
-                });
-
-            modelBuilder.Entity("PiggyBank.Data.Models.ExternalId", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ExternalIdString")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("ExternalId");
-
-                    b.Property<Guid>("LocalId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Source")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "LocalId", "Source", "Type" }, "UX_LocalIDSourceType")
-                        .IsUnique();
-
-                    b.ToTable("ExternalIds");
                 });
 
             modelBuilder.Entity("PiggyBank.Data.Models.Price", b =>
@@ -412,17 +366,20 @@ namespace PiggyBank.Migrations
                     b.Property<Guid>("CommodityId")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("DataSource")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
                     b.Property<int>("PriceSource")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Source")
+                    b.Property<int>("PriceType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("Value")
                         .HasColumnType("decimal(28, 9)");
@@ -432,6 +389,24 @@ namespace PiggyBank.Migrations
                     b.HasIndex("CommodityId");
 
                     b.ToTable("Prices");
+                });
+
+            modelBuilder.Entity("PiggyBank.Data.Models.Setting", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("SettingType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(4096)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("PiggyBank.Data.Models.Split", b =>
@@ -447,6 +422,9 @@ namespace PiggyBank.Migrations
                         .HasMaxLength(2048)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("DataSource")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Memo")
                         .IsRequired()
                         .HasMaxLength(2048)
@@ -454,9 +432,6 @@ namespace PiggyBank.Migrations
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(28, 9)");
-
-                    b.Property<int>("Source")
-                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("TransactionId")
                         .HasColumnType("TEXT");
@@ -481,8 +456,8 @@ namespace PiggyBank.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("CommodityId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("DataSource")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -492,15 +467,10 @@ namespace PiggyBank.Migrations
                     b.Property<DateOnly>("PostDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("Source")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CommodityId");
 
                     b.ToTable("Transactions");
                 });
@@ -623,17 +593,6 @@ namespace PiggyBank.Migrations
                     b.Navigation("Account");
 
                     b.Navigation("Transaction");
-                });
-
-            modelBuilder.Entity("PiggyBank.Data.Models.Transaction", b =>
-                {
-                    b.HasOne("PiggyBank.Data.Models.Commodity", "Commodity")
-                        .WithMany()
-                        .HasForeignKey("CommodityId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Transactions_Commodities");
-
-                    b.Navigation("Commodity");
                 });
 
             modelBuilder.Entity("PiggyBank.Data.Models.Account", b =>

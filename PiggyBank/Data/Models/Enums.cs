@@ -1,4 +1,5 @@
 ﻿namespace PiggyBank.Enums;
+
 public enum AccountType
 {
     Asset = 1,
@@ -22,11 +23,6 @@ public enum CommodityType
     Stock = 3,
 }
 
-public enum ConfigurationKey
-{
-    DefaultBudgetId = 1
-}
-
 public enum DataSource
 {
     User = 1,
@@ -34,7 +30,7 @@ public enum DataSource
     Ofx = 3,
 }
 
-public enum PriceSourceType
+public enum PriceSource
 {
     EditDialog = 1,
     FinanceQuote = 2,
@@ -57,4 +53,9 @@ public enum PriceType
     NetAssetValue = 4,
     Transaction = 5,
     Unknown = 6,
+}
+
+public enum SettingType
+{
+    DefaultBudgetId = 1
 }

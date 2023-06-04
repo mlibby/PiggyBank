@@ -53,7 +53,7 @@ public partial class Account
 
     public string DisplayAmount(decimal amount)
     {
-        amount = s_displayMultiplier[Type] * amount;
+        amount = s_displayMultiplier[AccountType] * amount;
         return Commodity.DisplayAmount(amount);
     }
 }

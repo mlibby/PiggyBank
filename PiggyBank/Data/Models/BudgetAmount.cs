@@ -8,7 +8,7 @@ public partial class BudgetAmount : ModelBase
     public Guid AccountId { get; set; }
     public virtual Account Account { get; set; } = null!;
 
-    public AmountType Type { get; set; }
+    public AmountType AmountType { get; set; }
 
     public DateOnly AmountDate { get; set; }
 

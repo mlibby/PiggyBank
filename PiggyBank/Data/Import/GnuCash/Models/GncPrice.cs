@@ -18,19 +18,19 @@ public partial class GncPrice
 
     public long ValueDenomination { get; set; }
 
-    public Dictionary<string, PriceSourceType> PriceSourceMap = new()
+    public Dictionary<string, PriceSource> PriceSourceMap = new()
     {
-        { "Finance::Quote", PriceSourceType.FinanceQuote },
-        { "invalid", PriceSourceType.Invalid },
-        { "temporary", PriceSourceType.Temporary },
-        { "user:invoice-post", PriceSourceType.Invoice },
-        { "user:price", PriceSourceType.UserPrice },
-        { "user:price-editor", PriceSourceType.EditDialog },
-        { "user:split-import", PriceSourceType.SplitImport },
-        { "user:split-register", PriceSourceType.SplitRegister },
-        { "user:stock-split", PriceSourceType.StockSplit },
-        { "user:stock-transaction", PriceSourceType.StockTransaction },
-        { "user:xfer-dialog", PriceSourceType.TransferDialog },
+        { "Finance::Quote", PriceSource.FinanceQuote },
+        { "invalid", PriceSource.Invalid },
+        { "temporary", PriceSource.Temporary },
+        { "user:invoice-post", PriceSource.Invoice },
+        { "user:price", PriceSource.UserPrice },
+        { "user:price-editor", PriceSource.EditDialog },
+        { "user:split-import", PriceSource.SplitImport },
+        { "user:split-register", PriceSource.SplitRegister },
+        { "user:stock-split", PriceSource.StockSplit },
+        { "user:stock-transaction", PriceSource.StockTransaction },
+        { "user:xfer-dialog", PriceSource.TransferDialog },
     };
 
     //public Dictionary<string, Price.PriceType> PriceTypeMap = new() {
