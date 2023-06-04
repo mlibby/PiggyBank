@@ -11,7 +11,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
 
             var accounts = new List<GncAccount>();
             var rootAccount = await GnuCashContext.Accounts
-                .SingleAsync(a => a.AccountType == "ROOT" && a.Name == "Root Account");
+                .SingleAsync(a => a.GncAccountType == "ROOT" && a.Name == "Root Account");
 
             var gnuCashAccounts = await GetGnuCashAccounts(rootAccount.Guid, accounts);
             count.Report(gnuCashAccounts.Count);
@@ -31,7 +31,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 {
                     account = new Account()
                     {
-                        Source = Source.SourceType.GnuCash
+                        Source = DataSource.GnuCash
                     };
                     PiggyBankContext.Accounts.Add(account);
                 }
@@ -75,7 +75,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 {
                     commodity = new Commodity()
                     {
-                        Source = Source.SourceType.GnuCash
+                        Source = DataSource.GnuCash
                     };
                     PiggyBankContext.Commodities.Add(commodity);
                 }
@@ -104,7 +104,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
             count.Report(gncTransactions.Count);
 
             var existingTransactionIds = await PiggyBankContext.Transactions
-                .Where(t => t.Source == Source.SourceType.GnuCash)
+                .Where(t => t.Source == DataSource.GnuCash)
                 .Select(t => t.Id)
                 .ToListAsync();
 
@@ -119,7 +119,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
                 {
                     transaction = new Transaction()
                     {
-                        Source = Source.SourceType.GnuCash
+                        Source = DataSource.GnuCash
                     };
                     PiggyBankContext.Transactions.Add(transaction);
                 }
@@ -233,7 +233,7 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
 
             split = new Split()
             {
-                Source = Source.SourceType.GnuCash
+                Source = DataSource.GnuCash
             };
 
             transaction.Splits.Add(split);

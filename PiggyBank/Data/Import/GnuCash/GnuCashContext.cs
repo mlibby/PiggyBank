@@ -32,7 +32,7 @@ public partial class GnuCashContext : DbContext
 
     public virtual DbSet<GncOrder> Orders { get; set; }
 
-    public virtual DbSet<GncPrice> Prices { get; set; }
+    public virtual DbSet<Price> Prices { get; set; }
 
     public virtual DbSet<GncRecurrence> Recurrences { get; set; }
 
@@ -57,7 +57,7 @@ public partial class GnuCashContext : DbContext
             entity.Property(e => e.Guid)
                 .HasColumnType("text(32)")
                 .HasColumnName("guid");
-            entity.Property(e => e.AccountType)
+            entity.Property(e => e.GncAccountType)
                 .HasColumnType("text(2048)")
                 .HasColumnName("account_type");
             entity.Property(e => e.Code)

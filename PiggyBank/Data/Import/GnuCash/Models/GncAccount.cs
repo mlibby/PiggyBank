@@ -2,27 +2,27 @@
 
 public partial class GncAccount
 {
-    private static Dictionary<string, Account.AccountType> s_gnuCashToPiggyBank = new()
+    private static Dictionary<string, AccountType> s_gnuCashToPiggyBank = new()
     {
-        { "ASSET", Account.AccountType.Asset },
-        { "BANK", Account.AccountType.Asset },
-        { "CASH", Account.AccountType.Asset },
-        { "CREDIT", Account.AccountType.Liability },
-        { "EQUITY", Account.AccountType.Equity },
-        { "EXPENSE", Account.AccountType.Expense },
-        { "INCOME", Account.AccountType.Income },
-        { "LIABILITY", Account.AccountType.Liability },
-        { "MUTUAL", Account.AccountType.Asset },
-        { "PAYABLE", Account.AccountType.Liability },
-        { "RECEIVABLE", Account.AccountType.Asset },
-        { "STOCK", Account.AccountType.Asset },
+        { "ASSET", AccountType.Asset },
+        { "BANK", AccountType.Asset },
+        { "CASH", AccountType.Asset },
+        { "CREDIT", AccountType.Liability },
+        { "EQUITY", AccountType.Equity },
+        { "EXPENSE", AccountType.Expense },
+        { "INCOME", AccountType.Income },
+        { "LIABILITY", AccountType.Liability },
+        { "MUTUAL", AccountType.Asset },
+        { "PAYABLE", AccountType.Liability },
+        { "RECEIVABLE", AccountType.Asset },
+        { "STOCK", AccountType.Asset },
     };
 
     public string Guid { get; set; } = null!;
 
     public string Name { get; set; } = null!;
 
-    public string AccountType { get; set; } = null!;
+    public string GncAccountType { get; set; } = null!;
 
     public string? CommodityGuid { get; set; }
 
@@ -40,5 +40,5 @@ public partial class GncAccount
 
     public long? Placeholder { get; set; }
 
-    public Account.AccountType PiggyBankAccountType => s_gnuCashToPiggyBank[AccountType.ToUpper()];
+    public AccountType PiggyBankAccountType => s_gnuCashToPiggyBank[GncAccountType.ToUpper()];
 }

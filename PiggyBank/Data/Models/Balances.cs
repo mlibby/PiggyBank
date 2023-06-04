@@ -51,7 +51,7 @@ public class Balances
             .ToList();
         var balance = splits.Sum(s => s.Value);
 
-        if (account.Type == Account.AccountType.Income)
+        if (account.Type == AccountType.Income)
         {
             balance = -balance;
         }

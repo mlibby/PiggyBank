@@ -14,6 +14,7 @@ global using PiggyBank.Data;
 global using PiggyBank.Data.Import.GnuCash;
 global using PiggyBank.Data.Models;
 global using PiggyBank.Data.Services;
+global using PiggyBank.Enums;
 global using PiggyBank.Helpers;
 global using PiggyBank.Shared.TreeTable;
 global using PiggyBank.Shared.TreeView;

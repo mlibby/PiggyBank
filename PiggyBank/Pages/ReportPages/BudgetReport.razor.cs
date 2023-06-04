@@ -77,7 +77,7 @@ public partial class BudgetReport
         LoadBudget();
     }
 
-    private TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
+    private TreeTableModel CreateTreeTableModel(AccountType accountType)
     {
         var columns = new List<string>
         {
@@ -128,7 +128,7 @@ public partial class BudgetReport
         }
     }
 
-    private Account? GetRootAccount(Account.AccountType accountType) =>
+    private Account? GetRootAccount(AccountType accountType) =>
         _accounts?.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
 
     public class FormModel

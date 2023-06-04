@@ -2,11 +2,11 @@
 
 public partial class GncCommodity
 {
-    public static readonly Dictionary<string, Commodity.CommodityType> TypeMap = new()
+    public static readonly Dictionary<string, CommodityType> TypeMap = new()
     {
-        {"CURRENCY", Commodity.CommodityType.Currency },
-        {"FUND", Commodity.CommodityType.Stock },
-        {"NYSE", Commodity.CommodityType.Stock },
+        {"CURRENCY", CommodityType.Currency },
+        {"FUND", CommodityType.Stock },
+        {"NYSE", CommodityType.Stock },
     };
 
     public string Guid { get; set; } = null!;

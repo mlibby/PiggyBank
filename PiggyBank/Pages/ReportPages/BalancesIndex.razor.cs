@@ -38,7 +38,7 @@ public partial class BalancesIndex
         _periodRanges = periodRanges;
     }
 
-    protected TreeTableModel? CreateTreeTableModel(Account.AccountType accountType)
+    protected TreeTableModel? CreateTreeTableModel(AccountType accountType)
     {
         if (_periodRanges is null)
         {
@@ -110,6 +110,6 @@ public partial class BalancesIndex
         }
     }
 
-    private Data.Models.Account? GetRootAccount(Data.Models.Account.AccountType accountType)
+    private Data.Models.Account? GetRootAccount(AccountType accountType)
         => _accounts?.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
 }

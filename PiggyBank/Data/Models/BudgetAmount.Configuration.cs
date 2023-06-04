@@ -11,6 +11,6 @@ public partial class BudgetAmount
 
         public int RoundTo { get; set; } = 0;
 
-        public List<Account.AccountType> AccountTypes { get; set; } = new List<Account.AccountType>();
+        public List<AccountType> AccountTypes { get; set; } = new List<AccountType>();
     }
 }

@@ -34,7 +34,7 @@ public record BudgetService(PiggyBankContext Context)
     public async Task<Guid> GetDefaultBudgetIdAsync()
     {
         var defaultBudget = await Context.Configurations
-            .SingleOrDefaultAsync(c => c.Key == Configuration.ConfigurationKey.DefaultBudgetId);
+            .SingleOrDefaultAsync(c => c.Key == ConfigurationKey.DefaultBudgetId);
 
         return defaultBudget is not null && Guid.TryParse(defaultBudget.Value, out var guid) ?
             guid :
@@ -44,13 +44,13 @@ public record BudgetService(PiggyBankContext Context)
     public void SaveDefaultBudgetId(Guid budgetId)
     {
         var defaultBudget = Context.Configurations
-            .SingleOrDefault(c => c.Key == Configuration.ConfigurationKey.DefaultBudgetId);
+            .SingleOrDefault(c => c.Key == ConfigurationKey.DefaultBudgetId);
 
         if (defaultBudget is null)
         {
             defaultBudget = new Configuration()
             {
-                Key = Configuration.ConfigurationKey.DefaultBudgetId
+                Key = ConfigurationKey.DefaultBudgetId
             };
             Context.Configurations.Add(defaultBudget);
         }
@@ -90,8 +90,8 @@ public record BudgetService(PiggyBankContext Context)
         var budgetPeriods = DateHelper.CalculatePeriods(budget.StartDate, budget.EndDate);
         var amountType =
             config.DefaultPeriod == DateHelper.PeriodType.Monthly ?
-            BudgetAmount.AmountType.Monthly :
-            BudgetAmount.AmountType.Annual;
+            AmountType.Monthly :
+            AmountType.Annual;
 
         foreach (var account in accounts)
         {

@@ -97,22 +97,22 @@ public partial class BudgetAmountCalculate : ComponentBase
 
         if (_model.IncludeAsset)
         {
-            config.AccountTypes.Add(Account.AccountType.Asset);
+            config.AccountTypes.Add(AccountType.Asset);
         }
 
         if (_model.IncludeExpense)
         {
-            config.AccountTypes.Add(Account.AccountType.Expense);
+            config.AccountTypes.Add(AccountType.Expense);
         }
 
         if (_model.IncludeIncome)
         {
-            config.AccountTypes.Add(Account.AccountType.Income);
+            config.AccountTypes.Add(AccountType.Income);
         }
 
         if (_model.IncludeLiability)
         {
-            config.AccountTypes.Add(Account.AccountType.Liability);
+            config.AccountTypes.Add(AccountType.Liability);
         }
 
         return config;

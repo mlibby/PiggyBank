@@ -8,19 +8,12 @@ public class PiggyBankContext : IdentityDbContext
     }
 
     public virtual DbSet<Account> Accounts { get; set; } = null!;
-
-    public virtual DbSet<Budget> Budgets { get; set; } = null!;
-
     public virtual DbSet<BudgetAmount> BudgetAmounts { get; set; } = null!;
-
+    public virtual DbSet<Budget> Budgets { get; set; } = null!;
     public virtual DbSet<Commodity> Commodities { get; set; } = null!;
-
     public virtual DbSet<Configuration> Configurations { get; set; } = null!;
-
-    public virtual DbSet<ExternalId> ExternalIds { get; set; } = null!;
-
+    public virtual DbSet<Price> Prices { get; set; } = null!;
     public virtual DbSet<Split> Splits { get; set; } = null!;
-
     public virtual DbSet<Transaction> Transactions { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -93,14 +86,16 @@ public class PiggyBankContext : IdentityDbContext
             entity.Property(e => e.Value).HasMaxLength(4096);
         });
 
-        modelBuilder.Entity<ExternalId>(entity =>
+        modelBuilder.Entity<Price>(entity =>
         {
-            entity.HasIndex(e => new { e.LocalId, e.Source, e.Type }, "UX_LocalIDSourceType").IsUnique();
+            entity.HasKey(e => e.Id);
 
             entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.ExternalIdString)
-                .HasMaxLength(255)
-                .HasColumnName("ExternalId");
+            entity.Property(e => e.Date).HasColumnType("date");
+            entity.Property(e => e.Value).HasColumnType("decimal(28, 9)");
+            entity.HasOne(d => d.Commodity).WithMany()
+                .HasForeignKey(d => d.CommodityId)
+                .HasConstraintName("FK_Prices_Commodities");
         });
 
         modelBuilder.Entity<Split>(entity =>

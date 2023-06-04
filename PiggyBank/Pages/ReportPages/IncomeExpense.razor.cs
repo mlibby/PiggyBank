@@ -39,7 +39,7 @@ public partial class IncomeExpense
 
     protected string AccountName(object data) => ((Account)data).Name;
 
-    protected TreeTableModel CreateTreeTableModel(Account.AccountType accountType)
+    protected TreeTableModel CreateTreeTableModel(AccountType accountType)
     {
         var columns = new List<string>
         {
@@ -83,6 +83,6 @@ public partial class IncomeExpense
         }
     }
 
-    private Account? GetRootAccount(Account.AccountType accountType)
+    private Account? GetRootAccount(AccountType accountType)
         => _accounts?.SingleOrDefault(a => a.Parent == null && a.Type == accountType);
 }

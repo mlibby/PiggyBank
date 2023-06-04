@@ -33,23 +33,23 @@
 }
 else if (_budget is not null)
 {
-    if (_budget.Amounts.Any(a => a.Account.Type == Account.AccountType.Income))
+    if (_budget.Amounts.Any(a => a.Account.Type == AccountType.Income))
     {
-        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Income)" />
+        <TreeTable Model="@CreateTreeTableModel(AccountType.Income)" />
     }
 
-    if (_budget.Amounts.Any(a => a.Account.Type == Account.AccountType.Expense))
+    if (_budget.Amounts.Any(a => a.Account.Type == AccountType.Expense))
     {
-        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Expense)" />
+        <TreeTable Model="@CreateTreeTableModel(AccountType.Expense)" />
     }
 
-    if (_budget.Amounts.Any(a => a.Account.Type == Account.AccountType.Asset))
+    if (_budget.Amounts.Any(a => a.Account.Type == AccountType.Asset))
     {
-        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Asset)" />
+        <TreeTable Model="@CreateTreeTableModel(AccountType.Asset)" />
     }
 
-    if (_budget.Amounts.Any(a => a.Account.Type == Account.AccountType.Liability))
+    if (_budget.Amounts.Any(a => a.Account.Type == AccountType.Liability))
     {
-        <TreeTable Model="@CreateTreeTableModel(Account.AccountType.Liability)" />
+        <TreeTable Model="@CreateTreeTableModel(AccountType.Liability)" />
     }
 }
