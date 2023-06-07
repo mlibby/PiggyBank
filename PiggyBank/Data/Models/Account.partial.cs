@@ -51,9 +51,9 @@ public partial class Account
         return warnings;
     }
 
-    public string DisplayAmount(decimal amount)
+    public string DisplayAmount(decimal amount, bool round = false)
     {
         amount = s_displayMultiplier[AccountType] * amount;
-        return Commodity.DisplayAmount(amount);
+        return Commodity.DisplayAmount(amount, round);
     }
 }

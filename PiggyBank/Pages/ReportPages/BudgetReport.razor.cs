@@ -160,12 +160,12 @@ public partial class BudgetReport
 
                 model.FooterValues = new List<string>()
                 {
-                    rootAccount.DisplayAmount(_balances![Column.ActualCurrent][rootAccount.Id]),
-                    rootAccount.DisplayAmount(_balances![Column.BudgetCurrent][rootAccount.Id]),
-                    rootAccount.DisplayAmount(differenceCurrent),
-                    rootAccount.DisplayAmount(_balances![Column.ActualYTD][rootAccount.Id]),
-                    rootAccount.DisplayAmount(_balances![Column.BudgetYTD][rootAccount.Id]),
-                    rootAccount.DisplayAmount(differenceYTD),
+                    rootAccount.Commodity.DisplayAmount(_balances![Column.ActualCurrent][rootAccount.Id], true),
+                    rootAccount.Commodity.DisplayAmount(_balances![Column.BudgetCurrent][rootAccount.Id], true),
+                    rootAccount.Commodity.DisplayAmount(differenceCurrent, true),
+                    rootAccount.Commodity.DisplayAmount(_balances![Column.ActualYTD][rootAccount.Id], true),
+                    rootAccount.Commodity.DisplayAmount(_balances![Column.BudgetYTD][rootAccount.Id], true),
+                    rootAccount.Commodity.DisplayAmount(differenceYTD, true),
                 };
             }
             else
@@ -176,9 +176,9 @@ public partial class BudgetReport
 
                 model.FooterValues = new List<string>()
                 {
-                    rootAccount.DisplayAmount(_balances![Column.ActualYTD][rootAccount.Id]),
-                    rootAccount.DisplayAmount(_balances![Column.BudgetYTD][rootAccount.Id]),
-                    rootAccount.DisplayAmount(difference),
+                    rootAccount.Commodity.DisplayAmount(_balances![Column.ActualYTD][rootAccount.Id], true),
+                    rootAccount.Commodity.DisplayAmount(_balances![Column.BudgetYTD][rootAccount.Id], true),
+                    rootAccount.Commodity.DisplayAmount(difference, true),
                 };
             }
         }
@@ -206,12 +206,12 @@ public partial class BudgetReport
 
             balances = new List<string>()
                 {
-                    account.DisplayAmount(_balances![Column.ActualCurrent][account.Id]),
-                    account.DisplayAmount(_balances![Column.BudgetCurrent][account.Id]),
-                    account.DisplayAmount(differenceCurrent),
-                    account.DisplayAmount(_balances![Column.ActualYTD][account.Id]),
-                    account.DisplayAmount(_balances![Column.BudgetYTD][account.Id]),
-                    account.DisplayAmount(differenceYTD),
+                    account.Commodity.DisplayAmount(_balances![Column.ActualCurrent][account.Id], true),
+                    account.Commodity.DisplayAmount(_balances![Column.BudgetCurrent][account.Id], true),
+                    account.Commodity.DisplayAmount(differenceCurrent, true),
+                    account.Commodity.DisplayAmount(_balances![Column.ActualYTD][account.Id], true),
+                    account.Commodity.DisplayAmount(_balances![Column.BudgetYTD][account.Id], true),
+                    account.Commodity.DisplayAmount(differenceYTD, true),
                 };
 
         }
@@ -223,9 +223,9 @@ public partial class BudgetReport
 
             balances = new List<string>
                 {
-                    account.DisplayAmount(_balances![Column.ActualYTD][account.Id]),
-                    account.DisplayAmount(_balances![Column.BudgetYTD][account.Id]),
-                    account.DisplayAmount(difference)
+                    account.Commodity.DisplayAmount(_balances![Column.ActualYTD][account.Id], true),
+                    account.Commodity.DisplayAmount(_balances![Column.BudgetYTD][account.Id], true),
+                    account.Commodity.DisplayAmount(difference, true)
                 };
         }
 
