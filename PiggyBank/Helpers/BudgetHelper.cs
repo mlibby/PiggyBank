@@ -2,7 +2,7 @@
 
 public static class BudgetHelper
 {
-    public static void CalculateBudgetAmounts(Budget budget, BudgetAmount.Configuration config, List<Account> accounts)
+    public static void CalculateBudgetAmounts(Budget budget, BudgetAmount.Configuration config, ICollection<Account> accounts)
     {
         var amountBalances = new Balances(accounts, config.StartDate, config.EndDate);
         var periodCount = DateHelper.CalculatePeriods(config.StartDate, config.EndDate).Count;
@@ -12,14 +12,8 @@ public static class BudgetHelper
             AmountType.Monthly :
             AmountType.Annual;
 
-        foreach (var account in accounts)
+        foreach (var account in accounts.Where(a => !config.AccountTypes.Contains(a.AccountType)))
         {
-            // TODO: remove this check when https://github.com/dotnet/efcore/issues/30921 is resolved
-            if (!config.AccountTypes.Contains(account.AccountType))
-            {
-                continue;
-            }
-
             if (account.IsHidden || account.IsPlaceholder)
             {
                 continue;
@@ -37,5 +31,4 @@ public static class BudgetHelper
             }
         }
     }
-
 }

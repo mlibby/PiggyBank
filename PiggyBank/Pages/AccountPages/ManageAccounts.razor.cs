@@ -2,7 +2,6 @@ namespace PiggyBank.Pages.AccountPages;
 
 public partial class ManageAccounts
 {
-    [Inject] private PiggyBankService AccountService { get; set; } = default!;
     [Inject] private ImportService ImportService { get; set; } = default!;
 
     private bool _importing;
@@ -15,7 +14,7 @@ public partial class ManageAccounts
         _accounts.Where(a => a.Parent == null).ToList() :
         (ICollection<Account>)new List<Account>();
 
-    protected override async Task OnInitializedAsync() => _accounts = await AccountService.GetAccountsAsync();
+    protected override async Task OnInitializedAsync() => _accounts = await PiggyBankService.GetAccountsAsync();
 
     protected string AccountName(object data) => ((Account)data).Name;
 
@@ -25,7 +24,7 @@ public partial class ManageAccounts
         var count = new Progress<int>(value => _recordCount = value);
         var processed = new Progress<int>(value => _recordsProcessed = value);
         await ImportService.ImportAccounts(processed, count, new CancellationToken());
-        _accounts = await AccountService.GetAccountsAsync();
+        _accounts = await PiggyBankService.GetAccountsAsync();
         _importing = false;
     }
 

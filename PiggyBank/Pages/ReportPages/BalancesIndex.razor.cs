@@ -2,8 +2,6 @@ namespace PiggyBank.Pages.ReportPages;
 
 public partial class BalancesIndex
 {
-    [Inject] private PiggyBankService AccountService { get; set; } = default!;
-
     private DateOnly _today = DateOnly.MinValue;
     private int _monthsToShow = 12;
     private List<DateRange>? _periodRanges = null;
@@ -11,7 +9,7 @@ public partial class BalancesIndex
 
     protected override async Task OnInitializedAsync()
     {
-        _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
+        _accounts = await PiggyBankService.GetAccountsIncludeSplitsAsync();
         ComputePeriods();
     }
 

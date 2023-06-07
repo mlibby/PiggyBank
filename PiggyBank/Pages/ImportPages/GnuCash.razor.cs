@@ -3,7 +3,6 @@ namespace PiggyBank.Pages.ImportPages;
 public partial class GnuCash : IDisposable
 {
     [Inject] private ImportService ImportService { get; set; } = default!;
-    [Inject] private NotificationService NotificationService { get; set; } = default!;
 
     private CancellationTokenSource? _importCancellationTokenSource;
     private bool _complete;

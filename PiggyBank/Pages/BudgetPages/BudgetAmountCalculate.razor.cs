@@ -2,9 +2,6 @@ namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetAmountCalculate : ComponentBase
 {
-    [Inject] private PiggyBankService PiggyBankService { get; set; } = default!;
-    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-
     [Parameter] public Guid BudgetId { get; set; }
 
     private bool _found = true;
@@ -67,7 +64,9 @@ public partial class BudgetAmountCalculate : ComponentBase
         _calculatingAmounts = true;
 
         var config = GetAmountConfig();
-        await PiggyBankService.CalculateAmounts(_budget, config);
+        var accounts = await PiggyBankService.GetAccountsAsync();
+
+        BudgetHelper.CalculateBudgetAmounts(_budget, config, accounts);
 
         await PiggyBankService.Save(_budget);
         _calculatingAmounts = false;

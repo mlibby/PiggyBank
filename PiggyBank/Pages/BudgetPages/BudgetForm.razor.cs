@@ -2,9 +2,6 @@ namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetForm
 {
-    [Inject] private PiggyBankService PiggyBankService { get; set; } = default!;
-    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-
     [Parameter] public Guid BudgetId { get; set; }
 
     private bool _found = true;

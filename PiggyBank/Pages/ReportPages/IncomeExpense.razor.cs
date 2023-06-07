@@ -2,8 +2,6 @@ namespace PiggyBank.Pages.ReportPages;
 
 public partial class IncomeExpense
 {
-    [Inject] private PiggyBankService AccountService { get; set; } = default!;
-
     private DateOnly _startDate = DateOnly.MinValue;
     private DateOnly _endDate = DateOnly.MaxValue;
     private string _priorYear = null!;
@@ -14,7 +12,7 @@ public partial class IncomeExpense
 
     protected override async Task OnInitializedAsync()
     {
-        _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
+        _accounts = await PiggyBankService.GetAccountsIncludeSplitsAsync();
         var endDate = DateTime.Now;
         _endDate = DateOnly.FromDateTime(endDate);
         _startDate = new DateOnly(_endDate.Year, 1, 1);

@@ -2,10 +2,6 @@ namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetAmountForm
 {
-    [Inject] private PiggyBankService AccountService { get; set; } = default!;
-    [Inject] private PiggyBankService PiggyBankService { get; set; } = default!;
-    [Inject] private NavigationManager NavigationManager { get; set; } = default!;
-
     [Parameter] public Guid AccountId { get; set; }
     [Parameter] public Guid BudgetId { get; set; }
 
@@ -28,7 +24,7 @@ public partial class BudgetAmountForm
             return;
         }
 
-        var accounts = await AccountService.GetAccountsAsync();
+        var accounts = await PiggyBankService.GetAccountsAsync();
         _model.Load(budget, AccountId, accounts);
 
         _editContext = new EditContext(_model);

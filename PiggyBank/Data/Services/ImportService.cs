@@ -182,9 +182,13 @@ public record ImportService(GnuCashContext GnuCashContext, PiggyBankContext Pigg
         account.ParentId = gncAccount.ParentGuid is not null ? Guid.Parse(gncAccount.ParentGuid!) : null;
         account.Description = gncAccount.Description!;
         account.CommodityId = Guid.Parse(gncAccount.CommodityGuid!);
-        account.AccountType = gncAccount.PiggyBankAccountType;
         account.IsPlaceholder = gncAccount.Placeholder > 0;
         account.IsHidden = gncAccount.Hidden > 0;
+
+        account.AccountType =
+            gncAccount.Name.StartsWith("Imbalance") ?
+            AccountType.Invalid :
+            gncAccount.PiggyBankAccountType;
     }
 
     private static void UpdateCommodity(GncCommodity gncCommodity, Commodity commodity, GncSlot? symbol)

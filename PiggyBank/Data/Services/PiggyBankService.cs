@@ -55,19 +55,24 @@ public record PiggyBankService(PiggyBankContext Context)
         return Guid.Empty;
     }
 
-    public async Task<int> SaveSetting(Setting setting)
+    public void SaveSetting(SettingType settingType, string value)
     {
-        if (setting.Id == Guid.Empty)
+        var setting = Context.Settings.SingleOrDefault(s => s.SettingType == settingType);
+        if (setting is null)
         {
-            setting.Id = Guid.NewGuid();
+            setting = new()
+            {
+                SettingType = settingType,
+                Value = value
+            };
             Context.Settings.Add(setting);
         }
         else
         {
-            Context.Entry(setting).State = EntityState.Modified;
+            setting.Value = value;
         }
 
-        return await Context.SaveChangesAsync();
+        Context.SaveChanges();
     }
 
     public async Task<int> Save(Budget budget)

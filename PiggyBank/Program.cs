@@ -27,11 +27,8 @@ services
 
 services
     .AddScoped<PiggyBankService, PiggyBankService>()
-    .AddScoped<BudgetService, BudgetService>()
-    .AddScoped<CommodityService, CommodityService>()
     .AddScoped<ImportService, ImportService>()
-    .AddScoped<NotificationService, NotificationService>()
-    .AddScoped<TransactionService, TransactionService>();
+    .AddScoped<NotificationService, NotificationService>();
 
 var app = builder.Build();
 

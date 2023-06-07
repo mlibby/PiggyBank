@@ -2,7 +2,6 @@ namespace PiggyBank.Pages.CommodityPages;
 
 public partial class ManageCommodities
 {
-    [Inject] private CommodityService CommodityService { get; set; } = default!;
     [Inject] private ImportService ImportService { get; set; } = default!;
 
     private bool _importing;
@@ -10,7 +9,7 @@ public partial class ManageCommodities
     private int _recordsProcessed = 0;
     private IEnumerable<Commodity>? _commodities;
 
-    protected override async Task OnInitializedAsync() => _commodities = await CommodityService.GetCommoditiesAsync();
+    protected override async Task OnInitializedAsync() => _commodities = await PiggyBankService.GetCommoditiesAsync();
 
     protected async Task Import()
     {
@@ -18,7 +17,7 @@ public partial class ManageCommodities
         var count = new Progress<int>(value => _recordCount = value);
         var processed = new Progress<int>(value => _recordsProcessed = value);
         await ImportService.ImportCommodities(processed, count, CancellationToken.None);
-        _commodities = await CommodityService.GetCommoditiesAsync();
+        _commodities = await PiggyBankService.GetCommoditiesAsync();
         _importing = false;
 
         // TODO: do we need this? Does the UI not refresh?

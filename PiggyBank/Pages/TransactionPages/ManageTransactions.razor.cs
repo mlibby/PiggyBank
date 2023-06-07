@@ -2,9 +2,7 @@ namespace PiggyBank.Pages.TransactionPages;
 
 public partial class ManageTransactions : IDisposable
 {
-    [Inject] private TransactionService TransactionService { get; set; } = default!;
     [Inject] private ImportService ImportService { get; set; } = default!;
-    [Inject] private NotificationService NotificationService { get; set; } = default!;
 
     private CancellationTokenSource? _importCancellationTokenSource;
     private bool _importing;
@@ -12,7 +10,7 @@ public partial class ManageTransactions : IDisposable
     private int _recordsProcessed = 0;
     private IEnumerable<Transaction>? _transactions;
 
-    protected override async Task OnInitializedAsync() => _transactions = await TransactionService.GetTransactionsAsync();
+    protected override async Task OnInitializedAsync() => _transactions = await PiggyBankService.GetTransactionsAsync();
 
     async Task ImportClicked()
     {
@@ -23,7 +21,7 @@ public partial class ManageTransactions : IDisposable
         _importCancellationTokenSource = new CancellationTokenSource();
         await ImportService.ImportTransactions(processed, count, _importCancellationTokenSource.Token);
 
-        _transactions = await TransactionService.GetTransactionsAsync();
+        _transactions = await PiggyBankService.GetTransactionsAsync();
         _importing = false;
     }
 
