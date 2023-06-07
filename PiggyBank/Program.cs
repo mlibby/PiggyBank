@@ -26,7 +26,7 @@ services
     .AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
 services
-    .AddScoped<AccountService, AccountService>()
+    .AddScoped<PiggyBankService, PiggyBankService>()
     .AddScoped<BudgetService, BudgetService>()
     .AddScoped<CommodityService, CommodityService>()
     .AddScoped<ImportService, ImportService>()

@@ -2,8 +2,7 @@ namespace PiggyBank.Pages.ReportPages;
 
 public partial class BudgetReport
 {
-    [Inject] private AccountService AccountService { get; set; } = default!;
-    [Inject] private BudgetService BudgetService { get; set; } = default!;
+    [Inject] private PiggyBankService PiggyBankService { get; set; } = default!;
 
     private enum Column
     {
@@ -26,10 +25,10 @@ public partial class BudgetReport
     {
         _loading = true;
 
-        _accounts = await AccountService.GetAccountsIncludeSplitsAsync();
+        _accounts = await PiggyBankService.GetAccountsIncludeSplitsAsync();
 
-        var budgetId = await BudgetService.GetDefaultBudgetIdAsync();
-        var budgets = await BudgetService.GetBudgetsAsync();
+        var budgetId = await PiggyBankService.GetSetting<Guid>(SettingType.DefaultBudgetId);
+        var budgets = await PiggyBankService.GetBudgetsAsync();
         _model = new FormModel()
         {
             BudgetId = budgetId,

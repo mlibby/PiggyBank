@@ -2,7 +2,7 @@ namespace PiggyBank.Pages.AccountPages;
 
 public partial class ManageAccounts
 {
-    [Inject] private AccountService AccountService { get; set; } = default!;
+    [Inject] private PiggyBankService AccountService { get; set; } = default!;
     [Inject] private ImportService ImportService { get; set; } = default!;
 
     private bool _importing;

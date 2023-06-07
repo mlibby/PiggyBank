@@ -2,7 +2,7 @@ namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetAmountIndex
 {
-    [Inject] private BudgetService BudgetService { get; set; } = default!;
+    [Inject] private PiggyBankService PiggyBankService { get; set; } = default!;
 
     [Parameter] public Guid BudgetId { get; set; }
 
@@ -21,7 +21,7 @@ public partial class BudgetAmountIndex
 
         _loading = true;
 
-        _budget = await BudgetService.GetBudgetAndAmountsAsync(BudgetId);
+        _budget = await PiggyBankService.GetBudgetAndAmountsAsync(BudgetId);
         if (_budget is null)
         {
             _notFoundMessage = $"Budget with ID '{BudgetId}' not found";

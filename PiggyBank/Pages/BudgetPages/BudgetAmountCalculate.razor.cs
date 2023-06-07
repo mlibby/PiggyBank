@@ -2,7 +2,7 @@ namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetAmountCalculate : ComponentBase
 {
-    [Inject] private BudgetService BudgetService { get; set; } = default!;
+    [Inject] private PiggyBankService PiggyBankService { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
 
     [Parameter] public Guid BudgetId { get; set; }
@@ -23,7 +23,7 @@ public partial class BudgetAmountCalculate : ComponentBase
         _model.StartDate = new DateOnly(today.Year - 1, 1, 1);
         _model.EndDate = new DateOnly(today.Year, 12, 31);
 
-        _budget = await BudgetService.GetBudgetAsync(BudgetId);
+        _budget = await PiggyBankService.GetBudgetAsync(BudgetId);
         if (_budget is null)
         {
             _notFoundMessage = $"Budget ID '{BudgetId}' not found";
@@ -67,9 +67,9 @@ public partial class BudgetAmountCalculate : ComponentBase
         _calculatingAmounts = true;
 
         var config = GetAmountConfig();
-        await BudgetService.CalculateAmounts(_budget, config);
+        await PiggyBankService.CalculateAmounts(_budget, config);
 
-        await BudgetService.Save(_budget);
+        await PiggyBankService.Save(_budget);
         _calculatingAmounts = false;
 
         Cancel();

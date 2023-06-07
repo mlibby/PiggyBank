@@ -2,7 +2,7 @@ namespace PiggyBank.Pages.ReportPages;
 
 public partial class IncomeExpense
 {
-    [Inject] private AccountService AccountService { get; set; } = default!;
+    [Inject] private PiggyBankService AccountService { get; set; } = default!;
 
     private DateOnly _startDate = DateOnly.MinValue;
     private DateOnly _endDate = DateOnly.MaxValue;

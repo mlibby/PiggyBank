@@ -2,7 +2,7 @@ namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetForm
 {
-    [Inject] private BudgetService BudgetService { get; set; } = default!;
+    [Inject] private PiggyBankService PiggyBankService { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
 
     [Parameter] public Guid BudgetId { get; set; }
@@ -29,7 +29,7 @@ public partial class BudgetForm
         }
         else
         {
-            _budget = await BudgetService.GetBudgetAsync(BudgetId);
+            _budget = await PiggyBankService.GetBudgetAsync(BudgetId);
         }
 
         if (_budget is null)
@@ -39,7 +39,7 @@ public partial class BudgetForm
             return;
         }
 
-        _budgetAmountCount = await BudgetService.GetBudgetAmountCountAsync(BudgetId);
+        _budgetAmountCount = await PiggyBankService.GetBudgetAmountCountAsync(BudgetId);
         _editContext = new EditContext(_budget);
         _validationMessageStore = new ValidationMessageStore(_editContext);
         _editContext!.OnValidationRequested += HandleValidationRequested;
@@ -79,7 +79,7 @@ public partial class BudgetForm
             return;
         }
 
-        await BudgetService.Save(_budget);
+        await PiggyBankService.Save(_budget);
         NavigationManager.NavigateTo(PageRoute.BudgetAmountCalculateFor(_budget.Id));
     }
 
@@ -90,7 +90,7 @@ public partial class BudgetForm
             return;
         }
 
-        await BudgetService.Save(_budget);
+        await PiggyBankService.Save(_budget);
         Cancel();
     }
 

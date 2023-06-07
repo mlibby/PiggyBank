@@ -2,7 +2,7 @@ namespace PiggyBank.Pages.ReportPages;
 
 public partial class BalancesIndex
 {
-    [Inject] private AccountService AccountService { get; set; } = default!;
+    [Inject] private PiggyBankService AccountService { get; set; } = default!;
 
     private DateOnly _today = DateOnly.MinValue;
     private int _monthsToShow = 12;

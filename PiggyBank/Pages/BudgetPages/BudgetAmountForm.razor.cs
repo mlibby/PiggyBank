@@ -2,8 +2,8 @@ namespace PiggyBank.Pages.BudgetPages;
 
 public partial class BudgetAmountForm
 {
-    [Inject] private AccountService AccountService { get; set; } = default!;
-    [Inject] private BudgetService BudgetService { get; set; } = default!;
+    [Inject] private PiggyBankService AccountService { get; set; } = default!;
+    [Inject] private PiggyBankService PiggyBankService { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
 
     [Parameter] public Guid AccountId { get; set; }
@@ -19,7 +19,7 @@ public partial class BudgetAmountForm
 
     protected override async Task OnParametersSetAsync()
     {
-        var budget = await BudgetService.GetBudgetAndAmountsAsync(BudgetId);
+        var budget = await PiggyBankService.GetBudgetAndAmountsAsync(BudgetId);
 
         if (budget is null)
         {
@@ -53,7 +53,7 @@ public partial class BudgetAmountForm
 
     private async Task Save()
     {
-        await BudgetService.Save(_model.Budget);
+        await PiggyBankService.Save(_model.Budget);
         Cancel();
     }
 
