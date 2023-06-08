@@ -12,7 +12,7 @@ public static class BudgetHelper
             AmountType.Monthly :
             AmountType.Annual;
 
-        foreach (var account in accounts.Where(a => !config.AccountTypes.Contains(a.AccountType)))
+        foreach (var account in accounts.Where(a => config.AccountTypes.Contains(a.AccountType)))
         {
             if (account.IsHidden || account.IsPlaceholder)
             {
