@@ -26,6 +26,7 @@ public static class PageRoute
     public const string ImportOfx = "/import/ofx";
     public const string ReportBalances = "/report/balances";
     public const string ReportBudget = "/report/budget";
+    public const string ReportBudgetProjection = "/report/budgetprojection";
     public const string ReportIncomeExpense = "/report/income-expense";
     public const string SettingsIndex = "/settings";
     public const string TransactionIndex = "/transaction";

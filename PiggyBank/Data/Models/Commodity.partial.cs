@@ -6,6 +6,9 @@ public partial class Commodity
     {
         var precision = round ? 0 : Precision;
         var roundedAmount = Math.Round(amount, precision);
-        return string.Format("{0}{1:N" + precision + "}", Symbol, roundedAmount);
+        var spacer = (Symbol?.Length > 1) ? " " : "";
+        {
+            return string.Format("{0}{1}{2:N" + precision + "}", Symbol, spacer, roundedAmount);
+        }
     }
 }

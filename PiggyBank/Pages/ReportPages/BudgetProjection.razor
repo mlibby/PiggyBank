@@ -1,0 +1,50 @@
+﻿@attribute [Route(PageRoute.ReportBudgetProjection)]
+
+<h1>Budget Projection</h1>
+
+@if (_model is not null)
+{
+    if (_model.Budgets is null)
+    {
+        <p>No budgets found. Go <a href="@(PageRoute.BudgetAdd)">add a budget</a>.</p>
+    }
+    else
+    {
+        <EditForm class="pb0" EditContext="_editContext">
+            <DataAnnotationsValidator />
+            <ValidationSummary role="alert" aria-label="budget report form errors" />
+            <div class="field">
+                <label for="selected-budget">Budget</label>
+                <InputSelect id="selected-budget" @bind-Value="_model.BudgetId">
+                    <option value="@(Guid.Empty)">Select Budget...</option>
+                    @foreach (var budget in _model.Budgets)
+                    {
+                        <option value="@budget.Id">@budget.Name</option>
+                    }
+                </InputSelect>
+            </div>
+        </EditForm>
+    }
+}
+
+@if (_loading)
+{
+    <p>Loading...</p>
+}
+else if (_model is not null && _budget is not null)
+{
+    var accountTypes = new List<AccountType>{
+        AccountType.Income,
+        AccountType.Expense,
+        AccountType.Asset,
+        AccountType.Liability
+    };
+
+    foreach (var accountType in accountTypes)
+    {
+        if (_budget.Amounts.Any(a => a.Account.AccountType == accountType))
+        {
+            <TreeTable Model="@CreateTreeTableModel(accountType)" />
+        }
+    }
+}
